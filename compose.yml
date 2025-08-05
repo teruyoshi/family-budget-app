@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # フロントエンド (React + Vite)
+  client:
+    build:
+      context: ./client
+      dockerfile: ../docker/client/Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3001
+    depends_on:
+      - server
+    networks:
+      - family-budget-network
+
+  # バックエンド (Node.js + Express)
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=family_budget
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - db
+    networks:
+      - family-budget-network
+
+  # データベース (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=family_budget
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - family-budget-network
+
+  # 開発用データベース管理ツール (pgAdmin)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - family-budget-network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  family-budget-network:
+    driver: bridge
