@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend format-check format-check-frontend
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
 
 # デフォルトターゲット
 help:
@@ -25,6 +25,9 @@ help:
 	@echo "  make format-check-frontend - フロントエンドフォーマットチェック実行"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
+	@echo "  make npm-version-minor  - マイナーバージョンを上げる"
+	@echo "  make npm-version-patch  - パッチバージョンを上げる"
+	@echo "  make npm-version-major  - メジャーバージョンを上げる"
 	@echo ""
 	@echo "Individual services:"
 	@echo "  make backend    - バックエンドサービスのログ"
@@ -176,3 +179,16 @@ backend-shell:
 # フロントエンドサービスに接続
 frontend-shell:
 	docker compose exec frontend sh
+
+# バージョン管理
+npm-version-minor:
+	@echo "マイナーバージョンを上げています..."
+	docker compose exec frontend npm version minor
+
+npm-version-patch:
+	@echo "パッチバージョンを上げています..."
+	docker compose exec frontend npm version patch
+
+npm-version-major:
+	@echo "メジャーバージョンを上げています..."
+	docker compose exec frontend npm version major
