@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ExpenseInput from './ExpenseInput';
 
 interface ExpenseFormProps {
   onSubmit?: (amount: number) => void;
@@ -18,12 +19,9 @@ function ExpenseForm({ onSubmit }: ExpenseFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        type="number"
-        placeholder="支出金額を入力"
+      <ExpenseInput
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded"
+        onChange={setAmount}
       />
       <button
         type="submit"
