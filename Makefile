@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend format-check format-check-frontend
 
 # デフォルトターゲット
 help:
@@ -19,6 +19,10 @@ help:
 	@echo "  make lint       - 全Lintチェック実行"
 	@echo "  make lint-frontend - フロントエンドLintチェック実行"
 	@echo "  make lint-backend  - バックエンドLintチェック実行"
+	@echo "  make format     - 全コードフォーマット実行"
+	@echo "  make format-frontend - フロントエンドコードフォーマット実行"
+	@echo "  make format-check   - 全コードフォーマットチェック実行"
+	@echo "  make format-check-frontend - フロントエンドフォーマットチェック実行"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
 	@echo ""
@@ -96,6 +100,26 @@ lint-backend:
 	@echo "バックエンドLintを実行中..."
 	docker compose exec backend go vet ./...
 	docker compose exec backend golint ./...
+
+# フォーマット実行
+format:
+	@echo "フロントエンドコードをフォーマット中..."
+	docker compose exec frontend npm run format
+
+# フロントエンドのみフォーマット実行
+format-frontend:
+	@echo "フロントエンドコードをフォーマット中..."
+	docker compose exec frontend npm run format
+
+# フォーマットチェック実行
+format-check:
+	@echo "フロントエンドフォーマットをチェック中..."
+	docker compose exec frontend npm run format:check
+
+# フロントエンドのみフォーマットチェック実行
+format-check-frontend:
+	@echo "フロントエンドフォーマットをチェック中..."
+	docker compose exec frontend npm run format:check
 
 # フロントエンドパッケージインストール
 npm-install:

@@ -22,7 +22,11 @@ export default tseslint.config([
   },
   // Test files configuration
   {
-    files: ['**/__tests__/**/*.{ts,tsx}', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+    files: [
+      '**/__tests__/**/*.{ts,tsx}',
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+    ],
     languageOptions: {
       ecmaVersion: 2020,
       globals: {

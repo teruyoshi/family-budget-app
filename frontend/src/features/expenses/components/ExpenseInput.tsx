@@ -1,18 +1,22 @@
-import TextInput from '../../../components/common/TextInput';
+import TextInput from '../../../components/common/TextInput'
 
 interface ExpenseInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
 }
 
-function ExpenseInput({ value, onChange, placeholder = '支出金額を入力' }: ExpenseInputProps) {
+function ExpenseInput({
+  value,
+  onChange,
+  placeholder = '支出金額を入力',
+}: ExpenseInputProps) {
   const handleChange = (inputValue: string) => {
     // 数値のみ許可（小数点を含む）
     if (inputValue === '' || /^\d*\.?\d*$/.test(inputValue)) {
-      onChange(inputValue);
+      onChange(inputValue)
     }
-  };
+  }
 
   return (
     <TextInput
@@ -21,7 +25,7 @@ function ExpenseInput({ value, onChange, placeholder = '支出金額を入力' }
       value={value}
       onChange={handleChange}
     />
-  );
+  )
 }
 
-export default ExpenseInput;
+export default ExpenseInput

@@ -1,10 +1,10 @@
-import { Container, Paper, Typography } from '@mui/material';
-import ExpenseForm from './features/expenses/components/ExpenseForm';
+import { Container, Paper, Typography } from '@mui/material'
+import ExpenseForm from './features/expenses/components/ExpenseForm'
 
 function App() {
   const handleExpenseSubmit = (amount: number) => {
-    console.log('支出登録:', amount);
-  };
+    console.log('支出登録:', amount)
+  }
 
   return (
     <Container
@@ -15,7 +15,7 @@ function App() {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#f5f5f5',
-        py: 4
+        py: 4,
       }}
     >
       <Paper
@@ -23,7 +23,7 @@ function App() {
         sx={{
           p: 4,
           width: '100%',
-          maxWidth: 400
+          maxWidth: 400,
         }}
       >
         <Typography
@@ -33,16 +33,16 @@ function App() {
           sx={{
             textAlign: 'center',
             fontWeight: 'bold',
-            mb: 3
+            mb: 3,
           }}
         >
           家計簿アプリ
         </Typography>
-        
+
         <ExpenseForm onSubmit={handleExpenseSubmit} />
       </Paper>
     </Container>
-  );
+  )
 }
 
-export default App;
+export default App
