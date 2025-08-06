@@ -28,6 +28,12 @@ make build && make up
 
 ## 📝 コーディング規約
 
+### スタイリング戦略
+- MUIコンポーネントを優先使用
+- sx propsで一貫したスタイリング
+- Material Designガイドラインの遵守
+- テーマカスタマイズでブランディングを統一
+
 ### TypeScript規約
 ```tsx
 // ✅ 良い例

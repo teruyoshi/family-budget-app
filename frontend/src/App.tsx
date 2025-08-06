@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Container, Paper, Typography, Button, Box } from '@mui/material';
 import ExpenseForm from './features/expenses/components/ExpenseForm';
 
 function App() {
@@ -9,22 +10,53 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
-        <h1 className="text-3xl font-bold text-center mb-6">家計簿アプリ</h1>
-        <div className="space-y-4">
+    <Container
+      maxWidth="sm"
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f5f5f5',
+        py: 4
+      }}
+    >
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          width: '100%',
+          maxWidth: 400
+        }}
+      >
+        <Typography
+          variant="h3"
+          component="h1"
+          gutterBottom
+          sx={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            mb: 3
+          }}
+        >
+          家計簿アプリ
+        </Typography>
+        
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <ExpenseForm onSubmit={handleExpenseSubmit} />
-          <div className="text-center">
-            <button
+          
+          <Box sx={{ textAlign: 'center' }}>
+            <Button
+              variant="contained"
               onClick={() => setCount((count) => count + 1)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              sx={{ fontWeight: 'bold' }}
             >
               count is {count}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

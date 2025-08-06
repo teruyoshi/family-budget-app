@@ -7,7 +7,8 @@ React + TypeScript + Viteで構築された家計簿管理アプリケーショ�
 - **React 19** - UIライブラリ
 - **TypeScript** - 型安全な開発
 - **Vite** - 高速ビルドツール
-- **Tailwind CSS** - ユーティリティファーストCSS
+- **Material-UI (MUI)** - Reactコンポーネントライブラリ
+- **Emotion** - CSS-in-JSスタイリング
 - **Jest** - テスティングフレームワーク
 - **React Testing Library** - コンポーネントテスト
 - **ESLint** - コード品質
@@ -87,7 +88,7 @@ make frontend           # ログ確認
 ## 📝 コンポーネントガイド
 
 ### TextInput
-汎用的なテキスト入力コンポーネント
+汎用的なテキスト入力コンポーネント（MUI TextFieldベース）
 
 ```tsx
 import TextInput from '../components/common/TextInput';
@@ -98,6 +99,7 @@ import TextInput from '../components/common/TextInput';
   value={value}
   onChange={handleChange}
   required
+  variant="outlined"
 />
 ```
 
@@ -129,6 +131,7 @@ import ExpenseForm from '../features/expenses/components/ExpenseForm';
 - TypeScriptの厳格な型チェックを有効化
 - ESLint + Prettierによる自動フォーマット
 - React Hooksの適切な使用
+- MUI sx propsによる一貫したスタイリング
 
 ### ファイル命名規則
 - コンポーネント: `PascalCase.tsx`

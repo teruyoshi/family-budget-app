@@ -1,12 +1,15 @@
 import { forwardRef } from 'react';
+import { TextField, SxProps, Theme } from '@mui/material';
 
 interface TextInputProps {
   type?: 'text' | 'number' | 'email' | 'password';
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
-  className?: string;
+  sx?: SxProps<Theme>;
   required?: boolean;
+  fullWidth?: boolean;
+  variant?: 'outlined' | 'filled' | 'standard';
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
@@ -14,22 +17,26 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({
   placeholder,
   value,
   onChange,
-  className = '',
-  required = false
+  sx,
+  required = false,
+  fullWidth = true,
+  variant = 'outlined'
 }, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
   return (
-    <input
-      ref={ref}
+    <TextField
+      inputRef={ref}
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={handleChange}
       required={required}
-      className={`w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
+      fullWidth={fullWidth}
+      variant={variant}
+      sx={sx}
     />
   );
 });

@@ -9,7 +9,7 @@
 ## 技術スタック
 
 - **フロントエンド**: React 19 + TypeScript + Vite
-- **スタイリング**: Tailwind CSS + PostCSS
+- **スタイリング**: Material-UI (MUI) + Emotion
 - **開発ツール**: ESLint, Prettier, Jest
 - **バックエンド**: Go 1.21 + Gin + GORM
 - **データベース**: MySQL 8.0
@@ -36,8 +36,7 @@ family-budget-app/
 │   ├── public/           # 公開ファイル
 │   ├── package.json      # npm依存関係
 │   ├── vite.config.ts    # Vite設定
-│   ├── tailwind.config.js# Tailwind CSS設定
-│   ├── postcss.config.js # PostCSS設定
+│   │   # MUIコンポーネントライブラリ使用
 │   ├── .prettierrc       # Prettier設定
 │   ├── jest.config.js    # Jest設定
 │   └── eslint.config.js  # ESLint設定

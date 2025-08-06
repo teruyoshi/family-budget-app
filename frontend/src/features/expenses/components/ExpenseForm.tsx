@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box, Button } from '@mui/material';
 import ExpenseInput from './ExpenseInput';
 
 interface ExpenseFormProps {
@@ -18,18 +19,24 @@ function ExpenseForm({ onSubmit }: ExpenseFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <ExpenseInput
         value={amount}
         onChange={setAmount}
       />
-      <button
+      <Button
         type="submit"
-        className="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        variant="contained"
+        color="error"
+        fullWidth
+        sx={{ 
+          fontWeight: 'bold',
+          py: 1.5
+        }}
       >
         支出を登録
-      </button>
-    </form>
+      </Button>
+    </Box>
   );
 }
 

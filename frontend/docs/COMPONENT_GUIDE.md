@@ -261,46 +261,45 @@ function ExpenseForm() {
 
 ## 🎨 スタイリング戦略
 
-### Tailwind CSS活用
-一貫したデザインシステムを構築します。
+### MUI (Material-UI) 活用
+Material Designガイドラインに基づいた一貫したデザインシステムを構築します。
 
 ```tsx
-// デザイントークンの定義
-const buttonVariants = {
-  primary: 'bg-blue-500 hover:bg-blue-700 text-white',
-  secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
-  danger: 'bg-red-500 hover:bg-red-700 text-white',
-};
+import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
-const buttonSizes = {
-  small: 'px-2 py-1 text-sm',
-  medium: 'px-4 py-2',
-  large: 'px-6 py-3 text-lg',
-};
-
-interface ButtonProps {
-  variant?: keyof typeof buttonVariants;
-  size?: keyof typeof buttonSizes;
+// テーマカスタマイズ例
+interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
+  variant?: 'primary' | 'secondary' | 'danger';
   children: React.ReactNode;
-  onClick?: () => void;
 }
 
 function Button({ 
   variant = 'primary', 
-  size = 'medium', 
-  children, 
-  onClick 
+  children,
+  sx,
+  ...props 
 }: ButtonProps) {
-  const classes = [
-    'font-bold rounded focus:outline-none focus:ring-2',
-    buttonVariants[variant],
-    buttonSizes[size],
-  ].join(' ');
+  const getVariantProps = () => {
+    switch (variant) {
+      case 'primary':
+        return { variant: 'contained' as const, color: 'primary' as const };
+      case 'secondary':
+        return { variant: 'outlined' as const, color: 'primary' as const };
+      case 'danger':
+        return { variant: 'contained' as const, color: 'error' as const };
+      default:
+        return { variant: 'contained' as const, color: 'primary' as const };
+    }
+  };
 
   return (
-    <button className={classes} onClick={onClick}>
+    <MuiButton
+      {...getVariantProps()}
+      sx={{ fontWeight: 'bold', ...sx }}
+      {...props}
+    >
       {children}
-    </button>
+    </MuiButton>
   );
 }
 ```
@@ -309,23 +308,32 @@ function Button({
 
 ### 1. React.memo による最適化
 ```tsx
+import { Box, Typography, IconButton } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
+
 const ExpenseItem = memo(function ExpenseItem({ 
   expense,
   onEdit,
   onDelete 
 }: ExpenseItemProps) {
   return (
-    <div className="expense-item">
-      <span>{expense.amount}</span>
-      <button onClick={() => onEdit(expense.id)}>編集</button>
-      <button onClick={() => onDelete(expense.id)}>削除</button>
-    </div>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 1 }}>
+      <Typography variant="body1">{expense.amount}</Typography>
+      <IconButton onClick={() => onEdit(expense.id)} size="small">
+        <Edit />
+      </IconButton>
+      <IconButton onClick={() => onDelete(expense.id)} size="small" color="error">
+        <Delete />
+      </IconButton>
+    </Box>
   );
 });
 ```
 
 ### 2. useMemo と useCallback
 ```tsx
+import { List } from '@mui/material';
+
 function ExpenseList({ expenses, filter }: ExpenseListProps) {
   // 高コストな計算のメモ化
   const filteredExpenses = useMemo(() => {
@@ -340,7 +348,7 @@ function ExpenseList({ expenses, filter }: ExpenseListProps) {
   }, []);
 
   return (
-    <div>
+    <List>
       {filteredExpenses.map(expense => (
         <ExpenseItem
           key={expense.id}
@@ -348,7 +356,7 @@ function ExpenseList({ expenses, filter }: ExpenseListProps) {
           onEdit={handleExpenseEdit}
         />
       ))}
-    </div>
+    </List>
   );
 }
 ```
