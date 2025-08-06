@@ -14,8 +14,33 @@ services:
     environment:
       - NODE_ENV=development
       - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - server
     networks:
       - family-budget-network
+
+  # バックエンド (Go)
+  server:
+    build:
+      context: ./server
+      dockerfile: ../docker/server/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./server:/app
+    environment:
+      - GO_ENV=development
+      - PORT=8080
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=family_budget
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - db
+    networks:
+      - family-budget-network
+    restart: unless-stopped
 
   # データベース (PostgreSQL)
   db:
