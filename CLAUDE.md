@@ -4,14 +4,14 @@
 
 ## プロジェクト概要
 
-これは家計簿アプリケーションプロジェクトです。フロントエンドにReact + TypeScript + Vite、バックエンドにNode.js + Expressを使用したフルスタックアプリケーションです。
+これは家計簿アプリケーションプロジェクトです。フロントエンドにReact + TypeScript + Vite、バックエンドにGo言語を使用したフルスタックアプリケーションです。
 
 ## 技術スタック
 
 - **フロントエンド**: React 19 + TypeScript + Vite
 - **スタイリング**: Tailwind CSS
 - **開発ツール**: ESLint, Prettier, Jest, Vite HMR
-- **バックエンド**: Node.js + Express + TypeScript
+- **バックエンド**: Go言語
 - **データベース**: PostgreSQL 15
 
 ## プロジェクト構造
@@ -32,16 +32,9 @@ family-budget-app/
 │   ├── .prettierrc       # Prettier設定
 │   ├── jest.config.js    # Jest設定
 │   └── src/setupTests.ts # テスト環境設定
-├── server/               # Node.js バックエンド
-│   ├── src/
-│   │   └── index.ts
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── .env.example      # 環境変数テンプレート
+├── server/               # Go言語バックエンド（未実装）
 ├── docker/               # Dockerファイル格納
-│   ├── client/
-│   │   └── Dockerfile
-│   └── server/
+│   └── client/
 │       └── Dockerfile
 └── db/                   # データベース関連
     └── init.sql          # PostgreSQL初期スキーマ
@@ -72,23 +65,23 @@ npm run lint         # ESLintチェック
 #### バックエンド
 ```bash
 cd server
-npm install          # 依存関係のインストール
-npm run dev          # 開発サーバー起動 (http://localhost:3000)
-npm run build        # TypeScriptビルド
-npm start            # 本番環境起動
+go mod init family-budget-server  # Go モジュール初期化
+go run main.go       # 開発サーバー起動 (http://localhost:8080)
+go build             # バイナリビルド
+./family-budget-server  # 本番環境起動
 ```
 
 ## Docker構成
 
 ### サービス一覧
 - **client**: React開発サーバー (ポート5173)
-- **server**: Node.js/Express API (ポート3000) 
+- **server**: Go API (ポート8080) 
 - **db**: PostgreSQL データベース (ポート5432)
 - **pgadmin**: データベース管理UI (ポート5050)
 
 ### アクセスURL
 - フロントエンド: http://localhost:5173
-- バックエンドAPI: http://localhost:3000
+- バックエンドAPI: http://localhost:8080
 - pgAdmin: http://localhost:5050 (admin@example.com / admin)
 
 ## 開発セットアップ
@@ -100,9 +93,8 @@ npm start            # 本番環境起動
    - Docker対応済み（ポート5173）
 
 2. **バックエンド**: 
-   - Node.js + Express + TypeScript 構成完了
-   - CORS, dotenv 設定済み
-   - Docker対応済み（ポート3000）
+   - Go言語バックエンド（未実装）
+   - Docker対応予定（ポート8080）
 
 3. **データベース**:
    - PostgreSQL 15 Alpine
@@ -114,7 +106,7 @@ npm start            # 本番環境起動
 ### 完了済み
 - Docker Compose フルスタック構成完了
 - React TypeScript + Tailwind CSS フロントエンド構築
-- Node.js Express TypeScript バックエンド構築
+- Go言語バックエンド設計
 - PostgreSQL データベース設計・初期スキーマ作成
 - 基本的なAPI エンドポイント(/api/health, /api/test)実装
 - 開発環境整備: ESLint + Prettier + Jest導入
@@ -124,7 +116,7 @@ npm start            # 本番環境起動
 ### 現在の実装状況
 - **インフラ**: Docker環境完全構築済み
 - **フロントエンド**: React開発環境完備（テスト環境含む）
-- **バックエンド**: Express API基盤完成
+- **バックエンド**: Go言語移行中
 - **データベース**: PostgreSQL + pgAdmin運用可能
 
 ### データベーススキーマ
@@ -134,8 +126,9 @@ npm start            # 本番環境起動
 - budgets: 予算設定
 
 ### 次のステップ
-1. フロントエンド画面実装（家計簿UI作成）
-2. バックエンドAPI実装（CRUD機能）
+1. Go言語バックエンド実装
+2. フロントエンド画面実装（家計簿UI作成）
+3. バックエンドAPI実装（CRUD機能）
 3. フロントエンド・バックエンドAPI連携
 4. ユーザー認証システム実装
 5. 取引管理機能の実装
