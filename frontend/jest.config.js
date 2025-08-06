@@ -2,11 +2,20 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(svg|png|jpg|jpeg|gif|ico|webp)$': 'identity-obj-proxy',
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: {
+        jsx: 'react-jsx',
+        esModuleInterop: true,
+        skipLibCheck: true,
+        verbatimModuleSyntax: false,
+        allowSyntheticDefaultImports: true,
+      },
+    }],
   },
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.(ts|tsx)',
@@ -16,4 +25,9 @@ export default {
     'src/**/*.(ts|tsx)',
     '!src/**/*.d.ts',
   ],
+  globals: {
+    'ts-jest': {
+      isolatedModules: true,
+    },
+  },
 };
