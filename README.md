@@ -2,6 +2,19 @@
 
 家計簿管理のためのモダンなフルスタックWebアプリケーション。収支管理、カテゴリ別予算設定、データ可視化機能を提供します。
 
+## 🌐 デモサイト
+
+**GitHub Pages デモ**: [https://username.github.io/family-budget-app/](https://username.github.io/family-budget-app/)
+
+> ⚠️ **注意**: デモサイトのURLは、あなたのGitHubユーザー名に合わせて更新してください
+
+### デモ機能
+- ✅ 支出金額の入力と記録
+- ✅ 支出履歴の一覧表示
+- ✅ 合計支出額の自動計算
+- ✅ レスポンシブデザイン
+- ✅ リアルタイムUI更新
+
 ## 🚀 特徴
 
 - **モダンなUI/UX**: Material-UI (MUI) v6によるレスポンシブデザイン
