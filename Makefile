@@ -13,7 +13,11 @@ help:
 	@echo "  make logs-f     - ログをフォロー（-f付き）"
 	@echo "  make clean      - 停止・イメージ・ボリューム削除"
 	@echo "  make dev        - 開発環境起動（ログ表示付き）"
-	@echo "  make test       - テスト実行"
+	@echo "  make test       - 全テスト実行"
+	@echo "  make test-frontend - フロントエンドテスト実行"
+	@echo "  make test-backend  - バックエンドテスト実行"
+	@echo "  make npm-install   - フロントエンドパッケージインストール"
+	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
 	@echo ""
 	@echo "Individual services:"
 	@echo "  make backend    - バックエンドサービスのログ"
@@ -60,6 +64,27 @@ test:
 	docker compose exec frontend npm test
 	@echo "バックエンドテストを実行中..."
 	docker compose exec backend go test ./...
+
+# フロントエンドのみテスト実行
+test-frontend:
+	@echo "フロントエンドテストを実行中..."
+	docker compose exec frontend npm test
+
+# バックエンドのみテスト実行
+test-backend:
+	@echo "バックエンドテストを実行中..."
+	docker compose exec backend go test ./...
+
+# フロントエンドパッケージインストール
+npm-install:
+	@echo "フロントエンドパッケージをインストール中..."
+	docker compose exec frontend npm install
+
+# フロントエンドパッケージ追加インストール
+npm-install-package:
+	@echo "パッケージ名を指定してください: make npm-install-package PKG=パッケージ名"
+	@if [ -z "$(PKG)" ]; then echo "使用例: make npm-install-package PKG=lodash"; exit 1; fi
+	docker compose exec frontend npm install $(PKG)
 
 # 個別サービスのログ
 backend:

@@ -206,3 +206,43 @@ docker compose up --build  # 直接実行
 - **バックエンドAPI**: http://localhost:8080
 - **API健康状態**: http://localhost:8080/api/health
 - **phpMyAdmin**: http://localhost:8081 (root / root)
+
+## Claude開発作業指示
+
+### 基本作業方針
+- **作業ディレクトリ**: 必ずプロジェクトルート (`/home/teruyoshi/workspace/family-budget-app`) で作業する
+- **コンテナベース開発**: フロントエンドの作業はすべてMakefileを使用してDocker容器内で実行する
+- **タスク管理**: Todo機能を使用して一つのタスクに集中し、完了次第作業を停止して指示を仰ぐ
+
+### Docker開発コマンド（Makefile使用）
+
+#### テスト実行
+```bash
+make test-frontend        # フロントエンドテストのみ実行
+make test-backend         # バックエンドテストのみ実行
+make test                 # 全テスト実行
+```
+
+#### パッケージ管理
+```bash
+make npm-install                          # package.jsonの依存関係インストール
+make npm-install-package PKG=react-router # 新しいパッケージ追加
+```
+
+#### 開発・デバッグ
+```bash
+make frontend-shell       # フロントエンドコンテナに接続
+make backend-shell        # バックエンドコンテナに接続
+make frontend             # フロントエンドログ確認
+make backend              # バックエンドログ確認
+```
+
+### TDD開発フロー
+1. **Red**: テスト書いて失敗を確認 → `make test-frontend`
+2. **Green**: 最小限の実装でテスト通す → `make test-frontend`
+3. **Refactor**: リファクタリング → `make test-frontend`
+
+### 作業完了の判断基準
+- 一つのTodoタスクが完了したら必ず作業を停止
+- ユーザーからの次の指示を待つ
+- コミット前に必ずテストが通ることを確認
