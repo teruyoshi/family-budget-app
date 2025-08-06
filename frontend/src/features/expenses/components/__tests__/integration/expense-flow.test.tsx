@@ -32,7 +32,9 @@ describe('Expense Flow Integration', () => {
 
     await waitFor(
       () => {
-        const updatedInput = screen.getByPlaceholderText('支出金額を入力')
+        const updatedInput = screen.getByPlaceholderText(
+          '支出金額を入力'
+        ) as HTMLInputElement
         expect(updatedInput.value === '' || updatedInput.value === '0').toBe(
           true
         )
