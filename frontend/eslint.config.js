@@ -20,4 +20,19 @@ export default tseslint.config([
       globals: globals.browser,
     },
   },
+  // Test files configuration
+  {
+    files: ['**/__tests__/**/*.{ts,tsx}', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
+    },
+    rules: {
+      // Allow describe, test, it, expect globals in test files
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
 ])
