@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ExpenseForm from './components/ExpenseForm';
+import ExpenseForm from './features/expenses/components/ExpenseForm';
 
 function App() {
   const [count, setCount] = useState(0);
