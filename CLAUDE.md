@@ -9,8 +9,11 @@
 ## 技術スタック
 
 - **フロントエンド**: React 19 + TypeScript + Vite
-- **スタイリング**: Material-UI (MUI) + Emotion
-- **開発ツール**: ESLint, Prettier, Jest
+- **スタイリング**: Material-UI (MUI) v6 + Emotion
+- **コンポーネント**: MUI Material Components、sx props、テーマシステム
+- **開発ツール**: ESLint, Prettier, Jest + React Testing Library
+- **型システム**: TypeScript strict mode、type-only imports最適化
+- **テスト戦略**: ハイブリッドテスト配置（単体テスト用__tests__、統合テスト用integration/）
 - **バックエンド**: Go 1.21 + Gin + GORM
 - **データベース**: MySQL 8.0
 - **インフラ**: Docker + Docker Compose
@@ -29,14 +32,32 @@ family-budget-app/
 │   └── settings.json     # Prettier自動フォーマット設定
 ├── frontend/             # React フロントエンド
 │   ├── src/
-│   │   ├── App.tsx       # メインアプリケーション
+│   │   ├── App.tsx       # メインアプリケーション（MUI Container使用）
+│   │   ├── App.test.tsx  # App.tsx単体テスト（co-located）
 │   │   ├── main.tsx      # エントリーポイント
 │   │   ├── setupTests.ts # テスト環境設定
+│   │   ├── components/   # 再利用可能コンポーネント
+│   │   │   └── common/   # 汎用コンポーネント
+│   │   │       ├── TextInput.tsx # MUI TextFieldベース汎用入力
+│   │   │       └── __tests__/    # 単体テスト
+│   │   │           └── TextInput.test.tsx # TextInput包括テスト
+│   │   ├── features/     # フィーチャーベース構成
+│   │   │   └── expenses/ # 支出管理フィーチャー
+│   │   │       └── components/
+│   │   │           ├── ExpenseForm.tsx  # MUI Boxベース支出フォーム
+│   │   │           ├── ExpenseInput.tsx # 数値入力特化コンポーネント
+│   │   │           └── __tests__/       # テストディレクトリ
+│   │   │               ├── ExpenseForm.test.tsx  # フォーム単体テスト
+│   │   │               ├── ExpenseInput.test.tsx # 入力単体テスト
+│   │   │               └── integration/          # 統合テスト
+│   │   │                   └── expense-flow.test.tsx # フロー統合テスト
 │   │   └── assets/       # 静的アセット
 │   ├── public/           # 公開ファイル
-│   ├── package.json      # npm依存関係
+│   ├── docs/             # フロントエンド専用ドキュメント
+│   │   ├── COMPONENT_GUIDE.md # コンポーネント設計ガイド
+│   │   └── DEVELOPMENT.md     # 開発ガイドライン
+│   ├── package.json      # npm依存関係（MUI, Emotion含む）
 │   ├── vite.config.ts    # Vite設定
-│   │   # MUIコンポーネントライブラリ使用
 │   ├── .prettierrc       # Prettier設定
 │   ├── jest.config.js    # Jest設定
 │   └── eslint.config.js  # ESLint設定
@@ -92,7 +113,7 @@ npm install          # 依存関係のインストール
 npm run dev          # 開発サーバー起動 (http://localhost:5173)
 npm run build        # プロダクションビルド
 npm run lint         # ESLintチェック
-# npm test           # Jestテスト実行（未設定）
+npm test             # Jestテスト実行（設定完了）
 ```
 
 #### バックエンド
@@ -121,8 +142,16 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 
 ### ✅ フロントエンド基盤
 - **React 19 + TypeScript + Vite**: モダンな開発環境
-- **Tailwind CSS**: ユーティリティファーストCSS
-- **開発ツール**: ESLint + Prettier + Jest設定完了
+- **Material-UI (MUI) v6**: コンポーネントライブラリとテーマシステム
+  - Emotionベースのスタイリングソリューション
+  - sx propsによるコンポーネントレベルスタイリング
+  - Material Design準拠のコンポーネント群
+- **TypeScript最適化**: type-only imports、strict mode設定
+- **開発ツール**: ESLint + Prettier + Jest設定完了、Makefileベースlint実行
+- **テスト環境**: Jest + React Testing Library完全対応
+  - ハイブリッドテスト配置戦略（単体・統合テスト分離）
+  - 全テストスイート通過（19テスト、5テストスイート）
+  - MUI特化のテスト最適化（数値型対応、非同期状態管理）
 - **VS Code統合**: 自動フォーマット設定
 - **Docker対応**: 開発環境コンテナ化
 
@@ -222,6 +251,13 @@ make test-backend         # バックエンドテストのみ実行
 make test                 # 全テスト実行
 ```
 
+#### Lint実行
+```bash
+make lint-frontend        # フロントエンドLintチェックのみ実行
+make lint-backend         # バックエンドLintチェックのみ実行
+make lint                 # 全Lintチェック実行
+```
+
 #### パッケージ管理
 ```bash
 make npm-install                          # package.jsonの依存関係インストール
@@ -240,6 +276,12 @@ make backend              # バックエンドログ確認
 1. **Red**: テスト書いて失敗を確認 → `make test-frontend`
 2. **Green**: 最小限の実装でテスト通す → `make test-frontend`
 3. **Refactor**: リファクタリング → `make test-frontend`
+
+### テスト配置戦略
+- **co-located**: 単純なコンポーネントのテスト（App.test.tsx等）
+- **__tests__ディレクトリ**: 複雑なコンポーネントの単体テスト
+- **integration/**: フィーチャー統合テスト（フロー・ワークフロー）
+- **MUI対応**: 数値型フィールド、非同期更新に対応したテスト実装
 
 ### 作業完了の判断基準
 - 一つのTodoタスクが完了したら必ず作業を停止

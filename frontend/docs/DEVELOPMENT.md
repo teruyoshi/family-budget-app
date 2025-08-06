@@ -29,10 +29,10 @@ make build && make up
 ## 📝 コーディング規約
 
 ### スタイリング戦略
-- MUIコンポーネントを優先使用
-- sx propsで一貫したスタイリング
-- Material Designガイドラインの遵守
-- テーマカスタマイズでブランディングを統一
+- **Material-UI (MUI) v6**: Material Designコンポーネント優先使用
+- **Emotion CSS-in-JS**: sx propsによる一貫したスタイリング
+- **デザインシステム**: Material Designガイドラインの遵守
+- **テーマ**: MUIテーマカスタマイズによるブランディング統一
 
 ### TypeScript規約
 ```tsx
@@ -62,20 +62,33 @@ const User = (props: any) => {
 ```
 src/
 ├── components/common/    # 汎用コンポーネント
+│   └── __tests__/        # 単体テスト（複雑なコンポーネント）
 ├── features/            # 機能別ディレクトリ
 │   └── [feature]/
 │       ├── components/  # 機能専用コンポーネント
+│       │   └── __tests__/  # テストディレクトリ
+│       │       └── integration/ # 統合テスト
 │       ├── types.ts     # 型定義（将来）
 │       └── README.md    # 機能ドキュメント
-└── utils/              # ユーティリティ（将来）
+├── utils/              # ユーティリティ（将来）
+└── App.test.tsx        # シンプルコンポーネント（co-located）
 ```
 
 ## 🧪 テスト戦略
 
-### テスト種別
+### テスト種別と配置パターン
 1. **単体テスト**: 個別コンポーネント
-2. **結合テスト**: コンポーネント間連携
+   - 複雑なコンポーネント: `__tests__/ComponentName.test.tsx`
+   - シンプルなコンポーネント: `ComponentName.test.tsx` (co-located)
+2. **統合テスト**: コンポーネント間連携
+   - `__tests__/integration/feature-flow.test.tsx`
 3. **E2Eテスト**: エンドツーエンド（将来）
+
+### テスト配置戦略
+- **__tests__/ディレクトリ**: 複雑なコンポーネントの包括テスト
+- **integration/サブディレクトリ**: フィーチャーフローテスト
+- **co-located**: シンプルなコンポーネントの基本テスト
+- **MUI対応**: 数値型フィールド、非同期状態管理に特化したテスト
 
 ### テスト作成ガイドライン
 
@@ -106,7 +119,7 @@ describe('ExpenseForm', () => {
 
 #### テスト実行コマンド
 ```bash
-# 全テスト実行
+# 全テスト実行 (19テスト、5テストスイート)
 make test-frontend
 
 # ウォッチモード
@@ -114,6 +127,10 @@ npm test -- --watch
 
 # カバレッジ確認
 npm test -- --coverage
+
+# 特定テストスイート実行
+npm test -- ExpenseForm.test.tsx
+npm test -- integration/expense-flow.test.tsx
 ```
 
 ## 🏗 TDD開発フロー
@@ -212,8 +229,13 @@ mkdir -p src/features/new-feature/components
 
 ### 3. TDD開発
 ```bash
-# テストファイル作成
-touch src/features/new-feature/components/NewComponent.test.tsx
+# テストディレクトリ作成とテストファイル作成
+mkdir -p src/features/new-feature/components/__tests__
+touch src/features/new-feature/components/__tests__/NewComponent.test.tsx
+
+# 統合テストが必要な場合
+mkdir -p src/features/new-feature/components/__tests__/integration
+touch src/features/new-feature/components/__tests__/integration/new-feature-flow.test.tsx
 
 # テスト実行（失敗確認）
 make test-frontend
@@ -293,5 +315,6 @@ make frontend
 - [React公式ドキュメント](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Material-UI (MUI)](https://mui.com/material-ui/getting-started/)
+- [Emotion](https://emotion.sh/docs/introduction)
 - [Vite](https://vitejs.dev/guide/)

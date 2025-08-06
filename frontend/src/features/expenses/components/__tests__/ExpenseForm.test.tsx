@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ExpenseForm from './ExpenseForm';
+import ExpenseForm from '../ExpenseForm';
 
 describe('ExpenseForm', () => {
   test('支出入力用のテキストボックスが表示される', () => {
