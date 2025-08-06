@@ -15,19 +15,19 @@ services:
       - NODE_ENV=development
       - VITE_API_URL=http://localhost:8080
     depends_on:
-      - server
+      - backend
     networks:
       - family-budget-network
 
   # バックエンド (Go)
-  server:
+  backend:
     build:
-      context: ./server
-      dockerfile: ../docker/server/Dockerfile
+      context: ./backend
+      dockerfile: ../docker/backend/Dockerfile
     ports:
       - "8080:8080"
     volumes:
-      - ./server:/app
+      - ./backend:/app
     environment:
       - GO_ENV=development
       - PORT=8080
