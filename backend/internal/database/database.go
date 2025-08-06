@@ -39,14 +39,14 @@ func Connect() error {
 		password = "app_password"
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FTokyo",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=UTC",
 		user, password, host, port, dbname)
 
 	var err error
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 		NowFunc: func() time.Time {
-			return time.Now().In(time.FixedZone("Asia/Tokyo", 9*60*60))
+			return time.Now().UTC()
 		},
 	})
 
