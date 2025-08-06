@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend
 
 # デフォルトターゲット
 help:
@@ -16,6 +16,9 @@ help:
 	@echo "  make test       - 全テスト実行"
 	@echo "  make test-frontend - フロントエンドテスト実行"
 	@echo "  make test-backend  - バックエンドテスト実行"
+	@echo "  make lint       - 全Lintチェック実行"
+	@echo "  make lint-frontend - フロントエンドLintチェック実行"
+	@echo "  make lint-backend  - バックエンドLintチェック実行"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
 	@echo ""
@@ -74,6 +77,25 @@ test-frontend:
 test-backend:
 	@echo "バックエンドテストを実行中..."
 	docker compose exec backend go test ./...
+
+# Lint実行
+lint:
+	@echo "フロントエンドLintを実行中..."
+	docker compose exec frontend npm run lint
+	@echo "バックエンドLintを実行中..."
+	docker compose exec backend go vet ./...
+	docker compose exec backend golint ./...
+
+# フロントエンドのみLint実行
+lint-frontend:
+	@echo "フロントエンドLintを実行中..."
+	docker compose exec frontend npm run lint
+
+# バックエンドのみLint実行
+lint-backend:
+	@echo "バックエンドLintを実行中..."
+	docker compose exec backend go vet ./...
+	docker compose exec backend golint ./...
 
 # フロントエンドパッケージインストール
 npm-install:

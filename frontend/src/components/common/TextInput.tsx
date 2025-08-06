@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
-import { TextField, SxProps, Theme } from '@mui/material';
+import { TextField } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 
 interface TextInputProps {
   type?: 'text' | 'number' | 'email' | 'password';
