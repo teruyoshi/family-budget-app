@@ -2,108 +2,96 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ExpenseForm from '../../ExpenseForm';
 
 describe('Expense Flow Integration', () => {
-  test('支出登録の完全なフローが正常に動作する', async () => {
+  // Test helper function to setup ExpenseForm test environment
+  const setupExpenseForm = () => {
     const mockOnSubmit = jest.fn();
     
     render(<ExpenseForm onSubmit={mockOnSubmit} />);
-    
-    // フォーム要素の存在確認
     const input = screen.getByPlaceholderText('支出金額を入力');
     const submitButton = screen.getByRole('button', { name: '支出を登録' });
     
-    expect(input).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-    
-    // 金額入力
-    fireEvent.change(input, { target: { value: '1500' } });
-    expect(input).toHaveValue(1500);
-    
-    // フォーム送信
+    return {
+      mockOnSubmit,
+      input,
+      submitButton
+    };
+  };
+  test('支出登録の完全なフローが正常に動作する', async () => {
+    // Arrange
+    const { mockOnSubmit, input, submitButton } = setupExpenseForm();
+    const testAmount = 1500;
+
+    // Act
+    fireEvent.change(input, { target: { value: testAmount.toString() } });
     fireEvent.click(submitButton);
-    
-    // 送信処理が呼ばれることを確認
+
+    // Assert
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(1500);
+      expect(mockOnSubmit).toHaveBeenCalledWith(testAmount);
     });
     
-    // 送信後にフィールドがクリアされることを確認（MUI TextFieldの仕様上、valueが数値型として残る場合がある）
     await waitFor(() => {
       const updatedInput = screen.getByPlaceholderText('支出金額を入力');
-      // MUI TextFieldでは空値が数値型で0になる可能性があるため、どちらもチェック
       expect(updatedInput.value === '' || updatedInput.value === '0').toBe(true);
     }, { timeout: 3000 });
   });
 
   test('無効な入力での送信が防止される', async () => {
-    const mockOnSubmit = jest.fn();
-    
-    render(<ExpenseForm onSubmit={mockOnSubmit} />);
-    
-    const input = screen.getByPlaceholderText('支出金額を入力');
-    const submitButton = screen.getByRole('button', { name: '支出を登録' });
-    
-    // 空の状態で送信しようとする
+    // Arrange
+    const { mockOnSubmit, input, submitButton } = setupExpenseForm();
+
+    // Act - 空の状態で送信
     fireEvent.click(submitButton);
-    
-    // 送信処理が呼ばれないことを確認
+
+    // Assert
     expect(mockOnSubmit).not.toHaveBeenCalled();
-    
-    // 0を入力して送信しようとする
+
+    // Act - 0を入力して送信
     fireEvent.change(input, { target: { value: '0' } });
     fireEvent.click(submitButton);
-    
-    // 送信処理が呼ばれないことを確認
+
+    // Assert
     expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
   test('小数点を含む金額の登録が正常に動作する', async () => {
-    const mockOnSubmit = jest.fn();
-    
-    render(<ExpenseForm onSubmit={mockOnSubmit} />);
-    
-    const input = screen.getByPlaceholderText('支出金額を入力');
-    const submitButton = screen.getByRole('button', { name: '支出を登録' });
-    
-    // 小数点を含む金額を入力
-    fireEvent.change(input, { target: { value: '123.45' } });
+    // Arrange
+    const { mockOnSubmit, input, submitButton } = setupExpenseForm();
+    const testAmount = 123.45;
+
+    // Act
+    fireEvent.change(input, { target: { value: testAmount.toString() } });
     fireEvent.click(submitButton);
-    
-    // 送信処理が正しい値で呼ばれることを確認
+
+    // Assert
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(123.45);
+      expect(mockOnSubmit).toHaveBeenCalledWith(testAmount);
     });
   });
 
   test('連続する支出登録が正常に動作する', async () => {
-    const mockOnSubmit = jest.fn();
-    
-    render(<ExpenseForm onSubmit={mockOnSubmit} />);
-    
-    const input = screen.getByPlaceholderText('支出金額を入力');
-    const submitButton = screen.getByRole('button', { name: '支出を登録' });
-    
-    // 1回目の登録
-    fireEvent.change(input, { target: { value: '1000' } });
+    // Arrange
+    const { mockOnSubmit, input, submitButton } = setupExpenseForm();
+    const firstAmount = 1000;
+    const secondAmount = 2500;
+
+    // Act - 1回目の登録
+    fireEvent.change(input, { target: { value: firstAmount.toString() } });
     fireEvent.click(submitButton);
-    
+
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(1000);
+      expect(mockOnSubmit).toHaveBeenCalledWith(firstAmount);
     });
-    
-    // フィールドクリアの確認（簡略版）
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledTimes(1);
-    });
-    
-    // 2回目の登録
-    fireEvent.change(input, { target: { value: '2500' } });
+
+    // Act - 2回目の登録
+    fireEvent.change(input, { target: { value: secondAmount.toString() } });
     fireEvent.click(submitButton);
-    
+
+    // Assert
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(2500);
+      expect(mockOnSubmit).toHaveBeenCalledWith(secondAmount);
     });
     
-    // 合計2回呼ばれることを確認
     expect(mockOnSubmit).toHaveBeenCalledTimes(2);
   });
 });
