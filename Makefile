@@ -1,0 +1,107 @@
+# Makefile for Family Budget App
+
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate
+
+# デフォルトターゲット
+help:
+	@echo "Available commands:"
+	@echo "  make up         - 全サービス起動（バックグラウンド）"
+	@echo "  make down       - 全サービス停止"
+	@echo "  make build      - 全イメージをビルド"
+	@echo "  make rebuild    - 全イメージを再ビルド（キャッシュなし）"
+	@echo "  make logs       - 全サービスのログを表示"
+	@echo "  make logs-f     - ログをフォロー（-f付き）"
+	@echo "  make clean      - 停止・イメージ・ボリューム削除"
+	@echo "  make dev        - 開発環境起動（ログ表示付き）"
+	@echo "  make test       - テスト実行"
+	@echo ""
+	@echo "Individual services:"
+	@echo "  make backend    - バックエンドサービスのログ"
+	@echo "  make frontend   - フロントエンドサービスのログ"
+	@echo "  make db         - データベースサービスのログ"
+	@echo "  make migrate    - データベースマイグレーション実行"
+
+# 全サービス起動（バックグラウンド）
+up:
+	docker compose up -d
+
+# 全サービス停止
+down:
+	docker compose down
+
+# 全イメージをビルド
+build:
+	docker compose build
+
+# 全イメージを再ビルド（キャッシュなし）
+rebuild:
+	docker compose build --no-cache
+
+# 全サービスのログを表示
+logs:
+	docker compose logs
+
+# ログをフォロー（-f付き）
+logs-f:
+	docker compose logs -f
+
+# 開発環境起動（ログ表示付き）
+dev:
+	docker compose up
+
+# 完全なクリーンアップ
+clean:
+	docker compose down -v --rmi all
+	docker system prune -f
+
+# テスト実行
+test:
+	@echo "フロントエンドテストを実行中..."
+	docker compose exec frontend npm test
+	@echo "バックエンドテストを実行中..."
+	docker compose exec backend go test ./...
+
+# 個別サービスのログ
+backend:
+	docker compose logs backend
+
+frontend:
+	docker compose logs frontend
+
+db:
+	docker compose logs db
+
+# データベースマイグレーション
+migrate:
+	@echo "データベースマイグレーションを実行中..."
+	docker compose exec backend go run cmd/server/main.go migrate
+
+# サービス再起動
+restart:
+	docker compose restart
+
+# 特定のサービスを再起動
+restart-backend:
+	docker compose restart backend
+
+restart-frontend:
+	docker compose restart frontend
+
+restart-db:
+	docker compose restart db
+
+# サービス状態確認
+status:
+	docker compose ps
+
+# データベースに接続
+db-shell:
+	docker compose exec db mysql -u root -p family_budget
+
+# バックエンドサービスに接続
+backend-shell:
+	docker compose exec backend sh
+
+# フロントエンドサービスに接続
+frontend-shell:
+	docker compose exec frontend sh

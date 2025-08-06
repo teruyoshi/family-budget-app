@@ -22,6 +22,7 @@ family-budget-app/
 ├── .gitignore
 ├── .env.example          # 環境変数テンプレート
 ├── compose.yml           # Docker Compose設定
+├── Makefile              # Docker Compose管理コマンド
 ├── CLAUDE.md
 ├── README.md
 ├── .vscode/              # VS Code設定
@@ -66,7 +67,18 @@ family-budget-app/
 
 ## 開発コマンド
 
-### Docker Compose（推奨）
+### Makefile（推奨）
+```bash
+make up                       # 全サービス起動（バックグラウンド）
+make dev                      # 開発環境起動（ログ表示）
+make down                     # 全サービス停止
+make logs                     # 全サービスログ確認
+make frontend                 # フロントエンドログ確認
+make backend                  # バックエンドログ確認
+make help                     # 利用可能なコマンド一覧
+```
+
+### Docker Compose（直接実行）
 ```bash
 docker compose up -d          # 全サービス起動（バックグラウンド）
 docker compose up             # 全サービス起動（ログ表示）
@@ -185,7 +197,9 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 ```bash
 # リポジトリクローン後
 cp .env.example .env        # 環境変数設定
-docker compose up --build  # 全サービス起動
+make build && make up       # 全サービスビルド・起動
+# または
+docker compose up --build  # 直接実行
 ```
 
 ### 動作確認URL
