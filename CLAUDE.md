@@ -56,13 +56,11 @@ family-budget-app/
 │   │       └── cors.go   # CORS設定
 │   ├── go.mod           # Go モジュール定義
 │   └── go.sum           # 依存関係チェックサム
-├── docker/              # Dockerファイル
-│   ├── frontend/
-│   │   └── Dockerfile   # React用コンテナ
-│   └── backend/
-│       └── Dockerfile   # Go用コンテナ
-└── db/                  # データベース関連
-    └── init.sql         # MySQL初期スキーマ
+└── docker/              # Dockerファイル
+    ├── frontend/
+    │   └── Dockerfile   # React用コンテナ
+    └── backend/
+        └── Dockerfile   # Go用コンテナ
 ```
 
 ## 開発コマンド
@@ -133,8 +131,8 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 - **Go + Gin + GORM**: 高性能REST APIサーバー
 - **MySQL接続**: GORM経由での型安全なデータベース操作
 - **データモデル**: User, Category, Transaction, Budget定義済み
-- **自動マイグレーション**: 起動時にスキーマ自動作成
-- **初期データシード**: デフォルトカテゴリ自動投入
+- **GORM自動マイグレーション**: 起動時にモデルからスキーマ自動生成
+- **初期データシード**: バックエンドコードからデフォルトカテゴリ自動投入
 - **CORS対応**: フロントエンド連携設定完了
 
 ### ✅ 実装済みAPI
@@ -147,9 +145,10 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 
 ### ✅ インフラ・DevOps
 - **Docker Compose**: フルスタック開発環境（frontend, backend, db, phpMyAdmin）
+- **Makefile管理**: Docker Composeコマンドの簡単実行
 - **マルチステージビルド**: 本番用最適化Dockerfileによるセキュアなコンテナ
-- **phpMyAdmin**: データベース管理UI
-- **環境変数管理**: .env.example テンプレート
+- **phpMyAdmin**: データベース管理UI（ポート8081）
+- **GORM運用**: SQLファイル不要、コードベースでのスキーマ管理
 
 ## データベーススキーマ
 
@@ -159,7 +158,7 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 - **transactions**: 取引記録 (id, user_id, category_id, amount, description, date, timestamps)  
 - **budgets**: 月次予算 (id, user_id, category_id, amount, month, timestamps)
 
-### 初期データ
+### 初期データ（GORM自動シード）
 - **支出カテゴリ**: 食費, 交通費, 娯楽費, 光熱費, 通信費, 医療費
 - **収入カテゴリ**: 給与, 副収入
 
