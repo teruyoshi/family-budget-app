@@ -1,10 +1,7 @@
-import { useState } from 'react';
-import { Container, Paper, Typography, Button, Box } from '@mui/material';
+import { Container, Paper, Typography, Box } from '@mui/material';
 import ExpenseForm from './features/expenses/components/ExpenseForm';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   const handleExpenseSubmit = (amount: number) => {
     console.log('支出登録:', amount);
   };
@@ -42,19 +39,7 @@ function App() {
           家計簿アプリ
         </Typography>
         
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <ExpenseForm onSubmit={handleExpenseSubmit} />
-          
-          <Box sx={{ textAlign: 'center' }}>
-            <Button
-              variant="contained"
-              onClick={() => setCount((count) => count + 1)}
-              sx={{ fontWeight: 'bold' }}
-            >
-              count is {count}
-            </Button>
-          </Box>
-        </Box>
+        <ExpenseForm onSubmit={handleExpenseSubmit} />
       </Paper>
     </Container>
   );
