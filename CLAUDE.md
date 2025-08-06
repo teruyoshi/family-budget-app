@@ -12,7 +12,7 @@
 - **スタイリング**: Tailwind CSS + PostCSS
 - **開発ツール**: ESLint, Prettier, Jest
 - **バックエンド**: Go 1.21 + Gin + GORM
-- **データベース**: PostgreSQL 15
+- **データベース**: MySQL 8.0
 - **インフラ**: Docker + Docker Compose
 
 ## プロジェクト構造
@@ -26,7 +26,7 @@ family-budget-app/
 ├── README.md
 ├── .vscode/              # VS Code設定
 │   └── settings.json     # Prettier自動フォーマット設定
-├── client/               # React フロントエンド
+├── frontend/             # React フロントエンド
 │   ├── src/
 │   │   ├── App.tsx       # メインアプリケーション
 │   │   ├── main.tsx      # エントリーポイント
@@ -56,12 +56,12 @@ family-budget-app/
 │   ├── go.mod           # Go モジュール定義
 │   └── go.sum           # 依存関係チェックサム
 ├── docker/              # Dockerファイル
-│   ├── client/
+│   ├── frontend/
 │   │   └── Dockerfile   # React用コンテナ
 │   └── backend/
 │       └── Dockerfile   # Go用コンテナ
 └── db/                  # データベース関連
-    └── init.sql         # PostgreSQL初期スキーマ
+    └── init.sql         # MySQL初期スキーマ
 ```
 
 ## 開発コマンド
@@ -71,14 +71,14 @@ family-budget-app/
 docker compose up -d          # 全サービス起動（バックグラウンド）
 docker compose up             # 全サービス起動（ログ表示）
 docker compose down           # 全サービス停止
-docker compose logs client    # フロントエンドログ確認
+docker compose logs frontend  # フロントエンドログ確認
 docker compose logs backend   # バックエンドログ確認
 ```
 
 ### 個別開発
 #### フロントエンド
 ```bash
-cd client
+cd frontend
 npm install          # 依存関係のインストール
 npm run dev          # 開発サーバー起動 (http://localhost:5173)
 npm run build        # プロダクションビルド
@@ -98,15 +98,15 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 ## Docker構成
 
 ### サービス一覧
-- **client**: React開発サーバー (ポート5173)
+- **frontend**: React開発サーバー (ポート5173)
 - **backend**: Go API (ポート8080) 
-- **db**: PostgreSQL データベース (ポート5432)
-- **pgadmin**: データベース管理UI (ポート5050)
+- **db**: MySQL データベース (ポート3306)
+- **phpmyadmin**: データベース管理UI (ポート8081)
 
 ### アクセスURL
 - フロントエンド: http://localhost:5173
 - バックエンドAPI: http://localhost:8080
-- pgAdmin: http://localhost:5050 (admin@example.com / admin)
+- phpMyAdmin: http://localhost:8081 (root / root)
 
 ## 実装済み機能
 
@@ -119,7 +119,7 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 
 ### ✅ バックエンドAPI基盤
 - **Go + Gin + GORM**: 高性能REST APIサーバー
-- **PostgreSQL接続**: GORM経由での型安全なデータベース操作
+- **MySQL接続**: GORM経由での型安全なデータベース操作
 - **データモデル**: User, Category, Transaction, Budget定義済み
 - **自動マイグレーション**: 起動時にスキーマ自動作成
 - **初期データシード**: デフォルトカテゴリ自動投入
@@ -134,9 +134,9 @@ go build -o bin/server cmd/server/main.go  # バイナリビルド
 - `DELETE /api/categories/:id` - カテゴリ削除
 
 ### ✅ インフラ・DevOps
-- **Docker Compose**: フルスタック開発環境（client, backend, db, pgAdmin）
+- **Docker Compose**: フルスタック開発環境（frontend, backend, db, phpMyAdmin）
 - **マルチステージビルド**: 本番用最適化Dockerfileによるセキュアなコンテナ
-- **pgAdmin**: データベース管理UI
+- **phpMyAdmin**: データベース管理UI
 - **環境変数管理**: .env.example テンプレート
 
 ## データベーススキーマ
@@ -192,4 +192,4 @@ docker compose up --build  # 全サービス起動
 - **フロントエンド**: http://localhost:5173
 - **バックエンドAPI**: http://localhost:8080
 - **API健康状態**: http://localhost:8080/api/health
-- **pgAdmin**: http://localhost:5050 (admin@example.com / admin)
+- **phpMyAdmin**: http://localhost:8081 (root / root)

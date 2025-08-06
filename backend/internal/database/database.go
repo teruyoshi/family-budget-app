@@ -8,7 +8,7 @@ import (
 
 	"family-budget-server/internal/models"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -27,23 +27,23 @@ func Connect() error {
 		host = "localhost"
 	}
 	if port == "" {
-		port = "5432"
+		port = "3306"
 	}
 	if dbname == "" {
 		dbname = "family_budget"
 	}
 	if user == "" {
-		user = "postgres"
+		user = "app_user"
 	}
 	if password == "" {
-		password = "postgres"
+		password = "app_password"
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable TimeZone=Asia/Tokyo",
-		host, port, user, password, dbname)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Asia%%2FTokyo",
+		user, password, host, port, dbname)
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 		NowFunc: func() time.Time {
 			return time.Now().In(time.FixedZone("Asia/Tokyo", 9*60*60))
