@@ -75,7 +75,7 @@ function App() {
             mb: 3,
           }}
         >
-          家計簿アプリ（デモ）
+          家計簿アプリ
         </Typography>
 
         <Alert severity="info" sx={{ mb: 3 }}>
