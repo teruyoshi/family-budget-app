@@ -62,18 +62,33 @@ make backend-shell        # バックエンドコンテナ接続
 - MUIコンポーネント優先
 - sx propsスタイリング
 - type-only imports最適化
+- `@/`パスエイリアスでsrcディレクトリ参照
+- モジュールindex.tsでバレルエクスポート
 
 ## 📁 重要なファイル構造
 
 ```
 frontend/src/
 ├── components/common/        # 汎用コンポーネント
-│   └── TextInput.tsx
-├── features/expenses/        # 支出管理フィーチャー
-│   └── components/
-│       ├── ExpenseForm.tsx
-│       ├── ExpenseInput.tsx
-│       └── __tests__/        # テスト
+│   ├── index.ts             # バレルエクスポート
+│   ├── AppTitle.tsx         # アプリタイトル
+│   ├── AmountText.tsx       # 金額表示
+│   ├── TextInput.tsx        # テキスト入力
+│   └── TextLabel.tsx        # ラベル表示
+├── features/
+│   ├── balance/             # 残金表示機能
+│   │   ├── index.ts
+│   │   └── components/BalanceDisplay.tsx
+│   └── expenses/            # 支出管理機能
+│       ├── index.ts
+│       └── components/
+│           ├── ExpenseForm.tsx
+│           ├── ExpenseInput.tsx
+│           ├── TotalExpenseDisplay.tsx
+│           └── __tests__/
+├── hooks/
+│   ├── index.ts
+│   └── useExpenseManager.ts  # 支出管理フック
 └── App.tsx                   # メインアプリ
 
 backend/internal/

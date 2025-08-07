@@ -7,6 +7,7 @@ import {
   ListItemText,
   Chip,
 } from '@mui/material'
+import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { useExpenseManager } from '@/hooks'
@@ -49,18 +50,7 @@ function App() {
           mb: 4,
         }}
       >
-        <Typography
-          variant="h3"
-          component="h1"
-          gutterBottom
-          sx={{
-            textAlign: 'center',
-            fontWeight: 'bold',
-            mb: 3,
-          }}
-        >
-          家計簿アプリ
-        </Typography>
+        <AppTitle />
 
         <BalanceDisplay balance={balance} />
 
