@@ -7,10 +7,9 @@ import {
   ListItemText,
   Chip,
 } from '@mui/material'
-import ExpenseForm from './features/expenses/components/ExpenseForm'
-import BalanceDisplay from './features/balance/components/BalanceDisplay'
-import TotalExpenseDisplay from './features/expenses/components/TotalExpenseDisplay'
-import { useExpenseManager } from './hooks/useExpenseManager'
+import { BalanceDisplay } from '@/features/balance'
+import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
+import { useExpenseManager } from '@/hooks'
 
 /**
  * メインアプリケーションコンポーネント
