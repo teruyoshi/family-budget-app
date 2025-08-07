@@ -61,18 +61,19 @@ describe('Expense Flow Integration', () => {
     expect(mockOnSubmit).not.toHaveBeenCalled()
   })
 
-  test('小数点を含む金額の登録が正常に動作する', async () => {
+  test('数字が自動的にフィルタされて登録される', async () => {
     // Arrange
     const { mockOnSubmit, input, submitButton } = setupExpenseForm()
-    const testAmount = 123.45
+    const inputValue = '123abc45'
+    const expectedAmount = 12345 // 数字部分のみ抽出
 
     // Act
-    fireEvent.change(input, { target: { value: testAmount.toString() } })
+    fireEvent.change(input, { target: { value: inputValue } })
     fireEvent.click(submitButton)
 
     // Assert
     await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(testAmount)
+      expect(mockOnSubmit).toHaveBeenCalledWith(expectedAmount)
     })
   })
 
