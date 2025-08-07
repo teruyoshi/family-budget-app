@@ -86,6 +86,10 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
         sx={{
           '& .MuiInputBase-input': {
             textAlign: 'right',
+            '&::placeholder': {
+              textAlign: 'center',
+              opacity: 0.6,
+            },
           },
           ...sx,
         }}
