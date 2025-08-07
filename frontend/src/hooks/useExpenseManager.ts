@@ -17,7 +17,7 @@ export interface Expense {
  * App.tsxから分離し、再利用可能な形で支出管理機能をカプセル化しています。
  * 
  * @param initialBalance 初期残金（デフォルト: 10000）
- * @returns 支出データ、残金、支出登録関数、合計支出額を含むオブジェクト
+ * @returns [値オブジェクト, 操作関数オブジェクト] の形式で返す
  */
 export function useExpenseManager(initialBalance: number = 10000) {
   const [expenses, setExpenses] = useState<Expense[]>([])
@@ -42,10 +42,15 @@ export function useExpenseManager(initialBalance: number = 10000) {
   // 合計支出額の計算（リアルタイム更新）
   const totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0)
 
-  return {
+  const values = {
     expenses,
     balance,
-    addExpense,
     totalAmount,
   }
+
+  const actions = {
+    addExpense,
+  }
+
+  return [values, actions] as const
 }

@@ -30,7 +30,7 @@ import { useExpenseManager } from './hooks/useExpenseManager'
  * - Material Design: 一貫したUI/UX
  */
 function App() {
-  const { expenses, balance, addExpense, totalAmount } = useExpenseManager(10000)
+  const [{ expenses, balance, totalAmount }, { addExpense }] = useExpenseManager(10000)
 
   return (
     <Container
