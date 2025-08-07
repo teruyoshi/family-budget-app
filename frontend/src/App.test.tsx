@@ -13,7 +13,7 @@ describe('App', () => {
     render(<App />)
     const balanceLabel = screen.getByText('残金：')
     const balanceContainer = balanceLabel.parentElement
-    expect(balanceContainer).toHaveTextContent('残金：10000')
+    expect(balanceContainer).toHaveTextContent('残金：¥10,000')
   })
 
   test('支出を5000で登録すると残金：5000が表示されている', async () => {
@@ -28,6 +28,6 @@ describe('App', () => {
     
     const balanceLabel = screen.getByText('残金：')
     const balanceContainer = balanceLabel.parentElement
-    expect(balanceContainer).toHaveTextContent('残金：5000')
+    expect(balanceContainer).toHaveTextContent('残金：¥5,000')
   })
 })

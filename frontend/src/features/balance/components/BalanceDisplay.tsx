@@ -23,9 +23,7 @@ function BalanceDisplay({ balance }: BalanceDisplayProps) {
       }}
     >
       <TextLabel text="残金：" variant="h5" sx={{ display: 'inline' }} />
-      <AmountText variant="h5" sx={{ display: 'inline' }}>
-        {balance}
-      </AmountText>
+      <AmountText amount={balance} variant="h5" sx={{ display: 'inline' }} />
     </Box>
   )
 }
