@@ -5,29 +5,36 @@ import {
 import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay, ExpenseHistory } from '@/features/expenses'
-import { useExpenseManager } from '@/hooks'
+import { IncomeForm, TotalIncomeDisplay, IncomeHistory } from '@/features/income'
+import { useExpenseManager, useIncomeManager } from '@/hooks'
 
 /**
  * メインアプリケーションコンポーネント
  *
- * 家計簿アプリの中央ハブとして機能し、支出の登録・表示・集計を統合管理します。
+ * 家計簿アプリの中央ハブとして機能し、収入・支出の登録・表示・集計を統合管理します。
  * GitHub Pages デモ版として、インメモリストレージを使用しています。
  *
  * 主な機能:
- * - 支出データの状態管理（useState）
- * - 新規支出の追加処理
- * - 支出履歴の表示（降順ソート）
- * - 合計支出額の自動計算
+ * - 収入・支出データの状態管理（useState）
+ * - 新規収入・支出の追加処理
+ * - 収入・支出履歴の表示（降順ソート）
+ * - 合計収入・支出額の自動計算
+ * - 残高表示の自動更新
  * - レスポンシブデザイン（MUI Container + Paper）
  *
  * アーキテクチャ:
  * - Container Component: アプリケーション状態を管理
- * - Feature-based Structure: expenses機能を統合
+ * - Feature-based Structure: income/expenses機能を統合
  * - Material Design: 一貫したUI/UX
  */
 function App() {
-  const [{ expenses, balance, totalAmount }, { addExpense }] =
+  const [{ expenses, balance: expenseBalance, totalAmount: totalExpenseAmount }, { addExpense }] =
     useExpenseManager(10000)
+  const [{ incomes, balance: incomeBalance, totalAmount: totalIncomeAmount }, { addIncome }] =
+    useIncomeManager(0)
+
+  // 実際の残高は収入から支出を引いたもの
+  const actualBalance = 10000 + totalIncomeAmount - totalExpenseAmount
 
   return (
     <Container
@@ -47,12 +54,18 @@ function App() {
       >
         <AppTitle />
 
-        <BalanceDisplay balance={balance} />
+        <BalanceDisplay balance={actualBalance} />
+
+        <IncomeForm onSubmit={addIncome} />
+
+        {totalIncomeAmount > 0 && <TotalIncomeDisplay totalAmount={totalIncomeAmount} />}
 
         <ExpenseForm onSubmit={addExpense} />
 
-        {totalAmount > 0 && <TotalExpenseDisplay totalAmount={totalAmount} />}
+        {totalExpenseAmount > 0 && <TotalExpenseDisplay totalAmount={totalExpenseAmount} />}
       </Paper>
+
+      <IncomeHistory incomes={incomes} />
 
       <ExpenseHistory expenses={expenses} />
     </Container>
