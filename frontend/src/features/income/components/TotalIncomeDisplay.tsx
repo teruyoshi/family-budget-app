@@ -23,7 +23,7 @@ function TotalIncomeDisplay({ totalAmount }: TotalIncomeDisplayProps) {
       }}
     >
       <TextLabel variant="h6" sx={{ display: 'inline' }}>
-        合計収入：
+        合計収入
       </TextLabel>
       <AmountText
         amount={totalAmount}

@@ -1,11 +1,16 @@
-import {
-  Container,
-  Paper,
-} from '@mui/material'
+import { Container, Paper, Grid, Box } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
-import { ExpenseForm, TotalExpenseDisplay, ExpenseHistory } from '@/features/expenses'
-import { IncomeForm, TotalIncomeDisplay, IncomeHistory } from '@/features/income'
+import {
+  ExpenseForm,
+  TotalExpenseDisplay,
+  ExpenseHistory,
+} from '@/features/expenses'
+import {
+  IncomeForm,
+  TotalIncomeDisplay,
+  IncomeHistory,
+} from '@/features/income'
 import { useExpenseManager, useIncomeManager } from '@/hooks'
 
 /**
@@ -28,9 +33,9 @@ import { useExpenseManager, useIncomeManager } from '@/hooks'
  * - Material Design: 一貫したUI/UX
  */
 function App() {
-  const [{ expenses, balance: expenseBalance, totalAmount: totalExpenseAmount }, { addExpense }] =
+  const [{ expenses, totalAmount: totalExpenseAmount }, { addExpense }] =
     useExpenseManager(10000)
-  const [{ incomes, balance: incomeBalance, totalAmount: totalIncomeAmount }, { addIncome }] =
+  const [{ incomes, totalAmount: totalIncomeAmount }, { addIncome }] =
     useIncomeManager(0)
 
   // 実際の残高は収入から支出を引いたもの
@@ -56,18 +61,34 @@ function App() {
 
         <BalanceDisplay balance={actualBalance} />
 
-        <IncomeForm onSubmit={addIncome} />
-
-        {totalIncomeAmount > 0 && <TotalIncomeDisplay totalAmount={totalIncomeAmount} />}
-
-        <ExpenseForm onSubmit={addExpense} />
-
-        {totalExpenseAmount > 0 && <TotalExpenseDisplay totalAmount={totalExpenseAmount} />}
+        <Grid container spacing={3} sx={{ mt: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box sx={{ pr: { md: 2 } }}>
+              <ExpenseForm onSubmit={addExpense} />
+              {totalExpenseAmount > 0 && (
+                <TotalExpenseDisplay totalAmount={totalExpenseAmount} />
+              )}
+            </Box>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box sx={{ pl: { md: 2 } }}>
+              <IncomeForm onSubmit={addIncome} />
+              {totalIncomeAmount > 0 && (
+                <TotalIncomeDisplay totalAmount={totalIncomeAmount} />
+              )}
+            </Box>
+          </Grid>
+        </Grid>
       </Paper>
 
-      <IncomeHistory incomes={incomes} />
-
-      <ExpenseHistory expenses={expenses} />
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <ExpenseHistory expenses={expenses} />
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <IncomeHistory incomes={incomes} />
+        </Grid>
+      </Grid>
     </Container>
   )
 }
