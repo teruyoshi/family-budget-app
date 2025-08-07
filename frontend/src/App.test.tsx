@@ -41,7 +41,9 @@ describe('App', () => {
     await user.type(amountInput, '3000')
     await user.click(submitButton)
     
-    expect(screen.getByText('合計支出: ¥3,000')).toBeInTheDocument()
+    const totalLabel = screen.getByText('合計支出:')
+    const totalContainer = totalLabel.parentElement
+    expect(totalContainer).toHaveTextContent('合計支出: ¥3,000')
   })
 
   test('複数回支出登録すると合計支出が正しく計算される', async () => {
@@ -60,6 +62,8 @@ describe('App', () => {
     await user.type(amountInput, '1500')
     await user.click(submitButton)
     
-    expect(screen.getByText('合計支出: ¥3,500')).toBeInTheDocument()
+    const totalLabel = screen.getByText('合計支出:')
+    const totalContainer = totalLabel.parentElement
+    expect(totalContainer).toHaveTextContent('合計支出: ¥3,500')
   })
 })
