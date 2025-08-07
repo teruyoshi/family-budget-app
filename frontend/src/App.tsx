@@ -4,13 +4,12 @@ import { BalanceDisplay } from '@/features/balance'
 import {
   ExpenseForm,
   TotalExpenseDisplay,
-  ExpenseHistory,
 } from '@/features/expenses'
 import {
   IncomeForm,
   TotalIncomeDisplay,
-  IncomeHistory,
 } from '@/features/income'
+import { ExpenseHistory, IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
 
 /**
