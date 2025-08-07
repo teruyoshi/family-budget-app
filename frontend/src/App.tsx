@@ -34,12 +34,12 @@ import { useExpenseManager, useIncomeManager } from '@/hooks'
  */
 function App() {
   const [{ expenses, totalAmount: totalExpenseAmount }, { addExpense }] =
-    useExpenseManager(10000)
+    useExpenseManager(0)
   const [{ incomes, totalAmount: totalIncomeAmount }, { addIncome }] =
     useIncomeManager(0)
 
   // 実際の残高は収入から支出を引いたもの
-  const actualBalance = 10000 + totalIncomeAmount - totalExpenseAmount
+  const actualBalance = totalIncomeAmount - totalExpenseAmount
 
   return (
     <Container
