@@ -21,7 +21,7 @@ describe('App', () => {
     render(<App />)
     
     const amountInput = screen.getByPlaceholderText('支出金額を入力')
-    const submitButton = screen.getByRole('button', { name: '登録' })
+    const submitButton = screen.getByRole('button', { name: '支出を登録' })
     
     await user.type(amountInput, '5000')
     await user.click(submitButton)

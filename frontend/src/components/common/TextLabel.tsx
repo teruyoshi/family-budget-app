@@ -1,4 +1,4 @@
-import { Typography, TypographyProps } from '@mui/material'
+import { Typography, type TypographyProps } from '@mui/material'
 
 interface TextLabelProps {
   text: string

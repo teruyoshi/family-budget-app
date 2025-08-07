@@ -1,4 +1,4 @@
-import { Typography, TypographyProps } from '@mui/material'
+import { Typography, type TypographyProps } from '@mui/material'
 import type { ReactNode } from 'react'
 
 interface AmountTextProps {
