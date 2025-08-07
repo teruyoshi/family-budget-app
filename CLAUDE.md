@@ -36,17 +36,6 @@ make frontend-shell       # フロントエンドコンテナ接続
 make backend-shell        # バックエンドコンテナ接続
 ```
 
-### TDD開発フロー
-1. **Red**: テスト作成→失敗確認 (`make test-frontend`)
-2. **Green**: 最小実装→テスト通過 (`make test-frontend`)  
-3. **Refactor**: リファクタリング (`make test-frontend`)
-
-### テスト配置戦略
-- **co-located**: シンプル（`*.test.tsx`）
-- **__tests__/**: 複雑コンポーネント単体テスト
-- **integration/**: フィーチャー統合テスト
-- **MUI対応**: 数値型フィールド、非同期状態管理
-
 ### 作業完了基準
 - **🛑 重要: 1つのTodoタスク完了→必ず停止**
 - 次の指示を待つ
@@ -57,48 +46,49 @@ make backend-shell        # バックエンドコンテナ接続
 - バックエンドAPI: http://localhost:8080  
 - phpMyAdmin: http://localhost:8081 (root/root)
 
-### コード規約
-- TypeScript strict mode
-- MUIコンポーネント優先
-- sx propsスタイリング
-- type-only imports最適化
-- `@/`パスエイリアスでsrcディレクトリ参照
-- モジュールindex.tsでバレルエクスポート
-
-## 📁 重要なファイル構造
+## 📁 現在のアーキテクチャ
 
 ```
 frontend/src/
 ├── components/common/        # 汎用コンポーネント
-│   ├── index.ts             # バレルエクスポート
-│   ├── AppTitle.tsx         # アプリタイトル
+│   ├── AmountInput.tsx      # 金額入力（¥フォーマット対応）
 │   ├── AmountText.tsx       # 金額表示
+│   ├── AppTitle.tsx         # アプリタイトル
 │   ├── TextInput.tsx        # テキスト入力
 │   └── TextLabel.tsx        # ラベル表示
 ├── features/
-│   ├── balance/             # 残金表示機能
-│   │   ├── index.ts
+│   ├── balance/             # 残高表示機能
 │   │   └── components/BalanceDisplay.tsx
-│   └── expenses/            # 支出管理機能
-│       ├── index.ts
-│       └── components/
-│           ├── ExpenseForm.tsx
-│           ├── ExpenseInput.tsx
-│           ├── TotalExpenseDisplay.tsx
-│           └── __tests__/
+│   ├── expenses/            # 支出管理機能
+│   │   └── components/
+│   │       ├── ExpenseForm.tsx
+│   │       ├── ExpenseInput.tsx
+│   │       └── TotalExpenseDisplay.tsx
+│   ├── income/              # 収入管理機能
+│   │   └── components/
+│   │       ├── IncomeForm.tsx
+│   │       ├── IncomeInput.tsx
+│   │       └── TotalIncomeDisplay.tsx
+│   └── history/             # 履歴表示機能
+│       ├── ExpenseHistory.tsx
+│       ├── IncomeHistory.tsx
+│       └── common/          # 履歴共通コンポーネント
+│           ├── HistoryItem.tsx
+│           └── HistoryList.tsx    # 日付グループ化対応
 ├── hooks/
-│   ├── index.ts
-│   └── useExpenseManager.ts  # 支出管理フック
-└── App.tsx                   # メインアプリ
-
-backend/internal/
-├── models/models.go          # データモデル
-├── handlers/                 # APIハンドラー
-└── database/database.go      # DB操作
+│   └── useBudgetManager.ts  # 統合家計簿管理フック
+└── App.tsx                  # メインアプリ
 ```
 
-## 🔧 最新の設定情報
-- **プロジェクト名**: FamilyBudgetApp (v0.1.0)
-- **テスト状況**: 19テスト、5テストスイート全通過
-- **Prettier**: セミコロンなし設定
-- **ESLint**: テストファイル対応済み
+## 🔧 現在の設定情報
+- **プロジェクト名**: FamilyBudgetApp (v0.3.0)
+- **テスト状況**: 43テスト、10テストスイート全通過
+- **主要機能**: 支出・収入登録、残高計算、日付グループ化履歴表示
+- **UI改善**: 金額¥表示、右寄せ入力、日付セクション分け
+
+## 🎨 コード規約
+- TypeScript strict mode
+- MUIコンポーネント優先、sx propsスタイリング
+- `@/`パスエイリアスでsrcディレクトリ参照
+- バレルエクスポート（index.ts）で再利用性向上
+- 単体テスト重視（結合テスト最小化で高速化）
