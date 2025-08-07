@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Container, Paper, Typography, List, ListItem, ListItemText, Chip, Alert } from '@mui/material'
 import ExpenseForm from './features/expenses/components/ExpenseForm'
+import BalanceDisplay from './features/balance/components/BalanceDisplay'
 
 /**
  * 支出データの型定義
@@ -79,17 +80,7 @@ function App() {
           家計簿アプリ
         </Typography>
 
-        <Typography
-          variant="h5"
-          sx={{
-            textAlign: 'center',
-            color: 'success.main',
-            fontWeight: 'bold',
-            mb: 3,
-          }}
-        >
-          残金：{balance}
-        </Typography>
+        <BalanceDisplay balance={balance} />
 
         <Alert severity="info" sx={{ mb: 3 }}>
           GitHub Pagesデモ版です。データはブラウザのメモリに保存されます。
