@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   Container,
   Paper,
@@ -10,16 +9,7 @@ import {
 } from '@mui/material'
 import ExpenseForm from './features/expenses/components/ExpenseForm'
 import BalanceDisplay from './features/balance/components/BalanceDisplay'
-
-/**
- * 支出データの型定義
- * アプリケーション全体で使用される支出レコードの構造を定義
- */
-interface Expense {
-  id: string // 一意識別子（タイムスタンプベース）
-  amount: number // 支出金額（正の数値）
-  timestamp: string // 登録日時（日本時間フォーマット）
-}
+import { useExpenseManager } from './hooks/useExpenseManager'
 
 /**
  * メインアプリケーションコンポーネント
@@ -40,25 +30,7 @@ interface Expense {
  * - Material Design: 一貫したUI/UX
  */
 function App() {
-  const [expenses, setExpenses] = useState<Expense[]>([])
-  const [balance, setBalance] = useState<number>(10000)
-
-  /**
-   * 新規支出登録ハンドラー
-   * ExpenseFormから呼び出され、新しい支出をリストの先頭に追加します
-   */
-  const handleExpenseSubmit = (amount: number) => {
-    const newExpense: Expense = {
-      id: Date.now().toString(),
-      amount,
-      timestamp: new Date().toLocaleString('ja-JP'),
-    }
-    setExpenses((prev) => [newExpense, ...prev]) // 最新を先頭に表示
-    setBalance((prev) => prev - amount) // 残金から支出分を減らす
-  }
-
-  // 合計支出額の計算（リアルタイム更新）
-  const totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0)
+  const { expenses, balance, addExpense, totalAmount } = useExpenseManager(10000)
 
   return (
     <Container
@@ -91,7 +63,7 @@ function App() {
 
         <BalanceDisplay balance={balance} />
 
-        <ExpenseForm onSubmit={handleExpenseSubmit} />
+        <ExpenseForm onSubmit={addExpense} />
 
         {totalAmount > 0 && (
           <Typography
