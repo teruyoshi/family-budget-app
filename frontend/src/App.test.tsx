@@ -30,4 +30,36 @@ describe('App', () => {
     const balanceContainer = balanceLabel.parentElement
     expect(balanceContainer).toHaveTextContent('残金：¥5,000')
   })
+
+  test('支出を3000で登録すると合計支出：¥3,000が表示されている', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    
+    const amountInput = screen.getByPlaceholderText('支出金額を入力')
+    const submitButton = screen.getByRole('button', { name: '支出を登録' })
+    
+    await user.type(amountInput, '3000')
+    await user.click(submitButton)
+    
+    expect(screen.getByText('合計支出: ¥3,000')).toBeInTheDocument()
+  })
+
+  test('複数回支出登録すると合計支出が正しく計算される', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    
+    const amountInput = screen.getByPlaceholderText('支出金額を入力')
+    const submitButton = screen.getByRole('button', { name: '支出を登録' })
+    
+    // 1回目の支出登録
+    await user.type(amountInput, '2000')
+    await user.click(submitButton)
+    
+    // 2回目の支出登録
+    await user.clear(amountInput)
+    await user.type(amountInput, '1500')
+    await user.click(submitButton)
+    
+    expect(screen.getByText('合計支出: ¥3,500')).toBeInTheDocument()
+  })
 })
