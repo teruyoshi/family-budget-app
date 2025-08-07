@@ -46,7 +46,7 @@ export function IncomeHistory({ incomes }: IncomeHistoryProps) {
             }}
           >
             <ListItemText
-              primary={<AmountText variant="h6">{income.amount}</AmountText>}
+              primary={<AmountText amount={income.amount} variant="h6" />}
               secondary={income.timestamp}
             />
             <Chip label="収入" color="success" size="small" />

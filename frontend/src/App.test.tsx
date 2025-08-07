@@ -9,14 +9,14 @@ describe('App', () => {
     expect(heading).toBeInTheDocument()
   })
 
-  test('初期残金10000円が表示される', () => {
+  test('初期残高10000円が表示される', () => {
     render(<App />)
-    const balanceLabel = screen.getByText('残金：')
+    const balanceLabel = screen.getByText('残高：')
     const balanceContainer = balanceLabel.parentElement
-    expect(balanceContainer).toHaveTextContent('残金：¥10,000')
+    expect(balanceContainer).toHaveTextContent('残高：¥10,000')
   })
 
-  test('支出を5000で登録すると残金：5000が表示されている', async () => {
+  test('支出を5000で登録すると残高：5000が表示されている', async () => {
     const user = userEvent.setup()
     render(<App />)
 
@@ -26,9 +26,9 @@ describe('App', () => {
     await user.type(amountInput, '5000')
     await user.click(submitButton)
 
-    const balanceLabel = screen.getByText('残金：')
+    const balanceLabel = screen.getByText('残高：')
     const balanceContainer = balanceLabel.parentElement
-    expect(balanceContainer).toHaveTextContent('残金：¥5,000')
+    expect(balanceContainer).toHaveTextContent('残高：¥5,000')
   })
 
   test('支出を3000で登録すると合計支出：¥3,000が表示されている', async () => {

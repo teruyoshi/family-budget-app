@@ -46,7 +46,7 @@ export function ExpenseHistory({ expenses }: ExpenseHistoryProps) {
             }}
           >
             <ListItemText
-              primary={<AmountText variant="h6">{expense.amount}</AmountText>}
+              primary={<AmountText amount={expense.amount} variant="h6" />}
               secondary={expense.timestamp}
             />
             <Chip label="支出" color="warning" size="small" />
