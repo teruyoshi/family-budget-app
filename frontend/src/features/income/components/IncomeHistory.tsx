@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemText,
   Chip,
+  Box,
 } from '@mui/material'
 import { AmountText } from '@/components/common'
 import type { Expense } from '@/hooks'
@@ -43,13 +44,27 @@ export function IncomeHistory({ incomes }: IncomeHistoryProps) {
               borderColor: 'divider',
               borderRadius: 1,
               mb: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
             <ListItemText
-              primary={<AmountText amount={income.amount} variant="h6" />}
-              secondary={income.timestamp}
+              primary={<Chip label="収入" color="success" size="small" />}
             />
-            <Chip label="収入" color="success" size="small" />
+            <Box sx={{ textAlign: 'right' }}>
+              <AmountText 
+                amount={income.amount} 
+                variant="h6" 
+                sx={{ color: 'success.main', fontWeight: 'bold' }}
+              />
+              <Typography 
+                variant="caption" 
+                sx={{ display: 'block', color: 'text.secondary', mt: 0.5 }}
+              >
+                {income.timestamp}
+              </Typography>
+            </Box>
           </ListItem>
         ))}
       </List>

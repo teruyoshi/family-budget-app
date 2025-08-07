@@ -39,10 +39,18 @@ export function useBudgetManager() {
    * @param amount 支出金額
    */
   const addExpense = (amount: number) => {
+    const now = new Date()
+    const dateStr = now.toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit', 
+      day: '2-digit',
+      weekday: 'short'
+    }).replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
+    
     const newExpense: Expense = {
       id: Date.now().toString(),
       amount,
-      timestamp: new Date().toLocaleString('ja-JP'),
+      timestamp: dateStr,
     }
     setExpenses((prev) => [newExpense, ...prev]) // 最新を先頭に表示
   }
@@ -54,10 +62,18 @@ export function useBudgetManager() {
    * @param amount 収入金額
    */
   const addIncome = (amount: number) => {
+    const now = new Date()
+    const dateStr = now.toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: '2-digit', 
+      day: '2-digit',
+      weekday: 'short'
+    }).replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
+    
     const newIncome: Income = {
       id: Date.now().toString(),
       amount,
-      timestamp: new Date().toLocaleString('ja-JP'),
+      timestamp: dateStr,
     }
     setIncomes((prev) => [newIncome, ...prev]) // 最新を先頭に表示
   }
