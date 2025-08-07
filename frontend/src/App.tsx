@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import ExpenseForm from './features/expenses/components/ExpenseForm'
 import BalanceDisplay from './features/balance/components/BalanceDisplay'
+import TotalExpenseDisplay from './features/expenses/components/TotalExpenseDisplay'
 import { useExpenseManager } from './hooks/useExpenseManager'
 
 /**
@@ -65,19 +66,7 @@ function App() {
 
         <ExpenseForm onSubmit={addExpense} />
 
-        {totalAmount > 0 && (
-          <Typography
-            variant="h6"
-            sx={{
-              mt: 3,
-              textAlign: 'center',
-              color: 'primary.main',
-              fontWeight: 'bold',
-            }}
-          >
-            合計支出: ¥{totalAmount.toLocaleString()}
-          </Typography>
-        )}
+        {totalAmount > 0 && <TotalExpenseDisplay totalAmount={totalAmount} />}
       </Paper>
 
       {expenses.length > 0 && (
