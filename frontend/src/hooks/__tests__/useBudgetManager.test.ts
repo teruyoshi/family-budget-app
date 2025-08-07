@@ -28,7 +28,7 @@ describe('useBudgetManager', () => {
     const [, actions] = result.current
 
     act(() => {
-      actions.addExpense(1000)
+      actions.addExpense(1000, '2025-01-15')
     })
 
     const [values] = result.current
@@ -39,12 +39,24 @@ describe('useBudgetManager', () => {
     expect(values.balance).toBe(-1000)
   })
 
+  test('指定した日付が履歴に反映される', () => {
+    const { result } = renderHook(() => useBudgetManager())
+    const [, actions] = result.current
+
+    act(() => {
+      actions.addExpense(1500, '2025-12-25')
+    })
+
+    const [values] = result.current
+    expect(values.expenses[0].timestamp).toBe('2025/12/25(木)')
+  })
+
   test('収入追加が正しく動作する', () => {
     const { result } = renderHook(() => useBudgetManager())
     const [, actions] = result.current
 
     act(() => {
-      actions.addIncome(5000)
+      actions.addIncome(5000, '2025-01-15')
     })
 
     const [values] = result.current
@@ -60,9 +72,9 @@ describe('useBudgetManager', () => {
     const [, actions] = result.current
 
     act(() => {
-      actions.addIncome(10000)
-      actions.addExpense(3000)
-      actions.addExpense(2000)
+      actions.addIncome(10000, '2025-01-15')
+      actions.addExpense(3000, '2025-01-15')
+      actions.addExpense(2000, '2025-01-16')
     })
 
     const [values] = result.current
@@ -76,14 +88,14 @@ describe('useBudgetManager', () => {
     const [, actions] = result.current
 
     act(() => {
-      actions.addExpense(1000)
+      actions.addExpense(1000, '2025-01-15')
     })
 
     // 1秒待機して異なるタイムスタンプを確保
     jest.advanceTimersByTime(1000)
 
     act(() => {
-      actions.addExpense(2000)
+      actions.addExpense(2000, '2025-01-16')
     })
 
     const [values] = result.current

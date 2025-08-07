@@ -1,63 +1,39 @@
-import { useState } from 'react'
-import { Box, Button } from '@mui/material'
-import ExpenseInput from './ExpenseInput'
+import { TransactionForm } from '@/components/common'
 
 /**
  * 支出登録フォームコンポーネント
  *
  * 支出金額の入力から登録までを担当するコンテナコンポーネントです。
- * 状態管理、バリデーション、送信処理を統合的に提供します。
+ * TransactionFormを使用して共通のフォーム構造を提供します。
  *
  * 機能:
- * - 支出金額の状態管理
- * - フォーム送信時のバリデーション（正の数値チェック）
- * - 送信後のフォームリセット
- * - MUI Box/Buttonによる統一されたスタイリング
- *
- * 設計パターン:
- * - Container Component: ロジック管理を担当
- * - Controlled Component: React状態で入力を制御
+ * - 支出金額の状態管理（TransactionFormに委譲）
+ * - 日付入力機能
+ * - フォーム送信時のバリデーション（TransactionFormに委譲）
+ * - 送信後のフォームリセット（TransactionFormに委譲）
  *
  * @example
- * <ExpenseForm onSubmit={(amount) => console.log('Expense:', amount)} />
+ * <ExpenseForm onSubmit={(amount, date) => console.log('Expense:', amount, date)} />
  */
 interface ExpenseFormProps {
-  onSubmit?: (amount: number) => void
+  onSubmit?: (amount: number, date: string) => void
 }
 
 function ExpenseForm({ onSubmit }: ExpenseFormProps) {
-  const [amount, setAmount] = useState(0)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // バリデーション: 正の数値のみ受け入れ
-    if (amount > 0 && onSubmit) {
-      onSubmit(amount)
-      setAmount(0) // フォームリセット
+  const handleSubmit = (amount: number, date: string) => {
+    if (onSubmit) {
+      onSubmit(amount, date)
     }
   }
 
   return (
-    <Box
-      component="form"
+    <TransactionForm
+      placeholder="支出金額を入力"
+      buttonText="支出を登録"
+      buttonColor="error"
+      datePickerLabel="支出日付"
       onSubmit={handleSubmit}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-    >
-      <ExpenseInput value={amount} onChange={setAmount} />
-      <Button
-        type="submit"
-        variant="contained"
-        color="error"
-        fullWidth
-        sx={{
-          fontWeight: 'bold',
-          py: 1.5,
-        }}
-      >
-        支出を登録
-      </Button>
-    </Box>
+    />
   )
 }
 

@@ -37,10 +37,12 @@ export function useBudgetManager() {
    * 新しい支出をリストの先頭に追加します
    *
    * @param amount 支出金額
+   * @param date 支出日付（YYYY-MM-DD形式）
    */
-  const addExpense = (amount: number) => {
-    const now = new Date()
-    const dateStr = now.toLocaleDateString('ja-JP', {
+  const addExpense = (amount: number, date: string) => {
+    // 指定された日付を日本語フォーマットに変換
+    const selectedDate = new Date(date)
+    const dateStr = selectedDate.toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: '2-digit', 
       day: '2-digit',
@@ -60,10 +62,12 @@ export function useBudgetManager() {
    * 新しい収入をリストの先頭に追加します
    *
    * @param amount 収入金額
+   * @param date 収入日付（YYYY-MM-DD形式）
    */
-  const addIncome = (amount: number) => {
-    const now = new Date()
-    const dateStr = now.toLocaleDateString('ja-JP', {
+  const addIncome = (amount: number, date: string) => {
+    // 指定された日付を日本語フォーマットに変換
+    const selectedDate = new Date(date)
+    const dateStr = selectedDate.toLocaleDateString('ja-JP', {
       year: 'numeric',
       month: '2-digit', 
       day: '2-digit',
