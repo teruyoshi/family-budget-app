@@ -1,15 +1,10 @@
 import {
   Container,
   Paper,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Chip,
 } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
-import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
+import { ExpenseForm, TotalExpenseDisplay, ExpenseHistory } from '@/features/expenses'
 import { useExpenseManager } from '@/hooks'
 
 /**
@@ -59,41 +54,7 @@ function App() {
         {totalAmount > 0 && <TotalExpenseDisplay totalAmount={totalAmount} />}
       </Paper>
 
-      {expenses.length > 0 && (
-        <Paper elevation={3} sx={{ p: 3 }}>
-          <Typography
-            variant="h5"
-            component="h2"
-            gutterBottom
-            sx={{ mb: 2, fontWeight: 'bold' }}
-          >
-            支出履歴
-          </Typography>
-          <List>
-            {expenses.map((expense) => (
-              <ListItem
-                key={expense.id}
-                sx={{
-                  border: 1,
-                  borderColor: 'divider',
-                  borderRadius: 1,
-                  mb: 1,
-                }}
-              >
-                <ListItemText
-                  primary={
-                    <Typography variant="h6" color="text.primary">
-                      ¥{expense.amount.toLocaleString()}
-                    </Typography>
-                  }
-                  secondary={expense.timestamp}
-                />
-                <Chip label="支出" color="warning" size="small" />
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      )}
+      <ExpenseHistory expenses={expenses} />
     </Container>
   )
 }
