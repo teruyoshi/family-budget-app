@@ -65,10 +65,10 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
     const handleChange = (inputValue: string) => {
       // 数字以外を除去
       const numericValue = parseNumber(inputValue)
-      
+
       // 表示値を更新（カンマ区切り）
       setDisplayValue(formatNumber(numericValue))
-      
+
       // 親コンポーネントには数値で通知
       onChange(numericValue)
     }

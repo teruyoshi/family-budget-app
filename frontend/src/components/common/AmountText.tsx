@@ -11,11 +11,7 @@ interface AmountTextProps {
  *
  * 金額を¥1,000形式で表示する専用コンポーネント。
  */
-function AmountText({
-  amount,
-  variant = 'body1',
-  sx,
-}: AmountTextProps) {
+function AmountText({ amount, variant = 'body1', sx }: AmountTextProps) {
   return (
     <Typography variant={variant} sx={sx}>
       ¥{amount.toLocaleString()}

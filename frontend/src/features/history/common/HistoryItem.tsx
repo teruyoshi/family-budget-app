@@ -1,8 +1,4 @@
-import {
-  ListItem,
-  ListItemText,
-  Chip,
-} from '@mui/material'
+import { ListItem, ListItemText, Chip } from '@mui/material'
 import { AmountText } from '@/components/common'
 import type { Expense } from '@/hooks'
 
@@ -34,9 +30,9 @@ export function HistoryItem({ item, label, color }: HistoryItemProps) {
       <ListItemText
         primary={<Chip label={label} color={color} size="small" />}
       />
-      <AmountText 
-        amount={item.amount} 
-        variant="h6" 
+      <AmountText
+        amount={item.amount}
+        variant="h6"
         sx={{ color: `${color}.main`, fontWeight: 'bold' }}
       />
     </ListItem>

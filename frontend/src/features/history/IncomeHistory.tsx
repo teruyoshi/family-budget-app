@@ -13,7 +13,7 @@ interface IncomeHistoryProps {
  */
 export function IncomeHistory({ incomes }: IncomeHistoryProps) {
   return (
-    <HistoryList 
+    <HistoryList
       items={incomes}
       title="収入履歴"
       itemLabel="収入"

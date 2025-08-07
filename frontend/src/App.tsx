@@ -1,14 +1,8 @@
 import { Container, Paper, Grid, Box } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
-import {
-  ExpenseForm,
-  TotalExpenseDisplay,
-} from '@/features/expenses'
-import {
-  IncomeForm,
-  TotalIncomeDisplay,
-} from '@/features/income'
+import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
+import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { ExpenseHistory, IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
 
@@ -33,13 +27,7 @@ import { useBudgetManager } from '@/hooks'
  */
 function App() {
   const [
-    {
-      expenses,
-      incomes,
-      balance,
-      totalExpenseAmount,
-      totalIncomeAmount,
-    },
+    { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
     { addExpense, addIncome },
   ] = useBudgetManager()
 

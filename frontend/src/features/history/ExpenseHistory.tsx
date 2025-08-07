@@ -13,7 +13,7 @@ interface ExpenseHistoryProps {
  */
 export function ExpenseHistory({ expenses }: ExpenseHistoryProps) {
   return (
-    <HistoryList 
+    <HistoryList
       items={expenses}
       title="支出履歴"
       itemLabel="支出"

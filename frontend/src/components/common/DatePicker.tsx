@@ -19,7 +19,12 @@ interface DatePickerProps {
  * MUI X DatePickerを使用したリッチな日付ピッカーです。
  * 日本語対応でカレンダーUIを提供し、より使いやすい日付選択を実現します。
  */
-export default function DatePicker({ value, onChange, label, disabled = false }: DatePickerProps) {
+export default function DatePicker({
+  value,
+  onChange,
+  label,
+  disabled = false,
+}: DatePickerProps) {
   const handleChange = (newValue: Dayjs | null) => {
     if (newValue) {
       onChange(newValue.format('YYYY-MM-DD'))

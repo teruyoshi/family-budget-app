@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { Box, Button, FormControlLabel, Switch, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Switch,
+  Typography,
+} from '@mui/material'
 import { DatePicker, AmountInput } from './'
 
 /**
@@ -59,8 +65,8 @@ function TransactionForm({
     // バリデーション: 正の数値のみ受け入れ
     if (amount > 0 && onSubmit) {
       // 日付選択が無効な場合は今日の日付（アジア/東京タイムゾーン）を使用
-      const finalDate = useCustomDate 
-        ? date 
+      const finalDate = useCustomDate
+        ? date
         : new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' })
       onSubmit(amount, finalDate)
       setAmount(0) // 金額のみリセット（日付とトグル状態は保持）
@@ -88,20 +94,20 @@ function TransactionForm({
         }
         sx={{ alignSelf: 'flex-start', mb: 0 }}
       />
-      
+
       <DatePicker
         label={datePickerLabel}
         value={date}
         onChange={setDate}
         disabled={!useCustomDate}
       />
-      
+
       <AmountInput
         placeholder={placeholder}
         value={amount}
         onChange={setAmount}
       />
-      
+
       <Button
         type="submit"
         variant="contained"

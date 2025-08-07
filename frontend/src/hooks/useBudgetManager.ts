@@ -42,13 +42,15 @@ export function useBudgetManager() {
   const addExpense = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換
     const selectedDate = new Date(date)
-    const dateStr = selectedDate.toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit', 
-      day: '2-digit',
-      weekday: 'short'
-    }).replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
-    
+    const dateStr = selectedDate
+      .toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'short',
+      })
+      .replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
+
     const newExpense: Expense = {
       id: Date.now().toString(),
       amount,
@@ -67,13 +69,15 @@ export function useBudgetManager() {
   const addIncome = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換
     const selectedDate = new Date(date)
-    const dateStr = selectedDate.toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit', 
-      day: '2-digit',
-      weekday: 'short'
-    }).replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
-    
+    const dateStr = selectedDate
+      .toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'short',
+      })
+      .replace(/(\d{4})\/(\d{2})\/(\d{2})\s(.+)/, '$1/$2/$3($4)')
+
     const newIncome: Income = {
       id: Date.now().toString(),
       amount,

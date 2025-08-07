@@ -21,11 +21,7 @@ describe('AmountInput', () => {
     const mockOnChange = jest.fn()
 
     render(
-      <AmountInput
-        value={0}
-        onChange={mockOnChange}
-        placeholder="金額を入力"
-      />
+      <AmountInput value={0} onChange={mockOnChange} placeholder="金額を入力" />
     )
 
     const input = screen.getByPlaceholderText('金額を入力')
@@ -36,11 +32,7 @@ describe('AmountInput', () => {
     const mockOnChange = jest.fn()
 
     render(
-      <AmountInput
-        value={0}
-        onChange={mockOnChange}
-        placeholder="金額を入力"
-      />
+      <AmountInput value={0} onChange={mockOnChange} placeholder="金額を入力" />
     )
 
     const input = screen.getByPlaceholderText('金額を入力')
@@ -53,11 +45,7 @@ describe('AmountInput', () => {
     const mockOnChange = jest.fn()
 
     render(
-      <AmountInput
-        value={0}
-        onChange={mockOnChange}
-        placeholder="金額を入力"
-      />
+      <AmountInput value={0} onChange={mockOnChange} placeholder="金額を入力" />
     )
 
     const input = screen.getByPlaceholderText('金額を入力')

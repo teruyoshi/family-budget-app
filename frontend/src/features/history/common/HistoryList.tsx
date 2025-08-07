@@ -1,10 +1,4 @@
-import {
-  Paper,
-  Typography,
-  List,
-  ListSubheader,
-  Divider,
-} from '@mui/material'
+import { Paper, Typography, List, ListSubheader, Divider } from '@mui/material'
 import { HistoryItem } from './HistoryItem'
 import type { Expense } from '@/hooks'
 
@@ -21,20 +15,28 @@ interface HistoryListProps {
  * 支出・収入履歴の共通レイアウトを提供するコンポーネントです。
  * アイテムを日付でグループ化して表示します。
  */
-export function HistoryList({ items, title, itemLabel, itemColor }: HistoryListProps) {
+export function HistoryList({
+  items,
+  title,
+  itemLabel,
+  itemColor,
+}: HistoryListProps) {
   if (items.length === 0) {
     return null
   }
 
   // 日付でアイテムをグループ化
-  const groupedItems = items.reduce((groups, item) => {
-    const date = item.timestamp
-    if (!groups[date]) {
-      groups[date] = []
-    }
-    groups[date].push(item)
-    return groups
-  }, {} as Record<string, Expense[]>)
+  const groupedItems = items.reduce(
+    (groups, item) => {
+      const date = item.timestamp
+      if (!groups[date]) {
+        groups[date] = []
+      }
+      groups[date].push(item)
+      return groups
+    },
+    {} as Record<string, Expense[]>
+  )
 
   // 日付を降順でソート
   const sortedDates = Object.keys(groupedItems).sort((a, b) => {
@@ -59,7 +61,7 @@ export function HistoryList({ items, title, itemLabel, itemColor }: HistoryListP
           {index > 0 && <Divider sx={{ my: 2 }} />}
           <ListSubheader
             component="div"
-            sx={{ 
+            sx={{
               bgcolor: 'transparent',
               fontWeight: 'bold',
               fontSize: '0.9rem',
@@ -72,7 +74,7 @@ export function HistoryList({ items, title, itemLabel, itemColor }: HistoryListP
           </ListSubheader>
           <List sx={{ pt: 0 }}>
             {groupedItems[date].map((item) => (
-              <HistoryItem 
+              <HistoryItem
                 key={item.id}
                 item={item}
                 label={itemLabel}

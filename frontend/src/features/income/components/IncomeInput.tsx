@@ -30,11 +30,7 @@ function IncomeInput({
   placeholder = '収入金額を入力',
 }: IncomeInputProps) {
   return (
-    <AmountInput
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-    />
+    <AmountInput placeholder={placeholder} value={value} onChange={onChange} />
   )
 }
 
