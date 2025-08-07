@@ -2,7 +2,7 @@ import { Typography, type TypographyProps } from '@mui/material'
 import type { ReactNode } from 'react'
 
 interface AmountTextProps {
-  children: ReactNode
+  children?: ReactNode
   amount?: number
   variant?: TypographyProps['variant']
   sx?: TypographyProps['sx']
