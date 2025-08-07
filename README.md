@@ -52,40 +52,16 @@
 family-budget-app/
 ├── frontend/                   # React フロントエンド
 │   ├── src/
-│   │   ├── components/         # 再利用可能コンポーネント
-│   │   │   └── common/         # 汎用コンポーネント (TextInput等)
-│   │   │       ├── TextInput.tsx        # MUI TextFieldベース汎用入力
-│   │   │       └── __tests__/           # 単体テスト
-│   │   │           └── TextInput.test.tsx
-│   │   ├── features/           # フィーチャーベース構成
-│   │   │   └── expenses/       # 支出管理フィーチャー
-│   │   │       └── components/
-│   │   │           ├── ExpenseForm.tsx     # フォームコンポーネント
-│   │   │           ├── ExpenseInput.tsx    # 入力コンポーネント
-│   │   │           └── __tests__/          # テストディレクトリ
-│   │   │               ├── ExpenseForm.test.tsx
-│   │   │               ├── ExpenseInput.test.tsx
-│   │   │               └── integration/     # 統合テスト
-│   │   │                   └── expense-flow.test.tsx
-│   │   ├── App.tsx             # メインアプリケーション
-│   │   ├── App.test.tsx        # App単体テスト（co-located）
-│   │   └── main.tsx            # エントリーポイント
-│   ├── docs/                   # フロントエンド専用ドキュメント
-│   ├── package.json            # 依存関係 (MUI, Emotion等)
-│   └── README.md               # フロントエンド固有ドキュメント
+│   │   ├── components/common/  # 汎用コンポーネント
+│   │   ├── features/expenses/  # 支出管理機能
+│   │   └── App.tsx            # メインアプリ（詳細コメント付き）
+│   └── README.md              # 簡潔な開発ガイド
 ├── backend/                    # Go バックエンド
-│   ├── cmd/server/main.go      # メインサーバー
-│   ├── internal/               # 内部パッケージ
-│   │   ├── models/             # データモデル
-│   │   ├── handlers/           # HTTPハンドラー
-│   │   └── database/           # データベース操作
-│   ├── go.mod                  # Go モジュール定義
-│   └── go.sum                  # 依存関係チェックサム
-├── docker/                     # Dockerファイル
-├── compose.yml                 # Docker Compose設定
-├── Makefile                    # 開発コマンド
-├── CLAUDE.md                   # 開発ガイダンス
-└── README.md                   # このファイル
+│   ├── cmd/server/            # メインサーバー
+│   └── internal/              # APIハンドラー・モデル
+├── compose.yml                # Docker環境設定
+├── Makefile                   # 開発コマンド
+└── CLAUDE.md                  # Claude専用指示
 ```
 
 ## 🚀 クイックスタート
@@ -135,14 +111,18 @@ make test                       # 全テスト実行
 make test-frontend              # フロントエンドテストのみ
 make test-backend               # バックエンドテストのみ
 
-# Lint実行
+# Lint・フォーマット実行
 make lint                       # 全Lintチェック実行
 make lint-frontend              # フロントエンドLintのみ
 make lint-backend               # バックエンドLintのみ
+make format-frontend            # フロントエンドコードフォーマット
+make format-frontend-check      # フォーマットチェックのみ
 
 # パッケージ管理
-make npm-install                # フロントエンド依存関係インストール
-make npm-install-package PKG=react-router  # 新パッケージ追加
+make npm-install                          # フロントエンド依存関係インストール
+make npm-install-package PKG=react-router # 新パッケージ追加
+make npm-version-minor                    # マイナーバージョンアップ
+make npm-version-patch                    # パッチバージョンアップ
 ```
 
 ### デバッグ・ログ確認
@@ -156,16 +136,11 @@ make backend-shell              # バックエンドコンテナ接続
 ## 🏗 実装済み機能
 
 ### ✅ フロントエンド
-- React 19 + TypeScript + Vite開発環境
-- Material-UI (MUI) v6完全対応
-- sx propsによるコンポーネントレベルスタイリング
-- Jest + React Testing Libraryテスト環境（ハイブリッド配置戦略）
-  - 19テスト（5テストスイート）全通過
-  - 単体テスト：__tests__/ディレクトリ
-  - 統合テスト：integration/サブディレクトリ
-  - co-located：シンプルなコンポーネント
-- ESLint + Prettier + 自動フォーマット
-- フィーチャーベースディレクトリ構成
+- **React 19 + TypeScript + Vite**: モダンな開発環境
+- **Material-UI (MUI) v6**: 統一されたデザインシステム
+- **包括的テスト環境**: 19テスト（5スイート）全通過
+- **コード品質**: ESLint + Prettier自動整形
+- **詳細なコード内ドキュメント**: 実装例・設計原則をコメントで提供
 
 ### ✅ バックエンド
 - Go + Gin REST APIサーバー
@@ -183,32 +158,54 @@ make backend-shell              # バックエンドコンテナ接続
 ## 📊 データベーススキーマ
 
 ### テーブル構造
-- **users**: ユーザー管理
-- **categories**: 収支カテゴリ
-- **transactions**: 取引記録
-- **budgets**: 月次予算
+- **users**: ユーザー管理 (id, name, email, timestamps)
+- **categories**: 収支カテゴリ (id, name, type, color, description, timestamps)
+- **transactions**: 取引記録 (id, user_id, category_id, amount, description, date, timestamps)
+- **budgets**: 月次予算 (id, user_id, category_id, amount, month, timestamps)
 
-### 初期データ
+### 初期データ（GORM自動シード）
 - **支出カテゴリ**: 食費、交通費、娯楽費、光熱費、通信費、医療費
 - **収入カテゴリ**: 給与、副収入
 
-## 🗺 ロードマップ
+## 🔌 実装済みAPI
 
-### 🚧 フェーズ1: トランザクション機能
-- [ ] Transaction CRUD API実装
-- [ ] 取引履歴UI開発
-- [ ] フィルタ・ページネーション
+### ヘルスチェック
+- `GET /api/health` - ヘルスチェック（データベース接続確認含む）
 
-### 🚧 フェーズ2: 家計簿UI強化
-- [ ] ダッシュボード（収支サマリー）
-- [ ] カテゴリ管理画面
-- [ ] レスポンシブデザイン対応
+### カテゴリ管理
+- `GET /api/categories` - カテゴリ一覧取得
+- `POST /api/categories` - 新規カテゴリ作成
+- `GET /api/categories/:id` - 特定カテゴリ取得
+- `PUT /api/categories/:id` - カテゴリ更新
+- `DELETE /api/categories/:id` - カテゴリ削除
+
+## 🗺 開発ロードマップ
+
+### 🚧 フェーズ1: トランザクションAPI実装
+**Transaction CRUD API**
+- [ ] `GET /api/transactions` - 取引一覧（フィルタ・ページネーション対応）
+- [ ] `POST /api/transactions` - 新規取引登録
+- [ ] `PUT /api/transactions/:id` - 取引更新
+- [ ] `DELETE /api/transactions/:id` - 取引削除
+
+### 🚧 フェーズ2: フロントエンド家計簿UI
+**基本コンポーネント**
+- [ ] TransactionForm - 取引入力フォーム
+- [ ] TransactionList - 取引履歴表示
+- [ ] CategorySelector - カテゴリ選択
+- [ ] DatePicker - 日付選択
+- [ ] AmountInput - 金額入力
+
+**ページ実装**
+- [ ] Dashboard - 収支サマリー
+- [ ] Transactions - 取引管理
+- [ ] Categories - カテゴリ管理
 
 ### 🚧 フェーズ3: 高度な機能
-- [ ] 予算管理機能
-- [ ] データ可視化（Chart.js/Recharts）
-- [ ] ユーザー認証（JWT）
-- [ ] 月次/年次レポート
+- [ ] Budget API + UI - 予算管理機能
+- [ ] データ可視化 - Chart.js/Recharts使用
+- [ ] ユーザー認証 - JWT実装
+- [ ] レポート機能 - 月次/年次レポート
 
 ## 🤝 開発ガイドライン
 
@@ -232,11 +229,12 @@ make backend-shell              # バックエンドコンテナ接続
 - **結合テスト**: APIエンドポイント
 - **E2Eテスト**: 将来実装予定
 
-## 📚 ドキュメント
+## 📚 ドキュメント戦略
 
-- `CLAUDE.md` - 開発者向けガイダンス
-- `frontend/README.md` - フロントエンド固有ドキュメント
-- `frontend/docs/` - コンポーネントガイド・開発ガイドライン
+- **メインREADME**: プロジェクト概要・開発手順
+- **frontend/README.md**: 簡潔な開発ガイド
+- **コード内コメント**: 詳細な実装例・設計原則・使用方法
+- **CLAUDE.md**: Claude専用作業指示
 
 ## 🐛 トラブルシューティング
 
