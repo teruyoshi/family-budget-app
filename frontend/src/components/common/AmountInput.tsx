@@ -83,7 +83,12 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
         required={required}
         fullWidth={fullWidth}
         variant={variant}
-        sx={sx}
+        sx={{
+          '& .MuiInputBase-input': {
+            textAlign: 'right',
+          },
+          ...sx,
+        }}
       />
     )
   }
