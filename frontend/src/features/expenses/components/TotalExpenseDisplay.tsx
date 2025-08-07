@@ -8,7 +8,7 @@ interface TotalExpenseDisplayProps {
 
 /**
  * 合計支出表示コンポーネント
- * 
+ *
  * 合計支出金額を表示するためのコンポーネント。
  * センタリングされ、プライマリカラーで強調表示されます。
  */
@@ -22,8 +22,14 @@ function TotalExpenseDisplay({ totalAmount }: TotalExpenseDisplayProps) {
         mt: 3,
       }}
     >
-      <TextLabel text="合計支出：" variant="h6" sx={{ display: 'inline' }} />
-      <AmountText amount={totalAmount} variant="h6" sx={{ display: 'inline' }} />
+      <TextLabel variant="h6" sx={{ display: 'inline' }}>
+        合計支出
+      </TextLabel>
+      <AmountText
+        amount={totalAmount}
+        variant="h6"
+        sx={{ display: 'inline' }}
+      />
     </Box>
   )
 }

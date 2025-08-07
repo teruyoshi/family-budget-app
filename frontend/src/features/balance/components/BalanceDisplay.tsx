@@ -8,7 +8,7 @@ interface BalanceDisplayProps {
 
 /**
  * 残金表示コンポーネント
- * 
+ *
  * 現在の残高を表示するためのコンポーネント。
  * センタリングされ、緑色で強調表示されます。
  */
@@ -22,7 +22,9 @@ function BalanceDisplay({ balance }: BalanceDisplayProps) {
         mb: 3,
       }}
     >
-      <TextLabel text="残金：" variant="h5" sx={{ display: 'inline' }} />
+      <TextLabel variant="h5" sx={{ display: 'inline' }}>
+        残金
+      </TextLabel>
       <AmountText amount={balance} variant="h5" sx={{ display: 'inline' }} />
     </Box>
   )

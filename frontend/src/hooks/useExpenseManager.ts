@@ -12,10 +12,10 @@ export interface Expense {
 
 /**
  * 支出管理カスタムフック
- * 
+ *
  * 支出データと残金の状態管理、支出登録処理を提供します。
  * App.tsxから分離し、再利用可能な形で支出管理機能をカプセル化しています。
- * 
+ *
  * @param initialBalance 初期残金（デフォルト: 10000）
  * @returns [値オブジェクト, 操作関数オブジェクト] の形式で返す
  */
@@ -26,7 +26,7 @@ export function useExpenseManager(initialBalance: number = 10000) {
   /**
    * 新規支出登録ハンドラー
    * 新しい支出をリストの先頭に追加し、残金から支出分を減らします
-   * 
+   *
    * @param amount 支出金額
    */
   const addExpense = (amount: number) => {

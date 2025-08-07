@@ -4,29 +4,29 @@ import type { SxProps, Theme } from '@mui/material'
 
 /**
  * 汎用テキスト入力コンポーネント
- * 
+ *
  * MUI TextFieldをラップした再利用可能なコンポーネントです。
  * プロジェクト全体で一貫したスタイリングとAPI設計を提供します。
- * 
+ *
  * 設計原則:
  * - Single Responsibility: 入力機能のみに責任を持つ
  * - Composition: MUIコンポーネントを合成して機能を提供
  * - Reusability: 型安全で再利用可能な設計
- * 
+ *
  * @example
  * // 基本使用例
- * <TextInput 
- *   value={name} 
- *   onChange={setName} 
- *   placeholder="名前を入力" 
+ * <TextInput
+ *   value={name}
+ *   onChange={setName}
+ *   placeholder="名前を入力"
  * />
- * 
+ *
  * // 数値入力
- * <TextInput 
- *   type="number" 
- *   value={amount} 
- *   onChange={setAmount} 
- *   required 
+ * <TextInput
+ *   type="number"
+ *   value={amount}
+ *   onChange={setAmount}
+ *   required
  * />
  */
 interface TextInputProps {
