@@ -32,6 +32,7 @@ interface Expense {
  */
 function App() {
   const [expenses, setExpenses] = useState<Expense[]>([])
+  const [balance, setBalance] = useState<number>(10000)
 
   /**
    * 新規支出登録ハンドラー
@@ -76,6 +77,18 @@ function App() {
           }}
         >
           家計簿アプリ
+        </Typography>
+
+        <Typography
+          variant="h5"
+          sx={{
+            textAlign: 'center',
+            color: 'success.main',
+            fontWeight: 'bold',
+            mb: 3,
+          }}
+        >
+          残金：{balance}
         </Typography>
 
         <Alert severity="info" sx={{ mb: 3 }}>
