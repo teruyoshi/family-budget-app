@@ -26,16 +26,15 @@ interface IncomeFormProps {
 }
 
 function IncomeForm({ onSubmit }: IncomeFormProps) {
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState(0)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const numericAmount = parseFloat(amount)
 
     // バリデーション: 正の数値のみ受け入れ
-    if (numericAmount > 0 && onSubmit) {
-      onSubmit(numericAmount)
-      setAmount('') // フォームリセット
+    if (amount > 0 && onSubmit) {
+      onSubmit(amount)
+      setAmount(0) // フォームリセット
     }
   }
 

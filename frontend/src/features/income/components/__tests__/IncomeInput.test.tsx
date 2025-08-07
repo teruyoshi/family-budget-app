@@ -13,12 +13,12 @@ describe('IncomeInput', () => {
     expect(mockOnChange).toHaveBeenCalledWith(1000)
   })
 
-  test('カンマ区切り表示される', () => {
+  test('カンマ区切り + 円マーク表示される', () => {
     const mockOnChange = jest.fn()
 
     render(<IncomeInput value={1000} onChange={mockOnChange} />)
 
-    const input = screen.getByDisplayValue('1,000')
+    const input = screen.getByDisplayValue('¥1,000')
     expect(input).toBeInTheDocument()
   })
 
@@ -39,7 +39,7 @@ describe('IncomeInput', () => {
 
     render(<IncomeInput value={100} onChange={mockOnChange} />)
 
-    const input = screen.getByDisplayValue('100')
+    const input = screen.getByDisplayValue('¥100')
     fireEvent.change(input, { target: { value: '' } })
 
     expect(mockOnChange).toHaveBeenCalledWith(0)

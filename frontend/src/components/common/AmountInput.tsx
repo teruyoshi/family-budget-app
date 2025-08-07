@@ -9,7 +9,7 @@ import type { SxProps, Theme } from '@mui/material'
  * 入力中にカンマ区切りで表示し、実際の値は数値として管理します。
  *
  * 特徴:
- * - 入力中に自動的にカンマ区切り表示（1000 → 1,000）
+ * - 入力中に自動的にカンマ区切り + 円マーク表示（1000 → ¥1,000）
  * - 内部的には数値として管理
  * - TextInputをコンポジションで活用
  *
@@ -45,13 +45,13 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
   ) => {
     const [displayValue, setDisplayValue] = useState<string>('')
 
-    // 数値を表示用文字列に変換（カンマ区切り）
+    // 数値を表示用文字列に変換（カンマ区切り + 円マーク）
     const formatNumber = (num: number): string => {
       if (isNaN(num) || num === 0) return ''
-      return num.toLocaleString()
+      return `¥${num.toLocaleString()}`
     }
 
-    // 表示用文字列を数値に変換（カンマを除去）
+    // 表示用文字列を数値に変換（カンマと円マークを除去）
     const parseNumber = (str: string): number => {
       const cleaned = str.replace(/[^0-9]/g, '')
       return cleaned === '' ? 0 : parseInt(cleaned, 10)
