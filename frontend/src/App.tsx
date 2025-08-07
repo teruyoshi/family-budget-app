@@ -11,7 +11,7 @@ import {
   TotalIncomeDisplay,
   IncomeHistory,
 } from '@/features/income'
-import { useExpenseManager, useIncomeManager } from '@/hooks'
+import { useBudgetManager } from '@/hooks'
 
 /**
  * メインアプリケーションコンポーネント
@@ -33,13 +33,16 @@ import { useExpenseManager, useIncomeManager } from '@/hooks'
  * - Material Design: 一貫したUI/UX
  */
 function App() {
-  const [{ expenses, totalAmount: totalExpenseAmount }, { addExpense }] =
-    useExpenseManager(0)
-  const [{ incomes, totalAmount: totalIncomeAmount }, { addIncome }] =
-    useIncomeManager(0)
-
-  // 実際の残高は収入から支出を引いたもの
-  const actualBalance = totalIncomeAmount - totalExpenseAmount
+  const [
+    {
+      expenses,
+      incomes,
+      balance,
+      totalExpenseAmount,
+      totalIncomeAmount,
+    },
+    { addExpense, addIncome },
+  ] = useBudgetManager()
 
   return (
     <Container
@@ -59,7 +62,7 @@ function App() {
       >
         <AppTitle />
 
-        <BalanceDisplay balance={actualBalance} />
+        <BalanceDisplay balance={balance} />
 
         <Grid container spacing={3} sx={{ mt: 2 }}>
           <Grid size={{ xs: 12, md: 6 }}>

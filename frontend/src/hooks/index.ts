@@ -1,2 +1,1 @@
-export { useExpenseManager, type Expense } from './useExpenseManager'
-export { useIncomeManager, type Income } from './useIncomeManager'
+export { useBudgetManager, type Expense, type Income } from './useBudgetManager'
