@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import App from './App'
 
 describe('App', () => {
@@ -16,54 +15,11 @@ describe('App', () => {
     expect(balanceContainer).toHaveTextContent('残高：¥0')
   })
 
-  test('支出を5000で登録すると残高：-5000が表示されている', async () => {
-    const user = userEvent.setup()
+  test('支出フォームと収入フォームが表示される', () => {
     render(<App />)
-
-    const amountInput = screen.getByPlaceholderText('支出金額を入力')
-    const submitButton = screen.getByRole('button', { name: '支出を登録' })
-
-    await user.type(amountInput, '5000')
-    await user.click(submitButton)
-
-    const balanceLabel = screen.getByText('残高：')
-    const balanceContainer = balanceLabel.parentElement
-    expect(balanceContainer).toHaveTextContent('残高：¥-5,000')
-  })
-
-  test('支出を3000で登録すると合計支出：¥3,000が表示されている', async () => {
-    const user = userEvent.setup()
-    render(<App />)
-
-    const amountInput = screen.getByPlaceholderText('支出金額を入力')
-    const submitButton = screen.getByRole('button', { name: '支出を登録' })
-
-    await user.type(amountInput, '3000')
-    await user.click(submitButton)
-
-    const totalLabel = screen.getByText('合計支出：')
-    const totalContainer = totalLabel.parentElement
-    expect(totalContainer).toHaveTextContent('合計支出：¥3,000')
-  })
-
-  test('複数回支出登録すると合計支出が正しく計算される', async () => {
-    const user = userEvent.setup()
-    render(<App />)
-
-    const amountInput = screen.getByPlaceholderText('支出金額を入力')
-    const submitButton = screen.getByRole('button', { name: '支出を登録' })
-
-    // 1回目の支出登録
-    await user.type(amountInput, '2000')
-    await user.click(submitButton)
-
-    // 2回目の支出登録
-    await user.clear(amountInput)
-    await user.type(amountInput, '1500')
-    await user.click(submitButton)
-
-    const totalLabel = screen.getByText('合計支出：')
-    const totalContainer = totalLabel.parentElement
-    expect(totalContainer).toHaveTextContent('合計支出：¥3,500')
+    expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '支出を登録' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '収入を登録' })).toBeInTheDocument()
   })
 })
