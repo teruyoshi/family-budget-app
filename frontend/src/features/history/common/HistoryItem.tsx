@@ -2,8 +2,6 @@ import {
   ListItem,
   ListItemText,
   Chip,
-  Box,
-  Typography,
 } from '@mui/material'
 import { AmountText } from '@/components/common'
 import type { Expense } from '@/hooks'
@@ -18,7 +16,7 @@ interface HistoryItemProps {
  * 履歴アイテムコンポーネント
  *
  * 支出・収入履歴の個別アイテムを表示する共通コンポーネントです。
- * カテゴリラベルと色を指定することで、支出・収入両方に対応します。
+ * 日付はセクションヘッダーで表示されるため、個別アイテムには日付を表示しません。
  */
 export function HistoryItem({ item, label, color }: HistoryItemProps) {
   return (
@@ -36,19 +34,11 @@ export function HistoryItem({ item, label, color }: HistoryItemProps) {
       <ListItemText
         primary={<Chip label={label} color={color} size="small" />}
       />
-      <Box sx={{ textAlign: 'right' }}>
-        <AmountText 
-          amount={item.amount} 
-          variant="h6" 
-          sx={{ color: `${color}.main`, fontWeight: 'bold' }}
-        />
-        <Typography 
-          variant="caption" 
-          sx={{ display: 'block', color: 'text.secondary', mt: 0.5 }}
-        >
-          {item.timestamp}
-        </Typography>
-      </Box>
+      <AmountText 
+        amount={item.amount} 
+        variant="h6" 
+        sx={{ color: `${color}.main`, fontWeight: 'bold' }}
+      />
     </ListItem>
   )
 }

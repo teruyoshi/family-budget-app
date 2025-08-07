@@ -19,7 +19,8 @@ describe('HistoryItem', () => {
 
     expect(screen.getByText('支出')).toBeInTheDocument()
     expect(screen.getByText('¥1,500')).toBeInTheDocument()
-    expect(screen.getByText('2025/01/15(水)')).toBeInTheDocument()
+    // 日付はセクションヘッダーで表示されるため、個別アイテムには表示されない
+    expect(screen.queryByText('2025/01/15(水)')).not.toBeInTheDocument()
   })
 
   test('収入アイテムが正しく表示される', () => {
@@ -39,7 +40,7 @@ describe('HistoryItem', () => {
 
     expect(screen.getByText('収入')).toBeInTheDocument()
     expect(screen.getByText('¥3,000')).toBeInTheDocument()
-    expect(screen.getByText('2025/01/16(木)')).toBeInTheDocument()
+    expect(screen.queryByText('2025/01/16(木)')).not.toBeInTheDocument()
   })
 
   test('正しいCSSクラスが適用される', () => {
