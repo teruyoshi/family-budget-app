@@ -22,7 +22,7 @@ function TotalExpenseDisplay({ totalAmount }: TotalExpenseDisplayProps) {
         mt: 3,
       }}
     >
-      <TextLabel text="合計支出: " variant="h6" sx={{ display: 'inline' }} />
+      <TextLabel text="合計支出：" variant="h6" sx={{ display: 'inline' }} />
       <AmountText amount={totalAmount} variant="h6" sx={{ display: 'inline' }} />
     </Box>
   )
