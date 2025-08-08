@@ -10,13 +10,19 @@
     "**/build/**"
   ],
   "theme": "default",
-  "name": "FamilyBudgetApp Documentation",
+  "name": "🏠 家計簿アプリ - APIドキュメント",
   "excludeExternals": true,
   "excludePrivate": false,
   "excludeProtected": false,
   "disableSources": false,
   "includeVersion": true,
   "sort": ["source-order"],
+  "readme": "none",
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
   "kindSortOrder": [
     "Project",
     "Module",

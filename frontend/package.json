@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "test": "jest",
     "docs": "typedoc",
-    "docs:clean": "rm -rf docs"
+    "docs:clean": "rm -rf docs",
+    "docs:serve": "serve docs -p 3001"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -43,6 +44,7 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "prettier": "^3.6.2",
+    "serve": "^14.2.4",
     "ts-jest": "^29.4.1",
     "typedoc": "^0.28.9",
     "typescript": "~5.8.3",

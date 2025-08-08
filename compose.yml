@@ -6,6 +6,7 @@ services:
       dockerfile: ../docker/frontend/Dockerfile
     ports:
       - "5173:5173"
+      - "3001:3001"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -56,19 +57,6 @@ services:
       - family-budget-network
     command: --default-authentication-plugin=mysql_native_password
 
-  # 開発用データベース管理ツール (phpMyAdmin)
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - "8081:80"
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=root
-    depends_on:
-      - db
-    networks:
-      - family-budget-network
 
 volumes:
   mysql_data:

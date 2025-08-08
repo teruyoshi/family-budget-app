@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
 
 # デフォルトターゲット
 help:
@@ -23,6 +23,11 @@ help:
 	@echo "  make format-frontend - フロントエンドコードフォーマット実行"
 	@echo "  make format-check   - 全コードフォーマットチェック実行"
 	@echo "  make format-check-frontend - フロントエンドフォーマットチェック実行"
+	@echo "  make build-frontend - フロントエンドビルド実行"
+	@echo "  make docs-frontend  - フロントエンドドキュメント生成"
+	@echo "  make docs-clean-frontend - フロントエンドドキュメント削除"
+	@echo "  make docs-serve-frontend - フロントエンドドキュメントサーバー起動（バックグラウンド） (http://localhost:3001)"
+	@echo "  make docs-stop-frontend  - フロントエンドドキュメントサーバー停止"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
 	@echo "  make npm-version-minor  - マイナーバージョンを上げる"
@@ -113,6 +118,33 @@ format:
 format-frontend:
 	@echo "フロントエンドコードをフォーマット中..."
 	docker compose exec frontend npm run format
+
+# フロントエンドビルド
+build-frontend:
+	@echo "フロントエンドをビルド中..."
+	docker compose exec frontend npm run build
+
+# フロントエンドドキュメント生成
+docs-frontend:
+	@echo "フロントエンドドキュメントを生成中..."
+	docker compose exec frontend npm run docs
+
+# フロントエンドドキュメント削除
+docs-clean-frontend:
+	@echo "フロントエンドドキュメントを削除中..."
+	docker compose exec frontend npm run docs:clean
+
+# フロントエンドドキュメントサーバー起動（バックグラウンド）
+docs-serve-frontend:
+	@echo "フロントエンドドキュメントサーバーをバックグラウンドで起動中..."
+	@echo "ドキュメントは http://localhost:3001 で閲覧できます"
+	@echo "停止する場合は: make docs-stop-frontend"
+	docker compose exec -d frontend npm run docs:serve
+
+# フロントエンドドキュメントサーバー停止
+docs-stop-frontend:
+	@echo "ドキュメントサーバーを停止中..."
+	docker compose exec frontend pkill -f "serve docs"
 
 # フォーマットチェック実行
 format-check:
