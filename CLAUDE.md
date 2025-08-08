@@ -65,6 +65,7 @@ make backend-shell        # バックエンドコンテナ接続
 frontend/
 ├── src/
 │   ├── components/common/        # 汎用コンポーネント（JSDoc完備）
+│   │   ├── __stories__/         # Storybookストーリーファイル
 │   │   ├── AmountInput.tsx      # 金額入力（¥フォーマット対応）
 │   │   ├── AmountText.tsx       # 金額表示
 │   │   ├── AppTitle.tsx         # アプリタイトル
@@ -74,21 +75,27 @@ frontend/
 │   │   └── TransactionForm.tsx  # 取引フォーム統合
 │   ├── features/
 │   │   ├── balance/             # 残高表示機能
-│   │   │   └── components/BalanceDisplay.tsx
+│   │   │   └── components/
+│   │   │       ├── __stories__/ # Storybookストーリーファイル
+│   │   │       └── BalanceDisplay.tsx
 │   │   ├── expenses/            # 支出管理機能
 │   │   │   └── components/
+│   │   │       ├── __stories__/ # Storybookストーリーファイル
 │   │   │       ├── ExpenseForm.tsx
 │   │   │       ├── ExpenseInput.tsx
 │   │   │       └── TotalExpenseDisplay.tsx
 │   │   ├── income/              # 収入管理機能
 │   │   │   └── components/
+│   │   │       ├── __stories__/ # Storybookストーリーファイル
 │   │   │       ├── IncomeForm.tsx
 │   │   │       ├── IncomeInput.tsx
 │   │   │       └── TotalIncomeDisplay.tsx
 │   │   └── history/             # 履歴表示機能
+│   │       ├── __stories__/     # Storybookストーリーファイル
 │   │       ├── ExpenseHistory.tsx
 │   │       ├── IncomeHistory.tsx
 │   │       └── common/          # 履歴共通コンポーネント
+│   │           ├── __stories__/ # Storybookストーリーファイル
 │   │           ├── HistoryItem.tsx
 │   │           └── HistoryList.tsx    # 日付グループ化対応
 │   ├── hooks/

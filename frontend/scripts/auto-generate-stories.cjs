@@ -152,7 +152,11 @@ function getDefaultValue(type, propName) {
     if (propName.toLowerCase().includes('label')) return 'ラベル';
     return 'テキスト';
   }
-  if (type.includes('number')) return 0;
+  if (type.includes('number')) {
+    if (propName.toLowerCase().includes('amount') || propName.toLowerCase().includes('balance')) return 1000;
+    if (propName.toLowerCase().includes('total')) return 5000;
+    return 0;
+  }
   if (type.includes('boolean')) return false;
   if (type.includes('Date')) return 'new Date()';
   if (type.includes('()') || type.includes('=>')) return '() => console.log("クリック")';
@@ -293,7 +297,13 @@ function main() {
     
     for (const file of files) {
       const filePath = path.join(fullDir, file);
-      const storyPath = path.join(fullDir, file.replace('.tsx', '.stories.tsx'));
+      const storiesDir = path.join(fullDir, '__stories__');
+      const storyPath = path.join(storiesDir, file.replace('.tsx', '.stories.tsx'));
+      
+      // __stories__ディレクトリが存在しない場合は作成
+      if (!fs.existsSync(storiesDir)) {
+        fs.mkdirSync(storiesDir, { recursive: true });
+      }
       
       // 既存のストーリーファイルがある場合はスキップ
       if (fs.existsSync(storyPath)) {
