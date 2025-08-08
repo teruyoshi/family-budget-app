@@ -2,22 +2,28 @@ import { useState } from 'react'
 
 /**
  * 支出データの型定義
- * アプリケーション全体で使用される支出レコードの構造を定義
+ * @typedef {Object} Expense
+ * @property {string} id - 一意識別子（タイムスタンプベース）
+ * @property {number} amount - 支出金額（正の数値）
+ * @property {string} timestamp - 登録日時（日本時間フォーマット: YYYY/MM/DD(曜日)）
  */
 export interface Expense {
-  id: string // 一意識別子（タイムスタンプベース）
-  amount: number // 支出金額（正の数値）
-  timestamp: string // 登録日時（日本時間フォーマット）
+  id: string
+  amount: number
+  timestamp: string
 }
 
 /**
  * 収入データの型定義
- * アプリケーション全体で使用される収入レコードの構造を定義
+ * @typedef {Object} Income
+ * @property {string} id - 一意識別子（タイムスタンプベース）
+ * @property {number} amount - 収入金額（正の数値）
+ * @property {string} timestamp - 登録日時（日本時間フォーマット: YYYY/MM/DD(曜日)）
  */
 export interface Income {
-  id: string // 一意識別子（タイムスタンプベース）
-  amount: number // 収入金額（正の数値）
-  timestamp: string // 登録日時（日本時間フォーマット）
+  id: string
+  amount: number
+  timestamp: string
 }
 
 /**
@@ -26,7 +32,30 @@ export interface Income {
  * 収入・支出データと残高の状態管理、各種登録処理を一元化したフックです。
  * 従来の useExpenseManager と useIncomeManager を統合し、より効率的な状態管理を実現します。
  *
- * @returns [値オブジェクト, 操作関数オブジェクト] の形式で返す
+ * @returns {[values: Object, actions: Object]} タプル形式で値オブジェクトと操作関数オブジェクトを返す
+ * @returns {Object} returns[0].values - 状態値オブジェクト
+ * @returns {Expense[]} returns[0].values.expenses - 支出データ配列（新しい順）
+ * @returns {Income[]} returns[0].values.incomes - 収入データ配列（新しい順）
+ * @returns {number} returns[0].values.balance - 現在の残高（収入 - 支出）
+ * @returns {number} returns[0].values.totalExpenseAmount - 支出合計額
+ * @returns {number} returns[0].values.totalIncomeAmount - 収入合計額
+ * @returns {Object} returns[1].actions - 操作関数オブジェクト
+ * @returns {Function} returns[1].actions.addExpense - 支出登録関数
+ * @returns {Function} returns[1].actions.addIncome - 収入登録関数
+ *
+ * @example
+ * ```typescript
+ * const [values, actions] = useBudgetManager();
+ *
+ * // 支出登録
+ * actions.addExpense(1000, '2024-01-01');
+ *
+ * // 収入登録
+ * actions.addIncome(50000, '2024-01-01');
+ *
+ * // 残高確認
+ * console.log(values.balance); // 49000
+ * ```
  */
 export function useBudgetManager() {
   const [expenses, setExpenses] = useState<Expense[]>([])
@@ -34,10 +63,15 @@ export function useBudgetManager() {
 
   /**
    * 新規支出登録ハンドラー
-   * 新しい支出をリストの先頭に追加します
+   * 新しい支出をリストの先頭に追加し、日付を日本語フォーマットに変換します
    *
-   * @param amount 支出金額
-   * @param date 支出日付（YYYY-MM-DD形式）
+   * @param {number} amount - 支出金額（正の数値）
+   * @param {string} date - 支出日付（YYYY-MM-DD形式）
+   *
+   * @example
+   * ```typescript
+   * addExpense(1500, '2024-01-15'); // 1500円の支出を登録
+   * ```
    */
   const addExpense = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換
@@ -61,10 +95,15 @@ export function useBudgetManager() {
 
   /**
    * 新規収入登録ハンドラー
-   * 新しい収入をリストの先頭に追加します
+   * 新しい収入をリストの先頭に追加し、日付を日本語フォーマットに変換します
    *
-   * @param amount 収入金額
-   * @param date 収入日付（YYYY-MM-DD形式）
+   * @param {number} amount - 収入金額（正の数値）
+   * @param {string} date - 収入日付（YYYY-MM-DD形式）
+   *
+   * @example
+   * ```typescript
+   * addIncome(50000, '2024-01-01'); // 50000円の収入を登録
+   * ```
    */
   const addIncome = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換
@@ -86,19 +125,19 @@ export function useBudgetManager() {
     setIncomes((prev) => [newIncome, ...prev]) // 最新を先頭に表示
   }
 
-  // 合計支出額の計算（リアルタイム更新）
+  // 合計支出額を計算（リアルタイム更新）
   const totalExpenseAmount = expenses.reduce(
     (sum, expense) => sum + expense.amount,
     0
   )
 
-  // 合計収入額の計算（リアルタイム更新）
+  // 合計収入額を計算（リアルタイム更新）
   const totalIncomeAmount = incomes.reduce(
     (sum, income) => sum + income.amount,
     0
   )
 
-  // 実際の残高は収入から支出を引いたもの
+  // 現在の残高を計算（収入 - 支出）
   const balance = totalIncomeAmount - totalExpenseAmount
 
   const values = {

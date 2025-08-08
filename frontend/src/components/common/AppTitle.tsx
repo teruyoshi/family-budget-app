@@ -5,6 +5,21 @@ import { Typography } from '@mui/material'
  *
  * アプリケーションのメインタイトルを表示するコンポーネント。
  * 一貫したスタイルでアプリケーション名を表示します。
+ *
+ * @component
+ * @returns {JSX.Element} センタリングされた「家計簿アプリ」タイトル
+ *
+ * @example
+ * ```tsx
+ * // アプリのヘッダー部分で使用
+ * function App() {
+ *   return (
+ *     <div>
+ *       <AppTitle />
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 function AppTitle() {
   return (
