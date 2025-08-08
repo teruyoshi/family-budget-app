@@ -19,6 +19,7 @@ interface ExpenseInputProps {
  * AmountInputをベースにした支出金額入力に特化したコンポーネントです。
  * 入力中にカンマ区切り表示され、数値として管理されます。
  *
+ * @group 支出機能
  * @component
  * @param {ExpenseInputProps} props - コンポーネントのプロパティ
  * @param {number} props.value - 現在の入力値

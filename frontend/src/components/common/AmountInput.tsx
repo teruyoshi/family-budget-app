@@ -34,6 +34,7 @@ interface AmountInputProps {
  * - TextInputをコンポジションで活用
  * - 右寄せ表示で視認性を向上
  *
+ * @group 共通コンポーネント
  * @component
  * @param {AmountInputProps} props - コンポーネントのプロパティ
  * @param {string} props.placeholder - プレースホルダーテキスト

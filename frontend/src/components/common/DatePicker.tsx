@@ -26,6 +26,7 @@ interface DatePickerProps {
  * MUI X DatePickerを使用したリッチな日付ピッカーです。
  * 日本語対応でカレンダーUIを提供し、より使いやすい日付選択を実現します。
  *
+ * @group 共通コンポーネント
  * @component
  * @param {DatePickerProps} props - コンポーネントのプロパティ
  * @param {string} props.value - 現在の日付値（YYYY-MM-DD形式の文字列）

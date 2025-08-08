@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="ドキュメント/はじめに" />
+
+# 家計簿アプリ コンポーネント設計書
+
+このStorybookでは、家計簿アプリのReactコンポーネントを実際に動かしながらドキュメントを確認できます。
+
+## 📚 ドキュメント構成
+
+### Storybook（このページ）
+- コンポーネントの動作確認
+- プロパティのインタラクティブ編集
+- 使用例とバリエーション
+
+### TypeDoc（技術仕様書）
+TypeDocで生成された詳細な技術仕様書は以下のURLで確認できます：
+
+- **開発環境**: [http://localhost:3001](http://localhost:3001)
+- **API仕様**: TypeScriptの型定義とJSDocコメント
+- **関数シグネチャ**: 詳細な引数と戻り値の型情報
+
+## 🏗️ アーキテクチャ
+
+```
+src/
+├── components/common/        # 汎用コンポーネント
+├── features/
+│   ├── balance/             # 残高表示機能
+│   ├── expenses/            # 支出管理機能
+│   ├── income/              # 収入管理機能
+│   └── history/             # 履歴表示機能
+└── hooks/                   # カスタムフック
+    └── useBudgetManager.ts  # 統合家計簿管理
+```
+
+## 💡 使用方法
+
+1. **コンポーネント探索**: 左のサイドバーからコンポーネントを選択
+2. **プロパティ編集**: Controls タブでプロパティを動的に変更
+3. **コード参照**: Docs タブで詳細なドキュメントを確認
+4. **技術仕様**: TypeDocリンクから型定義を参照
+
+## 🔗 関連リンク
+
+- [TypeDoc技術仕様書](http://localhost:3001) - 型定義とAPI仕様
+- [GitHub Repository](../../../) - ソースコード
+- [開発環境](http://localhost:5173) - 実際のアプリ

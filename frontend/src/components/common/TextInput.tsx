@@ -13,6 +13,7 @@ import type { SxProps, Theme } from '@mui/material'
  * - Composition: MUIコンポーネントを合成して機能を提供
  * - Reusability: 型安全で再利用可能な設計
  *
+ * @group 共通コンポーネント
  * @component
  * @param {TextInputProps} props - コンポーネントのプロパティ
  * @param {'text' | 'number' | 'email' | 'password'} props.type - 入力フィールドのタイプ

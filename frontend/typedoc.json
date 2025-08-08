@@ -1,6 +1,14 @@
 {
-  "entryPoints": ["src"],
-  "entryPointStrategy": "expand",
+  "entryPoints": [
+    "src/components/common/*.tsx",
+    "src/features/balance/components/*.tsx",
+    "src/features/expenses/components/*.tsx", 
+    "src/features/income/components/*.tsx",
+    "src/features/history/*.tsx",
+    "src/features/history/common/*.tsx",
+    "src/hooks/*.ts"
+  ],
+  "entryPointStrategy": "resolve",
   "out": "docs",
   "exclude": [
     "**/*.test.ts",
@@ -10,6 +18,7 @@
     "**/build/**"
   ],
   "theme": "default",
+  "customCss": "./typedoc-custom.css",
   "name": "🏠 家計簿アプリ - APIドキュメント",
   "excludeExternals": true,
   "excludePrivate": false,
@@ -20,22 +29,33 @@
   "readme": "none",
   "navigation": {
     "includeCategories": true,
-    "includeGroups": true
+    "includeGroups": true,
+    "includeFolders": true
   },
   "categorizeByGroup": true,
   "kindSortOrder": [
     "Project",
-    "Module",
+    "Module", 
     "Namespace",
-    "Enum",
     "Class",
     "Interface",
     "TypeAlias",
-    "Constructor",
-    "Property",
     "Variable",
-    "Function",
-    "Accessor",
-    "Method"
+    "Function"
+  ],
+  "modifierTags": [
+    "@component"
+  ],
+  "sidebarLinks": {
+    "GitHub": "https://github.com/user/family-budget-app",
+    "🎨 Storybook": "http://localhost:6006"
+  },
+  "groupOrder": [
+    "共通コンポーネント",
+    "残高機能", 
+    "支出機能",
+    "収入機能",
+    "履歴機能",
+    "カスタムフック"
   ]
 }

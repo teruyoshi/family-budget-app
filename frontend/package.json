@@ -13,7 +13,10 @@
     "test": "jest",
     "docs": "typedoc",
     "docs:clean": "rm -rf docs",
-    "docs:serve": "serve docs -p 3001"
+    "docs:serve": "serve docs -p 3001",
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
+    "build-storybook": "storybook build",
+    "generate-stories": "node scripts/auto-generate-stories.cjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -45,10 +48,20 @@
     "jest-environment-jsdom": "^30.0.5",
     "prettier": "^3.6.2",
     "serve": "^14.2.4",
+    "@storybook/addon-docs": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/addon-links": "^8.6.14",
+    "@storybook/addon-onboarding": "^8.6.14",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test": "^8.6.14",
+    "storybook": "^8.6.14",
     "ts-jest": "^29.4.1",
     "typedoc": "^0.28.9",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.4"
+    "vite": "^5.4.10"
   }
 }

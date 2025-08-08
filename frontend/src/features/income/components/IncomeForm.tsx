@@ -15,6 +15,7 @@ interface IncomeFormProps {
  * 収入金額の入力から登録までを担当するコンテナコンポーネントです。
  * TransactionFormを使用して共通のフォーム構造とバリデーションを提供します。
  *
+ * @group 収入機能
  * @component
  * @param {IncomeFormProps} props - コンポーネントのプロパティ
  * @param {Function} [props.onSubmit] - フォーム送信時のコールバック関数(amount: number, date: string) => void

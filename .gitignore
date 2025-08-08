@@ -53,6 +53,9 @@ jsdoc/
 out/
 documentation/
 
+# Storybook build outputs
+storybook-static/
+
 # IDE/Editor files
 .vscode/
 .idea/

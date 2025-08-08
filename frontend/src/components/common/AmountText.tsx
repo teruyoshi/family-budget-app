@@ -18,6 +18,7 @@ interface AmountTextProps {
  * 金額を¥1,000形式で表示する専用コンポーネント。
  * Material-UIのTypographyを使用してフォーマット済みの金額を表示します。
  *
+ * @group 共通コンポーネント
  * @component
  * @param {AmountTextProps} props - コンポーネントのプロパティ
  * @param {number} props.amount - 表示する金額（数値）

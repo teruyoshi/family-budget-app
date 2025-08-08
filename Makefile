@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
 
 # デフォルトターゲット
 help:
@@ -28,6 +28,10 @@ help:
 	@echo "  make docs-clean-frontend - フロントエンドドキュメント削除"
 	@echo "  make docs-serve-frontend - フロントエンドドキュメントサーバー起動（バックグラウンド） (http://localhost:3001)"
 	@echo "  make docs-stop-frontend  - フロントエンドドキュメントサーバー停止"
+	@echo "  make storybook-frontend  - Storybookサーバー起動（バックグラウンド） (http://localhost:6006)"
+	@echo "  make storybook-stop-frontend - Storybookサーバー停止"
+	@echo "  make generate-stories-frontend - JSDocからStorybookストーリー自動生成"
+	@echo "  make docs-dev-frontend   - TypeDoc + Storybook 両方起動（開発モード）"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
 	@echo "  make npm-version-minor  - マイナーバージョンを上げる"
@@ -145,6 +149,45 @@ docs-serve-frontend:
 docs-stop-frontend:
 	@echo "ドキュメントサーバーを停止中..."
 	docker compose exec frontend pkill -f "serve docs"
+
+# Storybookサーバー起動（バックグラウンド）
+storybook-frontend:
+	@echo "Storybookサーバーをバックグラウンドで起動中..."
+	@echo "Storybookは http://localhost:6006 で閲覧できます"
+	@echo "停止する場合は: make storybook-stop-frontend"
+	docker compose exec -d frontend npm run storybook
+
+# Storybookサーバー停止
+storybook-stop-frontend:
+	@echo "Storybookサーバーを停止中..."
+	docker compose exec frontend pkill -f "storybook"
+
+# JSDocからStorybookストーリー自動生成
+generate-stories-frontend:
+	@echo "JSDocコメントからStorybookストーリーを自動生成中..."
+	docker compose exec frontend npm run generate-stories
+	@echo "ストーリー生成が完了しました！"
+
+# TypeDoc + Storybook 連携開発モード
+docs-dev-frontend:
+	@echo "==================================================="
+	@echo "📚 ドキュメント開発モードを起動中..."
+	@echo "==================================================="
+	@echo "1. TypeDocドキュメント生成中..."
+	$(MAKE) docs-frontend
+	@echo "2. TypeDocサーバーをバックグラウンドで起動中..."
+	$(MAKE) docs-serve-frontend
+	@echo ""
+	@echo "🎯 ドキュメント連携が完了しました！"
+	@echo ""
+	@echo "📖 TypeDoc（技術仕様書）: http://localhost:3001"
+	@echo "🎨 Storybook（コンポーネント）: http://localhost:6006"
+	@echo ""
+	@echo "⚡ 両方でコンポーネントドキュメントを確認できます"
+	@echo "⚡ StorybookからTypeDocへ、TypeDocからStorybookへリンク可能"
+	@echo ""
+	@echo "Storybookサーバーをバックグラウンドで起動中..."
+	docker compose exec -d frontend npm run storybook
 
 # フォーマットチェック実行
 format-check:

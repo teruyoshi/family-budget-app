@@ -17,6 +17,7 @@ interface BalanceDisplayProps {
  * 現在の残高を中央揃えで表示します。残高は緑色で強調表示され、
  * 「残高」ラベルと金額が横並びで配置されます。
  *
+ * @group 残高機能
  * @component
  * @param {BalanceDisplayProps} props - コンポーネントのプロパティ
  * @param {number} props.balance - 表示する残高金額（正負両方対応）

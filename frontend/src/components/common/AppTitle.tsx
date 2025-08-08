@@ -6,6 +6,7 @@ import { Typography } from '@mui/material'
  * アプリケーションのメインタイトルを表示するコンポーネント。
  * 一貫したスタイルでアプリケーション名を表示します。
  *
+ * @group 共通コンポーネント
  * @component
  * @returns {JSX.Element} センタリングされた「家計簿アプリ」タイトル
  *

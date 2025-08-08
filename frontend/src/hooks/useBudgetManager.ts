@@ -32,6 +32,7 @@ export interface Income {
  * 収入・支出データと残高の状態管理、各種登録処理を一元化したフックです。
  * 従来の useExpenseManager と useIncomeManager を統合し、より効率的な状態管理を実現します。
  *
+ * @group カスタムフック
  * @returns {[values: Object, actions: Object]} タプル形式で値オブジェクトと操作関数オブジェクトを返す
  * @returns {Object} returns[0].values - 状態値オブジェクト
  * @returns {Expense[]} returns[0].values.expenses - 支出データ配列（新しい順）

@@ -20,6 +20,7 @@ interface TextLabelProps {
  * Material-UIのTypographyをラップして再利用可能にしています。
  * childrenの後にコロンを自動で付与します。
  *
+ * @group 共通コンポーネント
  * @component
  * @param {TextLabelProps} props - コンポーネントのプロパティ
  * @param {ReactNode} props.children - 表示するコンテンツ

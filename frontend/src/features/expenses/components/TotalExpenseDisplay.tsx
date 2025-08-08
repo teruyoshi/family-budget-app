@@ -17,6 +17,7 @@ interface TotalExpenseDisplayProps {
  * 合計支出金額を中央揃えで表示します。金額はプライマリカラーで強調表示され、
  * 「合計支出」ラベルと金額が横並びで配置されます。
  *
+ * @group 支出機能
  * @component
  * @param {TotalExpenseDisplayProps} props - コンポーネントのプロパティ
  * @param {number} props.totalAmount - 表示する合計支出金額

@@ -1,0 +1,42 @@
+/* TypeDoc カスタムCSS - シンプルなカテゴリ別リスト */
+
+/* サイドバーの基本設定 */
+.tsd-navigation {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* サイドバー幅の調整 */
+.col-sidebar {
+  width: 300px !important;
+}
+
+.col-content {
+  margin-left: 300px !important;
+}
+
+/* アイコン付きコンポーネント名 */
+.tsd-navigation a[href*="AmountInput"]::before { content: "💰 "; }
+.tsd-navigation a[href*="AmountText"]::before { content: "💰 "; }
+.tsd-navigation a[href*="AppTitle"]::before { content: "🏠 "; }
+.tsd-navigation a[href*="DatePicker"]::before { content: "📅 "; }
+.tsd-navigation a[href*="TextInput"]::before { content: "📝 "; }
+.tsd-navigation a[href*="TextLabel"]::before { content: "🏷️ "; }
+.tsd-navigation a[href*="TransactionForm"]::before { content: "📋 "; }
+
+/* フィーチャーコンポーネント */
+.tsd-navigation a[href*="BalanceDisplay"]::before { content: "💰 "; }
+.tsd-navigation a[href*="ExpenseForm"]::before,
+.tsd-navigation a[href*="ExpenseInput"]::before,
+.tsd-navigation a[href*="TotalExpenseDisplay"]::before { content: "💸 "; }
+.tsd-navigation a[href*="IncomeForm"]::before,
+.tsd-navigation a[href*="IncomeInput"]::before,
+.tsd-navigation a[href*="TotalIncomeDisplay"]::before { content: "💵 "; }
+.tsd-navigation a[href*="History"]::before { content: "📊 "; }
+
+/* フック */
+.tsd-navigation a[href*="useBudgetManager"]::before { content: "🪝 "; }
+
+/* Component Kind のスタイル */
+.tsd-kind-component > .tsd-kind-icon::before { content: "⚛️"; }
+.tsd-navigation .tsd-kind-component > a::before { content: "⚛️ "; }
+

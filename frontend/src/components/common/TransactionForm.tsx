@@ -44,6 +44,7 @@ interface TransactionFormProps {
  * - Controlled Component: React状態で入力を制御
  * - Flexible Interface: 日付選択の有無を動的に制御
  *
+ * @group 共通コンポーネント
  * @component
  * @param {TransactionFormProps} props - コンポーネントのプロパティ
  * @param {string} props.placeholder - 金額入力フィールドのプレースホルダーテキスト
