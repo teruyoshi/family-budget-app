@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ExpenseInput from '../ExpenseInput';
+import type { Meta, StoryObj } from '@storybook/react'
+import ExpenseInput from '../ExpenseInput'
 
 const meta: Meta<typeof ExpenseInput> = {
   title: '支出機能/ExpenseInput',
@@ -33,10 +33,10 @@ const meta: Meta<typeof ExpenseInput> = {
       description: 'placeholderプロパティ (任意)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
@@ -44,5 +44,4 @@ export const Default: Story = {
     onChange: 0,
     placeholder: 'プレースホルダーテキスト',
   },
-};
-
+}

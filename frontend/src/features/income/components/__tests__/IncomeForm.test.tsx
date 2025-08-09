@@ -22,14 +22,16 @@ describe('IncomeForm', () => {
 
   test('トグルスイッチを有効にすると日付ピッカーが表示される', () => {
     render(<IncomeForm />)
-    
+
     // 最初は日付ピッカーが非表示
-    expect(screen.queryByRole('group', { name: '収入日付' })).not.toBeInTheDocument()
-    
+    expect(
+      screen.queryByRole('group', { name: '収入日付' })
+    ).not.toBeInTheDocument()
+
     // トグルスイッチをクリック
     const dateToggle = screen.getByRole('switch', { name: '日付を指定する' })
     fireEvent.click(dateToggle)
-    
+
     // 日付ピッカーが表示される
     expect(screen.getByRole('group', { name: '収入日付' })).toBeInTheDocument()
   })

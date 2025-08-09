@@ -104,11 +104,7 @@ function TransactionForm({
       />
 
       {useCustomDate && (
-        <DatePicker
-          label={datePickerLabel}
-          value={date}
-          onChange={setDate}
-        />
+        <DatePicker label={datePickerLabel} value={date} onChange={setDate} />
       )}
 
       <AmountInput

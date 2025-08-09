@@ -22,5 +22,11 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+    rollupOptions: {
+      external: (id) => {
+        // __stories__ ディレクトリのファイルをビルドから除外
+        return id.includes('__stories__')
+      },
+    },
   },
 })

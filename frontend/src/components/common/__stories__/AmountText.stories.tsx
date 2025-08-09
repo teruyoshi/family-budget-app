@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import AmountText from '../AmountText';
+import type { Meta, StoryObj } from '@storybook/react'
+import AmountText from '../AmountText'
 
 const meta: Meta<typeof AmountText> = {
   title: '共通コンポーネント/AmountText',
@@ -29,16 +29,16 @@ const meta: Meta<typeof AmountText> = {
       description: 'スタイルオブジェクト (任意)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     amount: 1000,
   },
-};
+}
 
 export const Variants: Story = {
   render: () => (
@@ -55,4 +55,4 @@ export const Variants: Story = {
       },
     },
   },
-};
+}

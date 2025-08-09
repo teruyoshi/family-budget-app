@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ExpenseForm from '../ExpenseForm';
+import type { Meta, StoryObj } from '@storybook/react'
+import ExpenseForm from '../ExpenseForm'
 
 const meta: Meta<typeof ExpenseForm> = {
   title: '支出機能/ExpenseForm',
@@ -29,11 +29,9 @@ TransactionFormを使用して共通のフォーム構造とバリデーショ�
       description: 'onSubmitプロパティ (任意)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-};
-
+export const Default: Story = {}

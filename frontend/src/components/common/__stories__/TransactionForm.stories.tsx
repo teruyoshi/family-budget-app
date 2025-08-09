@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import TransactionForm from '../TransactionForm';
+import type { Meta, StoryObj } from '@storybook/react'
+import TransactionForm from '../TransactionForm'
 
 const meta: Meta<typeof TransactionForm> = {
   title: '共通コンポーネント/TransactionForm',
@@ -27,7 +27,7 @@ const meta: Meta<typeof TransactionForm> = {
     buttonColor: {
       control: 'select',
       description: '登録ボタンの色テーマ (必須)',
-      options: ["error","success"],
+      options: ['error', 'success'],
     },
     datePickerLabel: {
       control: 'text',
@@ -38,10 +38,10 @@ const meta: Meta<typeof TransactionForm> = {
       description: 'フォーム送信時のコールバック関数 (任意)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
@@ -50,5 +50,4 @@ export const Default: Story = {
     buttonColor: undefined,
     datePickerLabel: 'ラベル',
   },
-};
-
+}

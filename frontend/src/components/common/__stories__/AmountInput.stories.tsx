@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import AmountInput from '../AmountInput';
+import type { Meta, StoryObj } from '@storybook/react'
+import AmountInput from '../AmountInput'
 
 const meta: Meta<typeof AmountInput> = {
   title: '共通コンポーネント/AmountInput',
@@ -43,13 +43,13 @@ const meta: Meta<typeof AmountInput> = {
     variant: {
       control: 'select',
       description: '入力フィールドのバリアント (任意)',
-      options: ["outlined","filled","standard"],
+      options: ['outlined', 'filled', 'standard'],
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
@@ -57,7 +57,7 @@ export const Default: Story = {
     value: 0,
     onChange: 0,
   },
-};
+}
 
 export const Variants: Story = {
   render: () => (
@@ -74,4 +74,4 @@ export const Variants: Story = {
       },
     },
   },
-};
+}
