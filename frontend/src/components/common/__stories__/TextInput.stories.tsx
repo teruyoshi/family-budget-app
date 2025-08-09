@@ -85,16 +85,16 @@ export const Default: Story = {
   args: {
     placeholder: 'プレースホルダーテキスト',
     value: 'テキスト',
-    onChange: 'テキスト',
+    onChange: (value: string) => console.log('Changed:', value),
   },
 }
 
 export const Variants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      <TextInput value={'テキスト'} onChange={'テキスト'} variant="outlined" />
-      <TextInput value={'テキスト'} onChange={'テキスト'} variant="filled" />
-      <TextInput value={'テキスト'} onChange={'テキスト'} variant="standard" />
+      <TextInput value={'テキスト'} onChange={(value) => console.log('Outlined:', value)} variant="outlined" />
+      <TextInput value={'テキスト'} onChange={(value) => console.log('Filled:', value)} variant="filled" />
+      <TextInput value={'テキスト'} onChange={(value) => console.log('Standard:', value)} variant="standard" />
     </div>
   ),
   parameters: {
