@@ -25,26 +25,10 @@ interface AmountInputProps {
 /**
  * 金額入力専用コンポーネント
  *
- * TextInputをベースに金額入力に特化した機能を提供します。
- * 入力中にカンマ区切りで表示し、実際の値は数値として管理します。
- *
- * 特徴:
- * - 入力中に自動的にカンマ区切り + 円マーク表示（1000 → ¥1,000）
- * - 内部的には数値として管理
- * - TextInputをコンポジションで活用
- * - 右寄せ表示で視認性を向上
+ * 自動的にカンマ区切りと円マーク表示を行い、右寄せで表示します。
+ * 入力値は数値として管理され、TextInputをベースに構築されています。
  *
  * @group 共通コンポーネント
- * @component
- * @param {AmountInputProps} props - コンポーネントのプロパティ
- * @param {string} props.placeholder - プレースホルダーテキスト
- * @param {number} props.value - 現在の金額（数値）
- * @param {function} props.onChange - 金額変更時のコールバック関数
- * @param {SxProps<Theme>} props.sx - スタイルオブジェクト
- * @param {boolean} props.required - 必須項目かどうか
- * @param {boolean} props.fullWidth - 全幅で表示するかどうか
- * @param {'outlined' | 'filled' | 'standard'} props.variant - 入力フィールドのバリアント
- * @returns {JSX.Element} 金額フォーマット機能付きのテキスト入力コンポーネント
  *
  * @example
  * // 基本的な使用例
@@ -79,21 +63,13 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
   ) => {
     const [displayValue, setDisplayValue] = useState<string>('')
 
-    /**
-     * 数値を表示用文字列に変換（カンマ区切り + 円マーク）
-     * @param {number} num - 変換する数値
-     * @returns {string} フォーマット済みの文字列（¥1,000形式）、0またはNaNの場合は空文字列
-     */
+    /** 数値を¥1,000形式の文字列に変換 */
     const formatNumber = (num: number): string => {
       if (isNaN(num) || num === 0) return ''
       return `¥${num.toLocaleString()}`
     }
 
-    /**
-     * 表示用文字列を数値に変換（カンマと円マークを除去）
-     * @param {string} str - 変換する文字列
-     * @returns {number} 抽出された数値、数字がない場合は0
-     */
+    /** 表示用文字列から数値を抽出 */
     const parseNumber = (str: string): number => {
       const cleaned = str.replace(/[^0-9]/g, '')
       return cleaned === '' ? 0 : parseInt(cleaned, 10)
@@ -104,10 +80,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
       setDisplayValue(formatNumber(value))
     }, [value])
 
-    /**
-     * 入力値変更ハンドラー
-     * @param {string} inputValue - 入力された値
-     */
+    /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
     const handleChange = (inputValue: string) => {
       // 数字以外を除去
       const numericValue = parseNumber(inputValue)

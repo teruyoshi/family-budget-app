@@ -16,7 +16,8 @@
     "docs:serve": "serve docs -p 3001",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
     "build-storybook": "storybook build",
-    "generate-stories": "node scripts/auto-generate-stories.cjs"
+    "generate-stories": "node scripts/auto-generate-stories.cjs",
+    "generate-stories:force": "node scripts/auto-generate-stories.cjs --force"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

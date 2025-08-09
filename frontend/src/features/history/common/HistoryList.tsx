@@ -111,3 +111,5 @@ export function HistoryList({
     </Paper>
   )
 }
+
+export default HistoryList

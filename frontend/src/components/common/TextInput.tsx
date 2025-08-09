@@ -5,26 +5,9 @@ import type { SxProps, Theme } from '@mui/material'
 /**
  * 汎用テキスト入力コンポーネント
  *
- * MUI TextFieldをラップした再利用可能なコンポーネントです。
- * プロジェクト全体で一貫したスタイリングとAPI設計を提供します。
- *
- * 設計原則:
- * - Single Responsibility: 入力機能のみに責任を持つ
- * - Composition: MUIコンポーネントを合成して機能を提供
- * - Reusability: 型安全で再利用可能な設計
+ * MUI TextFieldをラップし、プロジェクト全体で一貫したAPIを提供します。
  *
  * @group 共通コンポーネント
- * @component
- * @param {TextInputProps} props - コンポーネントのプロパティ
- * @param {'text' | 'number' | 'email' | 'password'} props.type - 入力フィールドのタイプ
- * @param {string} props.placeholder - プレースホルダーテキスト
- * @param {string} props.value - 現在の入力値
- * @param {function} props.onChange - 値変更時のコールバック関数
- * @param {SxProps<Theme>} props.sx - スタイルオブジェクト
- * @param {boolean} props.required - 必須項目かどうか
- * @param {boolean} props.fullWidth - 全幅で表示するかどうか
- * @param {'outlined' | 'filled' | 'standard'} props.variant - 入力フィールドのバリアント
- * @returns {JSX.Element} Material-UIのTextFieldをラップしたテキスト入力コンポーネント
  *
  * @example
  * // 基本使用例

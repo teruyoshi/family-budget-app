@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import AmountInput from './AmountInput';
+import AmountInput from '../AmountInput';
 
 const meta: Meta<typeof AmountInput> = {
   title: '共通コンポーネント/AmountInput',
@@ -8,9 +8,9 @@ const meta: Meta<typeof AmountInput> = {
     layout: 'centered',
     docs: {
       description: {
-        component: `金額入力専用のコンポーネントです。¥マークの表示と数値フォーマット機能を内蔵しています。
+        component: `金額入力コンポーネントのProps型定義
         
-詳細な技術仕様は [TypeDoc](http://localhost:3001/modules/components_common_AmountInput.html) で確認できます。`,
+詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
       },
     },
   },
@@ -18,24 +18,32 @@ const meta: Meta<typeof AmountInput> = {
   argTypes: {
     placeholder: {
       control: 'text',
-      description: 'プレースホルダーテキスト',
+      description: 'プレースホルダーテキスト (任意)',
     },
     value: {
       control: 'number',
-      description: '現在の金額（数値）',
+      description: '現在の金額（数値） (必須)',
+    },
+    onChange: {
+      control: 'number',
+      description: '金額変更時のコールバック関数 (必須)',
+    },
+    sx: {
+      control: 'object',
+      description: 'スタイルオブジェクト (任意)',
     },
     required: {
       control: 'boolean',
-      description: '必須項目かどうか',
+      description: '必須項目かどうか (任意)',
     },
     fullWidth: {
-      control: 'boolean', 
-      description: '全幅で表示するかどうか',
+      control: 'boolean',
+      description: '全幅で表示するかどうか (任意)',
     },
     variant: {
       control: 'select',
-      options: ['outlined', 'filled', 'standard'],
-      description: '入力フィールドのバリアント',
+      description: '入力フィールドのバリアント (任意)',
+      options: ["outlined","filled","standard"],
     },
   },
 };
@@ -45,37 +53,25 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    placeholder: '金額を入力してください',
+    placeholder: 'プレースホルダーテキスト',
     value: 0,
-    onChange: (value: number) => console.log('Amount changed:', value),
+    onChange: () => {},
   },
 };
 
-export const WithValue: Story = {
-  args: {
-    placeholder: '金額を入力してください',
-    value: 10000,
-    onChange: (value: number) => console.log('Amount changed:', value),
-  },
-};
-
-export const Required: Story = {
-  args: {
-    placeholder: '必須項目です',
-    value: 0,
-    required: true,
-    onChange: (value: number) => console.log('Amount changed:', value),
-  },
-};
-
-export const FullWidth: Story = {
-  args: {
-    placeholder: '全幅表示',
-    value: 5000,
-    fullWidth: true,
-    onChange: (value: number) => console.log('Amount changed:', value),
-  },
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <AmountInput value={1000} onChange={() => {}} variant="outlined" placeholder="金額を入力" />
+      <AmountInput value={2000} onChange={() => {}} variant="filled" placeholder="金額を入力" />
+      <AmountInput value={3000} onChange={() => {}} variant="standard" placeholder="金額を入力" />
+    </div>
+  ),
   parameters: {
-    layout: 'padded',
+    docs: {
+      description: {
+        story: 'バリアントの表示例',
+      },
+    },
   },
 };

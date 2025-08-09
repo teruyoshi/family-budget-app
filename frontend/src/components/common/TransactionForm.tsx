@@ -27,32 +27,10 @@ interface TransactionFormProps {
 /**
  * 取引登録フォーム共通コンポーネント
  *
- * 支出・収入登録フォームの共通部分を汎化したコンポーネントです。
- * 金額入力、日付入力（オプション）、登録ボタンを提供します。
- * トグルスイッチで日付選択の有効/無効を切り替え可能です。
- *
- * 機能:
- * - 取引金額の状態管理
- * - 日付入力機能（トグルで制御）
- * - 日付選択無効時は自動的に今日の日付を使用
- * - フォーム送信時のバリデーション（正の数値チェック）
- * - 送信後のフォームリセット
- * - カスタマイズ可能なボタンスタイリング
- *
- * 設計パターン:
- * - Generic Component: 支出・収入両方で再利用可能
- * - Controlled Component: React状態で入力を制御
- * - Flexible Interface: 日付選択の有無を動的に制御
+ * 支出・収入登録フォームの共通部分を提供します。
+ * 金額入力、日付選択（トグル制御）、登録ボタンを含みます。
  *
  * @group 共通コンポーネント
- * @component
- * @param {TransactionFormProps} props - コンポーネントのプロパティ
- * @param {string} props.placeholder - 金額入力フィールドのプレースホルダーテキスト
- * @param {string} props.buttonText - 登録ボタンのテキスト
- * @param {'error' | 'success'} props.buttonColor - 登録ボタンの色テーマ
- * @param {string} props.datePickerLabel - 日付選択フィールドのラベル
- * @param {function} props.onSubmit - フォーム送信時のコールバック関数
- * @returns {JSX.Element} 金額・日付入力と登録ボタンを含む汎用取引フォーム
  *
  * @example
  * // 支出フォーム
@@ -88,10 +66,7 @@ function TransactionForm({
   )
   const [useCustomDate, setUseCustomDate] = useState(false)
 
-  /**
-   * フォーム送信ハンドラー
-   * @param {React.FormEvent} e - フォーム送信イベント
-   */
+  /** フォーム送信処理：金額バリデーションと日付設定を実行 */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 

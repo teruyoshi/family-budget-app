@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import AppTitle from './AppTitle';
+import AppTitle from '../AppTitle';
 
 const meta: Meta<typeof AppTitle> = {
   title: '共通コンポーネント/AppTitle',
@@ -8,9 +8,25 @@ const meta: Meta<typeof AppTitle> = {
     layout: 'centered',
     docs: {
       description: {
-        component: `アプリケーションのタイトルを表示するコンポーネントです。統一されたスタイリングを提供します。
+        component: `アプリタイトルコンポーネント
+アプリケーションのメインタイトルを表示するコンポーネント。
+一貫したスタイルでアプリケーション名を表示します。
+@group 共通コンポーネント
+@component
+@returns {JSX.Element} センタリングされた「家計簿アプリ」タイトル
+@example
+\`\`\`tsx
+// アプリのヘッダー部分で使用
+function App() {
+  return (
+    <div>
+      <AppTitle />
+    </div>
+  );
+}
+\`\`\`
         
-詳細な技術仕様は [TypeDoc](http://localhost:3001/modules/components_common_AppTitle.html) で確認できます。`,
+詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
       },
     },
   },
@@ -20,15 +36,6 @@ const meta: Meta<typeof AppTitle> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const InHeader: Story = {
-  parameters: {
-    layout: 'padded',
-    docs: {
-      description: {
-        story: 'ヘッダー領域での使用例',
-      },
-    },
-  },
+export const Default: Story = {
 };
+

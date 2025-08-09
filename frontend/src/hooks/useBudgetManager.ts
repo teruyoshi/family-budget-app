@@ -1,25 +1,13 @@
 import { useState } from 'react'
 
-/**
- * 支出データの型定義
- * @typedef {Object} Expense
- * @property {string} id - 一意識別子（タイムスタンプベース）
- * @property {number} amount - 支出金額（正の数値）
- * @property {string} timestamp - 登録日時（日本時間フォーマット: YYYY/MM/DD(曜日)）
- */
+/** 支出データの型定義 */
 export interface Expense {
   id: string
   amount: number
   timestamp: string
 }
 
-/**
- * 収入データの型定義
- * @typedef {Object} Income
- * @property {string} id - 一意識別子（タイムスタンプベース）
- * @property {number} amount - 収入金額（正の数値）
- * @property {string} timestamp - 登録日時（日本時間フォーマット: YYYY/MM/DD(曜日)）
- */
+/** 収入データの型定義 */
 export interface Income {
   id: string
   amount: number
@@ -29,20 +17,11 @@ export interface Income {
 /**
  * 統合家計簿管理カスタムフック
  *
- * 収入・支出データと残高の状態管理、各種登録処理を一元化したフックです。
- * 従来の useExpenseManager と useIncomeManager を統合し、より効率的な状態管理を実現します。
+ * 収入・支出データと残高の状態管理を一元化します。
+ * タプル形式で[値オブジェクト, 操作関数オブジェクト]を返します。
  *
  * @group カスタムフック
- * @returns {[values: Object, actions: Object]} タプル形式で値オブジェクトと操作関数オブジェクトを返す
- * @returns {Object} returns[0].values - 状態値オブジェクト
- * @returns {Expense[]} returns[0].values.expenses - 支出データ配列（新しい順）
- * @returns {Income[]} returns[0].values.incomes - 収入データ配列（新しい順）
- * @returns {number} returns[0].values.balance - 現在の残高（収入 - 支出）
- * @returns {number} returns[0].values.totalExpenseAmount - 支出合計額
- * @returns {number} returns[0].values.totalIncomeAmount - 収入合計額
- * @returns {Object} returns[1].actions - 操作関数オブジェクト
- * @returns {Function} returns[1].actions.addExpense - 支出登録関数
- * @returns {Function} returns[1].actions.addIncome - 収入登録関数
+ * @returns 値オブジェクト（expenses, incomes, balance等）と操作関数（addExpense, addIncome）のタプル
  *
  * @example
  * ```typescript

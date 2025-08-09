@@ -33,7 +33,16 @@ function analyzeComponent(filePath, content) {
   
   // JSDocコメントを抽出
   const jsDocMatch = content.match(/\/\*\*\s*([\s\S]*?)\s*\*\//);
-  const jsDocComment = jsDocMatch ? jsDocMatch[1].replace(/\s*\*\s?/g, ' ').trim() : '';
+  let jsDocComment = '';
+  if (jsDocMatch) {
+    // JSDocコメントを整形（改行とマークダウンを保持）
+    jsDocComment = jsDocMatch[1]
+      .replace(/^\s*\*\s?/gm, '') // 各行の先頭の * を削除
+      .replace(/\n\n+/g, '\n\n') // 連続する空行を1つに
+      .replace(/`/g, '\\`') // バッククォートをエスケープ
+      .replace(/\${/g, '\\${') // テンプレートリテラル変数をエスケープ
+      .trim();
+  }
   
   // propsのinterfaceを検索
   const interfacePattern = new RegExp(`interface\\s+${componentName}Props\\s*\\{([^}]*(?:\\{[^}]*\\}[^}]*)*)\\}`, 's');
@@ -105,7 +114,7 @@ function generateArgTypes(props) {
     }`;
     
     return argType;
-  }).join(',\\n');
+  }).join(',\n');
   
   return `
   argTypes: {
@@ -131,7 +140,11 @@ function generateDefaultArgs(props) {
   const args = props.filter(prop => !prop.optional || ['placeholder', 'label'].includes(prop.name))
     .map(prop => {
       let defaultValue = getDefaultValue(prop.type, prop.name);
-      if (typeof defaultValue === 'string' && !defaultValue.startsWith('()') && !defaultValue.startsWith('new ')) {
+      // 文字列値のみクォートで囲む（関数や特殊値は除く）
+      if (typeof defaultValue === 'string' && 
+          !defaultValue.startsWith('()') && 
+          !defaultValue.startsWith('new ') &&
+          defaultValue !== 'undefined') {
         defaultValue = `'${defaultValue}'`;
       }
       return `    ${prop.name}: ${defaultValue}`;
@@ -141,7 +154,7 @@ function generateDefaultArgs(props) {
   
   return `
   args: {
-${args.join(',\\n')},
+${args.join(',\n')},
   },`;
 }
 
@@ -159,7 +172,8 @@ function getDefaultValue(type, propName) {
   }
   if (type.includes('boolean')) return false;
   if (type.includes('Date')) return 'new Date()';
-  if (type.includes('()') || type.includes('=>')) return '() => console.log("クリック")';
+  if (type.includes('()') || type.includes('=>')) return '() => console.log("変更")';
+  if (propName.toLowerCase() === 'onchange') return '() => {}';
   return 'undefined';
 }
 
@@ -172,15 +186,46 @@ function generateStoryTemplate(component, category) {
   // バリエーションストーリーを生成
   const variants = [];
   
-  // 共通的なバリエーション
-  if (props.some(p => p.name === 'variant')) {
+  // 必須プロパティを取得してデフォルト値を設定
+  const requiredProps = props.filter(p => !p.optional);
+  const requiredPropsString = requiredProps.map(prop => {
+    const defaultValue = getDefaultValue(prop.type, prop.name);
+    const value = typeof defaultValue === 'string' && 
+      !defaultValue.startsWith('()') && 
+      !defaultValue.startsWith('new ') &&
+      defaultValue !== 'undefined' ? `'${defaultValue}'` : defaultValue;
+    return `${prop.name}={${value}}`;
+  }).join(' ');
+  
+  // AmountTextコンポーネント用の特別なバリエーション
+  if (name === 'AmountText') {
+    variants.push(`
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <${name} amount={1000} variant="h6" />
+      <${name} amount={5000} variant="h5" />
+      <${name} amount={25000} variant="h4" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: '異なるバリアントでの金額表示例',
+      },
+    },
+  },
+};`);
+  }
+  // 一般的なバリエーション（MUI TextFieldなど）
+  else if (props.some(p => p.name === 'variant' && p.type.includes('outlined'))) {
     variants.push(`
 export const Variants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      <${name} variant="outlined" />
-      <${name} variant="filled" />
-      <${name} variant="standard" />
+      <${name} ${requiredPropsString} variant="outlined" />
+      <${name} ${requiredPropsString} variant="filled" />
+      <${name} ${requiredPropsString} variant="standard" />
     </div>
   ),
   parameters: {
@@ -211,7 +256,7 @@ export const Disabled: Story = {
   }
   
   return `import type { Meta, StoryObj } from '@storybook/react';
-import ${name} from './${name}';
+import ${name} from '../${name}';
 
 const meta: Meta<typeof ${name}> = {
   title: '${category}/${name}',
@@ -277,10 +322,16 @@ generate-stories-frontend:
 }
 
 // メイン処理
-function main() {
+function main(options = {}) {
+  const forceUpdate = options.force || process.argv.includes('--force') || process.argv.includes('-f');
+  
   console.log('🚀 JSDocからStorybookストーリーの自動生成を開始...');
+  if (forceUpdate) {
+    console.log('🔥 強制更新モード: すべてのストーリーを再生成します');
+  }
   
   let generatedCount = 0;
+  let updatedCount = 0;
   let skippedCount = 0;
   
   for (const dir of COMPONENTS_DIRS) {
@@ -305,11 +356,33 @@ function main() {
         fs.mkdirSync(storiesDir, { recursive: true });
       }
       
-      // 既存のストーリーファイルがある場合はスキップ
+      // 既存のストーリーファイルがある場合の処理
+      let shouldUpdate = false;
+      let isUpdate = false;
+      
       if (fs.existsSync(storyPath)) {
-        console.log(`⏭️  スキップ: ${file} (既存のストーリーあり)`);
-        skippedCount++;
-        continue;
+        if (forceUpdate) {
+          shouldUpdate = true;
+          isUpdate = true;
+          console.log(`🔥 強制更新: ${file}`);
+        } else {
+          // コンポーネントファイルとストーリーファイルの更新時刻を比較
+          const componentStat = fs.statSync(filePath);
+          const storyStat = fs.statSync(storyPath);
+          
+          if (componentStat.mtime > storyStat.mtime) {
+            shouldUpdate = true;
+            isUpdate = true;
+            console.log(`🔄 更新: ${file} (コンポーネントが新しい)`);
+          } else {
+            console.log(`⏭️  スキップ: ${file} (既存のストーリーが最新)`);
+            skippedCount++;
+            continue;
+          }
+        }
+      } else {
+        shouldUpdate = true;
+        isUpdate = false;
       }
       
       try {
@@ -319,8 +392,14 @@ function main() {
         const storyContent = generateStoryTemplate(component, category);
         
         fs.writeFileSync(storyPath, storyContent, 'utf8');
-        console.log(`✅ 生成: ${component.name}.stories.tsx`);
-        generatedCount++;
+        
+        if (isUpdate) {
+          console.log(`✅ 更新: ${component.name}.stories.tsx`);
+          updatedCount++;
+        } else {
+          console.log(`✅ 生成: ${component.name}.stories.tsx`);
+          generatedCount++;
+        }
       } catch (error) {
         console.error(`❌ エラー: ${file}`, error.message);
       }
@@ -331,10 +410,11 @@ function main() {
   updateMakefile();
   
   console.log(`\\n🎉 完了！`);
-  console.log(`📊 生成: ${generatedCount}件, スキップ: ${skippedCount}件`);
+  console.log(`📊 生成: ${generatedCount}件, 更新: ${updatedCount}件, スキップ: ${skippedCount}件`);
   console.log(`\\n🔧 使用方法:`);
-  console.log(`   make generate-stories-frontend  # ストーリー自動生成`);
-  console.log(`   make storybook-frontend         # Storybook起動`);
+  console.log(`   make generate-stories-frontend        # ストーリー自動生成（差分更新）`);
+  console.log(`   make generate-stories-frontend-force  # ストーリー強制再生成（全更新）`);
+  console.log(`   make storybook-frontend               # Storybook起動`);
 }
 
 // スクリプト実行

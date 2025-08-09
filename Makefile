@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
 
 # デフォルトターゲット
 help:
@@ -30,7 +30,8 @@ help:
 	@echo "  make docs-stop-frontend  - フロントエンドドキュメントサーバー停止"
 	@echo "  make storybook-frontend  - Storybookサーバー起動（バックグラウンド） (http://localhost:6006)"
 	@echo "  make storybook-stop-frontend - Storybookサーバー停止"
-	@echo "  make generate-stories-frontend - JSDocからStorybookストーリー自動生成"
+	@echo "  make generate-stories-frontend       - JSDocからStorybookストーリー自動生成"
+	@echo "  make generate-stories-frontend-force - JSDocからStorybookストーリー強制再生成"
 	@echo "  make docs-dev-frontend   - TypeDoc + Storybook 両方起動（開発モード）"
 	@echo "  make npm-install   - フロントエンドパッケージインストール"
 	@echo "  make npm-install-package PKG=パッケージ名 - 新しいパッケージ追加"
@@ -167,6 +168,12 @@ generate-stories-frontend:
 	@echo "JSDocコメントからStorybookストーリーを自動生成中..."
 	docker compose exec frontend npm run generate-stories
 	@echo "ストーリー生成が完了しました！"
+
+# JSDocからStorybookストーリー強制再生成
+generate-stories-frontend-force:
+	@echo "JSDocコメントからStorybookストーリーを強制再生成中..."
+	docker compose exec frontend npm run generate-stories:force
+	@echo "ストーリー強制再生成が完了しました！"
 
 # TypeDoc + Storybook 連携開発モード
 docs-dev-frontend:

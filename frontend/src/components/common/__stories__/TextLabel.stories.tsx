@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TextLabel from './TextLabel';
+import TextLabel from '../TextLabel';
 
 const meta: Meta<typeof TextLabel> = {
   title: '共通コンポーネント/TextLabel',
@@ -15,11 +15,44 @@ const meta: Meta<typeof TextLabel> = {
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    children: {
+      control: 'object',
+      description: '表示するコンテンツ (必須)',
+    },
+    variant: {
+      control: 'object',
+      description: 'Typography のバリエーション (任意)',
+    },
+    sx: {
+      control: 'object',
+      description: 'スタイルオブジェクト (任意)',
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {
+    children: undefined,
+  },
 };
 
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <TextLabel variant="outlined" />
+      <TextLabel variant="filled" />
+      <TextLabel variant="standard" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'バリアントの表示例',
+      },
+    },
+  },
+};

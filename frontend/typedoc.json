@@ -34,14 +34,11 @@
   },
   "categorizeByGroup": true,
   "kindSortOrder": [
-    "Project",
-    "Module", 
-    "Namespace",
-    "Class",
+    "Module",
+    "Function",
     "Interface",
     "TypeAlias",
-    "Variable",
-    "Function"
+    "Variable"
   ],
   "modifierTags": [
     "@component"
@@ -50,6 +47,7 @@
     "GitHub": "https://github.com/user/family-budget-app",
     "🎨 Storybook": "http://localhost:6006"
   },
+  "hideGenerator": true,
   "groupOrder": [
     "共通コンポーネント",
     "残高機能", 
