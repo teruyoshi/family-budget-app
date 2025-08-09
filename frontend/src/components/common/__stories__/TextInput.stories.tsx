@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import TextInput from '../TextInput'
+import type { Meta, StoryObj } from '@storybook/react';
+import TextInput from '../TextInput';
 
 const meta: Meta<typeof TextInput> = {
   title: '共通コンポーネント/TextInput',
@@ -73,13 +73,13 @@ MUI TextFieldをラップし、プロジェクト全体で一貫したAPIを提�
     variant: {
       control: 'select',
       description: '入力フィールドのバリアント (任意)',
-      options: ['outlined', 'filled', 'standard'],
+      options: ["outlined","filled","standard"],
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -87,14 +87,14 @@ export const Default: Story = {
     value: 'テキスト',
     onChange: 'テキスト',
   },
-}
+};
 
 export const Variants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      <TextInput variant="outlined" />
-      <TextInput variant="filled" />
-      <TextInput variant="standard" />
+      <TextInput value={'テキスト'} onChange={'テキスト'} variant="outlined" />
+      <TextInput value={'テキスト'} onChange={'テキスト'} variant="filled" />
+      <TextInput value={'テキスト'} onChange={'テキスト'} variant="standard" />
     </div>
   ),
   parameters: {
@@ -104,4 +104,4 @@ export const Variants: Story = {
       },
     },
   },
-}
+};

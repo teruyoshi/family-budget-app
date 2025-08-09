@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import ExpenseForm from '../ExpenseForm'
 
 describe('ExpenseForm', () => {
@@ -14,10 +14,23 @@ describe('ExpenseForm', () => {
     expect(submitButton).toBeInTheDocument()
   })
 
-  test('日付を入力するピッカーが存在する', () => {
+  test('日付指定トグルスイッチが表示される', () => {
     render(<ExpenseForm />)
-    // MUI X DatePickerの場合、複数の要素に同じラベルが存在するため、より具体的なセレクタを使用
-    const datePicker = screen.getByRole('group', { name: '支出日付' })
-    expect(datePicker).toBeInTheDocument()
+    const dateToggle = screen.getByRole('switch', { name: '日付を指定する' })
+    expect(dateToggle).toBeInTheDocument()
+  })
+
+  test('トグルスイッチを有効にすると日付ピッカーが表示される', () => {
+    render(<ExpenseForm />)
+    
+    // 最初は日付ピッカーが非表示
+    expect(screen.queryByRole('group', { name: '支出日付' })).not.toBeInTheDocument()
+    
+    // トグルスイッチをクリック
+    const dateToggle = screen.getByRole('switch', { name: '日付を指定する' })
+    fireEvent.click(dateToggle)
+    
+    // 日付ピッカーが表示される
+    expect(screen.getByRole('group', { name: '支出日付' })).toBeInTheDocument()
   })
 })

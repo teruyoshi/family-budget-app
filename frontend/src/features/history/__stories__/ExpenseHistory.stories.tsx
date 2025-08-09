@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import ExpenseHistory from '../ExpenseHistory'
+import type { Meta, StoryObj } from '@storybook/react';
+import ExpenseHistory from '../ExpenseHistory';
 
 const meta: Meta<typeof ExpenseHistory> = {
   title: '履歴機能/ExpenseHistory',
@@ -27,13 +27,14 @@ const meta: Meta<typeof ExpenseHistory> = {
       description: 'expensesプロパティ (必須)',
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     expenses: undefined,
   },
-}
+};
+

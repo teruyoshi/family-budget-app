@@ -28,7 +28,7 @@ interface TransactionFormProps {
  * 取引登録フォーム共通コンポーネント
  *
  * 支出・収入登録フォームの共通部分を提供します。
- * 金額入力、日付選択（トグル制御）、登録ボタンを含みます。
+ * 金額入力、日付選択（トグルで表示/非表示制御）、登録ボタンを含みます。
  *
  * @group 共通コンポーネント
  *
@@ -72,7 +72,7 @@ function TransactionForm({
 
     // バリデーション: 正の数値のみ受け入れ
     if (amount > 0 && onSubmit) {
-      // 日付選択が無効な場合は今日の日付（アジア/東京タイムゾーン）を使用
+      // トグルが有効な場合は選択日付、無効な場合は今日の日付を使用
       const finalDate = useCustomDate
         ? date
         : new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' })
@@ -103,12 +103,13 @@ function TransactionForm({
         sx={{ alignSelf: 'flex-start', mb: 0 }}
       />
 
-      <DatePicker
-        label={datePickerLabel}
-        value={date}
-        onChange={setDate}
-        disabled={!useCustomDate}
-      />
+      {useCustomDate && (
+        <DatePicker
+          label={datePickerLabel}
+          value={date}
+          onChange={setDate}
+        />
+      )}
 
       <AmountInput
         placeholder={placeholder}

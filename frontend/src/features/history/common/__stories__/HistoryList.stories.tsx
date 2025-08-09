@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import HistoryList from '../HistoryList'
+import type { Meta, StoryObj } from '@storybook/react';
+import HistoryList from '../HistoryList';
 
 const meta: Meta<typeof HistoryList> = {
   title: '履歴機能/HistoryList',
@@ -53,13 +53,13 @@ const expenses = [
     itemColor: {
       control: 'select',
       description: 'itemColorプロパティ (必須)',
-      options: ['warning', 'success'],
+      options: ["warning","success"],
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -68,4 +68,5 @@ export const Default: Story = {
     itemLabel: 'ラベル',
     itemColor: undefined,
   },
-}
+};
+

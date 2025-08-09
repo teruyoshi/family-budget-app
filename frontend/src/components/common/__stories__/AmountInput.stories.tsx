@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import AmountInput from '../AmountInput'
+import type { Meta, StoryObj } from '@storybook/react';
+import AmountInput from '../AmountInput';
 
 const meta: Meta<typeof AmountInput> = {
   title: '共通コンポーネント/AmountInput',
@@ -43,43 +43,28 @@ const meta: Meta<typeof AmountInput> = {
     variant: {
       control: 'select',
       description: '入力フィールドのバリアント (任意)',
-      options: ['outlined', 'filled', 'standard'],
+      options: ["outlined","filled","standard"],
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
     placeholder: 'プレースホルダーテキスト',
     value: 0,
-    onChange: () => {},
+    onChange: 0,
   },
-}
+};
 
 export const Variants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      <AmountInput
-        value={1000}
-        onChange={() => {}}
-        variant="outlined"
-        placeholder="金額を入力"
-      />
-      <AmountInput
-        value={2000}
-        onChange={() => {}}
-        variant="filled"
-        placeholder="金額を入力"
-      />
-      <AmountInput
-        value={3000}
-        onChange={() => {}}
-        variant="standard"
-        placeholder="金額を入力"
-      />
+      <AmountInput value={0} onChange={0} variant="outlined" />
+      <AmountInput value={0} onChange={0} variant="filled" />
+      <AmountInput value={0} onChange={0} variant="standard" />
     </div>
   ),
   parameters: {
@@ -89,4 +74,4 @@ export const Variants: Story = {
       },
     },
   },
-}
+};

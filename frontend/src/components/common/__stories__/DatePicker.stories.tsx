@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import DatePicker from '../DatePicker'
+import type { Meta, StoryObj } from '@storybook/react';
+import DatePicker from '../DatePicker';
 
 const meta: Meta<typeof DatePicker> = {
   title: '共通コンポーネント/DatePicker',
@@ -33,10 +33,10 @@ const meta: Meta<typeof DatePicker> = {
       description: '無効状態にするかどうか (任意)',
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
@@ -44,7 +44,7 @@ export const Default: Story = {
     onChange: 'テキスト',
     label: 'ラベル',
   },
-}
+};
 
 export const Disabled: Story = {
   args: {
@@ -58,4 +58,4 @@ export const Disabled: Story = {
       },
     },
   },
-}
+};

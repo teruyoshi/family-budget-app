@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import IncomeForm from '../IncomeForm'
+import type { Meta, StoryObj } from '@storybook/react';
+import IncomeForm from '../IncomeForm';
 
 const meta: Meta<typeof IncomeForm> = {
   title: '収入機能/IncomeForm',
@@ -29,9 +29,11 @@ TransactionFormを使用して共通のフォーム構造とバリデーショ�
       description: 'onSubmitプロパティ (任意)',
     },
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {}
+export const Default: Story = {
+};
+
