@@ -2,7 +2,7 @@
   "entryPoints": [
     "src/components/common/*.tsx",
     "src/features/balance/components/*.tsx",
-    "src/features/expenses/components/*.tsx", 
+    "src/features/expenses/components/*.tsx",
     "src/features/income/components/*.tsx",
     "src/features/history/*.tsx",
     "src/features/history/common/*.tsx",
@@ -33,16 +33,8 @@
     "includeFolders": true
   },
   "categorizeByGroup": true,
-  "kindSortOrder": [
-    "Module",
-    "Function",
-    "Interface",
-    "TypeAlias",
-    "Variable"
-  ],
-  "modifierTags": [
-    "@component"
-  ],
+  "kindSortOrder": ["Module", "Function", "Interface", "TypeAlias", "Variable"],
+  "modifierTags": ["@component"],
   "sidebarLinks": {
     "GitHub": "https://github.com/user/family-budget-app",
     "🎨 Storybook": "http://localhost:6006"
@@ -50,7 +42,7 @@
   "hideGenerator": true,
   "groupOrder": [
     "共通コンポーネント",
-    "残高機能", 
+    "残高機能",
     "支出機能",
     "収入機能",
     "履歴機能",

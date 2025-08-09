@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import BalanceDisplay from '../BalanceDisplay';
+import type { Meta, StoryObj } from '@storybook/react'
+import BalanceDisplay from '../BalanceDisplay'
 
 const meta: Meta<typeof BalanceDisplay> = {
   title: '残高機能/BalanceDisplay',
@@ -28,14 +28,13 @@ const meta: Meta<typeof BalanceDisplay> = {
       description: 'balanceプロパティ (必須)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     balance: 1000,
   },
-};
-
+}

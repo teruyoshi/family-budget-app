@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import TotalIncomeDisplay from '../TotalIncomeDisplay';
+import type { Meta, StoryObj } from '@storybook/react'
+import TotalIncomeDisplay from '../TotalIncomeDisplay'
 
 const meta: Meta<typeof TotalIncomeDisplay> = {
   title: '収入機能/TotalIncomeDisplay',
@@ -23,14 +23,13 @@ const meta: Meta<typeof TotalIncomeDisplay> = {
       description: 'totalAmountプロパティ (必須)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     totalAmount: 1000,
   },
-};
-
+}

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import AppTitle from '../AppTitle';
+import type { Meta, StoryObj } from '@storybook/react'
+import AppTitle from '../AppTitle'
 
 const meta: Meta<typeof AppTitle> = {
   title: '共通コンポーネント/AppTitle',
@@ -31,11 +31,9 @@ function App() {
     },
   },
   tags: ['autodocs'],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-};
-
+export const Default: Story = {}

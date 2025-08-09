@@ -2,7 +2,13 @@
 
 /* サイドバーの基本設定 */
 .tsd-navigation {
-  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family:
+    'IBM Plex Sans',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif !important;
   font-size: 13px !important;
   line-height: 1.4 !important;
 }
@@ -54,7 +60,7 @@
 }
 
 .tsd-navigation details > summary::before {
-  content: "▶" !important;
+  content: '▶' !important;
   display: inline-block !important;
   width: 16px !important;
   text-align: center !important;
@@ -103,9 +109,18 @@
 }
 
 /* コンポーネント別アイコン（控えめに） */
-.tsd-navigation a[href*="components"]::before { content: "📦 "; font-size: 10px; }
-.tsd-navigation a[href*="features"]::before { content: "⚡ "; font-size: 10px; }
-.tsd-navigation a[href*="hooks"]::before { content: "🪝 "; font-size: 10px; }
+.tsd-navigation a[href*='components']::before {
+  content: '📦 ';
+  font-size: 10px;
+}
+.tsd-navigation a[href*='features']::before {
+  content: '⚡ ';
+  font-size: 10px;
+}
+.tsd-navigation a[href*='hooks']::before {
+  content: '🪝 ';
+  font-size: 10px;
+}
 
 /* 検索ボックスのスタイリング */
 .tsd-search {
@@ -126,4 +141,3 @@
   border-color: #1976d2 !important;
   background-color: #fff !important;
 }
-

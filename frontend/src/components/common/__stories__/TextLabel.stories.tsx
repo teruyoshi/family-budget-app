@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import TextLabel from '../TextLabel';
+import type { Meta, StoryObj } from '@storybook/react'
+import TextLabel from '../TextLabel'
 
 const meta: Meta<typeof TextLabel> = {
   title: '共通コンポーネント/TextLabel',
@@ -29,16 +29,16 @@ const meta: Meta<typeof TextLabel> = {
       description: 'スタイルオブジェクト (任意)',
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     children: undefined,
   },
-};
+}
 
 export const Variants: Story = {
   render: () => (
@@ -55,4 +55,4 @@ export const Variants: Story = {
       },
     },
   },
-};
+}
