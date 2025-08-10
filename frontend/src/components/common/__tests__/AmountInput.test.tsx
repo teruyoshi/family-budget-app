@@ -114,7 +114,10 @@ describe('AmountInput', () => {
       )
 
       const input = screen.getByDisplayValue('¥5,000')
-      expect(input).toHaveAttribute('aria-label', '金額入力フィールド、現在の値: ¥5,000')
+      expect(input).toHaveAttribute(
+        'aria-label',
+        '金額入力フィールド、現在の値: ¥5,000'
+      )
     })
 
     test('エラー状態でaria-invalidが設定される', () => {

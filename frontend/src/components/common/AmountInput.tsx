@@ -129,7 +129,9 @@ export default function AmountInput({
       error={error}
       helperText={helperText}
       inputProps={{
-        'aria-label': ariaLabel || `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
+        'aria-label':
+          ariaLabel ||
+          `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
         'aria-describedby': ariaDescribedby,
         'aria-invalid': error,
         inputMode: 'numeric' as const,
