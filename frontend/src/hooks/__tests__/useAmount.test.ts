@@ -104,14 +104,16 @@ describe('useAmount', () => {
 
   describe('エッジケース', () => {
     it('undefinedを初期値として渡すと0として扱われる', () => {
-      const { result } = renderHook(() => useAmount(undefined as any))
+      const { result } = renderHook(() =>
+        useAmount(undefined as unknown as number)
+      )
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(undefined)
     })
 
     it('nullを初期値として渡すと0として扱われる', () => {
-      const { result } = renderHook(() => useAmount(null as any))
+      const { result } = renderHook(() => useAmount(null as unknown as number))
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(null)

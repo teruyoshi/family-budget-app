@@ -9,7 +9,8 @@ const meta: Meta<typeof AmountInput> = {
   parameters: {
     docs: {
       description: {
-        component: '金額入力専用コンポーネント。数値を自動で¥記号付きカンマ区切りで表示します。',
+        component:
+          '金額入力専用コンポーネント。数値を自動で¥記号付きカンマ区切りで表示します。',
       },
     },
   },

@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major
+.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
 
 # デフォルトターゲット
 help:
@@ -16,6 +16,10 @@ help:
 	@echo "  make test       - 全テスト実行"
 	@echo "  make test-frontend - フロントエンドテスト実行"
 	@echo "  make test-backend  - バックエンドテスト実行"
+	@echo "  make test-coverage-frontend - フロントエンドカバレッジテスト + ブラウザ表示 (http://localhost:8090)"
+	@echo "  make coverage-serve-frontend - カバレッジレポートサーバー起動（バックグラウンド） (http://localhost:8090)"
+	@echo "  make coverage-stop-frontend  - カバレッジレポートサーバー停止"
+	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）"
 	@echo "  make lint       - 全Lintチェック実行"
 	@echo "  make lint-frontend - フロントエンドLintチェック実行"
 	@echo "  make lint-backend  - バックエンドLintチェック実行"
@@ -274,3 +278,85 @@ npm-version-patch:
 npm-version-major:
 	@echo "メジャーバージョンを上げています..."
 	docker compose exec frontend npm version major
+
+# カバレッジテスト実行 + ブラウザ表示
+test-coverage-frontend:
+	@echo "===================================================="
+	@echo "📊 フロントエンドカバレッジテストを実行中..."
+	@echo "===================================================="
+	docker compose exec frontend npm run test:ci
+	@echo ""
+	@echo "🌐 カバレッジレポートサーバーを起動中..."
+	@echo "📈 カバレッジレポート: http://localhost:8090"
+	@echo "停止する場合は: make coverage-stop-frontend"
+	@echo ""
+	@pkill -f "python.*8090.*lcov-report" 2>/dev/null || true
+	@python3 -m http.server 8090 --directory frontend/coverage/lcov-report &
+	@echo "✅ カバレッジレポートがブラウザで表示できます！"
+
+# カバレッジレポートサーバー起動（バックグラウンド）
+coverage-serve-frontend:
+	@echo "カバレッジレポートサーバーをバックグラウンドで起動中..."
+	@echo "カバレッジレポート: http://localhost:8090"
+	@echo "停止する場合は: make coverage-stop-frontend"
+	@pkill -f "python.*8090.*lcov-report" 2>/dev/null || true
+	@python3 -m http.server 8090 --directory frontend/coverage/lcov-report &
+
+# カバレッジレポートサーバー停止
+coverage-stop-frontend:
+	@echo "カバレッジレポートサーバーを停止中..."
+	@pkill -f "python.*8090.*lcov-report" 2>/dev/null || echo "サーバーは既に停止しています"
+
+# フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）
+quality-check-frontend:
+	@echo "========================================================"
+	@echo "🔍 フロントエンド品質確認を開始します..."
+	@echo "========================================================"
+	@echo ""
+	@echo "📐 1. Prettierフォーマットチェック実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm run format:check; then \
+		echo "✅ Prettierフォーマットチェック: 合格"; \
+	else \
+		echo "❌ Prettierフォーマットチェック: 不合格"; \
+		echo "💡 修正するには: make format-frontend"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🔧 2. ESLint静的解析実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm run lint; then \
+		echo "✅ ESLint静的解析: 合格"; \
+	else \
+		echo "❌ ESLint静的解析: 不合格"; \
+		echo "💡 修正可能なエラーは: docker compose exec frontend npm run lint -- --fix"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🎯 3. TypeScript型チェック実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm run typecheck; then \
+		echo "✅ TypeScript型チェック: 合格"; \
+	else \
+		echo "❌ TypeScript型チェック: 不合格"; \
+		echo "💡 型エラーを修正してください"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🧪 4. Jestテスト実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm test; then \
+		echo "✅ Jestテスト: 合格"; \
+	else \
+		echo "❌ Jestテスト: 不合格"; \
+		echo "💡 テストを修正してください"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "========================================================"
+	@echo "🎉 フロントエンド品質確認が完了しました！"
+	@echo "✅ Prettier: フォーマット適合"
+	@echo "✅ ESLint: 静的解析合格"
+	@echo "✅ TypeScript: 型チェック合格"
+	@echo "✅ Jest: 全テスト合格"
+	@echo "========================================================"

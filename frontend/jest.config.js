@@ -25,7 +25,12 @@ export default {
     '<rootDir>/src/**/__tests__/**/*.(ts|tsx)',
     '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
   ],
-  collectCoverageFrom: ['src/**/*.(ts|tsx)', '!src/**/*.d.ts'],
+  collectCoverageFrom: [
+    'src/**/*.(ts|tsx)',
+    '!src/**/*.d.ts',
+    '!src/**/__stories__/**/*',
+    '!src/**/*.stories.(ts|tsx)',
+  ],
   globals: {
     'ts-jest': {
       isolatedModules: true,
