@@ -1,22 +1,22 @@
 import { HistoryList } from './common'
 import type { Expense } from '@/hooks'
 
-interface IncomeHistoryProps {
+/**
+ * 収入履歴コンポーネントのProps型定義
+ */
+export interface IncomeHistoryProps {
+  /** 表示する収入データの配列 */
   incomes: Expense[]
 }
 
 /**
- * 収入履歴コンポーネント
- * 収入データを日付グループ化して時系列降順で表示します。
+ * 収入データを日付グループ化して表示するコンポーネント
  *
- * @group 履歴機能
- *
+ * @component
  * @example
- * ```tsx
  * <IncomeHistory incomes={incomes} />
- * ```
  */
-export function IncomeHistory({ incomes }: IncomeHistoryProps) {
+export default function IncomeHistory({ incomes }: IncomeHistoryProps) {
   return (
     <HistoryList
       items={incomes}
@@ -26,5 +26,3 @@ export function IncomeHistory({ incomes }: IncomeHistoryProps) {
     />
   )
 }
-
-export default IncomeHistory

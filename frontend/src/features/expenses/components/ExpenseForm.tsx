@@ -1,24 +1,22 @@
 import { TransactionForm } from '@/components/common'
 
-interface ExpenseFormProps {
+/**
+ * 支出登録フォームコンポーネントのProps型定義
+ */
+export interface ExpenseFormProps {
+  /** フォーム送信時のコールバック関数 */
   onSubmit?: (amount: number, date: string) => void
 }
 
 /**
- * 支出登録フォームコンポーネント
- * TransactionFormを使用して共通のフォーム構造とバリデーションを提供します。
+ * TransactionFormを使用した支出登録フォームコンポーネント
  *
- * @group 支出機能
- *
+ * @component
  * @example
- * ```tsx
- * <ExpenseForm onSubmit={(amount, date) => {
- *   console.log('支出登録:', amount, date);
- * }} />
- * ```
+ * <ExpenseForm onSubmit={(amount, date) => addExpense(amount, date)} />
  */
 
-function ExpenseForm({ onSubmit }: ExpenseFormProps) {
+export default function ExpenseForm({ onSubmit }: ExpenseFormProps) {
   const handleSubmit = (amount: number, date: string) => {
     if (onSubmit) {
       onSubmit(amount, date)
@@ -35,5 +33,3 @@ function ExpenseForm({ onSubmit }: ExpenseFormProps) {
     />
   )
 }
-
-export default ExpenseForm

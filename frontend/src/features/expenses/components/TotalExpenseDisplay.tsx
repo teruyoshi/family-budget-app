@@ -3,37 +3,23 @@ import TextLabel from '../../../components/common/TextLabel'
 import AmountText from '../../../components/common/AmountText'
 
 /**
- * TotalExpenseDisplayコンポーネントのプロパティ
- * @typedef {Object} TotalExpenseDisplayProps
- * @property {number} totalAmount - 表示する合計支出金額
+ * 合計支出表示コンポーネントのProps型定義
  */
-interface TotalExpenseDisplayProps {
+export interface TotalExpenseDisplayProps {
+  /** 表示する合計支出金額 */
   totalAmount: number
 }
 
 /**
- * 合計支出表示コンポーネント
+ * 合計支出金額を中央揃えで表示するコンポーネント
  *
- * 合計支出金額を中央揃えで表示します。金額はプライマリカラーで強調表示され、
- * 「合計支出」ラベルと金額が横並びで配置されます。
- *
- * @group 支出機能
  * @component
- * @param {TotalExpenseDisplayProps} props - コンポーネントのプロパティ
- * @param {number} props.totalAmount - 表示する合計支出金額
- *
- * @returns {JSX.Element} 合計支出表示UI
- *
  * @example
- * ```tsx
- * // 基本的な使用例
  * <TotalExpenseDisplay totalAmount={15000} />
- *
- * // 状態管理と組み合わせ
- * <TotalExpenseDisplay totalAmount={values.totalExpenseAmount} />
- * ```
  */
-function TotalExpenseDisplay({ totalAmount }: TotalExpenseDisplayProps) {
+export default function TotalExpenseDisplay({
+  totalAmount,
+}: TotalExpenseDisplayProps) {
   return (
     <Box
       sx={{
@@ -54,5 +40,3 @@ function TotalExpenseDisplay({ totalAmount }: TotalExpenseDisplayProps) {
     </Box>
   )
 }
-
-export default TotalExpenseDisplay

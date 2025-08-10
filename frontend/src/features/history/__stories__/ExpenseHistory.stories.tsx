@@ -1,39 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import ExpenseHistory from '../ExpenseHistory'
 
 const meta: Meta<typeof ExpenseHistory> = {
-  title: '履歴機能/ExpenseHistory',
   component: ExpenseHistory,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `支出履歴コンポーネント
-支出データを日付グループ化して時系列降順で表示します。
-@group 履歴機能
-@example
-\`\`\`tsx
-<ExpenseHistory expenses={expenses} />
-\`\`\`
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    expenses: {
-      control: 'object',
-      description: 'expensesプロパティ (必須)',
-    },
+  title: 'features/history/ExpenseHistory',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
+
+export const WithExpenses: StoryObj<typeof ExpenseHistory> = {
+  args: {
+    expenses: [
+      { id: '1', amount: 1500, timestamp: '2025/01/15(水)' },
+      { id: '2', amount: 800, timestamp: '2025/01/15(水)' },
+      { id: '3', amount: 2000, timestamp: '2025/01/14(火)' },
+    ],
   },
 }
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Empty: StoryObj<typeof ExpenseHistory> = {
   args: {
-    expenses: undefined,
+    expenses: [],
   },
 }

@@ -1,46 +1,30 @@
 import AmountInput from '../../../components/common/AmountInput'
 
 /**
- * ExpenseInputコンポーネントのプロパティ
- * @typedef {Object} ExpenseInputProps
- * @property {number} value - 現在の入力値（数値）
- * @property {Function} onChange - 値変更時のコールバック関数
- * @property {string} [placeholder] - 入力欄のプレースホルダーテキスト
+ * 支出金額入力コンポーネントのProps型定義
  */
-interface ExpenseInputProps {
+export interface ExpenseInputProps {
+  /** 現在の入力値 */
   value: number
+  /** 値変更時のコールバック関数 */
   onChange: (value: number) => void
+  /** 入力欄のプレースホルダー */
   placeholder?: string
 }
 
 /**
- * 支出金額専用入力コンポーネント
+ * AmountInputをベースにした支出金額入力コンポーネント
  *
- * AmountInputをベースにした支出金額入力に特化したコンポーネントです。
- * 入力中にカンマ区切り表示され、数値として管理されます。
- *
- * @group 支出機能
  * @component
- * @param {ExpenseInputProps} props - コンポーネントのプロパティ
- * @param {number} props.value - 現在の入力値
- * @param {Function} props.onChange - 値変更時のコールバック関数
- * @param {string} [props.placeholder] - プレースホルダーテキスト
- *
- * @returns {JSX.Element} 支出金額入力UI
- *
  * @example
- * ```tsx
- * const [expenseAmount, setExpenseAmount] = useState(0);
- *
  * <ExpenseInput
  *   value={expenseAmount}
  *   onChange={setExpenseAmount}
- *   placeholder="1000"
+ *   placeholder="支出金額を入力"
  * />
- * ```
  */
 
-function ExpenseInput({
+export default function ExpenseInput({
   value,
   onChange,
   placeholder = '支出金額を入力',
@@ -49,5 +33,3 @@ function ExpenseInput({
     <AmountInput placeholder={placeholder} value={value} onChange={onChange} />
   )
 }
-
-export default ExpenseInput

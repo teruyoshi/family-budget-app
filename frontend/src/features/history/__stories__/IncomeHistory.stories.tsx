@@ -1,39 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import IncomeHistory from '../IncomeHistory'
 
 const meta: Meta<typeof IncomeHistory> = {
-  title: '履歴機能/IncomeHistory',
   component: IncomeHistory,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `収入履歴コンポーネント
-収入データを日付グループ化して時系列降順で表示します。
-@group 履歴機能
-@example
-\`\`\`tsx
-<IncomeHistory incomes={incomes} />
-\`\`\`
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    incomes: {
-      control: 'object',
-      description: 'incomesプロパティ (必須)',
-    },
+  title: 'features/history/IncomeHistory',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
+
+export const WithIncomes: StoryObj<typeof IncomeHistory> = {
+  args: {
+    incomes: [
+      { id: '1', amount: 50000, timestamp: '2025/01/15(水)' },
+      { id: '2', amount: 25000, timestamp: '2025/01/10(金)' },
+      { id: '3', amount: 30000, timestamp: '2025/01/08(水)' },
+    ],
   },
 }
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Empty: StoryObj<typeof IncomeHistory> = {
   args: {
-    incomes: undefined,
+    incomes: [],
   },
 }

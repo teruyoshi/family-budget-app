@@ -11,49 +11,34 @@ import { DatePicker, AmountInput } from './'
 /**
  * 取引登録フォームコンポーネントのProps型定義
  */
-interface TransactionFormProps {
-  /** 金額入力フィールドのプレースホルダーテキスト */
+export interface TransactionFormProps {
+  /** 金額入力のプレースホルダー */
   placeholder: string
   /** 登録ボタンのテキスト */
   buttonText: string
-  /** 登録ボタンの色テーマ */
+  /** ボタンの色テーマ */
   buttonColor: 'error' | 'success'
-  /** 日付選択フィールドのラベル */
+  /** 日付ピッカーのラベル */
   datePickerLabel: string
-  /** フォーム送信時のコールバック関数 */
+  /** フォーム送信時のコールバック */
   onSubmit?: (amount: number, date: string) => void
 }
 
 /**
- * 取引登録フォーム共通コンポーネント
+ * 金額入力、日付選択、登録ボタンを含む取引登録フォーム
  *
- * 支出・収入登録フォームの共通部分を提供します。
- * 金額入力、日付選択（トグルで表示/非表示制御）、登録ボタンを含みます。
- *
- * @group 共通コンポーネント
- *
+ * @component
  * @example
- * // 支出フォーム
  * <TransactionForm
  *   placeholder="支出金額を入力"
  *   buttonText="支出を登録"
  *   buttonColor="error"
  *   datePickerLabel="支出日付"
- *   onSubmit={(amount, date) => console.log('Expense:', amount, date)}
- * />
- *
- * @example
- * // 収入フォーム
- * <TransactionForm
- *   placeholder="収入金額を入力"
- *   buttonText="収入を登録"
- *   buttonColor="success"
- *   datePickerLabel="収入日付"
- *   onSubmit={(amount, date) => addIncome(amount, date)}
+ *   onSubmit={(amount, date) => addExpense(amount, date)}
  * />
  */
 
-function TransactionForm({
+export default function TransactionForm({
   placeholder,
   buttonText,
   buttonColor,
@@ -66,7 +51,7 @@ function TransactionForm({
   )
   const [useCustomDate, setUseCustomDate] = useState(false)
 
-  /** フォーム送信処理：金額バリデーションと日付設定を実行 */
+  /** フォーム送信処理 */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -128,5 +113,3 @@ function TransactionForm({
     </Box>
   )
 }
-
-export default TransactionForm

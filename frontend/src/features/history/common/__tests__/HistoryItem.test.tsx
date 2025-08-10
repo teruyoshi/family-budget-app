@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { HistoryItem } from '../HistoryItem'
+import HistoryItem from '../HistoryItem'
 
 describe('HistoryItem', () => {
   const mockExpense = {

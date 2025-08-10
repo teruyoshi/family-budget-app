@@ -2,23 +2,22 @@ import { Box } from '@mui/material'
 import TextLabel from '../../../components/common/TextLabel'
 import AmountText from '../../../components/common/AmountText'
 
-interface BalanceDisplayProps {
+/**
+ * 残高表示コンポーネントのProps型定義
+ */
+export interface BalanceDisplayProps {
+  /** 表示する残高金額 */
   balance: number
 }
 
 /**
- * 残高表示コンポーネント
- * 現在の残高を中央揃えで緑色表示します。
+ * 現在の残高を中央揃えで表示するコンポーネント
  *
- * @group 残高機能
- *
+ * @component
  * @example
- * ```tsx
  * <BalanceDisplay balance={25000} />
- * <BalanceDisplay balance={-1500} />
- * ```
  */
-function BalanceDisplay({ balance }: BalanceDisplayProps) {
+export default function BalanceDisplay({ balance }: BalanceDisplayProps) {
   return (
     <Box
       sx={{
@@ -35,5 +34,3 @@ function BalanceDisplay({ balance }: BalanceDisplayProps) {
     </Box>
   )
 }
-
-export default BalanceDisplay

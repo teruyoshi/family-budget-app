@@ -1,28 +1,13 @@
 import { Typography } from '@mui/material'
 
 /**
- * アプリタイトルコンポーネント
+ * アプリケーションのメインタイトルを表示するコンポーネント
  *
- * アプリケーションのメインタイトルを表示するコンポーネント。
- * 一貫したスタイルでアプリケーション名を表示します。
- *
- * @group 共通コンポーネント
  * @component
- * @returns {JSX.Element} センタリングされた「家計簿アプリ」タイトル
- *
  * @example
- * ```tsx
- * // アプリのヘッダー部分で使用
- * function App() {
- *   return (
- *     <div>
- *       <AppTitle />
- *     </div>
- *   );
- * }
- * ```
+ * <AppTitle />
  */
-function AppTitle() {
+export default function AppTitle() {
   return (
     <Typography
       variant="h3"
@@ -38,5 +23,3 @@ function AppTitle() {
     </Typography>
   )
 }
-
-export default AppTitle

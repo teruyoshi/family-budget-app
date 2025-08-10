@@ -4,35 +4,35 @@ import type { SxProps, Theme } from '@mui/material'
 
 /**
  * 金額入力コンポーネントのProps型定義
- * 
+ *
  * 金額入力に特化したプロパティセット。自動的に¥記号とカンマ区切りで表示される。
  */
 export interface AmountInputProps {
   /** プレースホルダーテキスト（例: "金額を入力してください"） */
   placeholder?: string
-  
-  /** 
+
+  /**
    * 現在の金額（数値）
    * @example 15000 → "¥15,000" と表示
    */
   value: number
-  
-  /** 
+
+  /**
    * 金額変更時のコールバック関数
    * @param value 入力された数値（NaNや無効値は渡されない）
    */
   onChange: (value: number) => void
-  
+
   /** MUI sx propsによるカスタムスタイル */
   sx?: SxProps<Theme>
-  
+
   /** 必須項目として扱うかどうか（バリデーション表示用） */
   required?: boolean
-  
+
   /** 全幅で表示するかどうか（デフォルト: true） */
   fullWidth?: boolean
-  
-  /** 
+
+  /**
    * MUI TextFieldのバリアント
    * @default "outlined"
    */
@@ -53,7 +53,7 @@ export interface AmountInputProps {
  * - 半角数値のみ受け付け、全角数値は自動変換
  *
  * @component
- * 
+ *
  * @example
  * ```tsx
  * // 基本的な使用例
@@ -63,7 +63,7 @@ export interface AmountInputProps {
  *   placeholder="金額を入力してください"
  * />
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // 支出入力フォーム
@@ -75,7 +75,7 @@ export interface AmountInputProps {
  *   variant="outlined"
  * />
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // カスタムスタイル適用

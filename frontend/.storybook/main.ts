@@ -25,14 +25,14 @@ const config: StorybookConfig = {
       shouldRemoveUndefinedFromOptional: true,
       shouldIncludePropTagMap: true,
       savePropValueAsString: true,
-      
+
       // JSDoc情報をStorybookに反映
       compilerOptions: {
         allowSyntheticDefaultImports: false,
       },
-      
+
       // node_modules由来の型を除外し、プロジェクト内の型のみ処理
-      propFilter: (prop, component) => {
+      propFilter: (prop) => {
         if (prop.parent) {
           // node_modules内のファイルは除外
           if (/node_modules/.test(prop.parent.fileName)) {
@@ -44,7 +44,12 @@ const config: StorybookConfig = {
           }
         }
         // HTML属性のみの場合は除外（className、styleなど）
-        if (prop.name === 'className' || prop.name === 'style' || prop.name === 'key' || prop.name === 'ref') {
+        if (
+          prop.name === 'className' ||
+          prop.name === 'style' ||
+          prop.name === 'key' ||
+          prop.name === 'ref'
+        ) {
           return false
         }
         return true

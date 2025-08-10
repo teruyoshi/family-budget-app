@@ -1,45 +1,30 @@
 import AmountInput from '../../../components/common/AmountInput'
 
 /**
- * IncomeInputコンポーネントのプロパティ
- * @typedef {Object} IncomeInputProps
- * @property {number} value - 現在の入力値（数値）
- * @property {Function} onChange - 値変更時のコールバック関数
- * @property {string} [placeholder] - 入力欄のプレースホルダーテキスト
+ * 収入金額入力コンポーネントのProps型定義
  */
-interface IncomeInputProps {
+export interface IncomeInputProps {
+  /** 現在の入力値 */
   value: number
+  /** 値変更時のコールバック関数 */
   onChange: (value: number) => void
+  /** 入力欄のプレースホルダー */
   placeholder?: string
 }
 
 /**
- * 収入金額専用入力コンポーネント
- *
- * AmountInputをベースにした収入金額入力に特化したコンポーネントです。
- * 入力中にカンマ区切り表示され、数値として管理されます。
+ * AmountInputをベースにした収入金額入力コンポーネント
  *
  * @component
- * @param {IncomeInputProps} props - コンポーネントのプロパティ
- * @param {number} props.value - 現在の入力値
- * @param {Function} props.onChange - 値変更時のコールバック関数
- * @param {string} [props.placeholder] - プレースホルダーテキスト
- *
- * @returns {JSX.Element} 収入金額入力UI
- *
  * @example
- * ```tsx
- * const [incomeAmount, setIncomeAmount] = useState(0);
- *
  * <IncomeInput
  *   value={incomeAmount}
  *   onChange={setIncomeAmount}
- *   placeholder="50000"
+ *   placeholder="収入金額を入力"
  * />
- * ```
  */
 
-function IncomeInput({
+export default function IncomeInput({
   value,
   onChange,
   placeholder = '収入金額を入力',
@@ -48,5 +33,3 @@ function IncomeInput({
     <AmountInput placeholder={placeholder} value={value} onChange={onChange} />
   )
 }
-
-export default IncomeInput

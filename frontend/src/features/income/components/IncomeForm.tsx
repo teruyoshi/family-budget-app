@@ -1,24 +1,22 @@
 import { TransactionForm } from '@/components/common'
 
-interface IncomeFormProps {
+/**
+ * 収入登録フォームコンポーネントのProps型定義
+ */
+export interface IncomeFormProps {
+  /** フォーム送信時のコールバック関数 */
   onSubmit?: (amount: number, date: string) => void
 }
 
 /**
- * 収入登録フォームコンポーネント
- * TransactionFormを使用して共通のフォーム構造とバリデーションを提供します。
+ * TransactionFormを使用した収入登録フォームコンポーネント
  *
- * @group 収入機能
- *
+ * @component
  * @example
- * ```tsx
- * <IncomeForm onSubmit={(amount, date) => {
- *   console.log('収入登録:', amount, date);
- * }} />
- * ```
+ * <IncomeForm onSubmit={(amount, date) => addIncome(amount, date)} />
  */
 
-function IncomeForm({ onSubmit }: IncomeFormProps) {
+export default function IncomeForm({ onSubmit }: IncomeFormProps) {
   const handleSubmit = (amount: number, date: string) => {
     if (onSubmit) {
       onSubmit(amount, date)
@@ -35,5 +33,3 @@ function IncomeForm({ onSubmit }: IncomeFormProps) {
     />
   )
 }
-
-export default IncomeForm

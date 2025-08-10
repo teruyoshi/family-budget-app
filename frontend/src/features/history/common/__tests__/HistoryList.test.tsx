@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { HistoryList } from '../HistoryList'
+import HistoryList from '../HistoryList'
 
 describe('HistoryList', () => {
   const mockItemsSameDate = [

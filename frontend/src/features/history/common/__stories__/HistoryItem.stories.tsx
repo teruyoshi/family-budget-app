@@ -1,53 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import HistoryItem from '../HistoryItem'
 
 const meta: Meta<typeof HistoryItem> = {
-  title: '履歴機能/HistoryItem',
   component: HistoryItem,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `履歴アイテムコンポーネント
-支出・収入履歴の個別アイテムを表示します。左側にラベルチップ、右側に金額を表示。
-@example
-\`\`\`tsx
-<HistoryItem
-  item={expenseItem}
-  label="支出"
-  color="warning"
-/>
-\`\`\`
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    item: {
-      control: 'object',
-      description: 'itemプロパティ (必須)',
-    },
-    label: {
-      control: 'text',
-      description: 'labelプロパティ (必須)',
-    },
-    color: {
-      control: 'select',
-      description: 'colorプロパティ (必須)',
-      options: ['warning', 'success'],
-    },
+  title: 'features/history/common/HistoryItem',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
+
+export const ExpenseItem: StoryObj<typeof HistoryItem> = {
+  args: {
+    item: { id: '1', amount: 1500, timestamp: '2025/01/15(水)' },
+    label: '支出',
+    color: 'warning',
   },
 }
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const IncomeItem: StoryObj<typeof HistoryItem> = {
   args: {
-    item: undefined,
-    label: 'ラベル',
-    color: undefined,
+    item: { id: '2', amount: 25000, timestamp: '2025/01/15(水)' },
+    label: '収入',
+    color: 'success',
   },
 }

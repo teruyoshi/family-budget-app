@@ -2,26 +2,30 @@ import { ListItem, ListItemText, Chip } from '@mui/material'
 import { AmountText } from '@/components/common'
 import type { Expense } from '@/hooks'
 
-interface HistoryItemProps {
+/**
+ * 履歴アイテムコンポーネントのProps型定義
+ */
+export interface HistoryItemProps {
+  /** 表示するアイテム（支出・収入）データ */
   item: Expense
+  /** 表示するラベル（"支出"または"収入"） */
   label: string
+  /** チップの色設定 */
   color: 'warning' | 'success'
 }
 
 /**
- * 履歴アイテムコンポーネント
- * 支出・収入履歴の個別アイテムを表示します。左側にラベルチップ、右側に金額を表示。
+ * 支出・収入履歴の個別アイテム表示コンポーネント
  *
+ * @component
  * @example
- * ```tsx
  * <HistoryItem
  *   item={expenseItem}
  *   label="支出"
  *   color="warning"
  * />
- * ```
  */
-export function HistoryItem({ item, label, color }: HistoryItemProps) {
+export default function HistoryItem({ item, label, color }: HistoryItemProps) {
   return (
     <ListItem
       sx={{
@@ -45,5 +49,3 @@ export function HistoryItem({ item, label, color }: HistoryItemProps) {
     </ListItem>
   )
 }
-
-export default HistoryItem

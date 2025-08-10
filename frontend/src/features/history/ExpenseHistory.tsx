@@ -1,22 +1,22 @@
 import { HistoryList } from './common'
 import type { Expense } from '@/hooks'
 
-interface ExpenseHistoryProps {
+/**
+ * 支出履歴コンポーネントのProps型定義
+ */
+export interface ExpenseHistoryProps {
+  /** 表示する支出データの配列 */
   expenses: Expense[]
 }
 
 /**
- * 支出履歴コンポーネント
- * 支出データを日付グループ化して時系列降順で表示します。
+ * 支出データを日付グループ化して表示するコンポーネント
  *
- * @group 履歴機能
- *
+ * @component
  * @example
- * ```tsx
  * <ExpenseHistory expenses={expenses} />
- * ```
  */
-export function ExpenseHistory({ expenses }: ExpenseHistoryProps) {
+export default function ExpenseHistory({ expenses }: ExpenseHistoryProps) {
   return (
     <HistoryList
       items={expenses}
@@ -26,5 +26,3 @@ export function ExpenseHistory({ expenses }: ExpenseHistoryProps) {
     />
   )
 }
-
-export default ExpenseHistory

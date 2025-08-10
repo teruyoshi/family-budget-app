@@ -1,41 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import TextLabel from '../TextLabel'
 
 const meta: Meta<typeof TextLabel> = {
-  title: '共通コンポーネント/TextLabel',
   component: TextLabel,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `テキストラベルコンポーネントのProps型定義
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    children: {
-      control: 'object',
-      description: '表示するコンテンツ (必須)',
-    },
-    variant: {
-      control: 'object',
-      description: 'Typography のバリエーション (任意)',
-    },
-    sx: {
-      control: 'object',
-      description: 'スタイルオブジェクト (任意)',
-    },
+  title: 'components/common/TextLabel',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
+
+export const Default: StoryObj<typeof TextLabel> = {
+  args: {
+    children: '残高',
   },
 }
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const SmallLabel: StoryObj<typeof TextLabel> = {
   args: {
-    children: undefined,
+    children: '小さなラベル',
+    variant: 'caption',
+  },
+}
+
+export const LargeLabel: StoryObj<typeof TextLabel> = {
+  args: {
+    children: '大きなラベル',
+    variant: 'h6',
   },
 }

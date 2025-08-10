@@ -33,9 +33,17 @@ const preview: Preview = {
       storySort: {
         order: [
           '共通コンポーネント',
-          ['AmountInput', 'TextInput', 'AmountText', 'TextLabel', 'DatePicker', 'AppTitle', 'TransactionForm'],
+          [
+            'AmountInput',
+            'TextInput',
+            'AmountText',
+            'TextLabel',
+            'DatePicker',
+            'AppTitle',
+            'TransactionForm',
+          ],
           '残高機能',
-          '支出機能', 
+          '支出機能',
           '収入機能',
           '履歴機能',
         ],

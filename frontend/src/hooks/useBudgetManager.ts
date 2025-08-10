@@ -15,27 +15,14 @@ export interface Income {
 }
 
 /**
- * 統合家計簿管理カスタムフック
+ * 収入・支出データと残高の状態管理を一元化するカスタムフック
  *
- * 収入・支出データと残高の状態管理を一元化します。
- * タプル形式で[値オブジェクト, 操作関数オブジェクト]を返します。
- *
- * @group カスタムフック
- * @returns 値オブジェクト（expenses, incomes, balance等）と操作関数（addExpense, addIncome）のタプル
+ * @returns タプル形式で[値オブジェクト, 操作関数オブジェクト]を返す
  *
  * @example
- * ```typescript
  * const [values, actions] = useBudgetManager();
- *
- * // 支出登録
  * actions.addExpense(1000, '2024-01-01');
- *
- * // 収入登録
- * actions.addIncome(50000, '2024-01-01');
- *
- * // 残高確認
- * console.log(values.balance); // 49000
- * ```
+ * console.log(values.balance);
  */
 export function useBudgetManager() {
   const [expenses, setExpenses] = useState<Expense[]>([])
@@ -43,15 +30,8 @@ export function useBudgetManager() {
 
   /**
    * 新規支出登録ハンドラー
-   * 新しい支出をリストの先頭に追加し、日付を日本語フォーマットに変換します
-   *
-   * @param {number} amount - 支出金額（正の数値）
-   * @param {string} date - 支出日付（YYYY-MM-DD形式）
-   *
-   * @example
-   * ```typescript
-   * addExpense(1500, '2024-01-15'); // 1500円の支出を登録
-   * ```
+   * @param amount 支出金額
+   * @param date 支出日付（YYYY-MM-DD形式）
    */
   const addExpense = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換
@@ -75,15 +55,8 @@ export function useBudgetManager() {
 
   /**
    * 新規収入登録ハンドラー
-   * 新しい収入をリストの先頭に追加し、日付を日本語フォーマットに変換します
-   *
-   * @param {number} amount - 収入金額（正の数値）
-   * @param {string} date - 収入日付（YYYY-MM-DD形式）
-   *
-   * @example
-   * ```typescript
-   * addIncome(50000, '2024-01-01'); // 50000円の収入を登録
-   * ```
+   * @param amount 収入金額
+   * @param date 収入日付（YYYY-MM-DD形式）
    */
   const addIncome = (amount: number, date: string) => {
     // 指定された日付を日本語フォーマットに変換

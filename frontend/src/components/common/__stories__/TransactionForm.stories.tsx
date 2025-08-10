@@ -1,54 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import TransactionForm from '../TransactionForm';
+import { Meta, StoryObj } from '@storybook/react'
+import TransactionForm from '../TransactionForm'
 
 const meta: Meta<typeof TransactionForm> = {
-  title: '共通コンポーネント/TransactionForm',
   component: TransactionForm,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `取引登録フォームコンポーネントのProps型定義
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    placeholder: {
-      control: 'text',
-      description: '金額入力フィールドのプレースホルダーテキスト (必須)',
-    },
-    buttonText: {
-      control: 'text',
-      description: '登録ボタンのテキスト (必須)',
-    },
-    buttonColor: {
-      control: 'select',
-      description: '登録ボタンの色テーマ (必須)',
-      options: ["error","success"],
-    },
-    datePickerLabel: {
-      control: 'text',
-      description: '日付選択フィールドのラベル (必須)',
-    },
-    onSubmit: {
-      control: 'text',
-      description: 'フォーム送信時のコールバック関数 (任意)',
-    },
-  },
-};
+  title: 'components/common/TransactionForm',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
+export const ExpenseForm: StoryObj<typeof TransactionForm> = {
   args: {
-    placeholder: 'プレースホルダーテキスト',
-    buttonText: 'テキスト',
-    buttonColor: undefined,
-    datePickerLabel: 'ラベル',
+    placeholder: '支出金額を入力してください',
+    buttonText: '支出を登録',
+    buttonColor: 'error',
+    datePickerLabel: '支出日付',
+    onSubmit: (amount, date) => console.log('Expense:', amount, date),
   },
-};
+}
 
+export const IncomeForm: StoryObj<typeof TransactionForm> = {
+  args: {
+    placeholder: '収入金額を入力してください',
+    buttonText: '収入を登録',
+    buttonColor: 'success',
+    datePickerLabel: '収入日付',
+    onSubmit: (amount, date) => console.log('Income:', amount, date),
+  },
+}

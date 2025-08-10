@@ -1,35 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import TotalExpenseDisplay from '../TotalExpenseDisplay'
 
 const meta: Meta<typeof TotalExpenseDisplay> = {
-  title: '支出機能/TotalExpenseDisplay',
   component: TotalExpenseDisplay,
-  parameters: {
-    layout: 'centered',
-    docs: {
-      description: {
-        component: `TotalExpenseDisplayコンポーネントのプロパティ
-@typedef {Object} TotalExpenseDisplayProps
-@property {number} totalAmount - 表示する合計支出金額
-        
-詳細な技術仕様は [TypeDoc](http://localhost:3001) で確認できます。`,
-      },
-    },
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    totalAmount: {
-      control: 'number',
-      description: 'totalAmountプロパティ (必須)',
-    },
+  title: 'features/expenses/TotalExpenseDisplay',
+  tags: ['autodocs'], // これでDocsページが自動生成
+}
+export default meta
+
+export const Default: StoryObj<typeof TotalExpenseDisplay> = {
+  args: {
+    totalAmount: 15000,
   },
 }
 
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const LargeAmount: StoryObj<typeof TotalExpenseDisplay> = {
   args: {
-    totalAmount: 1000,
+    totalAmount: 100000,
+  },
+}
+
+export const SmallAmount: StoryObj<typeof TotalExpenseDisplay> = {
+  args: {
+    totalAmount: 500,
   },
 }
