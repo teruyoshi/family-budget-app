@@ -2,7 +2,7 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2024年8月（TypeDoc + Storybook統合完了）
+**最終更新**: 2025年8月（JSDoc + Storybook Docs統合完了）
 
 ## 📋 プロジェクト概要
 
@@ -31,11 +31,8 @@ make npm-install          # 依存関係インストール
 
 #### ドキュメント・Storybook
 ```bash
-make docs-frontend                # TypeDocドキュメント生成
-make docs-serve-frontend          # TypeDocサーバー起動（ポート3001）
 make storybook-frontend           # Storybookサーバー起動（ポート6006）
-make generate-stories-frontend    # JSDocからストーリー自動生成
-make docs-dev-frontend            # TypeDoc + Storybook 連携開発モード
+make storybook-stop-frontend      # Storybookサーバー停止
 ```
 
 #### コンテナ操作
@@ -56,8 +53,7 @@ make backend-shell        # バックエンドコンテナ接続
 - **フロントエンド**: http://localhost:5173
 - **バックエンドAPI**: http://localhost:8080  
 - **phpMyAdmin**: http://localhost:8081 (root/root)
-- **TypeDoc（技術仕様書）**: http://localhost:3001
-- **Storybook（コンポーネント）**: http://localhost:6006
+- **Storybook（統合ドキュメント）**: http://localhost:6006
 
 ## 📁 現在のアーキテクチャ
 
@@ -101,8 +97,6 @@ frontend/
 │   ├── hooks/
 │   │   └── useBudgetManager.ts  # 統合家計簿管理フック
 │   └── App.tsx                  # メインアプリ
-├── scripts/
-│   └── auto-generate-stories.cjs # Storybookストーリー自動生成
 ├── .storybook/                   # Storybook設定
 ├── docs/                        # TypeDoc生成ドキュメント
 └── typedoc.json                 # TypeDoc設定
@@ -113,18 +107,25 @@ frontend/
 - **テスト状況**: 43テスト、10テストスイート全通過
 - **主要機能**: 支出・収入登録、残高計算、日付グループ化履歴表示
 - **UI改善**: 金額¥表示、右寄せ入力、日付セクション分け
-- **ドキュメント**: TypeDoc + Storybook 連携統合、JSDoc自動ストーリー生成
+- **ドキュメント**: JSDoc + Storybook Docs統合、react-docgen-typescript自動反映
 
-## 📚 ドキュメント統合システム
-- **TypeDoc**: 包括的な技術仕様書（JSDocコメント、型定義、アーキテクチャ）
-- **Storybook**: インタラクティブなコンポーネントドキュメント
-- **自動生成**: JSDocコメントからStorybookストーリーを自動作成
-- **相互リンク**: TypeDoc ⟷ Storybook 間のクロスリファレンス
+## 📚 ドキュメントシステム（JSDoc + Storybook）
+- **Storybook**: 唯一の統合ドキュメントプラットフォーム
+- **JSDoc → docgen**: TypeScript型定義とJSDocを自動的にStorybookに反映
+- **react-docgen-typescript**: Props型情報とJSDocコメントの自動抽出
+- **インタラクティブ**: 実際のコンポーネント操作とドキュメントが統合
+
+### JSDoc記述ルール（docgen最適化）
+1. **コンポーネント直前**: JSDocはコンポーネント定義の直前に配置
+2. **Props型export**: interface/type定義は必ずexportする
+3. **詳細説明**: 各プロパティに用途・制約・例を明記
+4. **@example追加**: JSXコードブロックで実用例を提供
+5. **@component/@remarks**: コンポーネントの特徴・注意点を記述
 
 ### ドキュメント更新フロー
-1. コンポーネント開発・修正
-2. `make generate-stories-frontend` でストーリー自動生成
-3. `make docs-dev-frontend` で両システム起動・確認
+1. コンポーネント開発・修正時にJSDoc更新（Props型はexport必須）
+2. 手動でStorybookストーリーファイル作成（*.stories.tsx）
+3. `make storybook-frontend` でドキュメント確認（JSDoc自動反映）
 
 ## 🎨 コード規約
 - **TypeScript**: strict mode、包括的JSDocコメント必須
@@ -133,3 +134,24 @@ frontend/
 - **エクスポート**: バレルエクスポート（index.ts）で再利用性向上
 - **テスト**: 単体テスト重視（結合テスト最小化で高速化）
 - **ドキュメント**: コンポーネント作成・修正時はJSDoc更新必須
+
+## 🤖 AI活用：JSDoc保守プロンプト
+
+セッション開始時にAIに渡すプロンプト：
+
+```
+あなたはこのセッションのJSDoc保守担当エンジニアです。
+目的：JSDocをprops直前に追加/更新し、Storybook Docs（docgen）に正しく出るように整備する。
+
+ルール:
+- すべての公開コンポーネントに説明（概要/remarks）を付与
+- Propsは各プロパティ直前にJSDoc（説明、必要なら@param、制約）を記述
+- 使用例(@example)は1つ以上（JSXで）
+- Props型定義は必ずexportする
+- 不明点は必ず質問。推測で省略しない
+- テストファイル（`**.test.tsx`、`**.spec.tsx`、`**.test.ts`、`**.spec.ts`）は対象外
+
+出力:
+- 変更差分に対するコード（JSDoc入り）を返す
+- インデント・改行は整形する
+```

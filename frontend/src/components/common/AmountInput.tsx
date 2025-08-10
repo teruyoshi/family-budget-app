@@ -4,48 +4,88 @@ import type { SxProps, Theme } from '@mui/material'
 
 /**
  * 金額入力コンポーネントのProps型定義
+ * 
+ * 金額入力に特化したプロパティセット。自動的に¥記号とカンマ区切りで表示される。
  */
-interface AmountInputProps {
-  /** プレースホルダーテキスト */
+export interface AmountInputProps {
+  /** プレースホルダーテキスト（例: "金額を入力してください"） */
   placeholder?: string
-  /** 現在の金額（数値） */
+  
+  /** 
+   * 現在の金額（数値）
+   * @example 15000 → "¥15,000" と表示
+   */
   value: number
-  /** 金額変更時のコールバック関数 */
+  
+  /** 
+   * 金額変更時のコールバック関数
+   * @param value 入力された数値（NaNや無効値は渡されない）
+   */
   onChange: (value: number) => void
-  /** スタイルオブジェクト */
+  
+  /** MUI sx propsによるカスタムスタイル */
   sx?: SxProps<Theme>
-  /** 必須項目かどうか */
+  
+  /** 必須項目として扱うかどうか（バリデーション表示用） */
   required?: boolean
-  /** 全幅で表示するかどうか */
+  
+  /** 全幅で表示するかどうか（デフォルト: true） */
   fullWidth?: boolean
-  /** 入力フィールドのバリアント */
+  
+  /** 
+   * MUI TextFieldのバリアント
+   * @default "outlined"
+   */
   variant?: 'outlined' | 'filled' | 'standard'
 }
 
 /**
  * 金額入力専用コンポーネント
  *
- * 自動的にカンマ区切りと円マーク表示を行い、右寄せで表示します。
- * 入力値は数値として管理され、TextInputをベースに構築されています。
+ * 数値入力を金額表示に自動変換する特殊なテキスト入力コンポーネント。
+ * 自動的にカンマ区切りと¥記号を表示し、右寄せレイアウトで数値の視認性を向上させます。
+ * TextInputをベースにしており、内部的には数値として管理されます。
  *
- * @group 共通コンポーネント
+ * @remarks
+ * - 入力中は数値のみを受け付け、自動的に¥15,000形式でフォーマット
+ * - 右寄せ表示で金額の桁を把握しやすい
+ * - プレースホルダーは中央揃えで使いやすさを配慮
+ * - 半角数値のみ受け付け、全角数値は自動変換
  *
+ * @component
+ * 
  * @example
+ * ```tsx
  * // 基本的な使用例
  * <AmountInput
  *   value={amount}
  *   onChange={setAmount}
- *   placeholder="金額を入力"
+ *   placeholder="金額を入力してください"
  * />
- *
+ * ```
+ * 
  * @example
- * // 必須項目として使用
+ * ```tsx
+ * // 支出入力フォーム
  * <AmountInput
  *   value={expense}
  *   onChange={setExpense}
  *   placeholder="支出金額"
  *   required
+ *   variant="outlined"
  * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // カスタムスタイル適用
+ * <AmountInput
+ *   value={income}
+ *   onChange={setIncome}
+ *   sx={{ backgroundColor: 'success.light' }}
+ *   fullWidth={false}
+ * />
+ * ```
  */
 
 const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(

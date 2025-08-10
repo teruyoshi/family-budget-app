@@ -15,9 +15,7 @@
     "docs:clean": "rm -rf docs",
     "docs:serve": "serve docs -p 3001",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
-    "build-storybook": "storybook build",
-    "generate-stories": "node scripts/auto-generate-stories.cjs",
-    "generate-stories:force": "node scripts/auto-generate-stories.cjs --force"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -48,6 +46,7 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "prettier": "^3.6.2",
+    "react-docgen-typescript": "^2.2.2",
     "serve": "^14.2.4",
     "@storybook/addon-docs": "^8.6.14",
     "@storybook/addon-essentials": "^8.6.14",

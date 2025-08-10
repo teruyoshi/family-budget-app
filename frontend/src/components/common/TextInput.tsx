@@ -5,29 +5,31 @@ import type { SxProps, Theme } from '@mui/material'
 /**
  * 汎用テキスト入力コンポーネント
  *
- * MUI TextFieldをラップし、プロジェクト全体で一貫したAPIを提供します。
- *
- * @group 共通コンポーネント
- *
+ * MUI TextFieldをラップしてプロジェクト全体で統一されたAPIを提供する基盤コンポーネント。
+ * 様々な入力タイプ（text, number, email, password）に対応し、一貫したスタイリングとバリデーション機能を提供します。
+ * AmountInputなど特殊な入力コンポーネントの基盤としても使用されます。
+ * 
+ * @remarks
+ * - 制御コンポーネントパターンを採用（value + onChange）
+ * - MUIの全バリアント（outlined, filled, standard）をサポート
+ * - forwardRefによるref転送で外部からのフォーカス制御が可能
+ * - 入力タイプに応じた適切なキーボード表示（モバイル対応）
+ * 
+ * @component
+ * 
  * @example
- * // 基本使用例
+ * ```tsx
+ * // 基本的なテキスト入力
  * <TextInput
  *   value={name}
  *   onChange={setName}
- *   placeholder="名前を入力"
+ *   placeholder="お名前を入力してください"
  * />
- *
+ * ```
+ * 
  * @example
- * // 数値入力
- * <TextInput
- *   type="number"
- *   value={amount}
- *   onChange={setAmount}
- *   required
- * />
- *
- * @example
- * // メール入力
+ * ```tsx
+ * // メールアドレス入力
  * <TextInput
  *   type="email"
  *   value={email}
@@ -35,27 +37,64 @@ import type { SxProps, Theme } from '@mui/material'
  *   placeholder="メールアドレス"
  *   required
  * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // パスワード入力（バリアント指定）
+ * <TextInput
+ *   type="password"
+ *   value={password}
+ *   onChange={setPassword}
+ *   variant="filled"
+ *   required
+ * />
+ * ```
  */
 
 /**
- * テキスト入力コンポーネントのProps型定義
+ * 汎用テキスト入力コンポーネントのProps型定義
+ * 
+ * MUI TextFieldをラップした統一APIを提供する基本入力コンポーネント用のプロパティセット
  */
-interface TextInputProps {
-  /** 入力フィールドのタイプ */
+export interface TextInputProps {
+  /** 
+   * 入力フィールドのタイプ
+   * @default "text"
+   */
   type?: 'text' | 'number' | 'email' | 'password'
-  /** プレースホルダーテキスト */
+  
+  /** プレースホルダーテキスト（例: "名前を入力してください"） */
   placeholder?: string
-  /** 現在の入力値 */
+  
+  /** 現在の入力値（制御コンポーネントとして使用） */
   value: string
-  /** 値変更時のコールバック関数 */
+  
+  /** 
+   * 値変更時のコールバック関数
+   * @param value ユーザーが入力した新しい文字列値
+   */
   onChange: (value: string) => void
-  /** スタイルオブジェクト */
+  
+  /** MUI sx propsによるカスタムスタイル */
   sx?: SxProps<Theme>
-  /** 必須項目かどうか */
+  
+  /** 
+   * 必須項目として扱うかどうか
+   * @default false
+   */
   required?: boolean
-  /** 全幅で表示するかどうか */
+  
+  /** 
+   * 全幅で表示するかどうか
+   * @default true
+   */
   fullWidth?: boolean
-  /** 入力フィールドのバリアント */
+  
+  /** 
+   * MUI TextFieldのバリアント
+   * @default "outlined"
+   */
   variant?: 'outlined' | 'filled' | 'standard'
 }
 
