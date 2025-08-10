@@ -1,4 +1,4 @@
-import { useAmountInput } from '@/hooks'
+import { useAmount } from '@/hooks'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -93,7 +93,7 @@ export default function AmountInput({
   fullWidth = true,
   variant = 'outlined',
 }: AmountInputProps) {
-  const [{ amount: displayValue }, setValue] = useAmountInput(value)
+  const [{ formatted: displayValue }, updateAmount] = useAmount(value)
 
   /** 表示用文字列から数値を抽出 */
   const parseNumber = (str: string): number => {
@@ -107,7 +107,7 @@ export default function AmountInput({
     const numericValue = parseNumber(inputValue)
 
     // フックを使って表示値を更新
-    setValue(numericValue)
+    updateAmount(numericValue)
 
     // 親コンポーネントには数値で通知
     onChange(numericValue)
