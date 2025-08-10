@@ -96,6 +96,15 @@ export interface TextInputProps {
    * @default "outlined"
    */
   variant?: 'outlined' | 'filled' | 'standard'
+
+  /** エラー状態を表示するかどうか */
+  error?: boolean
+
+  /** エラーメッセージテキスト */
+  helperText?: string
+
+  /** input要素に適用する追加プロパティ */
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -109,6 +118,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       required = false,
       fullWidth = true,
       variant = 'outlined',
+      error = false,
+      helperText,
+      inputProps,
     },
     ref
   ) => {
@@ -130,6 +142,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         required={required}
         fullWidth={fullWidth}
         variant={variant}
+        error={error}
+        helperText={helperText}
+        inputProps={inputProps}
         sx={sx}
       />
     )

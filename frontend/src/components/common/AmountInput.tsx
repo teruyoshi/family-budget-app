@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect } from 'react'
+import { useAmount } from '@/hooks'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -37,6 +37,18 @@ export interface AmountInputProps {
    * @default "outlined"
    */
   variant?: 'outlined' | 'filled' | 'standard'
+
+  /** アクセシビリティ用ラベル（aria-label） */
+  'aria-label'?: string
+
+  /** アクセシビリティ用説明（aria-describedby） */
+  'aria-describedby'?: string
+
+  /** エラー状態を表示するかどうか */
+  error?: boolean
+
+  /** エラーメッセージテキスト */
+  helperText?: string
 }
 
 /**
@@ -46,17 +58,16 @@ export interface AmountInputProps {
  * 自動的にカンマ区切りと¥記号を表示し、右寄せレイアウトで数値の視認性を向上させます。
  * TextInputをベースにしており、内部的には数値として管理されます。
  *
- * @remarks
+ * ## 特徴
  * - 入力中は数値のみを受け付け、自動的に¥15,000形式でフォーマット
  * - 右寄せ表示で金額の桁を把握しやすい
  * - プレースホルダーは中央揃えで使いやすさを配慮
  * - 半角数値のみ受け付け、全角数値は自動変換
  *
- * @component
+ * ## 使用例
  *
- * @example
+ * ### 基本的な使用例
  * ```tsx
- * // 基本的な使用例
  * <AmountInput
  *   value={amount}
  *   onChange={setAmount}
@@ -64,9 +75,8 @@ export interface AmountInputProps {
  * />
  * ```
  *
- * @example
+ * ### 支出入力フォーム
  * ```tsx
- * // 支出入力フォーム
  * <AmountInput
  *   value={expense}
  *   onChange={setExpense}
@@ -76,9 +86,8 @@ export interface AmountInputProps {
  * />
  * ```
  *
- * @example
+ * ### カスタムスタイル適用
  * ```tsx
- * // カスタムスタイル適用
  * <AmountInput
  *   value={income}
  *   onChange={setIncome}
@@ -87,76 +96,55 @@ export interface AmountInputProps {
  * />
  * ```
  */
+export default function AmountInput({
+  placeholder,
+  value,
+  onChange,
+  sx,
+  required = false,
+  fullWidth = true,
+  variant = 'outlined',
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
+  error = false,
+  helperText,
+}: AmountInputProps) {
+  const [{ formatted: displayValue }, setAmount] = useAmount(value)
 
-const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
-  (
-    {
-      placeholder,
-      value,
-      onChange,
-      sx,
-      required = false,
-      fullWidth = true,
-      variant = 'outlined',
-    },
-    ref
-  ) => {
-    const [displayValue, setDisplayValue] = useState<string>('')
-
-    /** 数値を¥1,000形式の文字列に変換 */
-    const formatNumber = (num: number): string => {
-      if (isNaN(num) || num === 0) return ''
-      return `¥${num.toLocaleString()}`
-    }
-
-    /** 表示用文字列から数値を抽出 */
-    const parseNumber = (str: string): number => {
-      const cleaned = str.replace(/[^0-9]/g, '')
-      return cleaned === '' ? 0 : parseInt(cleaned, 10)
-    }
-
-    // 初期値とpropsのvalueが変更された時に表示値を更新
-    useEffect(() => {
-      setDisplayValue(formatNumber(value))
-    }, [value])
-
-    /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
-    const handleChange = (inputValue: string) => {
-      // 数字以外を除去
-      const numericValue = parseNumber(inputValue)
-
-      // 表示値を更新（カンマ区切り）
-      setDisplayValue(formatNumber(numericValue))
-
-      // 親コンポーネントには数値で通知
-      onChange(numericValue)
-    }
-
-    return (
-      <TextInput
-        ref={ref}
-        type="text"
-        placeholder={placeholder}
-        value={displayValue}
-        onChange={handleChange}
-        required={required}
-        fullWidth={fullWidth}
-        variant={variant}
-        sx={{
-          '& .MuiInputBase-input': {
-            textAlign: 'right',
-            '&::placeholder': {
-              textAlign: 'center',
-              opacity: 0.6,
-            },
-          },
-          ...sx,
-        }}
-      />
-    )
+  const handleChange = (inputValue: string) => {
+    const numericValue = parseInt(inputValue.replace(/[^0-9]/g, ''), 10) || 0
+    setAmount(numericValue)
+    onChange(numericValue)
   }
-)
 
-AmountInput.displayName = 'AmountInput'
-
-export default AmountInput
+  return (
+    <TextInput
+      type="text"
+      placeholder={placeholder}
+      value={displayValue}
+      onChange={handleChange}
+      required={required}
+      fullWidth={fullWidth}
+      variant={variant}
+      error={error}
+      helperText={helperText}
+      inputProps={{
+        'aria-label': ariaLabel || `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
+        'aria-describedby': ariaDescribedby,
+        'aria-invalid': error,
+        inputMode: 'numeric' as const,
+        pattern: '[0-9]*',
+      }}
+      sx={{
+        '& .MuiInputBase-input': {
+          textAlign: 'right',
+          '&::placeholder': {
+            textAlign: 'center',
+            opacity: 0.6,
+          },
+        },
+        ...sx,
+      }}
+    />
+  )
+}

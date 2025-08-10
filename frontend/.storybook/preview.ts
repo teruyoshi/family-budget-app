@@ -3,22 +3,8 @@ import type { Preview } from '@storybook/react'
 const preview: Preview = {
   parameters: {
     docs: {
-      extractComponentDescription: (component, { notes }) => {
-        if (notes) {
-          return typeof notes === 'string'
-            ? notes
-            : notes.markdown || notes.text
-        }
-        return null
-      },
       source: {
         state: 'open',
-      },
-      toc: {
-        contentsSelector: '.sbdocs-content',
-        headingSelector: 'h1, h2, h3',
-        title: '目次',
-        disable: false,
       },
     },
     controls: {
