@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useAmountInput } from '@/hooks'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -93,13 +93,7 @@ export default function AmountInput({
   fullWidth = true,
   variant = 'outlined',
 }: AmountInputProps) {
-  const [displayValue, setDisplayValue] = useState<string>('')
-
-  /** 数値を¥1,000形式の文字列に変換 */
-  const formatNumber = (num: number): string => {
-    if (isNaN(num) || num === 0) return ''
-    return `¥${num.toLocaleString()}`
-  }
+  const [displayValue, setValue] = useAmountInput(value)
 
   /** 表示用文字列から数値を抽出 */
   const parseNumber = (str: string): number => {
@@ -107,18 +101,13 @@ export default function AmountInput({
     return cleaned === '' ? 0 : parseInt(cleaned, 10)
   }
 
-  // 初期値とpropsのvalueが変更された時に表示値を更新
-  useEffect(() => {
-    setDisplayValue(formatNumber(value))
-  }, [value])
-
   /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
   const handleChange = (inputValue: string) => {
     // 数字以外を除去
     const numericValue = parseNumber(inputValue)
 
-    // 表示値を更新（カンマ区切り）
-    setDisplayValue(formatNumber(numericValue))
+    // フックを使って表示値を更新
+    setValue(numericValue)
 
     // 親コンポーネントには数値で通知
     onChange(numericValue)
