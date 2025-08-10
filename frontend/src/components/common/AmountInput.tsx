@@ -46,17 +46,16 @@ export interface AmountInputProps {
  * 自動的にカンマ区切りと¥記号を表示し、右寄せレイアウトで数値の視認性を向上させます。
  * TextInputをベースにしており、内部的には数値として管理されます。
  *
- * @remarks
+ * ## 特徴
  * - 入力中は数値のみを受け付け、自動的に¥15,000形式でフォーマット
  * - 右寄せ表示で金額の桁を把握しやすい
  * - プレースホルダーは中央揃えで使いやすさを配慮
  * - 半角数値のみ受け付け、全角数値は自動変換
  *
- * @component
+ * ## 使用例
  *
- * @example
+ * ### 基本的な使用例
  * ```tsx
- * // 基本的な使用例
  * <AmountInput
  *   value={amount}
  *   onChange={setAmount}
@@ -64,9 +63,8 @@ export interface AmountInputProps {
  * />
  * ```
  *
- * @example
+ * ### 支出入力フォーム
  * ```tsx
- * // 支出入力フォーム
  * <AmountInput
  *   value={expense}
  *   onChange={setExpense}
@@ -76,9 +74,8 @@ export interface AmountInputProps {
  * />
  * ```
  *
- * @example
+ * ### カスタムスタイル適用
  * ```tsx
- * // カスタムスタイル適用
  * <AmountInput
  *   value={income}
  *   onChange={setIncome}
@@ -87,8 +84,7 @@ export interface AmountInputProps {
  * />
  * ```
  */
-
-function AmountInput({
+export default function AmountInput({
   placeholder,
   value,
   onChange,
@@ -150,5 +146,3 @@ function AmountInput({
     />
   )
 }
-
-export default AmountInput
