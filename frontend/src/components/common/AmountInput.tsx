@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -88,75 +88,67 @@ export interface AmountInputProps {
  * ```
  */
 
-const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
-  (
-    {
-      placeholder,
-      value,
-      onChange,
-      sx,
-      required = false,
-      fullWidth = true,
-      variant = 'outlined',
-    },
-    ref
-  ) => {
-    const [displayValue, setDisplayValue] = useState<string>('')
+function AmountInput({
+  placeholder,
+  value,
+  onChange,
+  sx,
+  required = false,
+  fullWidth = true,
+  variant = 'outlined',
+}: AmountInputProps) {
+  const [displayValue, setDisplayValue] = useState<string>('')
 
-    /** 数値を¥1,000形式の文字列に変換 */
-    const formatNumber = (num: number): string => {
-      if (isNaN(num) || num === 0) return ''
-      return `¥${num.toLocaleString()}`
-    }
-
-    /** 表示用文字列から数値を抽出 */
-    const parseNumber = (str: string): number => {
-      const cleaned = str.replace(/[^0-9]/g, '')
-      return cleaned === '' ? 0 : parseInt(cleaned, 10)
-    }
-
-    // 初期値とpropsのvalueが変更された時に表示値を更新
-    useEffect(() => {
-      setDisplayValue(formatNumber(value))
-    }, [value])
-
-    /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
-    const handleChange = (inputValue: string) => {
-      // 数字以外を除去
-      const numericValue = parseNumber(inputValue)
-
-      // 表示値を更新（カンマ区切り）
-      setDisplayValue(formatNumber(numericValue))
-
-      // 親コンポーネントには数値で通知
-      onChange(numericValue)
-    }
-
-    return (
-      <TextInput
-        ref={ref}
-        type="text"
-        placeholder={placeholder}
-        value={displayValue}
-        onChange={handleChange}
-        required={required}
-        fullWidth={fullWidth}
-        variant={variant}
-        sx={{
-          '& .MuiInputBase-input': {
-            textAlign: 'right',
-            '&::placeholder': {
-              textAlign: 'center',
-              opacity: 0.6,
-            },
-          },
-          ...sx,
-        }}
-      />
-    )
+  /** 数値を¥1,000形式の文字列に変換 */
+  const formatNumber = (num: number): string => {
+    if (isNaN(num) || num === 0) return ''
+    return `¥${num.toLocaleString()}`
   }
-)
 
-AmountInput.displayName = 'AmountInput'
+  /** 表示用文字列から数値を抽出 */
+  const parseNumber = (str: string): number => {
+    const cleaned = str.replace(/[^0-9]/g, '')
+    return cleaned === '' ? 0 : parseInt(cleaned, 10)
+  }
+
+  // 初期値とpropsのvalueが変更された時に表示値を更新
+  useEffect(() => {
+    setDisplayValue(formatNumber(value))
+  }, [value])
+
+  /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
+  const handleChange = (inputValue: string) => {
+    // 数字以外を除去
+    const numericValue = parseNumber(inputValue)
+
+    // 表示値を更新（カンマ区切り）
+    setDisplayValue(formatNumber(numericValue))
+
+    // 親コンポーネントには数値で通知
+    onChange(numericValue)
+  }
+
+  return (
+    <TextInput
+      type="text"
+      placeholder={placeholder}
+      value={displayValue}
+      onChange={handleChange}
+      required={required}
+      fullWidth={fullWidth}
+      variant={variant}
+      sx={{
+        '& .MuiInputBase-input': {
+          textAlign: 'right',
+          '&::placeholder': {
+            textAlign: 'center',
+            opacity: 0.6,
+          },
+        },
+        ...sx,
+      }}
+    />
+  )
+}
 
 export default AmountInput
