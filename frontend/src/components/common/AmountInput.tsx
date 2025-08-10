@@ -37,6 +37,18 @@ export interface AmountInputProps {
    * @default "outlined"
    */
   variant?: 'outlined' | 'filled' | 'standard'
+
+  /** アクセシビリティ用ラベル（aria-label） */
+  'aria-label'?: string
+
+  /** アクセシビリティ用説明（aria-describedby） */
+  'aria-describedby'?: string
+
+  /** エラー状態を表示するかどうか */
+  error?: boolean
+
+  /** エラーメッセージテキスト */
+  helperText?: string
 }
 
 /**
@@ -92,6 +104,10 @@ export default function AmountInput({
   required = false,
   fullWidth = true,
   variant = 'outlined',
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
+  error = false,
+  helperText,
 }: AmountInputProps) {
   const [{ formatted: displayValue }, setAmount] = useAmount(value)
 
@@ -110,6 +126,15 @@ export default function AmountInput({
       required={required}
       fullWidth={fullWidth}
       variant={variant}
+      error={error}
+      helperText={helperText}
+      inputProps={{
+        'aria-label': ariaLabel || `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
+        'aria-describedby': ariaDescribedby,
+        'aria-invalid': error,
+        inputMode: 'numeric' as const,
+        pattern: '[0-9]*',
+      }}
       sx={{
         '& .MuiInputBase-input': {
           textAlign: 'right',
