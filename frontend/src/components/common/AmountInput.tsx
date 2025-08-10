@@ -93,23 +93,11 @@ export default function AmountInput({
   fullWidth = true,
   variant = 'outlined',
 }: AmountInputProps) {
-  const [{ formatted: displayValue }, updateAmount] = useAmount(value)
+  const [{ formatted: displayValue }, setAmount] = useAmount(value)
 
-  /** 表示用文字列から数値を抽出 */
-  const parseNumber = (str: string): number => {
-    const cleaned = str.replace(/[^0-9]/g, '')
-    return cleaned === '' ? 0 : parseInt(cleaned, 10)
-  }
-
-  /** 入力変更時に表示文字列を数値に変換して親コンポーネントに通知 */
   const handleChange = (inputValue: string) => {
-    // 数字以外を除去
-    const numericValue = parseNumber(inputValue)
-
-    // フックを使って表示値を更新
-    updateAmount(numericValue)
-
-    // 親コンポーネントには数値で通知
+    const numericValue = parseInt(inputValue.replace(/[^0-9]/g, ''), 10) || 0
+    setAmount(numericValue)
     onChange(numericValue)
   }
 
