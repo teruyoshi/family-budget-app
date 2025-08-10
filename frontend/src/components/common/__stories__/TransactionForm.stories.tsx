@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import TransactionForm from '../TransactionForm'
 
 const meta: Meta<typeof TransactionForm> = {

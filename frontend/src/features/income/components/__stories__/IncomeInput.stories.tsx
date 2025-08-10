@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import IncomeInput from '../IncomeInput'
 
 const meta: Meta<typeof IncomeInput> = {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import HistoryItem from '../HistoryItem'
 
 const meta: Meta<typeof HistoryItem> = {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import AppTitle from '../AppTitle'
 
 const meta: Meta<typeof AppTitle> = {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import BalanceDisplay from '../BalanceDisplay'
 
 const meta: Meta<typeof BalanceDisplay> = {
