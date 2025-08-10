@@ -23,6 +23,7 @@
 - **コンテナ化**: Docker Compose完全対応
 - **テスト駆動開発**: Jest + React Testing Library
 - **コード品質**: ESLint + Prettier + 自動フォーマット
+- **CI/CD自動化**: GitHub Actions による品質チェック自動化
 
 ## 🛠 技術スタック
 
@@ -132,6 +133,37 @@ make backend                    # バックエンドログ確認
 make frontend-shell             # フロントエンドコンテナ接続
 make backend-shell              # バックエンドコンテナ接続
 ```
+
+## 🔄 CI/CD 自動化
+
+### GitHub Actions
+developブランチへのプルリクエスト時に自動実行される品質チェック：
+
+```yaml
+# .github/workflows/frontend-ci.yml
+name: Frontend CI
+on:
+  pull_request:
+    branches: [develop]
+    paths: ['frontend/**']
+```
+
+#### 自動実行される品質チェック
+- **TypeScript型チェック**: `tsc --noEmit`
+- **ESLint静的解析**: コードスタイル・品質チェック
+- **Jest テスト**: 67テスト + カバレッジレポート生成
+- **Vite ビルド**: 本番ビルド成功確認
+
+#### CI環境仕様
+- **実行環境**: ubuntu-latest
+- **Node.js**: 18.x LTS
+- **キャッシュ**: npm依存関係の最適化
+- **アーティファクト**: カバレッジレポート（30日保持）
+
+#### ステータス確認
+- プルリクエスト画面で自動ステータス表示
+- 失敗時は詳細ログとエラー箇所を表示
+- テスト失敗時のマージブロック機能
 
 ## 🏗 実装済み機能
 
