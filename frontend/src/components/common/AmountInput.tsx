@@ -93,7 +93,7 @@ export default function AmountInput({
   fullWidth = true,
   variant = 'outlined',
 }: AmountInputProps) {
-  const [displayValue, setValue] = useAmountInput(value)
+  const [{ amount: displayValue }, setValue] = useAmountInput(value)
 
   /** 表示用文字列から数値を抽出 */
   const parseNumber = (str: string): number => {

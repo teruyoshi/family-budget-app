@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 /**
  * useAmountInputの返り値型定義
  */
 export type UseAmountInputReturn = [
-  /** フォーマットされた金額文字列（例: "¥15,000"） */
-  string,
+  /** 金額オブジェクト：{フォーマット済み文字列, 数値} */
+  { amount: string; numericAmount: number },
   /** 数値での金額設定関数 */
   (value: number) => void
 ]
@@ -25,11 +25,12 @@ export type UseAmountInputReturn = [
  *
  * ### 基本的な使用例
  * ```tsx
- * const [displayAmount, setAmount] = useAmountInput(0)
+ * const [{ amount, numericAmount }, setAmount] = useAmountInput(0)
  * 
  * return (
  *   <div>
- *     <span>表示: {displayAmount}</span>
+ *     <span>表示: {amount}</span>
+ *     <span>数値: {numericAmount}</span>
  *     <button onClick={() => setAmount(15000)}>
  *       15000円に設定
  *     </button>
@@ -39,19 +40,19 @@ export type UseAmountInputReturn = [
  *
  * ### フォーム入力での使用例
  * ```tsx
- * const [expenseDisplay, setExpense] = useAmountInput(0)
+ * const [{ amount: expenseDisplay, numericAmount: expense }, setExpense] = useAmountInput(0)
  * 
  * const handleSubmit = () => {
- *   // setExpenseで設定した数値を使用
+ *   // expense変数で数値を直接使用
  *   console.log('支出:', expense)
  * }
  * ```
  *
  * @param initialValue 初期金額（数値）
- * @returns [フォーマット済み文字列, 値更新関数] のタプル
+ * @returns [金額オブジェクト, 値更新関数] のタプル
  */
 export default function useAmountInput(initialValue: number): UseAmountInputReturn {
-  const [displayValue, setDisplayValue] = useState<string>('')
+  const [numericValue, setNumericValue] = useState<number>(initialValue)
 
   /**
    * 数値を¥1,000形式の文字列に変換
@@ -67,10 +68,10 @@ export default function useAmountInput(initialValue: number): UseAmountInputRetu
   }
 
   /**
-   * 初期値が変更された時に表示値を更新
+   * 初期値が変更された時に数値を更新
    */
   useEffect(() => {
-    setDisplayValue(formatNumber(initialValue))
+    setNumericValue(initialValue)
   }, [initialValue])
 
   /**
@@ -78,8 +79,13 @@ export default function useAmountInput(initialValue: number): UseAmountInputRetu
    * @param value 設定する数値
    */
   const setValue = (value: number) => {
-    setDisplayValue(formatNumber(value))
+    setNumericValue(value)
   }
 
-  return [displayValue, setValue]
+  /**
+   * 数値から計算されるフォーマット済み表示文字列
+   */
+  const displayValue = useMemo(() => formatNumber(numericValue), [numericValue])
+
+  return [{ amount: displayValue, numericAmount: numericValue }, setValue]
 }
