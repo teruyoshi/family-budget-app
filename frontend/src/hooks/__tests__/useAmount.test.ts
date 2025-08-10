@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import useAmount from '../useAmountInput'
+import useAmount from '../useAmount'
 
 describe('useAmount', () => {
   describe('基本機能', () => {
