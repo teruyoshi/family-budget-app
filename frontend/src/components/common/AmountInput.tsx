@@ -1,4 +1,5 @@
 import { useMoney } from '@/hooks'
+import { parseMoneyString } from '@/lib/format'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -54,12 +55,14 @@ export interface AmountInputProps {
 /**
  * 金額入力専用コンポーネント
  *
- * 数値入力を金額表示に自動変換する特殊なテキスト入力コンポーネント。
+ * 数値入力を統一された金額表示フォーマットに自動変換する特殊なテキスト入力コンポーネント。
  * 自動的にカンマ区切りと¥記号を表示し、右寄せレイアウトで数値の視認性を向上させます。
  * TextInputをベースにしており、内部的には数値として管理されます。
  *
  * ## 特徴
+ * - 統一フォーマット: lib/format/useMoney + parseMoneyString を使用
  * - 入力中は数値のみを受け付け、自動的に¥15,000形式でフォーマット
+ * - 堅牢なパース処理: 統一されたparseMoneyString関数でエラーハンドリング
  * - 右寄せ表示で金額の桁を把握しやすい
  * - プレースホルダーは中央揃えで使いやすさを配慮
  * - 半角数値のみ受け付け、全角数値は自動変換
@@ -112,7 +115,9 @@ export default function AmountInput({
   const [{ formatted: displayValue }, setMoney] = useMoney(value)
 
   const handleChange = (inputValue: string) => {
-    const numericValue = parseInt(inputValue.replace(/[^0-9]/g, ''), 10) || 0
+    // 統一されたパース処理ライブラリを使用
+    // ¥記号、カンマ、全角数字などを適切に処理
+    const numericValue = parseMoneyString(inputValue)
     setMoney(numericValue)
     onChange(numericValue)
   }
