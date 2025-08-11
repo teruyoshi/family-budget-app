@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import useMoney from '../useAmount'
+import useMoney from '../useMoney'
 
 /**
  * 金額状態管理フック useMoney のテスト
