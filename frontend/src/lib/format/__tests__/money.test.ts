@@ -34,11 +34,11 @@ describe('money formatting library', () => {
       it.each([
         [1500.75, { decimalPlaces: 2 }, '¥1,500.75'],
         [1000.5, { decimalPlaces: 1 }, '¥1,000.5'],
+        [15000, { showSymbol: true }, '¥15,000'],
         [15000, { showSymbol: false }, '15,000'],
         [0, { emptyOnZero: true }, ''],
-        [-1500, { emptyOnNegative: true }, ''],
-        [15000, { showSymbol: true }, '¥15,000'],
         [0, { emptyOnZero: false }, '¥0'],
+        [-1500, { emptyOnNegative: true }, ''],
         [-1500, { emptyOnNegative: false }, '¥-1,500'],
       ] as const)('値 %p, opts %p -> %p', (input, opts, expected) => {
         expect(formatMoney(input, opts)).toBe(expected)
@@ -110,26 +110,42 @@ describe('money formatting library', () => {
   })
 
   describe('parseMoneyString', () => {
-    it.each([
-      ['¥15,000', 15000],
-      ['¥1,234,567', 1234567],
-      ['15,000', 15000],
-      ['1,500', 1500],
-      ['15000', 15000],
-      ['500', 500],
-      ['abc123def', 123],
-      ['price: ¥1,500 yen', 1500],
-      ['', 0],
-      ['abc', 0],
-      ['¥', 0],
-    ])('"%s" -> %p', (input, expected) => {
-      expect(parseMoneyString(input)).toBe(expected)
+    describe('基本パース処理', () => {
+      it.each([
+        ['¥15,000', 15000],
+        ['¥1,234,567', 1234567],
+        ['15,000', 15000],
+        ['1,500', 1500],
+        ['15000', 15000],
+        ['500', 500],
+      ])('"%s" -> %p', (input, expected) => {
+        expect(parseMoneyString(input)).toBe(expected)
+      })
     })
 
-    it('非文字列値で0を返す', () => {
-      expect(parseMoneyString(null as unknown as string)).toBe(0)
-      expect(parseMoneyString(undefined as unknown as string)).toBe(0)
-      expect(parseMoneyString(123 as unknown as string)).toBe(0)
+    describe('文字列が含まれる場合は文字列が無視される', () => {
+      it.each([
+        ['abc123def', 123], // 文字列部分は無視、数値のみ抽出
+        ['price: ¥1,500 yen', 1500], // 前後の文字列は無視、金額のみ抽出
+      ])('"%s" -> %p (数値のみ抽出)', (input, expected) => {
+        expect(parseMoneyString(input)).toBe(expected)
+      })
+    })
+
+    describe('無効な入力の処理', () => {
+      it.each([
+        ['', 0], // 空文字
+        ['abc', 0], // 文字列のみ
+        ['¥', 0], // 記号のみ
+      ])('"%s" -> %p', (input, expected) => {
+        expect(parseMoneyString(input)).toBe(expected)
+      })
+
+      it('非文字列値で0を返す', () => {
+        expect(parseMoneyString(null as unknown as string)).toBe(0)
+        expect(parseMoneyString(undefined as unknown as string)).toBe(0)
+        expect(parseMoneyString(123 as unknown as string)).toBe(0)
+      })
     })
   })
 
