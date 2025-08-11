@@ -13,58 +13,35 @@ import {
 describe('money formatting library', () => {
   describe('formatMoney', () => {
     describe('基本フォーマット', () => {
-      it('正の整数を¥記号付きカンマ区切りでフォーマット', () => {
-        expect(formatMoney(15000)).toBe('¥15,000')
-        expect(formatMoney(1234567)).toBe('¥1,234,567')
-        expect(formatMoney(500)).toBe('¥500')
-      })
-
-      it('ゼロを正しくフォーマット', () => {
-        expect(formatMoney(0)).toBe('¥0')
-      })
-
-      it('負の値を正しくフォーマット', () => {
-        expect(formatMoney(-1500)).toBe('¥-1,500')
-        expect(formatMoney(-1234567)).toBe('¥-1,234,567')
-      })
-
-      it('小数点を含む値を正しくフォーマット', () => {
-        expect(formatMoney(1500.75, { decimalPlaces: 2 })).toBe('¥1,500.75')
-        expect(formatMoney(1000.5, { decimalPlaces: 1 })).toBe('¥1,000.5')
+      it.each([
+        [15000, '¥15,000'],
+        [1234567, '¥1,234,567'],
+        [500, '¥500'],
+        [0, '¥0'],
+        [-1500, '¥-1,500'],
+        [-1234567, '¥-1,234,567'],
+      ])('値 %p -> %p', (input, expected) => {
+        // Arrange
+        const value = input
+        // Act
+        const actual = formatMoney(value)
+        // Assert
+        expect(actual).toBe(expected)
       })
     })
 
-    describe('showSymbolオプション', () => {
-      it('showSymbol: falseで¥記号なしでフォーマット', () => {
-        expect(formatMoney(15000, { showSymbol: false })).toBe('15,000')
-        expect(formatMoney(1234567, { showSymbol: false })).toBe('1,234,567')
-      })
-
-      it('showSymbol: trueで¥記号付きでフォーマット（デフォルト）', () => {
-        expect(formatMoney(15000, { showSymbol: true })).toBe('¥15,000')
-        expect(formatMoney(15000)).toBe('¥15,000')
-      })
-    })
-
-    describe('emptyOnZeroオプション', () => {
-      it('emptyOnZero: trueでゼロ値を空文字で返す', () => {
-        expect(formatMoney(0, { emptyOnZero: true })).toBe('')
-        expect(formatMoney(0, { emptyOnZero: false })).toBe('¥0')
-      })
-
-      it('emptyOnZero: falseでゼロ値を表示（デフォルト）', () => {
-        expect(formatMoney(0)).toBe('¥0')
-      })
-    })
-
-    describe('emptyOnNegativeオプション', () => {
-      it('emptyOnNegative: trueで負値を空文字で返す', () => {
-        expect(formatMoney(-1500, { emptyOnNegative: true })).toBe('')
-        expect(formatMoney(-1500, { emptyOnNegative: false })).toBe('¥-1,500')
-      })
-
-      it('emptyOnNegative: falseで負値を表示（デフォルト）', () => {
-        expect(formatMoney(-1500)).toBe('¥-1,500')
+    describe('オプション', () => {
+      it.each([
+        [1500.75, { decimalPlaces: 2 }, '¥1,500.75'],
+        [1000.5, { decimalPlaces: 1 }, '¥1,000.5'],
+        [15000, { showSymbol: false }, '15,000'],
+        [0, { emptyOnZero: true }, ''],
+        [-1500, { emptyOnNegative: true }, ''],
+        [15000, { showSymbol: true }, '¥15,000'],
+        [0, { emptyOnZero: false }, '¥0'],
+        [-1500, { emptyOnNegative: false }, '¥-1,500'],
+      ] as const)('値 %p, opts %p -> %p', (input, opts, expected) => {
+        expect(formatMoney(input, opts)).toBe(expected)
       })
     })
 
@@ -133,30 +110,20 @@ describe('money formatting library', () => {
   })
 
   describe('parseMoneyString', () => {
-    it('¥記号付き金額文字列から数値を抽出', () => {
-      expect(parseMoneyString('¥15,000')).toBe(15000)
-      expect(parseMoneyString('¥1,234,567')).toBe(1234567)
-    })
-
-    it('カンマ区切り文字列から数値を抽出', () => {
-      expect(parseMoneyString('15,000')).toBe(15000)
-      expect(parseMoneyString('1,500')).toBe(1500)
-    })
-
-    it('純粋な数値文字列から数値を抽出', () => {
-      expect(parseMoneyString('15000')).toBe(15000)
-      expect(parseMoneyString('500')).toBe(500)
-    })
-
-    it('混在文字列から数値のみを抽出', () => {
-      expect(parseMoneyString('abc123def')).toBe(123)
-      expect(parseMoneyString('price: ¥1,500 yen')).toBe(1500)
-    })
-
-    it('空文字・無効文字列で0を返す', () => {
-      expect(parseMoneyString('')).toBe(0)
-      expect(parseMoneyString('abc')).toBe(0)
-      expect(parseMoneyString('¥')).toBe(0)
+    it.each([
+      ['¥15,000', 15000],
+      ['¥1,234,567', 1234567],
+      ['15,000', 15000],
+      ['1,500', 1500],
+      ['15000', 15000],
+      ['500', 500],
+      ['abc123def', 123],
+      ['price: ¥1,500 yen', 1500],
+      ['', 0],
+      ['abc', 0],
+      ['¥', 0],
+    ])('"%s" -> %p', (input, expected) => {
+      expect(parseMoneyString(input)).toBe(expected)
     })
 
     it('非文字列値で0を返す', () => {
@@ -179,6 +146,24 @@ describe('money formatting library', () => {
       const formatted = formatMoney(originalValue)
       const parsed = parseMoneyString(formatted)
       expect(parsed).toBe(originalValue)
+    })
+
+    it('景の桁(11111111111111111)の往復変換 - 精度制限によりサポート外', () => {
+      // ESLintのno-loss-of-precision対応: 精度が失われる数値リテラルのため警告回避
+      const originalInputValue = '11111111111111111'
+      const originalValue = Number(originalInputValue)
+      const formatted = formatMoney(originalValue)
+      const parsed = parseMoneyString(formatted)
+
+      // JavaScriptの数値精度制限により、景の桁以上は正確に表現できない
+      // 画面入力での11111111111111111が表示で11,111,111,111,111,112になるバグを確認
+      expect(formatted).toBe('¥11,111,111,111,111,112')
+      expect(parsed).toBe(11111111111111112)
+
+      // 元の文字列と異なることを確認（精度落ちが発生）
+      expect(originalInputValue).not.toBe(String(originalValue))
+      expect(originalInputValue).toBe('11111111111111111')
+      expect(String(originalValue)).toBe('11111111111111112')
     })
   })
 })
