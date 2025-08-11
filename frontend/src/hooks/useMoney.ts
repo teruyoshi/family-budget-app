@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 
 /**
  * 金額状態の戻り値型定義
- * 
+ *
  * 金額の現在値とフォーマット済み表示文字列、更新関数をタプルで返します。
  */
 export type UseMoneyReturn = [
@@ -24,7 +24,7 @@ export type UseMoneyReturn = [
  *
  * @param initialValue 初期金額の数値
  * @returns [金額データオブジェクト, 金額更新関数] のタプル
- * 
+ *
  * @example
  * ```tsx
  * const [money, setMoney] = useMoney(15000)

@@ -3,7 +3,7 @@ import useMoney from '../useMoney'
 
 /**
  * 金額状態管理フック useMoney のテスト
- * 
+ *
  * 金額の数値状態管理、フォーマット処理、エッジケース処理を網羅的にテストします。
  */
 describe('useMoney', () => {
