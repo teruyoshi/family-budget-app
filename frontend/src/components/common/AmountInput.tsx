@@ -1,4 +1,4 @@
-import { useAmount } from '@/hooks'
+import { useMoney } from '@/hooks'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
 
@@ -109,11 +109,11 @@ export default function AmountInput({
   error = false,
   helperText,
 }: AmountInputProps) {
-  const [{ formatted: displayValue }, setAmount] = useAmount(value)
+  const [{ formatted: displayValue }, setMoney] = useMoney(value)
 
   const handleChange = (inputValue: string) => {
     const numericValue = parseInt(inputValue.replace(/[^0-9]/g, ''), 10) || 0
-    setAmount(numericValue)
+    setMoney(numericValue)
     onChange(numericValue)
   }
 

@@ -1,10 +1,15 @@
 import { renderHook, act } from '@testing-library/react'
-import useAmount from '../useAmount'
+import useMoney from '../useAmount'
 
-describe('useAmount', () => {
+/**
+ * 金額状態管理フック useMoney のテスト
+ * 
+ * 金額の数値状態管理、フォーマット処理、エッジケース処理を網羅的にテストします。
+ */
+describe('useMoney', () => {
   describe('基本機能', () => {
     it('初期値0でフックが正しく初期化される', () => {
-      const { result } = renderHook(() => useAmount(0))
+      const { result } = renderHook(() => useMoney(0))
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(0)
@@ -12,14 +17,14 @@ describe('useAmount', () => {
     })
 
     it('初期値が正の数値の場合、フォーマットされた文字列が返される', () => {
-      const { result } = renderHook(() => useAmount(15000))
+      const { result } = renderHook(() => useMoney(15000))
 
       expect(result.current[0].formatted).toBe('¥15,000')
       expect(result.current[0].value).toBe(15000)
     })
 
-    it('updateAmount関数で値を更新すると、フォーマット済み文字列が更新される', () => {
-      const { result } = renderHook(() => useAmount(0))
+    it('setMoney関数で値を更新すると、フォーマット済み文字列が更新される', () => {
+      const { result } = renderHook(() => useMoney(0))
 
       act(() => {
         result.current[1](50000)
@@ -32,28 +37,28 @@ describe('useAmount', () => {
 
   describe('フォーマット処理', () => {
     it('1000未満の数値は正しくフォーマットされる', () => {
-      const { result } = renderHook(() => useAmount(500))
+      const { result } = renderHook(() => useMoney(500))
 
       expect(result.current[0].formatted).toBe('¥500')
       expect(result.current[0].value).toBe(500)
     })
 
     it('1000以上の数値はカンマ区切りでフォーマットされる', () => {
-      const { result } = renderHook(() => useAmount(1234567))
+      const { result } = renderHook(() => useMoney(1234567))
 
       expect(result.current[0].formatted).toBe('¥1,234,567')
       expect(result.current[0].value).toBe(1234567)
     })
 
     it('0は空文字として扱われる', () => {
-      const { result } = renderHook(() => useAmount(0))
+      const { result } = renderHook(() => useMoney(0))
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(0)
     })
 
     it('NaNは空文字として扱われる', () => {
-      const { result } = renderHook(() => useAmount(NaN))
+      const { result } = renderHook(() => useMoney(NaN))
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(NaN)
@@ -61,8 +66,8 @@ describe('useAmount', () => {
   })
 
   describe('数値更新処理', () => {
-    it('updateAmount関数に0を設定すると空文字になる', () => {
-      const { result } = renderHook(() => useAmount(10000))
+    it('setMoney関数に0を設定すると空文字になる', () => {
+      const { result } = renderHook(() => useMoney(10000))
 
       act(() => {
         result.current[1](0)
@@ -72,8 +77,8 @@ describe('useAmount', () => {
       expect(result.current[0].value).toBe(0)
     })
 
-    it('updateAmount関数に負の値を設定すると空文字になる', () => {
-      const { result } = renderHook(() => useAmount(1000))
+    it('setMoney関数に負の値を設定すると空文字になる', () => {
+      const { result } = renderHook(() => useMoney(1000))
 
       act(() => {
         result.current[1](-500)
@@ -84,7 +89,7 @@ describe('useAmount', () => {
     })
 
     it('複数回の値更新が正しく反映される', () => {
-      const { result } = renderHook(() => useAmount(1000))
+      const { result } = renderHook(() => useMoney(1000))
 
       // 最初の更新
       act(() => {
@@ -105,7 +110,7 @@ describe('useAmount', () => {
   describe('エッジケース', () => {
     it('undefinedを初期値として渡すと0として扱われる', () => {
       const { result } = renderHook(() =>
-        useAmount(undefined as unknown as number)
+        useMoney(undefined as unknown as number)
       )
 
       expect(result.current[0].formatted).toBe('')
@@ -113,14 +118,14 @@ describe('useAmount', () => {
     })
 
     it('nullを初期値として渡すと0として扱われる', () => {
-      const { result } = renderHook(() => useAmount(null as unknown as number))
+      const { result } = renderHook(() => useMoney(null as unknown as number))
 
       expect(result.current[0].formatted).toBe('')
       expect(result.current[0].value).toBe(null)
     })
 
     it('非常に大きな数値も正しくフォーマットされる', () => {
-      const { result } = renderHook(() => useAmount(999999999999))
+      const { result } = renderHook(() => useMoney(999999999999))
 
       expect(result.current[0].formatted).toBe('¥999,999,999,999')
       expect(result.current[0].value).toBe(999999999999)
@@ -129,7 +134,7 @@ describe('useAmount', () => {
 
   describe('メモリリーク確認', () => {
     it('アンマウント後もエラーが発生しない', () => {
-      const { result, unmount } = renderHook(() => useAmount(1000))
+      const { result, unmount } = renderHook(() => useMoney(1000))
 
       unmount()
 
