@@ -147,7 +147,7 @@ export default function AmountInput({
         'aria-describedby': ariaDescribedby,
         'aria-invalid': error,
         inputMode: 'numeric' as const,
-        pattern: '[0-9]*',
+        pattern: '^¥?[0-9,]*$',
       }}
       sx={{
         '& .MuiInputBase-input': {
