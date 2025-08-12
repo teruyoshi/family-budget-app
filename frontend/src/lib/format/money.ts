@@ -172,5 +172,10 @@ export function parseMoneyString(moneyString: string): number {
 
   // 数値以外の文字を除去して数値化
   const numericValue = parseInt(moneyString.replace(/[^0-9]/g, ''), 10)
-  return isNaN(numericValue) ? 0 : numericValue
+  if (isNaN(numericValue)) return 0
+
+  // 安全な整数範囲チェック
+  checkSafeInteger(numericValue)
+
+  return numericValue
 }

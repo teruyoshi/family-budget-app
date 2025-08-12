@@ -190,6 +190,35 @@ describe('money formatting library', () => {
         expect(parseMoneyString(123 as unknown as string)).toBe(0)
       })
     })
+
+    describe('MAX_SAFE_INTEGER を超える値のエラー処理', () => {
+      it('MAX_SAFE_INTEGERを超える文字列でエラーを投げる', () => {
+        const unsafeString = '9007199254740992' // MAX_SAFE_INTEGER + 1
+        expect(() => parseMoneyString(unsafeString)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('景の桁(11111111111111111)文字列でエラーを投げる', () => {
+        const keinoString = '11111111111111111'
+        expect(() => parseMoneyString(keinoString)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('¥記号付き景の桁文字列でエラーを投げる', () => {
+        const keinoStringWithSymbol = '¥11,111,111,111,111,111'
+        expect(() => parseMoneyString(keinoStringWithSymbol)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('MAX_SAFE_INTEGERちょうどの文字列は正常に処理される', () => {
+        const safeString = '9007199254740991' // MAX_SAFE_INTEGER
+        expect(() => parseMoneyString(safeString)).not.toThrow()
+        expect(parseMoneyString(safeString)).toBe(Number.MAX_SAFE_INTEGER)
+      })
+    })
   })
 
   describe('統合テスト', () => {
@@ -217,11 +246,8 @@ describe('money formatting library', () => {
         '金額の値が大きすぎます。MAX_SAFE_INTEGER'
       )
 
-      // parseMoneyStringでは文字列として処理されるため、そのまま数値化される
-      // ただし、この値をformatMoneyに渡すとエラーになる
-      const parsed = parseMoneyString(keinoInputValue)
-      expect(parsed).toBe(Number('11111111111111111'))
-      expect(() => formatMoney(parsed)).toThrow(
+      // parseMoneyStringでも数値変換後にMAX_SAFE_INTEGERチェックでエラーを投げる
+      expect(() => parseMoneyString(keinoInputValue)).toThrow(
         '金額の値が大きすぎます。MAX_SAFE_INTEGER'
       )
     })
