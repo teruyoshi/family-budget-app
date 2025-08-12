@@ -118,11 +118,19 @@ export default function AmountText({
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedby,
 }: AmountTextProps) {
-  // 統一フォーマットライブラリを使用（表示専用）
-  const formattedAmount = formatMoneyForDisplay(amount, {
-    showSymbol,
-    decimalPlaces,
-  })
+  let formattedAmount: string
+
+  try {
+    // 統一フォーマットライブラリを使用（表示専用）
+    formattedAmount = formatMoneyForDisplay(amount, {
+      showSymbol,
+      decimalPlaces,
+    })
+  } catch (error) {
+    // MAX_SAFE_INTEGERを超える値などの無効な値の場合
+    formattedAmount = '値が無効です'
+    console.warn('AmountText: フォーマット処理でエラーが発生しました:', amount, error)
+  }
 
   return (
     <Typography
