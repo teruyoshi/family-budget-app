@@ -1,4 +1,4 @@
-import { useMoney } from '@/hooks'
+import { useMoney, useMoneyFormat } from '@/hooks'
 import { parseMoneyString } from '@/lib/format'
 import TextInput from './TextInput'
 import type { SxProps, Theme } from '@mui/material'
@@ -112,7 +112,8 @@ export default function AmountInput({
   error = false,
   helperText,
 }: AmountInputProps) {
-  const [{ formatted: displayValue }, setMoney] = useMoney(value)
+  const [money, setMoney] = useMoney(value)
+  const { forInput: displayValue } = useMoneyFormat(money)
 
   const handleChange = (inputValue: string) => {
     // 統一されたパース処理ライブラリを使用
