@@ -66,7 +66,7 @@ export interface DatePickerProps {
  * ```tsx
  * // 基本的な使用例（取引日選択）
  * const [transactionDate, setTransactionDate] = useState('2024-08-12')
- * 
+ *
  * <DatePicker
  *   value={transactionDate}
  *   onChange={setTransactionDate}

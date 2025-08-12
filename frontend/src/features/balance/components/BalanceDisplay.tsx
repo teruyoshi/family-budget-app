@@ -41,7 +41,7 @@ export interface BalanceDisplayProps {
  *
  * <Container>
  *   <BalanceDisplay balance={balance} />
- *   {/* 出力: "残高：¥25,000" (緑色、中央揃え) */}
+ *   // 出力: "残高：¥25,000" (緑色、中央揃え)
  * </Container>
  * ```
  *
@@ -61,7 +61,7 @@ export interface BalanceDisplayProps {
  * ```tsx
  * // マイナス残高での表示例
  * <BalanceDisplay balance={-15000} />
- * {/* 出力: "残高：¥-15,000" (緑色ベースで表示) */}
+ * // 出力: "残高：¥-15,000" (緑色ベースで表示)
  * ```
  */
 export default function BalanceDisplay({ balance }: BalanceDisplayProps) {

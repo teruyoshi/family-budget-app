@@ -1,10 +1,12 @@
 # Storybook 仕様トレーサビリティ表 - テンプレート
 
 ## 📋 概要
+
 Storybookストーリーに仕様トレーサビリティ表を追加するためのテンプレートです。  
 ドキュメント→仕様根拠→テストの関係を明確化し、品質監査・バグ調査の効率を向上させます。
 
 ## 🎯 目的
+
 - **品質監査**: 仕様とテストの対応関係を一目で確認
 - **バグ調査**: 関連する全資料に素早くアクセス
 - **新規参加者**: コンポーネントの背景・意図を理解促進
@@ -57,18 +59,21 @@ const meta: Meta<typeof ComponentName> = {
 ## 📚 記述ガイドライン
 
 ### 必須項目
+
 - [ ] **設計判断**: 関連するADRへのリンク（ない場合はN/A）
-- [ ] **ドメインモデル**: 用語集の該当セクションリンク  
+- [ ] **ドメインモデル**: 用語集の該当セクションリンク
 - [ ] **単体テスト**: テストファイルパスと簡潔な統計（行数・テスト数）
 - [ ] **品質方針**: 関連する品質ガイドへのリンク
 
 ### 推奨項目
+
 - [ ] **統合テスト**: 他コンポーネントとの連携テスト（該当する場合）
 - [ ] **テストカバレッジ**: 何をテストしているかの概要
 - [ ] **品質指標**: TypeScript・a11y・Performanceの現状
 - [ ] **今後の改善**: 既知の技術的負債・改善計画
 
 ### 記述のコツ
+
 - **簡潔性**: 1行1項目、長くても2-3行に収める
 - **具体性**: 抽象的な説明より具体的なリンク・数値を優先
 - **最新性**: 実装と乖離しないよう定期的に更新
@@ -77,27 +82,32 @@ const meta: Meta<typeof ComponentName> = {
 ## 🔗 参考例
 
 ### 実装例
-- **AmountInput**: [src/components/common/__stories__/AmountInput.stories.tsx](../src/components/common/__stories__/AmountInput.stories.tsx)
+
+- **AmountInput**: [src/components/common/**stories**/AmountInput.stories.tsx](../src/components/common/__stories__/AmountInput.stories.tsx)
 
 ### 他の適用候補
+
 - **AmountText**: 表示専用コンポーネントの例
-- **useBudgetManager**: カスタムフックの例  
+- **useBudgetManager**: カスタムフックの例
 - **TransactionForm**: 複雑なフォームコンポーネントの例
 
 ## 🔄 運用・保守
 
 ### 更新タイミング
+
 - **新機能追加**: コンポーネント機能拡張時に表を更新
 - **テスト追加**: 新しいテストケース追加時にカバレッジ項目更新
 - **ADR作成**: 新しいADRが該当コンポーネントに関連する場合
 - **品質改善**: a11y・Performance改善時に指標更新
 
 ### 品質管理
+
 - **月次**: リンク切れ・情報の陳腐化チェック
 - **リリース前**: 全コンポーネントの表が最新状態か確認
 - **レビュー**: PR時に表の更新漏れがないかチェック
 
 ### 改善・拡張
+
 - **自動化**: 将来的にテスト統計の自動取得を検討
 - **テンプレート**: よく使う表パターンをスニペット化
 - **可視化**: Storybookでの表示をより見やすく改善
@@ -107,15 +117,17 @@ const meta: Meta<typeof ComponentName> = {
 ## 💡 Tips
 
 ### リンクパスについて
+
 ```typescript
 // ✅ 良い例: 相対パスで確実にアクセス
-"[ADR-0001](../docs-src/adr/0001-use-tsdoc-unified-documentation.md)"
+'[ADR-0001](../docs-src/adr/0001-use-tsdoc-unified-documentation.md)'
 
 // ❌ 悪い例: 絶対パスやHTTPリンクは変更に弱い
-"[ADR-0001](https://github.com/user/repo/docs-src/adr/...)"
+'[ADR-0001](https://github.com/user/repo/docs-src/adr/...)'
 ```
 
 ### 表のサイズ調整
+
 ```typescript
 // 長い説明は備考欄ではなく、表の下に詳細セクションを作る
 ## 📋 仕様トレーサビリティ
@@ -126,9 +138,10 @@ const meta: Meta<typeof ComponentName> = {
 ```
 
 ### メンテナンスの負荷軽減
+
 ```typescript
 // テスト統計は具体的な数値より「充実度」で表現
-"| **単体テスト** | [Component.test.tsx](...) | 基本機能網羅 |"
+'| **単体テスト** | [Component.test.tsx](...) | 基本機能網羅 |'
 // 数値は変更頻度が高いため保守負荷になりやすい
 ```
 

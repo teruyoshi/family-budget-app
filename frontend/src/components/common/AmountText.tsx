@@ -129,7 +129,11 @@ export default function AmountText({
   } catch (error) {
     // MAX_SAFE_INTEGERを超える値などの無効な値の場合
     formattedAmount = '値が無効です'
-    console.warn('AmountText: フォーマット処理でエラーが発生しました:', amount, error)
+    console.warn(
+      'AmountText: フォーマット処理でエラーが発生しました:',
+      amount,
+      error
+    )
   }
 
   return (

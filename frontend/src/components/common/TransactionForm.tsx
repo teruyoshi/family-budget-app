@@ -99,7 +99,7 @@ export interface TransactionFormProps {
  * const handleIncomeSubmit = (amount: number, date: string) => {
  *   addIncome({
  *     amount,
- *     date, 
+ *     date,
  *     description: '給与収入',
  *     source: 'salary'
  *   })

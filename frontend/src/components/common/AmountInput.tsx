@@ -125,7 +125,11 @@ export default function AmountInput({
     } catch (error) {
       // MAX_SAFE_INTEGERを超える値や無効な入力の場合
       // エラーを無視して現在の値を維持（UIの安定性を保つ）
-      console.warn('AmountInput: 入力値が大きすぎるか無効です:', inputValue, error)
+      console.warn(
+        'AmountInput: 入力値が大きすぎるか無効です:',
+        inputValue,
+        error
+      )
     }
   }
 

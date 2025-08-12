@@ -82,8 +82,8 @@ export interface TextLabelProps {
  * // カスタムスタイリング例
  * <TextLabel
  *   variant="body2"
- *   sx={{ 
- *     color: 'text.secondary', 
+ *   sx={{
+ *     color: 'text.secondary',
  *     fontWeight: 'medium',
  *     mb: 0.5
  *   }}

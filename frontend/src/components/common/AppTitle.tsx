@@ -24,7 +24,7 @@ import { Typography } from '@mui/material'
  * <Container>
  *   <AppTitle />
  *   <Box>
- *     {/* その他のコンテンツ */}
+ *     // その他のコンテンツ
  *   </Box>
  * </Container>
  * ```
