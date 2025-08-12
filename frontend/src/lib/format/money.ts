@@ -20,6 +20,32 @@ export interface MoneyFormatOptions {
 }
 
 /**
+ * 数値が安全な整数の範囲内かどうかをチェック
+ *
+ * JavaScriptのNumber.MAX_SAFE_INTEGERを超える数値は精度が失われるため、
+ * 金額処理では安全でない値として扱います。
+ *
+ * @param value チェック対象の数値
+ * @throws {Error} 値がMAX_SAFE_INTEGERを超える場合
+ *
+ * @example
+ * ```typescript
+ * checkSafeInteger(9007199254740991)    // OK (MAX_SAFE_INTEGER)
+ * checkSafeInteger(9007199254740992)    // Error: 値が大きすぎます
+ * checkSafeInteger(11111111111111111)   // Error: 値が大きすぎます
+ * ```
+ *
+ * @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
+ */
+function checkSafeInteger(value: number): void {
+  if (Math.abs(value) > Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `金額の値が大きすぎます。MAX_SAFE_INTEGER (${Number.MAX_SAFE_INTEGER}) を超える値は精度が失われるためサポートしていません。入力値: ${value}`
+    )
+  }
+}
+
+/**
  * 金額を¥記号付きカンマ区切り形式にフォーマット
  *
  * 数値を日本円の表示形式（¥1,000）に変換します。
@@ -51,6 +77,9 @@ export function formatMoney(
 
   // 無効値の処理
   if (isNaN(value) || value == null) return ''
+
+  // 安全な整数範囲チェック
+  checkSafeInteger(value)
 
   // ゼロ値の処理
   if (value === 0 && emptyOnZero) return ''

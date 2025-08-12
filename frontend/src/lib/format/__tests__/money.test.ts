@@ -58,6 +58,35 @@ describe('money formatting library', () => {
         expect(formatMoney(undefined as unknown as number)).toBe('')
       })
     })
+
+    describe('MAX_SAFE_INTEGER を超える値のエラー処理', () => {
+      it('MAX_SAFE_INTEGERを超える正の値でエラーを投げる', () => {
+        const unsafeValue = Number.MAX_SAFE_INTEGER + 1
+        expect(() => formatMoney(unsafeValue)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('MAX_SAFE_INTEGERを超える負の値でエラーを投げる', () => {
+        const unsafeValue = -(Number.MAX_SAFE_INTEGER + 1)
+        expect(() => formatMoney(unsafeValue)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('景の桁(11111111111111111)でエラーを投げる', () => {
+        const keino = Number('11111111111111111')
+        expect(() => formatMoney(keino)).toThrow(
+          '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+        )
+      })
+
+      it('MAX_SAFE_INTEGERちょうどの値は正常に処理される', () => {
+        const safeValue = Number.MAX_SAFE_INTEGER
+        expect(() => formatMoney(safeValue)).not.toThrow()
+        expect(formatMoney(safeValue)).toBe('¥9,007,199,254,740,991')
+      })
+    })
   })
 
   describe('formatMoneyForInput', () => {
@@ -77,6 +106,13 @@ describe('money formatting library', () => {
     it('無効値を空文字で返す', () => {
       expect(formatMoneyForInput(NaN)).toBe('')
       expect(formatMoneyForInput(null as unknown as number)).toBe('')
+    })
+
+    it('MAX_SAFE_INTEGERを超える値でエラーを投げる', () => {
+      const unsafeValue = Number.MAX_SAFE_INTEGER + 1
+      expect(() => formatMoneyForInput(unsafeValue)).toThrow(
+        '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+      )
     })
   })
 
@@ -106,6 +142,13 @@ describe('money formatting library', () => {
 
     it('無効値を空文字で返す', () => {
       expect(formatMoneyForDisplay(NaN)).toBe('')
+    })
+
+    it('MAX_SAFE_INTEGERを超える値でエラーを投げる', () => {
+      const unsafeValue = Number.MAX_SAFE_INTEGER + 1
+      expect(() => formatMoneyForDisplay(unsafeValue)).toThrow(
+        '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+      )
     })
   })
 
@@ -164,22 +207,23 @@ describe('money formatting library', () => {
       expect(parsed).toBe(originalValue)
     })
 
-    it('景の桁(11111111111111111)の往復変換 - 精度制限によりサポート外', () => {
-      // ESLintのno-loss-of-precision対応: 精度が失われる数値リテラルのため警告回避
-      const originalInputValue = '11111111111111111'
-      const originalValue = Number(originalInputValue)
-      const formatted = formatMoney(originalValue)
-      const parsed = parseMoneyString(formatted)
+    it('景の桁(11111111111111111)以上の値は事前にエラーで防止', () => {
+      // 以前は精度落ちによるバグが発生していたが、現在はMAX_SAFE_INTEGERチェックで事前にエラーを投げる
+      const keinoInputValue = '11111111111111111'
+      const keinoValue = Number(keinoInputValue)
 
-      // JavaScriptの数値精度制限により、景の桁以上は正確に表現できない
-      // 画面入力での11111111111111111が表示で11,111,111,111,111,112になるバグを確認
-      expect(formatted).toBe('¥11,111,111,111,111,112')
-      expect(parsed).toBe(11111111111111112)
+      // formatMoney段階でエラーが投げられ、精度落ちバグを事前防止
+      expect(() => formatMoney(keinoValue)).toThrow(
+        '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+      )
 
-      // 元の文字列と異なることを確認（精度落ちが発生）
-      expect(originalInputValue).not.toBe(String(originalValue))
-      expect(originalInputValue).toBe('11111111111111111')
-      expect(String(originalValue)).toBe('11111111111111112')
+      // parseMoneyStringでは文字列として処理されるため、そのまま数値化される
+      // ただし、この値をformatMoneyに渡すとエラーになる
+      const parsed = parseMoneyString(keinoInputValue)
+      expect(parsed).toBe(Number('11111111111111111'))
+      expect(() => formatMoney(parsed)).toThrow(
+        '金額の値が大きすぎます。MAX_SAFE_INTEGER'
+      )
     })
   })
 })
