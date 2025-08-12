@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Generated documentation and reports (managed by CI)
+docs/
+storybook-static/
+coverage/
+build/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
