@@ -116,11 +116,17 @@ export default function AmountInput({
   const { forInput: displayValue } = useMoneyFormat(money)
 
   const handleChange = (inputValue: string) => {
-    // 統一されたパース処理ライブラリを使用
-    // ¥記号、カンマ、全角数字などを適切に処理
-    const numericValue = parseMoneyString(inputValue)
-    setMoney(numericValue)
-    onChange(numericValue)
+    try {
+      // 統一されたパース処理ライブラリを使用
+      // ¥記号、カンマ、全角数字などを適切に処理
+      const numericValue = parseMoneyString(inputValue)
+      setMoney(numericValue)
+      onChange(numericValue)
+    } catch (error) {
+      // MAX_SAFE_INTEGERを超える値や無効な入力の場合
+      // エラーを無視して現在の値を維持（UIの安定性を保つ）
+      console.warn('AmountInput: 入力値が大きすぎるか無効です:', inputValue, error)
+    }
   }
 
   return (
