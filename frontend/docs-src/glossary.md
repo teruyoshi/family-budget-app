@@ -20,28 +20,49 @@
 | **入力UI** | Input UI | ユーザーが値を入力するコンポーネント | ゼロ・負値は空文字表示 |
 | **表示UI** | Display UI | 値を表示するコンポーネント | 全値表示（ゼロ・負値含む） |
 | **履歴** | History | 過去の取引記録一覧 | 日付グループ化、新しい順 |
+| **ラベル** | Label | テキスト項目の識別表示 | 自動コロン付加、統一表記 |
+| **トレーサビリティ表** | Traceability Table | 仕様と実装の関連性を示す表 | ADR・テスト・品質ガイドとの連携 |
+
+### コンポーネント・アーキテクチャ関連
+
+| 用語 | 英語 | 定義 | 境界・制約 |
+|---|---|---|---|
+| **統合フォーム** | Integrated Form | 複数入力要素を組み合わせたフォーム | 金額・日付・送信の一体型UI |
+| **動的日付選択** | Dynamic Date Selection | トグルで日付指定を切り替える機能 | デフォルト今日・カスタム日付の選択 |
+| **状態管理分離** | State Management Separation | 状態管理とフォーマット処理の分離 | useMoney（状態）+ useMoneyFormat（表示） |
+| **ローカライズ** | Localization | 日本語・日本円対応の地域化 | 日本語曜日表示、¥記号、YYYY年MM月DD日 |
 
 ## 🏗️ データモデル
 
 ```mermaid
 erDiagram
     Transaction {
-        string id PK "取引ID"
+        string id PK "取引ID（タイムスタンプベース）"
         TransactionType type "EXPENSE | INCOME"
-        number amount "金額（正の整数）"
-        string description "説明"
-        Date date "取引日"
+        number amount "金額（正の整数、MAX_SAFE_INTEGER未満）"
+        string description "説明（1-100文字）"
+        Date date "取引日（YYYY-MM-DD）"
+        string timestamp "日本語フォーマット（2024/08/12(月)）"
         Date createdAt "作成日時"
     }
     
     Balance {
         number totalIncome "収入合計"
         number totalExpense "支出合計"
-        number currentBalance "現在残高"
+        number currentBalance "現在残高（収入-支出）"
         Date lastUpdated "最終更新日"
     }
     
+    UIState {
+        number moneyValue "金額数値状態"
+        string formattedForInput "入力UI用フォーマット"
+        string formattedForDisplay "表示用フォーマット"
+        boolean useCustomDate "動的日付選択状態"
+        string selectedDate "選択中日付"
+    }
+    
     Transaction ||--o{ Balance : "affects"
+    UIState }|--|| Transaction : "creates"
 ```
 
 ## 💰 金額フォーマット規約
@@ -78,6 +99,8 @@ erDiagram
 - **形式**: 整数または小数（最大2桁）
 - **範囲**: 1円 〜 MAX_SAFE_INTEGER円
 - **禁止**: 負値、0、非数値、無限大
+- **精度チェック**: MAX_SAFE_INTEGER超過時は明確なエラーメッセージ
+- **リアルタイム**: 入力中の即座バリデーション（TransactionForm）
 
 ### 説明・メモ
 - **文字数**: 1〜100文字
@@ -86,8 +109,15 @@ erDiagram
 
 ### 日付
 - **範囲**: 1900年1月1日 〜 2100年12月31日
-- **初期値**: 今日の日付
-- **形式**: YYYY-MM-DD（ISO 8601）
+- **初期値**: 今日の日付（動的取得）
+- **形式**: YYYY-MM-DD（ISO 8601 → 日本語表示変換）
+- **動的選択**: トグルスイッチで今日/カスタム日付を切り替え
+- **ローカライズ**: 日本語曜日付き表示（例: 2024/08/12(月)）
+
+### フォーム状態
+- **送信条件**: 正の数値 + 有効な日付のみ
+- **リセット**: 金額のみクリア（日付・トグル状態は保持）
+- **アクセシビリティ**: Enter送信・Tab順序・aria-label適切設定
 
 ## 🎨 UI設計原則
 
@@ -184,6 +214,7 @@ erDiagram
 
 | 日付 | バージョン | 変更内容 |
 |---|---|---|
+| 2025-08-12 | v1.2.0 | JSDoc一括更新反映、UI・アーキテクチャ用語追加、データモデル拡張 |
 | 2025-08-12 | v1.1.0 | 運用ルール追加、PRテンプレート連携 |
 | 2025-08-12 | v1.0.0 | 初版作成、TSDoc統一、精度制約追加 |
 

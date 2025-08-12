@@ -1,28 +1,108 @@
 import { useState } from 'react'
 
-/** 支出データの型定義 */
+/**
+ * 支出データの型定義
+ *
+ * 家計管理システムでの支出記録を表現するデータ構造。
+ * 日付は日本語フォーマットで保存され、表示用に最適化されています。
+ */
 export interface Expense {
+  /** 支出記録の一意識別子（タイムスタンプベース） */
   id: string
+  /** 支出金額（正の数値） */
   amount: number
-  timestamp: string
-}
-
-/** 収入データの型定義 */
-export interface Income {
-  id: string
-  amount: number
+  /** 日本語フォーマットのタイムスタンプ（例: "2024/08/12(月)"） */
   timestamp: string
 }
 
 /**
- * 収入・支出データと残高の状態管理を一元化するカスタムフック
+ * 収入データの型定義
  *
- * @returns タプル形式で[値オブジェクト, 操作関数オブジェクト]を返す
+ * 家計管理システムでの収入記録を表現するデータ構造。
+ * 支出データと同様の構造で、一貫したデータ管理を実現します。
+ */
+export interface Income {
+  /** 収入記録の一意識別子（タイムスタンプベース） */
+  id: string
+  /** 収入金額（正の数値） */
+  amount: number
+  /** 日本語フォーマットのタイムスタンプ（例: "2024/08/12(月)"） */
+  timestamp: string
+}
+
+/**
+ * 家計管理統合カスタムフック
+ *
+ * 収入・支出データと残高の状態管理を一元化し、家計簿アプリのコア機能を提供するビジネスロジックフック。
+ * ReactのuseStateをベースとし、ローカルステートでのリアルタイム残高算出と履歴管理を実現します。
+ *
+ * @remarks
+ * - **リアルタイム算出**: 支出・収入の追加に応じて自動で残高更新
+ * - **日付フォーマット**: ISO 8601 → 日本語曜日付き形式へ変換
+ * - **時系列順序**: 新しい記録を配列の先頭に配置（表示用）
+ * - **ID生成**: Date.now()で一意性を保証（簡易実装）
+ * - **単一責任**: データ操作と状態管理のみを担当
+ * - **イミュータブル**: useStateでの状態更新は適切に実装
+ *
+ * @returns タプル形式で [values, actions] を返す
+ * @returns values.expenses - 支出記録配列（新しい順）
+ * @returns values.incomes - 収入記録配列（新しい順）
+ * @returns values.balance - 現在の残高（収入合計 - 支出合計）
+ * @returns values.totalExpenseAmount - 支出合計金額
+ * @returns values.totalIncomeAmount - 収入合計金額
+ * @returns actions.addExpense - 新しい支出記録を追加する関数
+ * @returns actions.addIncome - 新しい収入記録を追加する関数
  *
  * @example
- * const [values, actions] = useBudgetManager();
- * actions.addExpense(1000, '2024-01-01');
- * console.log(values.balance);
+ * ```tsx
+ * // 基本的な使用例（メインアプリ）
+ * const [budgetData, budgetActions] = useBudgetManager()
+ *
+ * // 支出追加
+ * budgetActions.addExpense(1500, '2024-08-12')
+ *
+ * // 収入追加
+ * budgetActions.addIncome(250000, '2024-08-01')
+ *
+ * // 残高確認
+ * console.log('現在の残高:', budgetData.balance) // 248500
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // コンポーネントでの実用例
+ * function BudgetApp() {
+ *   const [values, actions] = useBudgetManager()
+ *
+ *   return (
+ *     <Container>
+ *       <BalanceDisplay balance={values.balance} />
+ *       <ExpenseForm onSubmit={actions.addExpense} />
+ *       <IncomeForm onSubmit={actions.addIncome} />
+ *       <ExpenseHistory expenses={values.expenses} />
+ *       <IncomeHistory incomes={values.incomes} />
+ *     </Container>
+ *   )
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // 統計情報の活用例
+ * const [values] = useBudgetManager()
+ *
+ * const monthlyExpense = values.totalExpenseAmount
+ * const monthlyIncome = values.totalIncomeAmount
+ * const savingsRate = ((monthlyIncome - monthlyExpense) / monthlyIncome) * 100
+ *
+ * return (
+ *   <Stack spacing={2}>
+ *     <TotalExpenseDisplay expense={values.totalExpenseAmount} />
+ *     <TotalIncomeDisplay income={values.totalIncomeAmount} />
+ *     <Typography>savings rate: {savingsRate.toFixed(1)}%</Typography>
+ *   </Stack>
+ * )
+ * ```
  */
 export function useBudgetManager() {
   const [expenses, setExpenses] = useState<Expense[]>([])
