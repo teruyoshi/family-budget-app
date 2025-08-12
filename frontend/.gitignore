@@ -16,7 +16,6 @@ dist-ssr
 docs/
 storybook-static/
 coverage/
-build/
 
 # Editor directories and files
 .vscode/*
