@@ -2,7 +2,7 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2025年8月12日（Issue #3 AmountText統一化＋MAX_SAFE_INTEGER精度対策完了）
+**最終更新**: 2025年8月12日（Issue #3 完了＋PR #13 フック分離対応完了）
 
 ## 📋 プロジェクト概要
 
@@ -51,6 +51,7 @@ make backend-shell        # バックエンドコンテナ接続
 - 次の指示を待つ
 - コミット前テスト確認必須
 - **プルリクエスト対応**: レビューコメント返信時はコミット番号併記
+- **レビュー返信**: `gh api --method POST repos/owner/repo/pulls/PR番号/comments -f body='内容' -f commit_id=SHA -f path=ファイルパス -F in_reply_to=コメントID`
 
 ### 開発環境URL
 - **フロントエンド**: http://localhost:5173
@@ -99,7 +100,9 @@ frontend/
 │   │           └── HistoryList.tsx    # 日付グループ化対応
 │   ├── hooks/
 │   │   ├── useBudgetManager.ts  # 統合家計簿管理フック
-│   │   └── useMoney.ts          # 金額状態管理（useAmount→リネーム済み）
+│   │   ├── useMoney.ts          # 金額状態管理（単一責任分離済み）
+│   │   ├── useMoneyFormat.ts    # 金額フォーマット専用フック
+│   │   └── __tests__/           # フックテスト（単体・統合分離）
 │   ├── lib/
 │   │   └── format/
 │   │       ├── money.ts         # 金額フォーマットライブラリ（MAX_SAFE_INTEGER対応）
@@ -114,7 +117,7 @@ frontend/
 
 ## 🔧 現在の設定情報
 - **プロジェクト名**: FamilyBudgetApp (v0.3.1)
-- **テスト状況**: 115テスト、12テストスイート全通過
+- **テスト状況**: 127テスト、14テストスイート全通過
 - **主要機能**: 支出・収入登録、残高計算、日付グループ化履歴表示
 - **UI改善**: 金額¥表示、右寄せ入力、日付セクション分け
 - **ドキュメント**: JSDoc + Storybook Docs統合、react-docgen-typescript自動反映
