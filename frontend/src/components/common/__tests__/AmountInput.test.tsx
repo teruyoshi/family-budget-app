@@ -149,7 +149,7 @@ describe('AmountInput', () => {
 
       const input = screen.getByDisplayValue('¥1,000')
       expect(input).toHaveAttribute('inputmode', 'numeric')
-      expect(input).toHaveAttribute('pattern', '[0-9]*')
+      expect(input).toHaveAttribute('pattern', '^¥?[0-9,]*$')
     })
 
     test('requiredプロパティが適切に設定される', () => {
