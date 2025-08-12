@@ -11,6 +11,8 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "test": "jest",
+    "test:ci": "jest --coverage --watchAll=false --passWithNoTests",
+    "typecheck": "tsc --noEmit",
     "docs": "typedoc",
     "docs:clean": "rm -rf docs",
     "docs:serve": "serve docs -p 3001",

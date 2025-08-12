@@ -1,5 +1,8 @@
-export { default as AmountText } from './AmountText'
-export { default as AmountInput } from './AmountInput'
+// 金額関連コンポーネント - 統一フォーマットライブラリ使用
+export { default as AmountText, type AmountTextProps } from './AmountText'
+export { default as AmountInput, type AmountInputProps } from './AmountInput'
+
+// 基本UIコンポーネント
 export { default as AppTitle } from './AppTitle'
 export { default as DatePicker } from './DatePicker'
 export { default as TextInput } from './TextInput'

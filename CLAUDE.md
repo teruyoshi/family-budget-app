@@ -2,7 +2,7 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2025年8月（JSDoc + Storybook Docs統合完了）
+**最終更新**: 2025年8月12日（Issue #3 完了＋PR #13 フック分離対応完了）
 
 ## 📋 プロジェクト概要
 
@@ -27,6 +27,8 @@ make test-backend         # バックエンドテスト
 make lint-frontend        # ESLintチェック
 make format-frontend      # Prettierフォーマット
 make npm-install          # 依存関係インストール
+make test-coverage-open   # テストカバレッジをブラウザで表示
+make quality-check        # 統合品質チェック（lint+format+test）
 ```
 
 #### ドキュメント・Storybook
@@ -48,6 +50,9 @@ make backend-shell        # バックエンドコンテナ接続
 - **🛑 重要: 1つのTodoタスク完了→必ず停止**
 - 次の指示を待つ
 - コミット前テスト確認必須
+- **プルリクエスト対応**: レビューコメント返信時はコミット番号併記
+- **レビュー返信**: `gh api --method POST repos/owner/repo/pulls/PR番号/comments -f body='内容' -f commit_id=SHA -f path=ファイルパス -F in_reply_to=コメントID`
+- **Claude生成コメント**: 全GitHubコメントに `🤖 Generated with [Claude Code](https://claude.ai/code)` 署名必須
 
 ### 開発環境URL
 - **フロントエンド**: http://localhost:5173
@@ -63,7 +68,7 @@ frontend/
 │   ├── components/common/        # 汎用コンポーネント（JSDoc完備）
 │   │   ├── __stories__/         # Storybookストーリーファイル
 │   │   ├── AmountInput.tsx      # 金額入力（¥フォーマット対応）
-│   │   ├── AmountText.tsx       # 金額表示
+│   │   ├── AmountText.tsx       # 金額表示（lib/format統一化済み）
 │   │   ├── AppTitle.tsx         # アプリタイトル
 │   │   ├── DatePicker.tsx       # 日付選択
 │   │   ├── TextInput.tsx        # テキスト入力
@@ -95,19 +100,29 @@ frontend/
 │   │           ├── HistoryItem.tsx
 │   │           └── HistoryList.tsx    # 日付グループ化対応
 │   ├── hooks/
-│   │   └── useBudgetManager.ts  # 統合家計簿管理フック
+│   │   ├── useBudgetManager.ts  # 統合家計簿管理フック
+│   │   ├── useMoney.ts          # 金額状態管理（単一責任分離済み）
+│   │   ├── useMoneyFormat.ts    # 金額フォーマット専用フック
+│   │   └── __tests__/           # フックテスト（単体・統合分離）
+│   ├── lib/
+│   │   └── format/
+│   │       ├── money.ts         # 金額フォーマットライブラリ（MAX_SAFE_INTEGER対応）
+│   │       └── __tests__/
+│   │           └── money.test.ts # 金額フォーマットテスト（115テスト通過）
 │   └── App.tsx                  # メインアプリ
 ├── .storybook/                   # Storybook設定
 ├── docs/                        # TypeDoc生成ドキュメント
+├── coverage/                    # テストカバレッジレポート（gitignore対象）
 └── typedoc.json                 # TypeDoc設定
 ```
 
 ## 🔧 現在の設定情報
-- **プロジェクト名**: FamilyBudgetApp (v0.3.0)
-- **テスト状況**: 43テスト、10テストスイート全通過
+- **プロジェクト名**: FamilyBudgetApp (v0.3.1)
+- **テスト状況**: 127テスト、14テストスイート全通過
 - **主要機能**: 支出・収入登録、残高計算、日付グループ化履歴表示
 - **UI改善**: 金額¥表示、右寄せ入力、日付セクション分け
 - **ドキュメント**: JSDoc + Storybook Docs統合、react-docgen-typescript自動反映
+- **品質対策**: MAX_SAFE_INTEGER精度チェック、統合品質コマンド、CI/CD自動化
 
 ## 📚 ドキュメントシステム（JSDoc + Storybook）
 - **Storybook**: 唯一の統合ドキュメントプラットフォーム
@@ -134,6 +149,7 @@ frontend/
 - **エクスポート**: バレルエクスポート（index.ts）で再利用性向上
 - **テスト**: 単体テスト重視（結合テスト最小化で高速化）
 - **ドキュメント**: コンポーネント作成・修正時はJSDoc更新必須
+- **精度対策**: 金額はMAX_SAFE_INTEGER範囲内チェック必須（lib/format/money.ts活用）
 
 ## 🤖 AI活用：JSDoc保守プロンプト
 
@@ -155,3 +171,30 @@ frontend/
 - 変更差分に対するコード（JSDoc入り）を返す
 - インデント・改行は整形する
 ```
+
+## 🔍 Issue #3 完了事項（AmountText統一化）
+
+### 実装概要
+- **金額フォーマットライブラリ**: `lib/format/money.ts` 新規作成
+- **統一化**: AmountText.tsx を formatMoneyForDisplay ベースに書き換え
+- **精度対策**: MAX_SAFE_INTEGER チェック機能で景の桁バグ根本解決
+- **テスト強化**: 115テスト（+6 MAX_SAFE_INTEGER関連テスト）
+
+### 技術的成果
+1. **Single Source of Truth**: 金額フォーマット処理の単一責任化
+2. **型安全性**: TypeScript + JSDoc による完全な型定義
+3. **精度保証**: checkSafeInteger() による事前エラー検出
+4. **テストカバレッジ**: it.each 表形式テストで可読性向上
+
+### 修正されたバグ
+- **景の桁精度落ち**: `11111111111111111` → `¥11,111,111,111,111,112` 
+- **対策**: MAX_SAFE_INTEGER超過時に明確なエラーメッセージで事前防止
+
+### CI/CD 統合
+- **GitHub Actions**: frontend-ci.yml で自動品質チェック
+- **Make コマンド**: quality-check, test-coverage-open 追加
+- **git hooks**: レビューコメント対応時のコミット番号併記ルール
+
+### 次期課題（Issue #12）
+- **react-hook-form 導入**: フォーム状態管理の統一化
+- **バリデーション強化**: 入力時のリアルタイム検証

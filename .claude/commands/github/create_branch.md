@@ -1,0 +1,1 @@
+gh コマンドで `#$ARGUMENTS` の Issue を読み込んで、 カレントブランチから Issue#$ARGUMENTS_custom_branch_name ブランチを切ってください。ブランチ名の custom_branch_name 部分については適切な名前に置き換えてください。
