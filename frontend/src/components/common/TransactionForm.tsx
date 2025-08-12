@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Box,
   Button,
@@ -7,11 +8,16 @@ import {
   Typography,
 } from '@mui/material'
 import { DatePicker, AmountInput } from './'
+import {
+  transactionFormSchema,
+  type TransactionFormData,
+} from '@/lib/validation/schemas'
 
 /**
  * 取引登録統合フォームコンポーネントのProps型定義
  *
  * 収入・支出両方に対応した汎用的な取引入力フォーム用のプロパティセット。
+ * react-hook-form + zod バリデーション対応で、
  * 金額入力・日付選択・送信ボタンの統合UIを提供します。
  */
 export interface TransactionFormProps {
@@ -45,40 +51,48 @@ export interface TransactionFormProps {
 
   /**
    * フォーム送信時のコールバック関数
-   * @param amount - 入力された金額（正の数値のみ）
-   * @param date - 選択された日付（YYYY-MM-DD形式）
+   * @param data - バリデーション済みフォームデータ（TransactionFormData型）
    * @example
    * ```tsx
-   * const handleExpense = (amount: number, date: string) => {
-   *   addExpense({ amount, date, description: ''支出' })
+   * const handleExpense = (data: TransactionFormData) => {
+   *   const finalDate = data.useCustomDate ? data.date : new Date().toISOString().split('T')[0]
+   *   addExpense({ amount: data.amount, date: finalDate, description: '支出' })
    * }
    * ```
    */
-  onSubmit?: (amount: number, date: string) => void
+  onSubmit?: (data: TransactionFormData) => void
+
+  /**
+   * フォームの初期値（任意）
+   * @defaultValue { amount: 0, date: 今日の日付, useCustomDate: false }
+   */
+  defaultValues?: Partial<TransactionFormData>
 }
 
 /**
  * 収入・支出共用取引登録統合フォームコンポーネント
  *
- * 金額入力・日付選択・送信ボタンを統合した汎用的な取引入力フォーム。
- * 動的日付選択機能（トグルスイッチ）と自動バリデーションを備え、
- * ExpenseFormやIncomeFormの共通基盤として機能します。
+ * react-hook-form + zodバリデーション対応の汎用的な取引入力フォーム。
+ * 金額入力・日付選択・送信ボタンを統合し、動的日付選択機能（トグルスイッチ）と
+ * 堅牢なバリデーション機能を備え、ExpenseFormやIncomeFormの共通基盤として機能。
  *
  * @remarks
+ * - **react-hook-form**: 効率的なフォーム管理と不要な再レンダリング抑制
+ * - **zodバリデーション**: 型安全なスキーマベースバリデーション
  * - **動的日付選択**: トグルスイッチで日付指定の有無を切り替え
- * - **自動バリデーション**: 正の数値のみ受け付け（ゼロ・負値は無効）
- * - **日付ロジック**: トグル無効時は今日の日付を使用
- * - **フォーム状態**: 金額のみリセット（日付・トグル状態保持）
- * - **アクセシビリティ**: キーボード操作・Enter送信対応
- * - **レスポンシブ**: モバイルデバイスでの操作性を考慮
+ * - **リアルタイムエラー表示**: 入力時にバリデーションエラーを表示
+ * - **日付ロジック**: トグル無効時は今日の日付を自動使用
+ * - **フォーム状態**: 送信後は金額のみリセット（日付・トグル状態保持）
+ * - **アクセシビリティ**: キーボード操作・Enter送信・エラーメッセージ読み上げ対応
  *
  * @example
  * ```tsx
  * // 支出登録フォームとしての使用
- * const handleExpenseSubmit = (amount: number, date: string) => {
+ * const handleExpenseSubmit = (data: TransactionFormData) => {
+ *   const finalDate = data.useCustomDate ? data.date : new Date().toISOString().split('T')[0]
  *   addExpense({
- *     amount,
- *     date,
+ *     amount: data.amount,
+ *     date: finalDate,
  *     description: '支出',
  *     category: 'general'
  *   })
@@ -95,13 +109,13 @@ export interface TransactionFormProps {
  *
  * @example
  * ```tsx
- * // 収入登録フォームとしての使用
- * const handleIncomeSubmit = (amount: number, date: string) => {
+ * // 初期値を指定した使用例
+ * const handleIncomeSubmit = (data: TransactionFormData) => {
+ *   const finalDate = data.useCustomDate ? data.date : new Date().toISOString().split('T')[0]
  *   addIncome({
- *     amount,
- *     date,
- *     description: '給与収入',
- *     source: 'salary'
+ *     amount: data.amount,
+ *     date: finalDate,
+ *     description: '給与収入'
  *   })
  * }
  *
@@ -110,31 +124,8 @@ export interface TransactionFormProps {
  *   buttonText="収入を登録"
  *   buttonColor="success"
  *   datePickerLabel="収入日付"
+ *   defaultValues={{ amount: 250000, useCustomDate: true }}
  *   onSubmit={handleIncomeSubmit}
- * />
- * ```
- *
- * @example
- * ```tsx
- * // フォーム結果のBudgetManager連携例
- * const { addTransaction } = useBudgetManager()
- *
- * const handleTransactionSubmit = (amount: number, date: string) => {
- *   addTransaction({
- *     id: crypto.randomUUID(),
- *     type: 'expense', // or 'income'
- *     amount,
- *     date,
- *     description: '手動入力'
- *   })
- * }
- *
- * <TransactionForm
- *   placeholder="金額を入力"
- *   buttonText="登録"
- *   buttonColor="error"
- *   datePickerLabel="取引日"
- *   onSubmit={handleTransactionSubmit}
  * />
  * ```
  */
@@ -145,58 +136,88 @@ export default function TransactionForm({
   buttonColor,
   datePickerLabel,
   onSubmit,
+  defaultValues = {},
 }: TransactionFormProps) {
-  const [amount, setAmount] = useState(0)
-  const [date, setDate] = useState(
-    new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' })
-  )
-  const [useCustomDate, setUseCustomDate] = useState(false)
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isValid },
+  } = useForm<TransactionFormData>({
+    resolver: zodResolver(transactionFormSchema),
+    defaultValues: {
+      amount: 0,
+      date: new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' }),
+      useCustomDate: false,
+      ...defaultValues,
+    },
+    mode: 'onChange', // リアルタイムバリデーション
+  })
+
+  const useCustomDate = watch('useCustomDate')
 
   /** フォーム送信処理 */
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // バリデーション: 正の数値のみ受け入れ
-    if (amount > 0 && onSubmit) {
-      // トグルが有効な場合は選択日付、無効な場合は今日の日付を使用
-      const finalDate = useCustomDate
-        ? date
-        : new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' })
-      onSubmit(amount, finalDate)
-      setAmount(0) // 金額のみリセット（日付とトグル状態は保持）
-    }
+  const handleFormSubmit = (data: TransactionFormData) => {
+    onSubmit?.(data)
+    // 金額のみリセット（日付とトグル状態は保持）
+    reset({
+      amount: 0,
+      date: data.date,
+      useCustomDate: data.useCustomDate,
+    })
   }
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(handleFormSubmit)}
       sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
     >
-      <FormControlLabel
-        control={
-          <Switch
-            checked={useCustomDate}
-            onChange={(e) => setUseCustomDate(e.target.checked)}
-            color="primary"
+      <Controller
+        name="useCustomDate"
+        control={control}
+        render={({ field }) => (
+          <FormControlLabel
+            control={
+              <Switch {...field} checked={field.value} color="primary" />
+            }
+            label={
+              <Typography variant="body2" color="text.secondary">
+                日付を指定する
+              </Typography>
+            }
+            sx={{ alignSelf: 'flex-start', mb: 0 }}
           />
-        }
-        label={
-          <Typography variant="body2" color="text.secondary">
-            日付を指定する
-          </Typography>
-        }
-        sx={{ alignSelf: 'flex-start', mb: 0 }}
+        )}
       />
 
       {useCustomDate && (
-        <DatePicker label={datePickerLabel} value={date} onChange={setDate} />
+        <Controller
+          name="date"
+          control={control}
+          render={({ field, fieldState }) => (
+            <DatePicker
+              {...field}
+              label={datePickerLabel}
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+            />
+          )}
+        />
       )}
 
-      <AmountInput
-        placeholder={placeholder}
-        value={amount}
-        onChange={setAmount}
+      <Controller
+        name="amount"
+        control={control}
+        render={({ field, fieldState }) => (
+          <AmountInput
+            {...field}
+            placeholder={placeholder}
+            error={!!fieldState.error}
+            helperText={fieldState.error?.message}
+          />
+        )}
       />
 
       <Button
@@ -204,6 +225,7 @@ export default function TransactionForm({
         variant="contained"
         color={buttonColor}
         fullWidth
+        disabled={!isValid}
         sx={{
           fontWeight: 'bold',
           py: 1.5,

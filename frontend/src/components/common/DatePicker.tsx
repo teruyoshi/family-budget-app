@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -10,7 +11,7 @@ dayjs.locale('ja')
  * 日付選択コンポーネントのProps型定義
  *
  * MUI DatePicker日本語対応版のプロパティ設定。
- * ISO 8601形式（YYYY-MM-DD）での日付管理を前提とします。
+ * react-hook-form対応で、ISO 8601形式（YYYY-MM-DD）での日付管理を前提とします。
  */
 export interface DatePickerProps {
   /**
@@ -18,7 +19,7 @@ export interface DatePickerProps {
    * @example "2024-08-12" - ISO 8601形式の日付文字列
    * @remarks 内部でdayjsライブラリを使用してパース・フォーマット
    */
-  value: string
+  value?: string
 
   /**
    * 日付変更時のコールバック関数
@@ -32,7 +33,7 @@ export interface DatePickerProps {
    * }
    * ```
    */
-  onChange: (date: string) => void
+  onChange?: (date: string) => void
 
   /**
    * 日付選択フィールドのラベル
@@ -47,15 +48,29 @@ export interface DatePickerProps {
    * @example disabled={isSubmitting} - フォーム送信中の無効化
    */
   disabled?: boolean
+
+  /** フィールド名（react-hook-form用） */
+  name?: string
+
+  /** フォーカス失ったときのコールバック（react-hook-form用） */
+  onBlur?: () => void
+
+  /** エラー状態を表示するかどうか */
+  error?: boolean
+
+  /** エラーメッセージテキスト */
+  helperText?: string
 }
 
 /**
  * 日本語ローカライズ対応の日付選択コンポーネント
  *
- * MUI X DatePickerをベースとした日本語対応版。dayjs + AdapterDayjsを使用し、
- * 日本語フォーマット（YYYY年MM月DD日）での表示と、ISO 8601形式での値管理を両立。
+ * MUI X DatePickerをベースとした日本語対応版。react-hook-form完全対応で、
+ * dayjs + AdapterDayjsを使用し、日本語フォーマット（YYYY年MM月DD日）での表示と、
+ * ISO 8601形式での値管理を両立。
  *
  * @remarks
+ * - **react-hook-form対応**: forwardRefでref転送、Controller連携
  * - **ローカライズ**: 日本語曜日・月名表示対応
  * - **フォーマット**: 表示は「2024年08月12日」、値は"2024-08-12"
  * - **バリデーション**: MUI DatePickerの標準バリデーション機能を継承
@@ -64,7 +79,32 @@ export interface DatePickerProps {
  *
  * @example
  * ```tsx
- * // 基本的な使用例（取引日選択）
+ * // react-hook-formでの使用例
+ * import { useForm, Controller } from 'react-hook-form'
+ * import { zodResolver } from '@hookform/resolvers/zod'
+ * import { datePickerSchema } from '@/lib/validation/schemas'
+ *
+ * const { control, handleSubmit } = useForm({
+ *   resolver: zodResolver(datePickerSchema)
+ * })
+ *
+ * <Controller
+ *   name="date"
+ *   control={control}
+ *   render={({ field, fieldState }) => (
+ *     <DatePicker
+ *       {...field}
+ *       label="取引日"
+ *       error={!!fieldState.error}
+ *       helperText={fieldState.error?.message}
+ *     />
+ *   )}
+ * />
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // 従来の使用例（互換性維持）
  * const [transactionDate, setTransactionDate] = useState('2024-08-12')
  *
  * <DatePicker
@@ -73,72 +113,51 @@ export interface DatePickerProps {
  *   label="取引日"
  * />
  * ```
- *
- * @example
- * ```tsx
- * // フォーム統合での使用例
- * const [formData, setFormData] = useState({
- *   amount: 0,
- *   date: dayjs().format('YYYY-MM-DD'),
- *   description: ''
- * })
- *
- * <DatePicker
- *   value={formData.date}
- *   onChange={(newDate) => setFormData(prev => ({ ...prev, date: newDate }))}
- *   label="支出日"
- *   disabled={isSubmitting}
- * />
- * ```
- *
- * @example
- * ```tsx
- * // 期間選択での使用例
- * const [startDate, setStartDate] = useState('2024-08-01')
- * const [endDate, setEndDate] = useState('2024-08-31')
- *
- * <>
- *   <DatePicker
- *     value={startDate}
- *     onChange={setStartDate}
- *     label="期間開始日"
- *   />
- *   <DatePicker
- *     value={endDate}
- *     onChange={setEndDate}
- *     label="期間終了日"
- *   />
- * </>
- * ```
  */
-export default function DatePicker({
-  value,
-  onChange,
-  label,
-  disabled = false,
-}: DatePickerProps) {
-  /** 日付変更ハンドラー */
-  const handleChange = (newValue: Dayjs | null) => {
-    if (newValue) {
-      onChange(newValue.format('YYYY-MM-DD'))
+const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
+  function DatePicker(
+    {
+      value,
+      onChange,
+      label,
+      disabled = false,
+      name,
+      onBlur,
+      error = false,
+      helperText,
+    },
+    ref
+  ) {
+    /** 日付変更ハンドラー */
+    const handleChange = (newValue: Dayjs | null) => {
+      if (newValue) {
+        onChange?.(newValue.format('YYYY-MM-DD'))
+      }
     }
-  }
 
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
-      <MuiDatePicker
-        label={label}
-        value={value ? dayjs(value) : null}
-        onChange={handleChange}
-        format="YYYY年MM月DD日"
-        disabled={disabled}
-        slotProps={{
-          textField: {
-            fullWidth: true,
-            sx: { mb: 2 },
-          },
-        }}
-      />
-    </LocalizationProvider>
-  )
-}
+    return (
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+        <MuiDatePicker
+          name={name}
+          label={label}
+          value={value ? dayjs(value) : null}
+          onChange={handleChange}
+          format="YYYY年MM月DD日"
+          disabled={disabled}
+          slotProps={{
+            textField: {
+              ref,
+              fullWidth: true,
+              sx: { mb: 2 },
+              onBlur,
+              error,
+              helperText,
+            },
+          }}
+        />
+      </LocalizationProvider>
+    )
+  }
+)
+
+export default DatePicker
