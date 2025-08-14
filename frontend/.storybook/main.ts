@@ -1,10 +1,11 @@
 export default {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
-  addons: ['@storybook/addon-docs', '@storybook/addon-essentials'],
+  addons: ['@storybook/addon-docs'],
+
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  docs: { autodocs: true },
-  reactDocgen: 'react-docgen-typescript',
-}
+
+  reactDocgen: 'react-docgen-typescript'
+};

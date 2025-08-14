@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import TextLabel from '../TextLabel'
 
 const meta: Meta<typeof TextLabel> = {
