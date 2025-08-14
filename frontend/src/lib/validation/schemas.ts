@@ -17,8 +17,7 @@ import { z } from 'zod'
  */
 export const amountSchema = z
   .number({
-    required_error: '金額を入力してください',
-    invalid_type_error: '有効な数値を入力してください',
+    message: '有効な数値を入力してください',
   })
   .positive('金額は正の数値を入力してください')
   .max(
@@ -37,7 +36,7 @@ export const amountSchema = z
  */
 export const dateSchema = z
   .string({
-    required_error: '日付を選択してください',
+    message: '日付を選択してください',
   })
   .regex(/^\d{4}-\d{2}-\d{2}$/, '日付はYYYY-MM-DD形式で入力してください')
   .refine((dateStr) => {

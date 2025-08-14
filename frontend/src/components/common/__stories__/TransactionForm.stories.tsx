@@ -38,7 +38,7 @@ export const ExpenseForm: StoryObj<typeof TransactionForm> = {
     buttonText: '支出を登録',
     buttonColor: 'error',
     datePickerLabel: '支出日付',
-    onSubmit: (amount, date) => console.log('Expense:', amount, date),
+    onSubmit: (data) => console.log('Expense:', data.amount, data.date),
   },
 }
 
@@ -48,6 +48,6 @@ export const IncomeForm: StoryObj<typeof TransactionForm> = {
     buttonText: '収入を登録',
     buttonColor: 'success',
     datePickerLabel: '収入日付',
-    onSubmit: (amount, date) => console.log('Income:', amount, date),
+    onSubmit: (data) => console.log('Income:', data.amount, data.date),
   },
 }
