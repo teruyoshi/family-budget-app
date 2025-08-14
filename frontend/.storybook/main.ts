@@ -7,5 +7,5 @@ export default {
     options: {},
   },
 
-  reactDocgen: 'react-docgen-typescript'
-};
+  reactDocgen: 'react-docgen-typescript',
+}
