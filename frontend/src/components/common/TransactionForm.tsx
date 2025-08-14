@@ -1,13 +1,11 @@
-import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Box, Button } from '@mui/material'
 import {
-  Box,
-  Button,
-  FormControlLabel,
-  Switch,
-  Typography,
-} from '@mui/material'
-import { DatePicker, AmountInput } from './'
+  ControlledAmountInput,
+  ControlledCustomDateSwitch,
+  ControlledDatePicker,
+} from './form'
 import {
   transactionFormSchema,
   type TransactionFormData,
@@ -174,51 +172,13 @@ export default function TransactionForm({
       onSubmit={handleSubmit(handleFormSubmit)}
       sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
     >
-      <Controller
-        name="useCustomDate"
-        control={control}
-        render={({ field }) => (
-          <FormControlLabel
-            control={
-              <Switch {...field} checked={field.value} color="primary" />
-            }
-            label={
-              <Typography variant="body2" color="text.secondary">
-                日付を指定する
-              </Typography>
-            }
-            sx={{ alignSelf: 'flex-start', mb: 0 }}
-          />
-        )}
-      />
+      <ControlledCustomDateSwitch control={control} />
 
       {useCustomDate && (
-        <Controller
-          name="date"
-          control={control}
-          render={({ field, fieldState }) => (
-            <DatePicker
-              {...field}
-              label={datePickerLabel}
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
-          )}
-        />
+        <ControlledDatePicker control={control} label={datePickerLabel} />
       )}
 
-      <Controller
-        name="amount"
-        control={control}
-        render={({ field, fieldState }) => (
-          <AmountInput
-            {...field}
-            placeholder={placeholder}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
-          />
-        )}
-      />
+      <ControlledAmountInput control={control} placeholder={placeholder} />
 
       <Button
         type="submit"
