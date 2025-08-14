@@ -1,17 +1,20 @@
 # フロントエンド用 Dockerfile (開発環境)
 FROM node:22-alpine
 
-# 作業ディレクトリを設定
-WORKDIR /app
+# セキュリティ: 非rootユーザーを使用
+USER node
 
-# パッケージファイルをコピー
-COPY package*.json ./
+# 作業ディレクトリを設定（nodeユーザーのホーム配下）
+WORKDIR /home/node/app
+
+# パッケージファイルをコピー（所有者をnodeに設定）
+COPY --chown=node:node package*.json ./
 
 # 依存関係をインストール
 RUN npm install
 
-# アプリケーションコードをコピー
-COPY . .
+# アプリケーションコードをコピー（所有者をnodeに設定）
+COPY --chown=node:node . .
 
 # ポートを公開
 EXPOSE 5173
