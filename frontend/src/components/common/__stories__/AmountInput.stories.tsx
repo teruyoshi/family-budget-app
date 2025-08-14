@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { action } from 'storybook/actions'
 import AmountInput from '../AmountInput'
 
 const meta: Meta<typeof AmountInput> = {
@@ -9,8 +9,32 @@ const meta: Meta<typeof AmountInput> = {
   parameters: {
     docs: {
       description: {
-        component:
-          '金額入力専用コンポーネント。数値を自動で¥記号付きカンマ区切りで表示します。',
+        component: `
+金額入力専用コンポーネント。数値を自動で¥記号付きカンマ区切りで表示します。
+useMoney・useMoneyFormat分離アーキテクチャと lib/format/money.ts 統合による堅牢な実装。
+
+## 📋 仕様トレーサビリティ
+
+| 項目 | 関連資料 | 備考 |
+|---|---|---|
+| **設計判断** | [ADR-0001: TSDoc統一](../docs-src/adr/0001-use-tsdoc-unified-documentation.md) | ドキュメント戦略 |
+| **ドメインモデル** | [用語集: 金額・入力UI](../docs-src/glossary.md#金額取引関連) | 用語定義・制約 |
+| **単体テスト** | [AmountInput.test.tsx](../src/components/common/__tests__/AmountInput.test.tsx) | 171行、9テスト |
+| **統合テスト** | [useMoney.integration.test.ts](../src/hooks/__tests__/useMoney.integration.test.ts) | フック連携 |
+| **品質方針** | [アクセシビリティガイド](../docs-src/quality/accessibility.md) | WCAG 2.1 AA準拠 |
+| **パフォーマンス** | [パフォーマンスガイド](../docs-src/quality/performance.md) | Bundle予算・監視 |
+
+## 🧪 テストカバレッジ
+- **基本機能**: フォーマット表示、数値変更、エラーハンドリング
+- **アクセシビリティ**: aria-label, inputMode, pattern, required対応  
+- **エッジケース**: MAX_SAFE_INTEGER超過、非数値入力、空文字処理
+- **統合**: useMoney + useMoneyFormat + parseMoneyString連携
+
+## 🎯 品質指標
+- **TypeScript**: strict mode準拠、TSDoc完備
+- **a11y**: Lighthouse 95点以上、axe-core violations 0件
+- **Performance**: 再レンダリング最適化（React.memo適用検討中）
+        `,
       },
     },
   },

@@ -17,6 +17,7 @@ export default {
           skipLibCheck: true,
           verbatimModuleSyntax: false,
           allowSyntheticDefaultImports: true,
+          isolatedModules: true,
         },
       },
     ],
@@ -31,9 +32,4 @@ export default {
     '!src/**/__stories__/**/*',
     '!src/**/*.stories.(ts|tsx)',
   ],
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-    },
-  },
 }
