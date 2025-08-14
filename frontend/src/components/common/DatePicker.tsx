@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import type { Ref } from 'react'
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -12,6 +12,7 @@ dayjs.locale('ja')
  *
  * MUI DatePicker日本語対応版のプロパティ設定。
  * react-hook-form対応で、ISO 8601形式（YYYY-MM-DD）での日付管理を前提とします。
+ * React 19の新しいrefパターンに対応。
  */
 export interface DatePickerProps {
   /**
@@ -60,6 +61,12 @@ export interface DatePickerProps {
 
   /** エラーメッセージテキスト */
   helperText?: string
+
+  /**
+   * DOM要素への参照（React 19の新しいrefパターン）
+   * @remarks react-hook-form統合やフォーカス制御で使用
+   */
+  ref?: Ref<HTMLInputElement>
 }
 
 /**
@@ -70,7 +77,7 @@ export interface DatePickerProps {
  * ISO 8601形式での値管理を両立。
  *
  * @remarks
- * - **react-hook-form対応**: forwardRefでref転送、Controller連携
+ * - **react-hook-form対応**: React 19の新しいrefパターンでController連携
  * - **ローカライズ**: 日本語曜日・月名表示対応
  * - **フォーマット**: 表示は「2024年08月12日」、値は"2024-08-12"
  * - **バリデーション**: MUI DatePickerの標準バリデーション機能を継承
@@ -114,20 +121,17 @@ export interface DatePickerProps {
  * />
  * ```
  */
-const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
-  function DatePicker(
-    {
-      value,
-      onChange,
-      label,
-      disabled = false,
-      name,
-      onBlur,
-      error = false,
-      helperText,
-    },
-    ref
-  ) {
+function DatePicker({
+  value,
+  onChange,
+  label,
+  disabled = false,
+  name,
+  onBlur,
+  error = false,
+  helperText,
+  ref,
+}: DatePickerProps) {
     /** 日付変更ハンドラー */
     const handleChange = (newValue: Dayjs | null) => {
       if (newValue) {
@@ -157,7 +161,6 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
         />
       </LocalizationProvider>
     )
-  }
-)
+}
 
 export default DatePicker
