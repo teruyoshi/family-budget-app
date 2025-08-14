@@ -1,4 +1,4 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Box,
@@ -158,7 +158,7 @@ export default function TransactionForm({
   const useCustomDate = watch('useCustomDate')
 
   /** フォーム送信処理 */
-  const handleFormSubmit = (data: TransactionFormData) => {
+  const handleFormSubmit: SubmitHandler<TransactionFormData> = (data) => {
     onSubmit?.(data)
     // 金額のみリセット（日付とトグル状態は保持）
     reset({

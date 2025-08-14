@@ -69,7 +69,7 @@ export const transactionFormSchema = z.object({
    * true: ユーザー指定日付使用
    * false: 今日の日付使用
    */
-  useCustomDate: z.boolean().default(false),
+  useCustomDate: z.boolean(),
 })
 
 /**
