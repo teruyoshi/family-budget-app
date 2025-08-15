@@ -60,7 +60,7 @@ export interface HistoryPageProps {
  * />
  * ```
  */
-export default function HistoryPage(props: HistoryPageProps = {}) {
+export default function HistoryPage() {
   const [
     { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
   ] = useBudgetManager()

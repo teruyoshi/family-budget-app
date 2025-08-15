@@ -187,7 +187,7 @@ if (!global.URL) {
      * 実際のルーティングテストでは MemoryRouter を使用するため、
      * この実装はReact Router内部の初期化エラー防止が主目的です。
      */
-    constructor(url: string, base?: string) {
+    constructor(url: string) {
       this.href = url
       this.origin = 'http://localhost:3000'
       this.protocol = 'http:'

@@ -60,7 +60,7 @@ export interface IncomePageProps {
  * />
  * ```
  */
-export default function IncomePage(props: IncomePageProps = {}) {
+export default function IncomePage() {
   const [{ incomes, totalIncomeAmount }, { addIncome }] = useBudgetManager()
 
   return (

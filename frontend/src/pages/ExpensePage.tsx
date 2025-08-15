@@ -56,7 +56,7 @@ export interface ExpensePageProps {
  * />
  * ```
  */
-export default function ExpensePage(props: ExpensePageProps = {}) {
+export default function ExpensePage() {
   const [{ expenses, totalExpenseAmount }, { addExpense }] = useBudgetManager()
 
   return (

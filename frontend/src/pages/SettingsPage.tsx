@@ -56,7 +56,7 @@ export interface SettingsPageProps {
  * <SettingsPage initialCategory="appearance" />
  * ```
  */
-export default function SettingsPage(props: SettingsPageProps = {}) {
+export default function SettingsPage() {
   return (
     <Container
       maxWidth="md"

@@ -11,6 +11,7 @@ import { useBudgetManager } from '@/hooks'
  *
  * 将来的な拡張を考慮した型定義ですが、現在は特別なpropsは不要です。
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DashboardPageProps {
   // 将来的な拡張用（例：初期表示設定、フィルター設定等）
 }
@@ -54,7 +55,7 @@ export interface DashboardPageProps {
  * <DashboardPage initialView="expenses" showTutorial={false} />
  * ```
  */
-export default function DashboardPage(props: DashboardPageProps = {}) {
+export default function DashboardPage() {
   const [
     { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
     { addExpense, addIncome },

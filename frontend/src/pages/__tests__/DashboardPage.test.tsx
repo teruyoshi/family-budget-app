@@ -102,8 +102,8 @@ describe('DashboardPage', () => {
     renderDashboardPage()
 
     // メインコンテンツエリアがランドマークとして認識されるかチェック
-    const mainContent = screen.getByText('家計簿アプリ').closest('main') || 
-                       screen.getByText('家計簿アプリ').closest('[role="main"]')
+    // const mainContent = screen.getByText('家計簿アプリ').closest('main') || 
+    //                    screen.getByText('家計簿アプリ').closest('[role="main"]')
     
     // アプリタイトルが適切な見出しレベルになっているかチェック
     const title = screen.getByText('家計簿アプリ')

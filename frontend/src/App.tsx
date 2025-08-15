@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { routes, type AppRoute } from '@/routes/routes'
 import {
   DashboardPage,
   ExpensePage,
@@ -17,7 +18,7 @@ import {
  * **ルーティング構成:**
  * - BrowserRouter: History API を使用したクライアントサイドルーティング
  * - 全ページコンポーネント対応: Dashboard, Expenses, Income, History, Settings
- * - 型安全なルート定義: AppRouteとの連携
+ * - 型安全なルート定義: AppRouteとroutesによる一元管理
  * 
  * **実装済みページ:**
  * - `/` : DashboardPage - メインダッシュボード（収入・支出統合管理）
@@ -28,38 +29,52 @@ import {
  *
  * **アーキテクチャ:**
  * - ページベース構造: 機能別にページを分離
+ * - ルート定義統一: routes配列による設定の一元管理
+ * - 型安全性: AppRoute型による厳密なパス管理
  * - コンポーネント再利用: 各ページで共通コンポーネントを活用
  * - 状態管理: useBudgetManager による一元管理
  * - レスポンシブ対応: 全ページでモバイル・デスクトップ対応
  *
  * @example
  * ```tsx
- * // 各ページへのナビゲーション例
- * <Link to="/">ダッシュボード</Link>
- * <Link to="/expenses">支出管理</Link>
- * <Link to="/income">収入管理</Link>
- * <Link to="/history">履歴表示</Link>
- * <Link to="/settings">設定</Link>
+ * // 型安全なナビゲーション例
+ * import { AppRoute, getRouteInfo } from '@/routes/routes'
+ * 
+ * const dashboardRoute: AppRoute = '/'
+ * const routeInfo = getRouteInfo(dashboardRoute)
+ * console.log(routeInfo?.title) // "ダッシュボード"
  * ```
  */
 function App() {
+  // ルート設定からページコンポーネントのマッピングを定義
+  const getPageComponent = (path: AppRoute) => {
+    switch (path) {
+      case '/':
+        return <DashboardPage />
+      case '/expenses':
+        return <ExpensePage />
+      case '/income':
+        return <IncomePage />
+      case '/history':
+        return <HistoryPage />
+      case '/settings':
+        return <SettingsPage />
+      default:
+        return <DashboardPage />
+    }
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* ダッシュボード（ホーム）ページ */}
-        <Route path="/" element={<DashboardPage />} />
-        
-        {/* 支出管理ページ */}
-        <Route path="/expenses" element={<ExpensePage />} />
-        
-        {/* 収入管理ページ */}
-        <Route path="/income" element={<IncomePage />} />
-        
-        {/* 履歴表示ページ */}
-        <Route path="/history" element={<HistoryPage />} />
-        
-        {/* 設定ページ */}
-        <Route path="/settings" element={<SettingsPage />} />
+        {/* routes配列を使用した動的なルート生成 */}
+        {routes.map((route) => (
+          <Route 
+            key={route.path}
+            path={route.path}
+            element={getPageComponent(route.path)}
+          />
+        ))}
       </Routes>
     </BrowserRouter>
   )
