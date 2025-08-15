@@ -1,89 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Container, Paper, Grid, Box } from '@mui/material'
-import AppTitle from '@/components/common/AppTitle'
-import { BalanceDisplay } from '@/features/balance'
-import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
-import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
-import { ExpenseHistory, IncomeHistory } from '@/features/history'
-import { useBudgetManager } from '@/hooks'
-
-/**
- * ダッシュボードページコンポーネント
- *
- * 家計簿アプリのメインダッシュボードとして機能し、収入・支出の登録・表示・集計を統合管理します。
- * React Router対応により、ルートパス（/）でアクセス可能なホームページとして動作します。
- *
- * 主な機能:
- * - 収入・支出データの状態管理（useState）
- * - 新規収入・支出の追加処理
- * - 収入・支出履歴の表示（降順ソート）
- * - 合計収入・支出額の自動計算
- * - 残高表示の自動更新
- * - レスポンシブデザイン（MUI Container + Paper）
- *
- * アーキテクチャ:
- * - React Router: BrowserRouter による SPA ルーティング
- * - Container Component: アプリケーション状態を管理
- * - Feature-based Structure: income/expenses機能を統合
- * - Material Design: 一貫したUI/UX
- */
-function DashboardPage() {
-  const [
-    { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
-    { addExpense, addIncome },
-  ] = useBudgetManager()
-
-  return (
-    <Container
-      maxWidth="md"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          mb: 4,
-        }}
-      >
-        <AppTitle />
-
-        <BalanceDisplay balance={balance} />
-
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ pr: { md: 2 } }}>
-              <ExpenseForm onSubmit={addExpense} />
-              {totalExpenseAmount > 0 && (
-                <TotalExpenseDisplay totalAmount={totalExpenseAmount} />
-              )}
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ pl: { md: 2 } }}>
-              <IncomeForm onSubmit={addIncome} />
-              {totalIncomeAmount > 0 && (
-                <TotalIncomeDisplay totalAmount={totalIncomeAmount} />
-              )}
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
-
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <ExpenseHistory expenses={expenses} />
-        </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <IncomeHistory incomes={incomes} />
-        </Grid>
-      </Grid>
-    </Container>
-  )
-}
+import {
+  DashboardPage,
+  ExpensePage,
+  IncomePage,
+  HistoryPage,
+  SettingsPage,
+} from '@/pages'
 
 /**
  * メインアプリケーションコンポーネント
@@ -92,15 +14,52 @@ function DashboardPage() {
  * 各ページコンポーネントへの適切なルーティングを管理します。
  *
  * @remarks
+ * **ルーティング構成:**
  * - BrowserRouter: History API を使用したクライアントサイドルーティング
- * - 基本ルート構造: 現在はダッシュボードページのみ実装
- * - 将来的な拡張: /expenses, /income, /history, /settings ページ追加予定
+ * - 全ページコンポーネント対応: Dashboard, Expenses, Income, History, Settings
+ * - 型安全なルート定義: AppRouteとの連携
+ * 
+ * **実装済みページ:**
+ * - `/` : DashboardPage - メインダッシュボード（収入・支出統合管理）
+ * - `/expenses` : ExpensePage - 支出管理専用ページ
+ * - `/income` : IncomePage - 収入管理専用ページ  
+ * - `/history` : HistoryPage - 全取引履歴表示ページ
+ * - `/settings` : SettingsPage - 設定管理ページ（将来拡張用）
+ *
+ * **アーキテクチャ:**
+ * - ページベース構造: 機能別にページを分離
+ * - コンポーネント再利用: 各ページで共通コンポーネントを活用
+ * - 状態管理: useBudgetManager による一元管理
+ * - レスポンシブ対応: 全ページでモバイル・デスクトップ対応
+ *
+ * @example
+ * ```tsx
+ * // 各ページへのナビゲーション例
+ * <Link to="/">ダッシュボード</Link>
+ * <Link to="/expenses">支出管理</Link>
+ * <Link to="/income">収入管理</Link>
+ * <Link to="/history">履歴表示</Link>
+ * <Link to="/settings">設定</Link>
+ * ```
  */
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* ダッシュボード（ホーム）ページ */}
         <Route path="/" element={<DashboardPage />} />
+        
+        {/* 支出管理ページ */}
+        <Route path="/expenses" element={<ExpensePage />} />
+        
+        {/* 収入管理ページ */}
+        <Route path="/income" element={<IncomePage />} />
+        
+        {/* 履歴表示ページ */}
+        <Route path="/history" element={<HistoryPage />} />
+        
+        {/* 設定ページ */}
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </BrowserRouter>
   )
