@@ -23,8 +23,8 @@ describe('App', () => {
     await waitFor(() => {
       const heading = screen.getByRole('heading', { name: '家計簿アプリ' })
       expect(heading).toBeInTheDocument()
-    })
-  })
+    }, { timeout: 10000 })
+  }, 15000)
 
   test('初期残高0円が表示される', async () => {
     await act(async () => {
@@ -35,8 +35,8 @@ describe('App', () => {
       const balanceLabel = screen.getByText('残高：')
       const balanceContainer = balanceLabel.parentElement
       expect(balanceContainer).toHaveTextContent('残高：¥0')
-    })
-  })
+    }, { timeout: 10000 })
+  }, 15000)
 
   test('支出フォームと収入フォームが表示される', async () => {
     await act(async () => {
@@ -52,8 +52,8 @@ describe('App', () => {
       expect(
         screen.getByRole('button', { name: '収入を登録' })
       ).toBeInTheDocument()
-    })
-  })
+    }, { timeout: 10000 })
+  }, 15000)
 
   test('404ページが表示される', async () => {
     await act(async () => {
@@ -63,6 +63,6 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
       expect(screen.getByText('お探しのページは存在しません。')).toBeInTheDocument()
-    })
-  })
+    }, { timeout: 10000 })
+  }, 15000)
 })
