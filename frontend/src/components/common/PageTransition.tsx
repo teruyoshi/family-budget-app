@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { Box, Fade, Slide } from '@mui/material'
-import { TransitionProps } from '@mui/material/transitions'
 
 /**
  * ページトランジションコンポーネントのProps型定義
@@ -17,7 +16,7 @@ export interface PageTransitionProps {
   /** トランジション有効フラグ */
   in?: boolean
   /** 追加のTransitionProps */
-  transitionProps?: Partial<TransitionProps>
+  transitionProps?: Record<string, any>
 }
 
 /**
