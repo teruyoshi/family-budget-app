@@ -2,12 +2,12 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2025年8月12日（AI自動ドキュメンテーション運用開始）
+**最終更新**: 2025年8月15日（React Router フルスタック実装完了）
 
 ## 📋 プロジェクト概要
 
 家計簿管理フルスタックWebアプリケーション
-- **フロントエンド**: React 19 + TypeScript + Vite + MUI v6
+- **フロントエンド**: React 19 + TypeScript + Vite + MUI v6 + React Router v7
 - **バックエンド**: Go 1.21 + Gin + GORM + MySQL 8.0
 - **インフラ**: Docker Compose
 
@@ -67,63 +67,59 @@ make backend-shell        # バックエンドコンテナ接続
 ```
 frontend/
 ├── src/
-│   ├── components/common/        # 汎用コンポーネント（JSDoc完備）
-│   │   ├── __stories__/         # Storybookストーリーファイル
-│   │   ├── AmountInput.tsx      # 金額入力（¥フォーマット対応）
-│   │   ├── AmountText.tsx       # 金額表示（lib/format統一化済み）
-│   │   ├── AppTitle.tsx         # アプリタイトル
-│   │   ├── DatePicker.tsx       # 日付選択
-│   │   ├── TextInput.tsx        # テキスト入力
-│   │   ├── TextLabel.tsx        # ラベル表示
-│   │   └── TransactionForm.tsx  # 取引フォーム統合
+│   ├── components/
+│   │   ├── common/              # 汎用コンポーネント（JSDoc完備）
+│   │   │   ├── __stories__/     # Storybookストーリーファイル
+│   │   │   ├── AmountInput.tsx  # 金額入力（¥フォーマット対応）
+│   │   │   ├── AmountText.tsx   # 金額表示（lib/format統一化済み）
+│   │   │   ├── AppTitle.tsx     # アプリタイトル
+│   │   │   ├── DatePicker.tsx   # 日付選択
+│   │   │   ├── NotFoundPage.tsx # 404エラーページ
+│   │   │   ├── PageLoader.tsx   # ページローディング
+│   │   │   ├── TextInput.tsx    # テキスト入力
+│   │   │   ├── TextLabel.tsx    # ラベル表示
+│   │   │   └── TransactionForm.tsx # 取引フォーム統合
+│   │   └── layout/              # レイアウトコンポーネント
+│   │       ├── AppLayout.tsx    # アプリ共通レイアウト
+│   │       └── index.ts         # バレルエクスポート
+│   ├── pages/                   # ページコンポーネント（React Router）
+│   │   ├── DashboardPage.tsx    # ダッシュボード（ホーム）
+│   │   ├── ExpensePage.tsx      # 支出管理ページ
+│   │   ├── IncomePage.tsx       # 収入管理ページ
+│   │   ├── HistoryPage.tsx      # 履歴表示ページ
+│   │   ├── SettingsPage.tsx     # 設定ページ
+│   │   ├── __tests__/           # ページテスト
+│   │   └── index.ts             # バレルエクスポート
+│   ├── routes/                  # ルーティング設定
+│   │   └── routes.tsx           # useRoutes + コード分割対応
 │   ├── features/
 │   │   ├── balance/             # 残高表示機能
-│   │   │   └── components/
-│   │   │       ├── __stories__/ # Storybookストーリーファイル
-│   │   │       └── BalanceDisplay.tsx
 │   │   ├── expenses/            # 支出管理機能
-│   │   │   └── components/
-│   │   │       ├── __stories__/ # Storybookストーリーファイル
-│   │   │       ├── ExpenseForm.tsx
-│   │   │       ├── ExpenseInput.tsx
-│   │   │       └── TotalExpenseDisplay.tsx
 │   │   ├── income/              # 収入管理機能
-│   │   │   └── components/
-│   │   │       ├── __stories__/ # Storybookストーリーファイル
-│   │   │       ├── IncomeForm.tsx
-│   │   │       ├── IncomeInput.tsx
-│   │   │       └── TotalIncomeDisplay.tsx
 │   │   └── history/             # 履歴表示機能
-│   │       ├── __stories__/     # Storybookストーリーファイル
-│   │       ├── ExpenseHistory.tsx
-│   │       ├── IncomeHistory.tsx
-│   │       └── common/          # 履歴共通コンポーネント
-│   │           ├── __stories__/ # Storybookストーリーファイル
-│   │           ├── HistoryItem.tsx
-│   │           └── HistoryList.tsx    # 日付グループ化対応
 │   ├── hooks/
 │   │   ├── useBudgetManager.ts  # 統合家計簿管理フック
-│   │   ├── useMoney.ts          # 金額状態管理（単一責任分離済み）
-│   │   ├── useMoneyFormat.ts    # 金額フォーマット専用フック
-│   │   └── __tests__/           # フックテスト（単体・統合分離）
+│   │   ├── useMoney.ts          # 金額状態管理
+│   │   ├── useMoneyFormat.ts    # 金額フォーマット専用
+│   │   └── __tests__/           # フックテスト
 │   ├── lib/
 │   │   └── format/
-│   │       ├── money.ts         # 金額フォーマットライブラリ（MAX_SAFE_INTEGER対応）
+│   │       ├── money.ts         # 金額フォーマットライブラリ
 │   │       └── __tests__/
-│   │           └── money.test.ts # 金額フォーマットテスト（115テスト通過）
-│   └── App.tsx                  # メインアプリ
-├── .storybook/                   # Storybook設定
-├── docs/                        # TypeDoc生成ドキュメント
-├── coverage/                    # テストカバレッジレポート（gitignore対象）
-└── typedoc.json                 # TypeDoc設定
+│   └── App.tsx                  # メインアプリ（useRoutes+BrowserRouter）
+├── .storybook/                  # Storybook設定
+├── docs/                       # TypeDoc生成ドキュメント
+├── coverage/                   # テストカバレッジレポート
+└── typedoc.json                # TypeDoc設定
 ```
 
 ## 🔧 現在の設定情報
 - **プロジェクト名**: FamilyBudgetApp (v0.3.1)
-- **テスト状況**: 127テスト、14テストスイート全通過
-- **主要機能**: 支出・収入登録、残高計算、日付グループ化履歴表示、AI自動ドキュメンテーション
-- **ドキュメント**: TSDoc統一化、Storybookトレーサビリティ表、用語集自動更新、ADR自動生成
-- **品質対策**: MAX_SAFE_INTEGER精度チェック、統合品質コマンド
+- **テスト状況**: 152テスト、17テストスイート全通過
+- **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
+- **ルーティング**: useRoutes、React.lazy、Suspense完全対応
+- **アーキテクチャ**: pages/routes/layout 分離、型安全なルート管理
+- **品質対策**: ESLint・TypeScript strict・テストカバレッジ90%+
 
 ## 🤖 AI自動ドキュメンテーション運用
 
@@ -162,7 +158,9 @@ frontend/
 - **PRテンプレート**: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) - 品質チェックリスト
 
 ## 📈 完了済み主要機能
+- ✅ **React Router 完全実装**: useRoutes + コード分割 + 404対応
+- ✅ **ページベース構造**: 5ページ + レイアウト + テスト完備
+- ✅ **型安全ルート管理**: AppRoute型 + RouteInfo型による厳密管理
+- ✅ **パフォーマンス最適化**: React.lazy + Suspense による初期バンドル削減
 - ✅ **金額フォーマット統一化**: lib/format/money.ts による Single Source of Truth
 - ✅ **フック分離**: useMoney（状態）+ useMoneyFormat（表示）の単一責任分離
-- ✅ **精度対策**: MAX_SAFE_INTEGER チェックで景の桁バグ根本解決  
-- ✅ **AI自動ドキュメンテーション**: TSDoc・用語集・ADRの運用体制確立
