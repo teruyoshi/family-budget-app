@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import { Box, Fade, Slide } from '@mui/material'
+import { forwardRef, ReactNode } from 'react'
+import { Box, Fade, Slide, useMediaQuery, useTheme } from '@mui/material'
 
 /**
  * ページトランジションコンポーネントのProps型定義
@@ -15,8 +15,18 @@ export interface PageTransitionProps {
   direction?: 'left' | 'right' | 'up' | 'down'
   /** トランジション有効フラグ */
   in?: boolean
+  /** カスタムイージング関数 */
+  easing?: string
+  /** 初期レンダリング時にもアニメーションを実行するか */
+  appear?: boolean
+  /** 要素がマウントされる際にアニメーションを実行するか */
+  mountOnEnter?: boolean
+  /** 要素がアンマウントされる際にアニメーションを実行するか */
+  unmountOnExit?: boolean
+  /** ルートの変更を識別するためのキー */
+  locationKey?: string
   /** 追加のTransitionProps */
-  transitionProps?: Record<string, any>
+  transitionProps?: Record<string, unknown>
 }
 
 /**
@@ -29,9 +39,11 @@ export interface PageTransitionProps {
  * **主な機能:**
  * - フェードイン/アウト効果
  * - スライドトランジション（上下左右対応）
- * - カスタマイズ可能なアニメーション時間
- * - パフォーマンス考慮（トランジション無効化オプション）
+ * - カスタマイズ可能なアニメーション時間・イージング
+ * - SSR対応（安全なメディアクエリ処理）
  * - アクセシビリティ対応（prefers-reduced-motion 考慮）
+ * - マウント・アンマウント制御（appear, mountOnEnter, unmountOnExit）
+ * - ルーティング統合（locationKey サポート）
  *
  * **アニメーションタイプ:**
  * - fade: フェードイン/アウト（デフォルト）
@@ -53,44 +65,67 @@ export interface PageTransitionProps {
  *
  * @example
  * ```tsx
- * // スライドトランジション
- * <PageTransition type="slide" direction="left" duration={300}>
+ * // 高度な設定のスライドトランジション
+ * <PageTransition 
+ *   type="slide" 
+ *   direction="left" 
+ *   duration={300}
+ *   easing="ease-in-out"
+ *   appear
+ *   mountOnEnter
+ *   unmountOnExit
+ * >
  *   <YourPageContent />
  * </PageTransition>
  * ```
  *
  * @example
  * ```tsx
- * // AppLayoutでの使用例
- * <AppLayout>
- *   <PageTransition>
+ * // React Routerでの使用例（位置付きコンテナ推奨）
+ * <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+ *   <PageTransition locationKey={location.key}>
  *     <Routes />
  *   </PageTransition>
- * </AppLayout>
+ * </Box>
  * ```
  */
-export default function PageTransition({
+const PageTransition = forwardRef<HTMLDivElement, PageTransitionProps>(({
   children,
   type = 'fade',
   duration = 250,
   direction = 'left',
   in: inProp = true,
+  easing,
+  appear = true,
+  mountOnEnter = true,
+  unmountOnExit = true,
+  locationKey,
   transitionProps = {},
-}: PageTransitionProps) {
-  // アクセシビリティ考慮: reduced-motion 設定チェック（テスト環境対応）
-  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia 
-    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    : false
+}, ref) => {
+  const theme = useTheme()
   
-  // reduced-motion設定時はアニメーション無効化
+  // SSR安全なメディアクエリ使用（noSsr: trueでクライアントサイド限定）
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { 
+    noSsr: true 
+  })
+  
+  // reduced-motion設定時はアニメーション無効化（即座にレンダリング）
   if (prefersReducedMotion || type === 'none') {
-    return <Box>{children}</Box>
+    return (
+      <Box ref={ref} key={locationKey}>
+        {children}
+      </Box>
+    )
   }
 
-  // 共通のトランジションプロパティ
+  // 共通のトランジションプロパティ（テーマのイージング使用可能）
   const commonProps = {
     in: inProp,
     timeout: duration,
+    appear,
+    mountOnEnter,
+    unmountOnExit,
+    easing: easing || theme.transitions.easing.easeInOut,
     ...transitionProps,
   }
 
@@ -99,20 +134,25 @@ export default function PageTransition({
     case 'slide':
       return (
         <Slide
+          key={locationKey}
           {...commonProps}
           direction={direction}
         >
-          <Box>{children}</Box>
+          <Box ref={ref}>{children}</Box>
         </Slide>
       )
     
     case 'fade':
     default:
       return (
-        <Fade {...commonProps}>
-          <Box>{children}</Box>
+        <Fade key={locationKey} {...commonProps}>
+          <Box ref={ref}>{children}</Box>
         </Fade>
       )
   }
-}
+})
+
+PageTransition.displayName = 'PageTransition'
+
+export default PageTransition
 
