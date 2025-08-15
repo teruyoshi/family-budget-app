@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Container, Paper, Grid, Box } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
 import { BalanceDisplay } from '@/features/balance'
@@ -7,10 +8,10 @@ import { ExpenseHistory, IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
 
 /**
- * メインアプリケーションコンポーネント
+ * ダッシュボードページコンポーネント
  *
- * 家計簿アプリの中央ハブとして機能し、収入・支出の登録・表示・集計を統合管理します。
- * GitHub Pages デモ版として、インメモリストレージを使用しています。
+ * 家計簿アプリのメインダッシュボードとして機能し、収入・支出の登録・表示・集計を統合管理します。
+ * React Router対応により、ルートパス（/）でアクセス可能なホームページとして動作します。
  *
  * 主な機能:
  * - 収入・支出データの状態管理（useState）
@@ -21,11 +22,12 @@ import { useBudgetManager } from '@/hooks'
  * - レスポンシブデザイン（MUI Container + Paper）
  *
  * アーキテクチャ:
+ * - React Router: BrowserRouter による SPA ルーティング
  * - Container Component: アプリケーション状態を管理
  * - Feature-based Structure: income/expenses機能を統合
  * - Material Design: 一貫したUI/UX
  */
-function App() {
+function DashboardPage() {
   const [
     { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
     { addExpense, addIncome },
@@ -80,6 +82,27 @@ function App() {
         </Grid>
       </Grid>
     </Container>
+  )
+}
+
+/**
+ * メインアプリケーションコンポーネント
+ *
+ * React Router による SPA ルーティングを提供し、
+ * 各ページコンポーネントへの適切なルーティングを管理します。
+ *
+ * @remarks
+ * - BrowserRouter: History API を使用したクライアントサイドルーティング
+ * - 基本ルート構造: 現在はダッシュボードページのみ実装
+ * - 将来的な拡張: /expenses, /income, /history, /settings ページ追加予定
+ */
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<DashboardPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
