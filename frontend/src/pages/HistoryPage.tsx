@@ -1,4 +1,5 @@
-import { Container, Paper, Grid, Typography, Box, Chip } from '@mui/material'
+import { Paper, Grid, Typography, Box, Chip } from '@mui/material'
+import AppLayout from '@/components/layout/AppLayout'
 import { ExpenseHistory, IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
 import { formatMoney } from '@/lib/format'
@@ -68,14 +69,7 @@ export default function HistoryPage() {
   const totalTransactions = expenses.length + incomes.length
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
+    <AppLayout maxWidth="lg">
       {/* ページヘッダー */}
       <Paper
         elevation={3}
@@ -244,6 +238,6 @@ export default function HistoryPage() {
         // - グラフ・チャート表示
       </Paper>
       */}
-    </Container>
+    </AppLayout>
   )
 }

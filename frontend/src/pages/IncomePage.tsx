@@ -1,4 +1,5 @@
-import { Container, Paper, Grid, Typography, Box } from '@mui/material'
+import { Paper, Grid, Typography, Box } from '@mui/material'
+import AppLayout from '@/components/layout/AppLayout'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
@@ -64,14 +65,7 @@ export default function IncomePage() {
   const [{ incomes, totalIncomeAmount }, { addIncome }] = useBudgetManager()
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
+    <AppLayout maxWidth="lg">
       {/* ページヘッダー */}
       <Paper
         elevation={3}
@@ -173,6 +167,6 @@ export default function IncomePage() {
         // - 予算達成率等
       </Paper>
       */}
-    </Container>
+    </AppLayout>
   )
 }
