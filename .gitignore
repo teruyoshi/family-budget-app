@@ -90,6 +90,3 @@ temp/
 # Production files
 *.tgz
 *.tar.gz
-
-# Other
-.claude/commands/ddd-explan-custom.md
