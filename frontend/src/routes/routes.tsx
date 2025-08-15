@@ -1,8 +1,12 @@
+import { lazy, Suspense, ReactElement } from 'react'
+import PageLoader from '@/components/common/PageLoader'
+import NotFoundPage from '@/components/common/NotFoundPage'
+
 /**
  * React Router 用のルート定義と型定義
  *
  * アプリケーション内のルーティング設定と型安全性を一元管理します。
- * 将来的なページ追加時の拡張性を考慮した設計となっています。
+ * コード分割とエラーハンドリングを含む包括的なルーティング設定を提供します。
  */
 
 /**
@@ -20,19 +24,37 @@ export type AppRoute =
   | '/history'    // 履歴表示ページ - 実装済み
   | '/settings'   // 設定ページ - 実装済み（基盤のみ）
 
+// コード分割による遅延ロード
+const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
+const ExpensePage = lazy(() => import('@/pages/ExpensePage'))
+const IncomePage = lazy(() => import('@/pages/IncomePage'))
+const HistoryPage = lazy(() => import('@/pages/HistoryPage'))
+const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
+
+/**
+ * Suspenseでラップされたページコンポーネントを作成
+ */
+const withSuspense = (Component: React.LazyExoticComponent<() => JSX.Element>) => (
+  <Suspense fallback={<PageLoader />}>
+    <Component />
+  </Suspense>
+)
+
 /**
  * ルート情報の型定義
  *
- * ナビゲーション生成やメタ情報管理に使用する構造化されたルート情報。
- * App.tsx でのルーティング設定と型安全な連携を提供します。
+ * ルート設定、メタ情報、コンポーネントを一元管理する構造化されたルート情報。
+ * コード分割とナビゲーション設定を統合した設計となっています。
  */
 export interface RouteInfo {
   /** ルートパス */
-  path: AppRoute
+  path: AppRoute | '*'
   /** ページタイトル */
   title: string
   /** ページの説明 */
   description: string
+  /** レンダリングするコンポーネント */
+  element: ReactElement
   /** ナビゲーションメニューでの表示有無 */
   showInNavigation: boolean
 }
@@ -40,40 +62,57 @@ export interface RouteInfo {
 /**
  * アプリケーションの全ルート情報
  *
- * 各ページのメタ情報とナビゲーション設定を一元管理。
+ * 各ページのメタ情報、コンポーネント、ナビゲーション設定を一元管理。
  * 新しいページ追加時はこの配列に追加することで、
- * ナビゲーションメニューやメタ情報が自動的に反映されます。
+ * ルーティング、ナビゲーションメニュー、メタ情報が自動的に反映されます。
+ * 
+ * @remarks
+ * - コード分割: React.lazyによる遅延ロード
+ * - 404対応: 未知パスのフォールバック設定
+ * - 型安全性: AppRoute型による厳密なパス管理
  */
 export const routes: RouteInfo[] = [
   {
     path: '/',
     title: 'ダッシュボード',
     description: '家計簿の概要と主要機能へのアクセス',
+    element: withSuspense(DashboardPage),
     showInNavigation: true,
   },
   {
     path: '/expenses',
     title: '支出管理',
     description: '支出の登録と履歴管理',
+    element: withSuspense(ExpensePage),
     showInNavigation: true,
   },
   {
     path: '/income',
     title: '収入管理', 
     description: '収入の登録と履歴管理',
+    element: withSuspense(IncomePage),
     showInNavigation: true,
   },
   {
     path: '/history',
     title: '履歴表示',
     description: '全ての取引履歴の一覧表示',
+    element: withSuspense(HistoryPage),
     showInNavigation: true,
   },
   {
     path: '/settings',
     title: '設定',
     description: 'アプリケーションの設定管理',
+    element: withSuspense(SettingsPage),
     showInNavigation: true,
+  },
+  {
+    path: '*',
+    title: '404 - ページが見つかりません',
+    description: '存在しないページへのアクセス',
+    element: <NotFoundPage />,
+    showInNavigation: false,
   },
 ] as const
 
@@ -89,7 +128,7 @@ export const routes: RouteInfo[] = [
  * console.log(dashboardRoute?.title) // "ダッシュボード"
  * ```
  */
-export function getRouteInfo(path: AppRoute): RouteInfo | undefined {
+export function getRouteInfo(path: AppRoute | '*'): RouteInfo | undefined {
   return routes.find(route => route.path === path)
 }
 
