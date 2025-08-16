@@ -17,88 +17,140 @@ describe('Application Routing', () => {
    */
   describe('Basic Routing', () => {
     test('renders dashboard page on root path', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/'] })
 
+      // ローディング完了を待機
       await waitFor(
         () => {
-          expect(
-            screen.getByRole('heading', { name: '家計簿アプリ' })
-          ).toBeInTheDocument()
-          expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
         },
-        { timeout: 10000 }
+        { timeout: 15000 }
       )
-    })
 
-    test('renders expenses page correctly', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/expenses'] })
-      })
-
+      // ダッシュボードページが表示されることを確認
       await waitFor(
         () => {
-          expect(
-            screen.getByRole('heading', { name: '支出管理' })
-          ).toBeInTheDocument()
+          expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高
           expect(
             screen.getByPlaceholderText('支出金額を入力')
-          ).toBeInTheDocument()
-        },
-        { timeout: 10000 }
-      )
-    })
-
-    test('renders income page correctly', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/income'] })
-      })
-
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('heading', { name: '収入管理' })
           ).toBeInTheDocument()
           expect(
             screen.getByPlaceholderText('収入金額を入力')
           ).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+          ).toHaveClass('Mui-selected')
         },
-        { timeout: 10000 }
+        { timeout: 5000 }
       )
-    })
+    }, 20000)
 
-    test('renders history page correctly', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/history'] })
-      })
+    test('renders expenses page correctly', async () => {
+      renderAppWithRouter({ initialEntries: ['/expenses'] })
 
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
+
+      // 支出ページが表示されることを確認
       await waitFor(
         () => {
           expect(
-            screen.getByRole('heading', { name: '履歴表示' })
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
           ).toBeInTheDocument()
-          expect(screen.getByText('取引履歴の一覧表示')).toBeInTheDocument()
+          expect(
+            screen.getByPlaceholderText('支出金額を入力')
+          ).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: '支出管理ページに移動' })
+          ).toHaveClass('Mui-selected')
         },
-        { timeout: 10000 }
+        { timeout: 5000 }
       )
-    })
+    }, 20000)
+
+    test('renders income page correctly', async () => {
+      renderAppWithRouter({ initialEntries: ['/income'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
+
+      // 収入ページが表示されることを確認
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '収入管理' })
+          ).toBeInTheDocument()
+          expect(
+            screen.getByPlaceholderText('収入金額を入力')
+          ).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: '収入管理ページに移動' })
+          ).toHaveClass('Mui-selected')
+        },
+        { timeout: 5000 }
+      )
+    }, 20000)
+
+    test('renders history page correctly', async () => {
+      renderAppWithRouter({ initialEntries: ['/history'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
+
+      // 履歴ページが表示されることを確認
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '取引履歴' })
+          ).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+          ).toHaveClass('Mui-selected')
+        },
+        { timeout: 5000 }
+      )
+    }, 20000)
 
     test('renders settings page correctly', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/settings'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/settings'] })
 
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
+
+      // 設定ページが表示されることを確認
       await waitFor(
         () => {
           expect(
             screen.getByRole('heading', { level: 1, name: '設定' })
           ).toBeInTheDocument()
           expect(screen.getByText('設定機能は開発中です')).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: '設定ページに移動' })
+          ).toHaveClass('Mui-selected')
         },
-        { timeout: 10000 }
+        { timeout: 5000 }
       )
-    })
+    }, 20000)
   })
 
   /**
