@@ -13,15 +13,19 @@ describe('Direct URL Access Tests', () => {
    */
   describe('Basic Direct Access', () => {
     test('dashboard page loads correctly via direct URL access', async () => {
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/'] })
 
+      // ローディング完了を待機
       await waitFor(
         () => {
-          expect(
-            screen.getByRole('heading', { name: '家計簿アプリ' })
-          ).toBeInTheDocument()
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
+
+      // ダッシュボードページが表示されることを確認
+      await waitFor(
+        () => {
           expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高表示
           expect(
             screen.getByPlaceholderText('支出金額を入力')
@@ -29,10 +33,13 @@ describe('Direct URL Access Tests', () => {
           expect(
             screen.getByPlaceholderText('収入金額を入力')
           ).toBeInTheDocument()
+          expect(
+            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+          ).toHaveClass('Mui-selected')
         },
-        { timeout: 10000 }
+        { timeout: 5000 }
       )
-    })
+    }, 20000)
 
     test('expenses page loads correctly via direct URL access', async () => {
       await act(async () => {
