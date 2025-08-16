@@ -22,7 +22,6 @@ export type UseMoneyReturn = [
   (amount: number) => void,
 ]
 
-
 /**
  * 金額状態管理フック
  *

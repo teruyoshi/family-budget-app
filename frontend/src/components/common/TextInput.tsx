@@ -67,6 +67,9 @@ export interface TextInputProps {
   /** プレースホルダーテキスト（例: "名前を入力してください"） */
   placeholder?: string
 
+  /** HTML input要素のname属性（フォーム送信やreact-hook-form用） */
+  name?: string
+
   /** 現在の入力値（制御コンポーネントとして使用） */
   value: string
 
@@ -75,6 +78,12 @@ export interface TextInputProps {
    * @param value ユーザーが入力した新しい文字列値
    */
   onChange: (value: string) => void
+
+  /**
+   * フォーカス喪失時のコールバック関数
+   * @param event フォーカス喪失イベント
+   */
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 
   /** MUI sx propsによるカスタムスタイル */
   sx?: SxProps<Theme>
@@ -112,8 +121,10 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     {
       type = 'text',
       placeholder,
+      name,
       value,
       onChange,
+      onBlur,
       sx,
       required = false,
       fullWidth = true,
@@ -136,9 +147,11 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <TextField
         inputRef={ref}
         type={type}
+        name={name}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        onBlur={onBlur}
         required={required}
         fullWidth={fullWidth}
         variant={variant}

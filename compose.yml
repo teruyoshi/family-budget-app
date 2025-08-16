@@ -9,11 +9,20 @@ services:
       - "3001:3001"
       - "6006:6006"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend:/home/node/app
+      - /home/node/app/node_modules
     environment:
       - NODE_ENV=development
       - VITE_API_URL=http://localhost:8080
+    # セキュリティ設定（開発環境用）
+    read_only: false   # 開発環境では書き込み必要
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE  # ファイル権限の読み取り・書き込みに必要
     depends_on:
       - backend
     networks:
@@ -36,6 +45,12 @@ services:
       - DB_NAME=family_budget
       - DB_USER=app_user
       - DB_PASSWORD=app_password
+    # セキュリティ設定
+    read_only: false   # 開発環境では書き込み必要
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE  # ポート8080バインドに必要
     depends_on:
       - db
     networks:
@@ -54,9 +69,18 @@ services:
       - MYSQL_PASSWORD=app_password
     volumes:
       - mysql_data:/var/lib/mysql
+    # セキュリティ設定
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
     networks:
       - family-budget-network
     command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
 
 
 volumes:

@@ -7,15 +7,37 @@
 
 /**
  * 金額フォーマットオプション
+ *
+ * @remarks
+ * アプリケーション全体で統一された金額表示フォーマットを実現するためのオプション設定です。
+ * 用途に応じて入力UI・表示UI・カスタム表示の3パターンに最適化できます。
  */
 export interface MoneyFormatOptions {
-  /** ¥記号を表示するかどうか（デフォルト: true） */
+  /**
+   * ¥記号を表示するかどうか
+   * @defaultValue true
+   */
   showSymbol?: boolean
-  /** ゼロ値を空文字で返すかどうか（デフォルト: false） */
+
+  /**
+   * ゼロ値を空文字で返すかどうか
+   * @defaultValue false
+   * @remarks 入力UIでプレースホルダー表示を優先したい場合にtrueを使用
+   */
   emptyOnZero?: boolean
-  /** 負値を空文字で返すかどうか（デフォルト: false） */
+
+  /**
+   * 負値を空文字で返すかどうか
+   * @defaultValue false
+   * @remarks 入力UIで負値入力を制限したい場合にtrueを使用
+   */
   emptyOnNegative?: boolean
-  /** 小数点以下の桁数（デフォルト: 0） */
+
+  /**
+   * 小数点以下の桁数
+   * @defaultValue 0
+   * @remarks 通常の家計簿では0、詳細計算時に2を使用
+   */
   decimalPlaces?: number
 }
 
