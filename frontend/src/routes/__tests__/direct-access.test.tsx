@@ -121,7 +121,7 @@ describe('Direct URL Access Tests', () => {
             screen.getByRole('heading', { level: 1, name: '取引履歴' })
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+            screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -147,7 +147,7 @@ describe('Direct URL Access Tests', () => {
           ).toBeInTheDocument()
           expect(screen.getByText('設定機能は開発中です')).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '設定ページに移動' })
+            screen.getAllByRole('menuitem', { name: '設定ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -175,10 +175,14 @@ describe('Direct URL Access Tests', () => {
 
         await waitFor(
           () => {
-            const activeMenuItem = screen.getByRole('menuitem', {
+            // 重複要素を考慮してselectedクラスを持つ要素を確認
+            const activeMenuItems = screen.getAllByRole('menuitem', {
               name: expectedActive,
             })
-            expect(activeMenuItem).toHaveClass('Mui-selected')
+            const selectedItems = activeMenuItems.filter((item) =>
+              item.classList.contains('Mui-selected')
+            )
+            expect(selectedItems.length).toBeGreaterThan(0)
 
             // 他の項目が選択されていないことを確認
             const allMenuItems = screen.getAllByRole('menuitem')

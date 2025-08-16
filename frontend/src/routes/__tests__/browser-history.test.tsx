@@ -33,7 +33,7 @@ describe('Browser History Integration Tests', () => {
             screen.getByRole('heading', { level: 1, name: '設定' })
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '設定ページに移動' })
+            screen.getAllByRole('menuitem', { name: '設定ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -117,7 +117,7 @@ describe('Browser History Integration Tests', () => {
             screen.getByRole('heading', { level: 1, name: '取引履歴' })
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+            screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }

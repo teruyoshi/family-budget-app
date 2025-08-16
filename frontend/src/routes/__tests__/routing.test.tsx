@@ -38,7 +38,7 @@ describe('Application Routing', () => {
             screen.getByPlaceholderText('収入金額を入力')
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+            screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -66,7 +66,7 @@ describe('Application Routing', () => {
             screen.getByPlaceholderText('支出金額を入力')
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '支出管理ページに移動' })
+            screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -94,7 +94,7 @@ describe('Application Routing', () => {
             screen.getByPlaceholderText('収入金額を入力')
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '収入管理ページに移動' })
+            screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -119,7 +119,7 @@ describe('Application Routing', () => {
             screen.getByRole('heading', { level: 1, name: '取引履歴' })
           ).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+            screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -145,7 +145,7 @@ describe('Application Routing', () => {
           ).toBeInTheDocument()
           expect(screen.getByText('設定機能は開発中です')).toBeInTheDocument()
           expect(
-            screen.getByRole('menuitem', { name: '設定ページに移動' })
+            screen.getAllByRole('menuitem', { name: '設定ページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }

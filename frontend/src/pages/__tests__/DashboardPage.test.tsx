@@ -28,7 +28,7 @@ describe('DashboardPage', () => {
     // ダッシュボードページが表示されているかチェック
     expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
     expect(
-      screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+      screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
     ).toHaveClass('Mui-selected')
 
     // 残高表示が存在するかチェック
@@ -96,7 +96,7 @@ describe('DashboardPage', () => {
     // 実際の履歴コンポーネントは存在するが、空の場合は何も表示しない仕様
     // 基本的なページ構造が正しく表示されていることを確認
     expect(
-      screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+      screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
     ).toHaveClass('Mui-selected')
   })
 

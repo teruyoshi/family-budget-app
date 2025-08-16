@@ -69,7 +69,7 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         () => {
           expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
           expect(
-            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+            screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -236,9 +236,9 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         await waitFor(
           () => {
             // 現在のページに対応するナビゲーション項目がアクティブ
-            const activeMenuItem = screen.getByRole('menuitem', {
+            const activeMenuItem = screen.getAllByRole('menuitem', {
               name: page.activeItem,
-            })
+            })[0]
             expect(activeMenuItem).toHaveClass('Mui-selected')
 
             // 他の項目は非アクティブ
@@ -569,9 +569,9 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
 
       // 複数の操作を連続で実行
       const operations = [
-        () => screen.getByRole('menuitem', { name: '支出管理ページに移動' }),
-        () => screen.getByRole('menuitem', { name: '収入管理ページに移動' }),
-        () => screen.getByRole('menuitem', { name: '履歴表示ページに移動' }),
+        () => screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0],
+        () => screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })[0],
+        () => screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0],
       ]
 
       for (const getElement of operations) {
