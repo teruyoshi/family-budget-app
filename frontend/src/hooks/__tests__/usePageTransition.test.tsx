@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react'
-import { MemoryRouter, useNavigate } from 'react-router-dom'
+import { renderHook } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { usePageTransition } from '../usePageTransition'
 import { type ReactNode } from 'react'
 
