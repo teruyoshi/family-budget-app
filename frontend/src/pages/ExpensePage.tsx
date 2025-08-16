@@ -1,4 +1,5 @@
-import { Container, Paper, Grid, Typography, Box } from '@mui/material'
+import { Paper, Grid, Typography, Box } from '@mui/material'
+import AppLayout from '@/components/layout/AppLayout'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { ExpenseHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks'
@@ -60,14 +61,7 @@ export default function ExpensePage() {
   const [{ expenses, totalExpenseAmount }, { addExpense }] = useBudgetManager()
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
+    <AppLayout maxWidth="lg">
       {/* ページヘッダー */}
       <Paper
         elevation={3}
@@ -166,6 +160,6 @@ export default function ExpensePage() {
         // グラフ・統計情報等の表示予定
       </Paper>
       */}
-    </Container>
+    </AppLayout>
   )
 }

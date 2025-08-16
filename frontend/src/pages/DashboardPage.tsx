@@ -1,5 +1,6 @@
-import { Container, Paper, Grid, Box } from '@mui/material'
+import { Paper, Grid, Box } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
+import AppLayout from '@/components/layout/AppLayout'
 import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
@@ -62,14 +63,7 @@ export default function DashboardPage() {
   ] = useBudgetManager()
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
+    <AppLayout>
       {/* ヘッダーセクション: タイトル + 残高表示 */}
       <Paper
         elevation={3}
@@ -111,6 +105,6 @@ export default function DashboardPage() {
           <IncomeHistory incomes={incomes} />
         </Grid>
       </Grid>
-    </Container>
+    </AppLayout>
   )
 }

@@ -1,6 +1,7 @@
-import { Container, Paper, Typography, Box, Alert, Divider } from '@mui/material'
+import { Paper, Typography, Box, Alert, Divider } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import InfoIcon from '@mui/icons-material/Info'
+import AppLayout from '@/components/layout/AppLayout'
 
 /**
  * 設定ページコンポーネントのProps型定義
@@ -58,14 +59,7 @@ export interface SettingsPageProps {
  */
 export default function SettingsPage() {
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
+    <AppLayout maxWidth="md">
       {/* ページヘッダー */}
       <Paper
         elevation={3}
@@ -231,6 +225,6 @@ export default function SettingsPage() {
           </Typography>
         </Box>
       </Paper>
-    </Container>
+    </AppLayout>
   )
 }

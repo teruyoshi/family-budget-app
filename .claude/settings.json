@@ -1,0 +1,55 @@
+{
+  "allowedTools": [
+    "Bash",
+    "Edit", 
+    "MultiEdit",
+    "Read",
+    "Write",
+    "LS",
+    "Glob",
+    "Grep",
+    "TodoWrite",
+    "Task",
+    "WebFetch",
+    "WebSearch",
+    "NotebookEdit",
+    "BashOutput",
+    "KillBash"
+  ],
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    ".git/**",
+    "*.log",
+    ".DS_Store",
+    "*.tmp",
+    "*.temp",
+    "docker-data/**",
+    ".vscode/**",
+    ".idea/**"
+  ],
+  "customSettings": {
+    "projectType": "family-budget-app",
+    "architecture": "frontend-backend-separated", 
+    "primaryLanguages": ["TypeScript", "Go"],
+    "frameworks": {
+      "frontend": ["React", "MUI", "Vite"],
+      "backend": ["Gin", "GORM"],
+      "testing": ["Jest", "React Testing Library"],
+      "documentation": ["Storybook", "TypeDoc"]
+    },
+    "qualityGates": {
+      "testCoverage": 90,
+      "lintErrors": 0,
+      "typeErrors": 0
+    },
+    "workflowPreferences": {
+      "commitMessage": "conventional-commits",
+      "branchNaming": "issue-based",
+      "prTemplate": "checklist-based",
+      "autoClaudeSignature": true
+    }
+  }
+}
