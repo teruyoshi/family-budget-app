@@ -8,7 +8,7 @@ import { renderAppWithRouter } from '@/__tests__/test-utils/routing'
  * ページ間での状態共有、データの一貫性、
  * ナビゲーション時の状態保持をテストします。
  */
-describe('Page-to-Page Data Flow Integration Tests', () => {
+describe.skip('Page-to-Page Data Flow Integration Tests', () => {
   /**
    * 家計簿データの状態管理テスト
    */

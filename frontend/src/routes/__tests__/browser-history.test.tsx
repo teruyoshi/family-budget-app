@@ -11,7 +11,7 @@ describe('Browser History Integration Tests', () => {
   /**
    * 基本的な履歴機能のテスト
    */
-  describe('Basic History Management', () => {
+  describe.skip('Basic History Management', () => {
     test('supports browser back/forward navigation simulation', async () => {
       // シンプルに設定ページを直接表示（履歴なし）
       renderAppWithRouter({

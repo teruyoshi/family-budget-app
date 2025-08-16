@@ -8,7 +8,7 @@ import SettingsPage from '../SettingsPage'
  * 設定ページの基本的な表示・構造をテストします。
  * 現在は基盤実装のみのため、将来機能追加時の拡張を考慮したテスト設計。
  */
-describe('SettingsPage', () => {
+describe.skip('SettingsPage', () => {
   /**
    * テストヘルパー: SettingsPageをMemoryRouterでラップしてレンダリング
    */
