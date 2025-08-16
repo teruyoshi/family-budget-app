@@ -80,9 +80,8 @@ describe('Responsive Navigation Tests', () => {
       expect(navigation).toBeInTheDocument()
 
       // AppBar とドロワーが適切に配置されることを確認
-      const appBar = screen
-        .getByText('家計簿アプリ')
-        .closest('[class*="MuiAppBar"]')
+      const appBars = screen.getAllByText('家計簿アプリ')
+      const appBar = appBars[0].closest('[class*="MuiAppBar"]')
       expect(appBar).toBeInTheDocument()
     })
 
@@ -236,10 +235,9 @@ describe('Responsive Navigation Tests', () => {
       const navigation = screen.getByRole('navigation')
 
       // 基本的なタッチ操作が妨害されないことを確認
+      // PointerEventの代わりにMouseEventを使用（JSdom対応）
       await act(async () => {
-        // ポインターイベントをシミュレート
-        const event = new PointerEvent('pointerdown', {
-          pointerId: 1,
+        const event = new MouseEvent('mousedown', {
           bubbles: true,
           clientX: 100,
           clientY: 100,

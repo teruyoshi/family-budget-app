@@ -184,14 +184,21 @@ describe('Direct URL Access Tests', () => {
             )
             expect(selectedItems.length).toBeGreaterThan(0)
 
-            // 他の項目が選択されていないことを確認
-            const allMenuItems = screen.getAllByRole('menuitem')
-            const otherItems = allMenuItems.filter(
-              (item) => item.getAttribute('aria-label') !== expectedActive
-            )
+            // アクティブでない項目が選択されていないことを確認
+            // 重複要素を考慮してページ名ごとにチェック
+            const inactiveLabels = [
+              'ダッシュボードページに移動',
+              '支出管理ページに移動', 
+              '収入管理ページに移動',
+              '履歴表示ページに移動',
+              '設定ページに移動'
+            ].filter(label => label !== expectedActive)
 
-            otherItems.forEach((item) => {
-              expect(item).not.toHaveClass('Mui-selected')
+            inactiveLabels.forEach(label => {
+              const inactiveItems = screen.getAllByRole('menuitem', { name: label })
+              inactiveItems.forEach(item => {
+                expect(item).not.toHaveClass('Mui-selected')
+              })
             })
           },
           { timeout: 10000 }
