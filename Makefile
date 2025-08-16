@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
+.PHONY: help up down build rebuild logs clean dev test test-file backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
 
 # デフォルトターゲット
 help:
@@ -15,6 +15,7 @@ help:
 	@echo "  make dev        - 開発環境起動（ログ表示付き）"
 	@echo "  make test       - 全テスト実行"
 	@echo "  make test-frontend - フロントエンドテスト実行"
+	@echo "  make test-file FILE=テストファイル名 - 特定のテストファイルのみ実行"
 	@echo "  make test-backend  - バックエンドテスト実行"
 	@echo "  make test-coverage-frontend - フロントエンドカバレッジテスト + ブラウザ表示 (http://localhost:8090)"
 	@echo "  make coverage-serve-frontend - カバレッジレポートサーバー起動（バックグラウンド） (http://localhost:8090)"
@@ -93,6 +94,12 @@ test:
 test-frontend:
 	@echo "フロントエンドテストを実行中..."
 	docker compose exec frontend npm test
+
+# 特定のテストファイルのみ実行
+test-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make test-file FILE=usePageTransition.test.tsx"; exit 1; fi
+	@echo "特定のテストファイルを実行中: $(FILE)"
+	docker compose exec frontend npm test -- --testPathPatterns=$(FILE) --watchAll=false
 
 # バックエンドのみテスト実行
 test-backend:
