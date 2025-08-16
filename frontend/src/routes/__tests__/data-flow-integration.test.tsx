@@ -80,9 +80,15 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       const user = userEvent.setup()
 
       // 収入ページで収入を入力
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/income'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/income'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       await waitFor(
         () => {
@@ -108,9 +114,15 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       })
 
       // ダッシュボードページに遷移して状態確認
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       await waitFor(
         () => {
@@ -128,9 +140,15 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
 
       // 複数の取引を行う
       // 1. 収入を追加
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/income'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/income'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       await waitFor(
         () => {
@@ -149,9 +167,15 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       })
 
       // 2. 支出を追加
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/expenses'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/expenses'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       await waitFor(
         () => {
@@ -170,9 +194,15 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       })
 
       // 3. 履歴ページで全ての取引を確認
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/history'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/history'] })
+
+      // ローディング完了を待機
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       await waitFor(
         () => {

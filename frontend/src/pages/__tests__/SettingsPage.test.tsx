@@ -34,11 +34,9 @@ describe('SettingsPage', () => {
     // ページ説明が表示されているかチェック
     expect(screen.getByText('アプリケーションの設定管理')).toBeInTheDocument()
 
-    // 設定アイコンが表示されているかチェック
-    const settingsIcon =
-      screen.getByTestId('SettingsIcon') ||
-      screen.getByText('設定').previousElementSibling
-    expect(settingsIcon).toBeInTheDocument()
+    // 設定アイコンが表示されているかチェック（重複要素考慮）
+    const settingsIcons = screen.queryAllByTestId('SettingsIcon')
+    expect(settingsIcons.length).toBeGreaterThanOrEqual(1)
   })
 
   /**
