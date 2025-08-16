@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 import { Box, Fade, Slide, useMediaQuery, useTheme } from '@mui/material'
 
 /**
@@ -129,27 +129,25 @@ const PageTransition = forwardRef<HTMLDivElement, PageTransitionProps>(({
     ...transitionProps,
   }
 
-  // トランジションタイプに応じたコンポーネント選択
-  switch (type) {
-    case 'slide':
-      return (
-        <Slide
-          key={locationKey}
-          {...commonProps}
-          direction={direction}
-        >
-          <Box ref={ref}>{children}</Box>
-        </Slide>
-      )
-    
-    case 'fade':
-    default:
-      return (
-        <Fade key={locationKey} {...commonProps}>
-          <Box ref={ref}>{children}</Box>
-        </Fade>
-      )
+  // スライドトランジション（早期リターン）
+  if (type === 'slide') {
+    return (
+      <Slide
+        key={locationKey}
+        {...commonProps}
+        direction={direction}
+      >
+        <Box ref={ref}>{children}</Box>
+      </Slide>
+    )
   }
+
+  // フェードトランジション（デフォルト）
+  return (
+    <Fade key={locationKey} {...commonProps}>
+      <Box ref={ref}>{children}</Box>
+    </Fade>
+  )
 })
 
 PageTransition.displayName = 'PageTransition'
