@@ -31,7 +31,7 @@ interface WebTextDecoder {
 }
 
 // グローバル環境にTextEncoder/TextDecoderを正しい型で設定
-global.TextEncoder = TextEncoder as any
+global.TextEncoder = TextEncoder as typeof global.TextEncoder
 global.TextDecoder = TextDecoder as unknown as {
   new (label?: string, options?: TextDecoderOptions): WebTextDecoder
 }
@@ -58,7 +58,7 @@ interface URLSearchParamsLike {
 }
 
 if (!global.URLSearchParams) {
-  // @ts-ignore
+  // @ts-expect-error - URLSearchParams polyfill for Jest environment
   global.URLSearchParams = class URLSearchParams {
     private params: Map<string, string> = new Map()
 
@@ -168,7 +168,7 @@ interface URLLike {
 }
 
 if (!global.URL) {
-  // @ts-ignore
+  // @ts-expect-error - URL polyfill for Jest environment
   global.URL = class URL {
     href: string
     origin: string

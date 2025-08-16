@@ -427,7 +427,9 @@ describe('Responsive Navigation Tests', () => {
           ).toBeInTheDocument()
         } else {
           // 重複要素を考慮して5個以上のmenuitem要素があることを確認
-          expect(screen.getAllByRole('menuitem').length).toBeGreaterThanOrEqual(5)
+          expect(screen.getAllByRole('menuitem').length).toBeGreaterThanOrEqual(
+            5
+          )
         }
       })
     })

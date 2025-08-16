@@ -19,7 +19,9 @@ describe('AppNavigation Routing Tests', () => {
 
       // 全てのナビゲーション項目が表示されているかチェック
       expect(
-        screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
+        screen.getAllByRole('menuitem', {
+          name: 'ダッシュボードページに移動',
+        })[0]
       ).toBeInTheDocument()
       expect(
         screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0]
@@ -75,7 +77,9 @@ describe('AppNavigation Routing Tests', () => {
 
       // 各ナビゲーション項目がクリック可能であることを確認
       const navigationItems = [
-        screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0],
+        screen.getAllByRole('menuitem', {
+          name: 'ダッシュボードページに移動',
+        })[0],
         screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0],
         screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })[0],
         screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0],

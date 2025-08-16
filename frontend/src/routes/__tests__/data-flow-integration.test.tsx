@@ -69,7 +69,9 @@ describe.skip('Page-to-Page Data Flow Integration Tests', () => {
         () => {
           expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
           expect(
-            screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
+            screen.getAllByRole('menuitem', {
+              name: 'ダッシュボードページに移動',
+            })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
@@ -569,9 +571,12 @@ describe.skip('Page-to-Page Data Flow Integration Tests', () => {
 
       // 複数の操作を連続で実行
       const operations = [
-        () => screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0],
-        () => screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })[0],
-        () => screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0],
+        () =>
+          screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })[0],
+        () =>
+          screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })[0],
+        () =>
+          screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0],
       ]
 
       for (const getElement of operations) {

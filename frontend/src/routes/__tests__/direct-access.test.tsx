@@ -185,7 +185,9 @@ describe('Direct URL Access Tests', () => {
             expect(selectedItems.length).toBeGreaterThan(0)
 
             // 基本的なナビゲーション存在確認のみ（重複要素問題回避）
-            expect(screen.getAllByRole('menuitem').length).toBeGreaterThanOrEqual(5)
+            expect(
+              screen.getAllByRole('menuitem').length
+            ).toBeGreaterThanOrEqual(5)
           },
           { timeout: 10000 }
         )

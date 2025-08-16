@@ -38,7 +38,9 @@ describe('Application Routing', () => {
             screen.getByPlaceholderText('収入金額を入力')
           ).toBeInTheDocument()
           expect(
-            screen.getAllByRole('menuitem', { name: 'ダッシュボードページに移動' })[0]
+            screen.getAllByRole('menuitem', {
+              name: 'ダッシュボードページに移動',
+            })[0]
           ).toHaveClass('Mui-selected')
         },
         { timeout: 5000 }
