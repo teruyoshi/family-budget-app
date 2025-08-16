@@ -27,7 +27,9 @@ describe('DashboardPage', () => {
 
     // ダッシュボードページが表示されているかチェック
     expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
-    expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
+    expect(
+      screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+    ).toHaveClass('Mui-selected')
 
     // 残高表示が存在するかチェック
     expect(screen.getByText(/残高/)).toBeInTheDocument()
@@ -77,9 +79,7 @@ describe('DashboardPage', () => {
     renderDashboardPage()
 
     // Containerコンポーネントが最大幅を制限しているかチェック
-    const container = screen
-      .getByText('¥0')
-      .closest('[class*="MuiContainer"]')
+    const container = screen.getByText('¥0').closest('[class*="MuiContainer"]')
     expect(container).toBeInTheDocument()
   })
 
@@ -95,7 +95,9 @@ describe('DashboardPage', () => {
     // 履歴が空の状態での表示確認
     // 実際の履歴コンポーネントは存在するが、空の場合は何も表示しない仕様
     // 基本的なページ構造が正しく表示されていることを確認
-    expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
+    expect(
+      screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+    ).toHaveClass('Mui-selected')
   })
 
   /**

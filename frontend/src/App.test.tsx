@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { AppContent } from './App'
 
@@ -29,7 +29,9 @@ describe('App', () => {
     await waitFor(
       () => {
         expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示
-        expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
+        expect(
+          screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+        ).toHaveClass('Mui-selected')
       },
       { timeout: 5000 }
     )

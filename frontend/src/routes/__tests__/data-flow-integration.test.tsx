@@ -4,7 +4,7 @@ import { renderAppWithRouter } from '@/__tests__/test-utils/routing'
 
 /**
  * ページ間データ連携統合テストスイート
- * 
+ *
  * ページ間での状態共有、データの一貫性、
  * ナビゲーション時の状態保持をテストします。
  */
@@ -15,20 +15,30 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
   describe('Budget Data State Management', () => {
     test('expense data persists across page navigation', async () => {
       const user = userEvent.setup()
-      
+
       // 支出ページで支出を入力
       renderAppWithRouter({ initialEntries: ['/expenses'] })
 
       // ローディング完了を待機
-      await waitFor(() => {
-        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-      }, { timeout: 15000 })
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       // 支出ページが表示されることを確認
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
-        expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-      }, { timeout: 5000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
+          expect(
+            screen.getByPlaceholderText('支出金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 5000 }
+      )
 
       // 支出金額を入力
       const expenseInput = screen.getByPlaceholderText('支出金額を入力')
@@ -47,29 +57,42 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       renderAppWithRouter({ initialEntries: ['/'] })
 
       // ローディング完了を待機
-      await waitFor(() => {
-        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-      }, { timeout: 15000 })
+      await waitFor(
+        () => {
+          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+        },
+        { timeout: 15000 }
+      )
 
       // ダッシュボード基本表示確認
-      await waitFor(() => {
-        expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
-        expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
-      }, { timeout: 5000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
+          expect(
+            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+          ).toHaveClass('Mui-selected')
+        },
+        { timeout: 5000 }
+      )
     }, 30000)
 
     test('income data persists across page navigation', async () => {
       const user = userEvent.setup()
-      
+
       // 収入ページで収入を入力
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/income'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('収入管理')).toBeInTheDocument()
-        expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('収入管理')).toBeInTheDocument()
+          expect(
+            screen.getByPlaceholderText('収入金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 収入金額を入力
       const incomeInput = screen.getByPlaceholderText('収入金額を入力')
@@ -89,26 +112,34 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         renderAppWithRouter({ initialEntries: ['/'] })
       })
 
-      await waitFor(() => {
-        const balanceText = screen.getByText(/残高/)
-        expect(balanceText).toBeInTheDocument()
-        
-        // 収入が反映された残高表示を確認
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          const balanceText = screen.getByText(/残高/)
+          expect(balanceText).toBeInTheDocument()
+
+          // 収入が反映された残高表示を確認
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('transaction history updates across all pages', async () => {
       const user = userEvent.setup()
-      
+
       // 複数の取引を行う
       // 1. 収入を追加
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/income'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByPlaceholderText('収入金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       const incomeInput = screen.getByPlaceholderText('収入金額を入力')
       await act(async () => {
@@ -122,9 +153,14 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         renderAppWithRouter({ initialEntries: ['/expenses'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByPlaceholderText('支出金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       const expenseInput = screen.getByPlaceholderText('支出金額を入力')
       await act(async () => {
@@ -138,11 +174,14 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         renderAppWithRouter({ initialEntries: ['/history'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('履歴表示')).toBeInTheDocument()
-        // 履歴コンポーネントが表示されていることを確認
-        // 実際の履歴データは useBudgetManager で管理される
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('履歴表示')).toBeInTheDocument()
+          // 履歴コンポーネントが表示されていることを確認
+          // 実際の履歴データは useBudgetManager で管理される
+        },
+        { timeout: 10000 }
+      )
     })
   })
 
@@ -156,7 +195,7 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         { path: '/expenses', activeItem: '支出管理ページに移動' },
         { path: '/income', activeItem: '収入管理ページに移動' },
         { path: '/history', activeItem: '履歴表示ページに移動' },
-        { path: '/settings', activeItem: '設定ページに移動' }
+        { path: '/settings', activeItem: '設定ページに移動' },
       ]
 
       for (const page of pages) {
@@ -164,40 +203,57 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
           renderAppWithRouter({ initialEntries: [page.path] })
         })
 
-        await waitFor(() => {
-          // 現在のページに対応するナビゲーション項目がアクティブ
-          const activeMenuItem = screen.getByRole('menuitem', { name: page.activeItem })
-          expect(activeMenuItem).toHaveClass('Mui-selected')
-          
-          // 他の項目は非アクティブ
-          const allMenuItems = screen.getAllByRole('menuitem')
-          const inactiveItems = allMenuItems.filter(item => 
-            item.getAttribute('aria-label') !== page.activeItem
-          )
-          
-          inactiveItems.forEach(item => {
-            expect(item).not.toHaveClass('Mui-selected')
-          })
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            // 現在のページに対応するナビゲーション項目がアクティブ
+            const activeMenuItem = screen.getByRole('menuitem', {
+              name: page.activeItem,
+            })
+            expect(activeMenuItem).toHaveClass('Mui-selected')
+
+            // 他の項目は非アクティブ
+            const allMenuItems = screen.getAllByRole('menuitem')
+            const inactiveItems = allMenuItems.filter(
+              (item) => item.getAttribute('aria-label') !== page.activeItem
+            )
+
+            inactiveItems.forEach((item) => {
+              expect(item).not.toHaveClass('Mui-selected')
+            })
+          },
+          { timeout: 10000 }
+        )
       }
     })
 
     test('navigation maintains context during rapid page changes', async () => {
-      const rapidSequence = ['/', '/expenses', '/income', '/history', '/settings', '/']
-      
+      const rapidSequence = [
+        '/',
+        '/expenses',
+        '/income',
+        '/history',
+        '/settings',
+        '/',
+      ]
+
       for (const path of rapidSequence) {
         await act(async () => {
           renderAppWithRouter({ initialEntries: [path] })
         })
 
-        await waitFor(() => {
-          // ナビゲーションが常に一貫していることを確認
-          expect(screen.getByRole('navigation', { name: 'メインナビゲーション' })).toBeInTheDocument()
-          expect(screen.getAllByRole('menuitem')).toHaveLength(5)
-          
-          // アプリタイトルが常に表示されていることを確認
-          expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            // ナビゲーションが常に一貫していることを確認
+            expect(
+              screen.getByRole('navigation', { name: 'メインナビゲーション' })
+            ).toBeInTheDocument()
+            expect(screen.getAllByRole('menuitem')).toHaveLength(5)
+
+            // アプリタイトルが常に表示されていることを確認
+            expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
 
@@ -207,7 +263,7 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         { path: '/expenses', title: '支出管理' },
         { path: '/income', title: '収入管理' },
         { path: '/history', title: '履歴表示' },
-        { path: '/settings', title: '設定' }
+        { path: '/settings', title: '設定' },
       ]
 
       for (const mapping of titleMappings) {
@@ -215,9 +271,12 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
           renderAppWithRouter({ initialEntries: [mapping.path] })
         })
 
-        await waitFor(() => {
-          expect(screen.getByText(mapping.title)).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            expect(screen.getByText(mapping.title)).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
   })
@@ -228,14 +287,19 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
   describe('Form State and Page Transitions', () => {
     test('form inputs maintain state during same-page navigation', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/expenses'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByPlaceholderText('支出金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // フォームに入力
       const amountInput = screen.getByPlaceholderText('支出金額を入力')
@@ -259,14 +323,19 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
 
     test('form validation state persists appropriately', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/income'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByPlaceholderText('収入金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 無効な値を入力
       const incomeInput = screen.getByPlaceholderText('収入金額を入力')
@@ -281,14 +350,19 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
 
     test('successful form submission resets form state', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/expenses'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByPlaceholderText('支出金額を入力')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 正常な値を入力して送信
       const expenseInput = screen.getByPlaceholderText('支出金額を入力')
@@ -312,21 +386,30 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
   describe('Data Consistency and Error Handling', () => {
     test('handles data inconsistencies gracefully', async () => {
       // 異常なナビゲーションパターンでのデータ整合性
-      const complexPattern = ['/expenses', '/income', '/history', '/expenses', '/history']
-      
+      const complexPattern = [
+        '/expenses',
+        '/income',
+        '/history',
+        '/expenses',
+        '/history',
+      ]
+
       for (const path of complexPattern) {
         await act(async () => {
           renderAppWithRouter({ initialEntries: [path] })
         })
 
-        await waitFor(() => {
-          // 各ページが正常に表示されることを確認
-          expect(screen.getByRole('navigation')).toBeInTheDocument()
-          
-          // データ状態が破綻していないことを確認
-          const pageContent = document.querySelector('main') || document.body
-          expect(pageContent).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            // 各ページが正常に表示されることを確認
+            expect(screen.getByRole('navigation')).toBeInTheDocument()
+
+            // データ状態が破綻していないことを確認
+            const pageContent = document.querySelector('main') || document.body
+            expect(pageContent).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
 
@@ -336,36 +419,49 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
         renderAppWithRouter({ initialEntries: ['/nonexistent'] })
       })
 
-      await waitFor(() => {
-        // 404ページが表示される
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          // 404ページが表示される
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 正常ページに戻る
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/'] })
       })
 
-      await waitFor(() => {
-        // アプリが正常に復旧することを確認
-        expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
-        expect(screen.getByRole('navigation')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          // アプリが正常に復旧することを確認
+          expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+          expect(screen.getByRole('navigation')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('handles concurrent page access correctly', async () => {
       // 複数のページコンポーネントが同時にマウントされても問題ないことを確認
       const simultaneousPages = ['/', '/expenses', '/income']
-      
-      const renders = simultaneousPages.map(path => 
+
+      const renders = simultaneousPages.map((path) =>
         renderAppWithRouter({ initialEntries: [path] })
       )
 
-      await Promise.all(renders.map(async ({ container }) => {
-        await waitFor(() => {
-          expect(container.firstChild).toBeInTheDocument()
-        }, { timeout: 10000 })
-      }))
+      await Promise.all(
+        renders.map(async ({ container }) => {
+          await waitFor(
+            () => {
+              expect(container.firstChild).toBeInTheDocument()
+            },
+            { timeout: 10000 }
+          )
+        })
+      )
     })
   })
 
@@ -376,42 +472,51 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
     test('efficient data sharing between pages', async () => {
       // ページ間でのデータ共有が効率的であることを確認
       const startTime = Date.now()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/expenses'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('支出管理')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('支出管理')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 別のページに高速遷移
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/income'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('収入管理')).toBeInTheDocument()
-        
-        const transitionTime = Date.now() - startTime
-        expect(transitionTime).toBeLessThan(10000) // 10秒以内
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('収入管理')).toBeInTheDocument()
+
+          const transitionTime = Date.now() - startTime
+          expect(transitionTime).toBeLessThan(10000) // 10秒以内
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('memory usage remains stable during navigation', async () => {
       // メモリ使用量の安定性をテスト
       const navigationCycles = 3
       const pages = ['/', '/expenses', '/income', '/history', '/settings']
-      
+
       for (let cycle = 0; cycle < navigationCycles; cycle++) {
         for (const page of pages) {
           await act(async () => {
             const { unmount } = renderAppWithRouter({ initialEntries: [page] })
-            
-            await waitFor(() => {
-              expect(screen.getByRole('navigation')).toBeInTheDocument()
-            }, { timeout: 5000 })
-            
+
+            await waitFor(
+              () => {
+                expect(screen.getByRole('navigation')).toBeInTheDocument()
+              },
+              { timeout: 5000 }
+            )
+
             unmount() // 適切なクリーンアップ
           })
         }
@@ -420,20 +525,23 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
 
     test('state updates are batched efficiently', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 複数の操作を連続で実行
       const operations = [
         () => screen.getByRole('menuitem', { name: '支出管理ページに移動' }),
         () => screen.getByRole('menuitem', { name: '収入管理ページに移動' }),
-        () => screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+        () => screen.getByRole('menuitem', { name: '履歴表示ページに移動' }),
       ]
 
       for (const getElement of operations) {
