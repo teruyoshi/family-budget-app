@@ -18,7 +18,6 @@ describe('Browser History Integration Tests', () => {
       // シンプルに設定ページを直接表示（履歴なし）
       renderAppWithRouter({
         initialEntries: ['/settings'],
-        renderFn: render,
       })
 
       // ローディング完了を待機
@@ -45,7 +44,6 @@ describe('Browser History Integration Tests', () => {
       // 収入ページテスト
       renderAppWithRouter({
         initialEntries: ['/income'],
-        renderFn: render,
       })
 
       // ローディング完了を待機
@@ -72,7 +70,6 @@ describe('Browser History Integration Tests', () => {
       // シンプルに支出ページをテスト
       renderAppWithRouter({
         initialEntries: ['/expenses'],
-        renderFn: render,
       })
 
       // ローディング完了を待機
@@ -99,7 +96,6 @@ describe('Browser History Integration Tests', () => {
       // シンプルに履歴ページをテスト
       renderAppWithRouter({
         initialEntries: ['/history'],
-        renderFn: render,
       })
 
       // ローディング完了を待機
