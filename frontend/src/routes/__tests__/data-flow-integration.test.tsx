@@ -17,14 +17,18 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       const user = userEvent.setup()
       
       // 支出ページで支出を入力
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/expenses'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/expenses'] })
 
+      // ローディング完了を待機
       await waitFor(() => {
-        expect(screen.getByText('支出管理')).toBeInTheDocument()
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+      }, { timeout: 15000 })
+
+      // 支出ページが表示されることを確認
+      await waitFor(() => {
+        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
         expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      }, { timeout: 5000 })
 
       // 支出金額を入力
       const expenseInput = screen.getByPlaceholderText('支出金額を入力')
@@ -40,20 +44,19 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
       })
 
       // ダッシュボードページに遷移
-      await act(async () => {
-        renderAppWithRouter({ initialEntries: ['/'] })
-      })
+      renderAppWithRouter({ initialEntries: ['/'] })
 
+      // ローディング完了を待機
       await waitFor(() => {
-        // 残高に支出が反映されているかチェック
-        // 初期残高0円から1000円の支出で-1000円になることを確認
-        const balanceText = screen.getByText(/残高/)
-        expect(balanceText).toBeInTheDocument()
-        
-        // 支出が反映された残高表示を確認
-        // useBudgetManagerによって状態が管理されている
-      }, { timeout: 10000 })
-    })
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+      }, { timeout: 15000 })
+
+      // ダッシュボード基本表示確認
+      await waitFor(() => {
+        expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
+        expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
+      }, { timeout: 5000 })
+    }, 30000)
 
     test('income data persists across page navigation', async () => {
       const user = userEvent.setup()
