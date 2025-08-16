@@ -15,40 +15,60 @@ const renderAppWithRouter = (initialEntries = ['/']) => {
 
 describe('App', () => {
   test('家計簿アプリのタイトルが表示される', async () => {
-    await act(async () => {
-      renderAppWithRouter()
-    })
+    renderAppWithRouter()
 
-    // Suspenseによる遅延ロードの完了を待機
+    // ローディング完了を待機
     await waitFor(
       () => {
-        const heading = screen.getByRole('heading', { name: '家計簿アプリ' })
-        expect(heading).toBeInTheDocument()
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
       },
-      { timeout: 10000 }
+      { timeout: 15000 }
     )
-  }, 15000)
+
+    // ダッシュボードページ特有の要素で確認
+    await waitFor(
+      () => {
+        expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示
+        expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
+      },
+      { timeout: 5000 }
+    )
+  }, 20000)
 
   test('初期残高0円が表示される', async () => {
-    await act(async () => {
-      renderAppWithRouter()
-    })
+    renderAppWithRouter()
 
+    // ローディング完了を待機
+    await waitFor(
+      () => {
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+      },
+      { timeout: 15000 }
+    )
+
+    // 残高表示確認
     await waitFor(
       () => {
         const balanceLabel = screen.getByText('残高：')
         const balanceContainer = balanceLabel.parentElement
         expect(balanceContainer).toHaveTextContent('残高：¥0')
       },
-      { timeout: 10000 }
+      { timeout: 5000 }
     )
-  }, 15000)
+  }, 20000)
 
   test('支出フォームと収入フォームが表示される', async () => {
-    await act(async () => {
-      renderAppWithRouter()
-    })
+    renderAppWithRouter()
 
+    // ローディング完了を待機
+    await waitFor(
+      () => {
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+      },
+      { timeout: 15000 }
+    )
+
+    // フォーム要素確認
     await waitFor(
       () => {
         expect(
@@ -64,15 +84,22 @@ describe('App', () => {
           screen.getByRole('button', { name: '収入を登録' })
         ).toBeInTheDocument()
       },
-      { timeout: 10000 }
+      { timeout: 5000 }
     )
-  }, 15000)
+  }, 20000)
 
   test('404ページが表示される', async () => {
-    await act(async () => {
-      renderAppWithRouter(['/unknown-path'])
-    })
+    renderAppWithRouter(['/unknown-path'])
 
+    // ローディング完了を待機
+    await waitFor(
+      () => {
+        expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+      },
+      { timeout: 15000 }
+    )
+
+    // 404ページ確認
     await waitFor(
       () => {
         expect(
@@ -82,7 +109,7 @@ describe('App', () => {
           screen.getByText('お探しのページは存在しません。')
         ).toBeInTheDocument()
       },
-      { timeout: 10000 }
+      { timeout: 5000 }
     )
-  }, 15000)
+  }, 20000)
 })

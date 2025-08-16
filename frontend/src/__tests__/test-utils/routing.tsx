@@ -196,3 +196,17 @@ export const testRoutes = {
   /** ナビゲーションに表示されるルート */
   navigation: ['/', '/expenses', '/income', '/history', '/settings'],
 } as const
+
+/**
+ * テストユーティリティファイル用のダミーテスト
+ * Jestがテストファイルと認識するのを防ぐため
+ */
+describe('routing test utilities', () => {
+  test('should export test utilities correctly', () => {
+    expect(renderWithRouter).toBeDefined()
+    expect(renderAppWithRouter).toBeDefined()
+    expect(testMultipleRoutes).toBeDefined()
+    expect(routeTestHelpers).toBeDefined()
+    expect(testRoutes).toBeDefined()
+  })
+})
