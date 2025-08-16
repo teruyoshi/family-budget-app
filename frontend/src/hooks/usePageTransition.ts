@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom'
+
 /**
  * React Router用のページトランジションフック
  *
@@ -22,18 +24,10 @@
  * ```
  */
 export function usePageTransition() {
-  // TODO: 将来実装
-  // const location = useLocation()
-  // const [transitionIn, setTransitionIn] = useState(true)
-  //
-  // useEffect(() => {
-  //   setTransitionIn(false)
-  //   const timer = setTimeout(() => setTransitionIn(true), 50)
-  //   return () => clearTimeout(timer)
-  // }, [location.pathname])
+  const location = useLocation()
 
   return {
     transitionIn: true,
-    transitionKey: 'static', // location.pathname
+    transitionKey: location.pathname,
   }
 }
