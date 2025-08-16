@@ -76,11 +76,13 @@ export function renderWithRouter(
 export function renderAppWithRouter({
   initialEntries = ['/'],
   initialIndex = 0,
+  renderFn = render,
 }: {
   initialEntries?: MemoryRouterProps['initialEntries']
   initialIndex?: MemoryRouterProps['initialIndex']
+  renderFn?: typeof render
 } = {}) {
-  return render(
+  return renderFn(
     <MemoryRouter initialEntries={initialEntries} initialIndex={initialIndex}>
       <AppContent />
     </MemoryRouter>
