@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { usePageTransition } from '../usePageTransition'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 // React Router のラッパーを提供するヘルパー
 const createWrapper = (initialEntries: string[] = ['/']) => {
