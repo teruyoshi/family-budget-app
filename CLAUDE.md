@@ -56,6 +56,7 @@ make backend-shell        # バックエンドコンテナ接続
 - **AI自動ドキュメンテーション**: コンポーネント作成・修正時に TSDoc・用語集を自動更新
 - **Claude署名**: GitHubコメント・コミットメッセージに `🤖 Generated with [Claude Code](https://claude.ai/code)` 署名
 
+
 ### 開発環境URL
 - **フロントエンド**: http://localhost:5173
 - **バックエンドAPI**: http://localhost:8080  
@@ -111,6 +112,7 @@ frontend/
 ├── docs/                       # TypeDoc生成ドキュメント
 ├── coverage/                   # テストカバレッジレポート
 └── typedoc.json                # TypeDoc設定
+
 ```
 
 ## 🔧 現在の設定情報
