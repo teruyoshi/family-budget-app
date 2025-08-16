@@ -27,7 +27,7 @@ describe('SettingsPage', () => {
     renderSettingsPage()
 
     // ページタイトルが表示されているかチェック
-    expect(screen.getByText('設定')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: '設定' })).toBeInTheDocument()
 
     // ページ説明が表示されているかチェック
     expect(screen.getByText('アプリケーションの設定管理')).toBeInTheDocument()
@@ -122,7 +122,7 @@ describe('SettingsPage', () => {
     renderSettingsPage()
 
     // ページタイトルが設定テーマ色（ブルー系）で表示されているかチェック
-    const pageTitle = screen.getByText('設定')
+    const pageTitle = screen.getByRole('heading', { level: 1, name: '設定' })
     expect(pageTitle).toHaveStyle({ color: '#1565c0' })
   })
 
@@ -133,12 +133,12 @@ describe('SettingsPage', () => {
     renderSettingsPage()
 
     // 中サイズ（md）のコンテナが使用されているかチェック
-    const container = screen.getByText('設定').closest('[class*="MuiContainer"]')
+    const pageTitle = screen.getByRole('heading', { level: 1, name: '設定' })
+    const container = pageTitle.closest('[class*="MuiContainer"]')
     expect(container).toBeInTheDocument()
 
     // ヘッダーとメインコンテンツが適切に分離されているかチェック
-    const header = screen.getByText('設定').closest('[elevation="3"]') ||
-                   screen.getByText('設定').closest('[class*="MuiPaper"]')
+    const header = pageTitle.closest('[class*="MuiPaper"]')
     const mainContent = screen.getByText('設定機能は開発中です').closest('[elevation="2"]') ||
                        screen.getByText('設定機能は開発中です').closest('[class*="MuiPaper"]')
 
@@ -153,7 +153,7 @@ describe('SettingsPage', () => {
     renderSettingsPage()
 
     // ページタイトルが適切な見出しレベル（h1）になっているかチェック
-    const pageTitle = screen.getByText('設定')
+    const pageTitle = screen.getByRole('heading', { level: 1, name: '設定' })
     expect(pageTitle.tagName).toBe('H1')
 
     // セクションタイトルが適切な見出しレベルになっているかチェック
