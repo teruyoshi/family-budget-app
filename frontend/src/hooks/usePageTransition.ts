@@ -35,7 +35,7 @@ export function usePageTransition() {
       previousPathRef.current = location.pathname
       return
     }
-    
+
     if (previousPathRef.current !== location.pathname) {
       // パスが変更された場合のみトランジション実行
       setTransitionIn(false)
