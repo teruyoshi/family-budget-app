@@ -1,85 +1,90 @@
-import { Container, Paper, Grid, Box } from '@mui/material'
-import AppTitle from '@/components/common/AppTitle'
-import { BalanceDisplay } from '@/features/balance'
-import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
-import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
-import { ExpenseHistory, IncomeHistory } from '@/features/history'
-import { useBudgetManager } from '@/hooks'
+import { BrowserRouter, useRoutes } from 'react-router-dom'
+import { routes } from '@/routes/routes'
+
+/**
+ * ルーティングコンポーネント
+ *
+ * useRoutesフックを使用してルーティング設定を管理します。
+ * routes配列から動的にルーティングテーブルを生成し、
+ * 型安全性とメンテナンス性を向上させています。
+ */
+function AppRoutes() {
+  // routes配列からReact Routerのルート設定を生成
+  const routeElements = routes.map((route) => ({
+    path: route.path,
+    element: route.element,
+  }))
+
+  return useRoutes(routeElements)
+}
+
+/**
+ * ルーターでラップされていない内部アプリケーションコンポーネント
+ *
+ * テスト環境でMemoryRouterを使用するために、
+ * ルーティングロジックを分離しています。
+ */
+export function AppContent() {
+  return <AppRoutes />
+}
 
 /**
  * メインアプリケーションコンポーネント
  *
- * 家計簿アプリの中央ハブとして機能し、収入・支出の登録・表示・集計を統合管理します。
- * GitHub Pages デモ版として、インメモリストレージを使用しています。
+ * React Router による SPA ルーティングを提供し、
+ * 各ページコンポーネントへの適切なルーティングを管理します。
  *
- * 主な機能:
- * - 収入・支出データの状態管理（useState）
- * - 新規収入・支出の追加処理
- * - 収入・支出履歴の表示（降順ソート）
- * - 合計収入・支出額の自動計算
- * - 残高表示の自動更新
- * - レスポンシブデザイン（MUI Container + Paper）
+ * @remarks
+ * **ルーティング構成:**
+ * - BrowserRouter: History API を使用したクライアントサイドルーティング
+ * - useRoutes: 宣言的なルーティング設定による保守性向上
+ * - コード分割: React.lazyによるページ単位の遅延ロード
+ * - 404対応: 未知パスに対する適切なフォールバック
+ * - 型安全なルート定義: AppRouteとroutesによる一元管理
  *
- * アーキテクチャ:
- * - Container Component: アプリケーション状態を管理
- * - Feature-based Structure: income/expenses機能を統合
- * - Material Design: 一貫したUI/UX
+ * **実装済みページ:**
+ * - `/` : DashboardPage - メインダッシュボード（収入・支出統合管理）
+ * - `/expenses` : ExpensePage - 支出管理専用ページ
+ * - `/income` : IncomePage - 収入管理専用ページ
+ * - `/history` : HistoryPage - 全取引履歴表示ページ
+ * - `/settings` : SettingsPage - 設定管理ページ（将来拡張用）
+ * - `*` : NotFoundPage - 404エラーページ
+ *
+ * **アーキテクチャ:**
+ * - ページベース構造: 機能別にページを分離
+ * - ルート定義統一: routes配列による設定の一元管理
+ * - 型安全性: AppRoute型による厳密なパス管理
+ * - パフォーマンス最適化: コード分割による初期バンドルサイズ削減
+ * - コンポーネント再利用: 各ページで共通コンポーネントを活用
+ * - 状態管理: useBudgetManager による一元管理
+ * - レスポンシブ対応: 全ページでモバイル・デスクトップ対応
+ *
+ * @example
+ * ```tsx
+ * // 型安全なナビゲーション例
+ * import { AppRoute, getRouteInfo } from '@/routes/routes'
+ *
+ * const dashboardRoute: AppRoute = '/'
+ * const routeInfo = getRouteInfo(dashboardRoute)
+ * console.log(routeInfo?.title) // "ダッシュボード"
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // ナビゲーションメニューの生成例
+ * import { getNavigationRoutes } from '@/routes/routes'
+ *
+ * const navRoutes = getNavigationRoutes()
+ * navRoutes.forEach(route => {
+ *   console.log(`${route.title}: ${route.path}`)
+ * })
+ * ```
  */
 function App() {
-  const [
-    { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
-    { addExpense, addIncome },
-  ] = useBudgetManager()
-
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
-        py: 4,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          mb: 4,
-        }}
-      >
-        <AppTitle />
-
-        <BalanceDisplay balance={balance} />
-
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ pr: { md: 2 } }}>
-              <ExpenseForm onSubmit={addExpense} />
-              {totalExpenseAmount > 0 && (
-                <TotalExpenseDisplay totalAmount={totalExpenseAmount} />
-              )}
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ pl: { md: 2 } }}>
-              <IncomeForm onSubmit={addIncome} />
-              {totalIncomeAmount > 0 && (
-                <TotalIncomeDisplay totalAmount={totalIncomeAmount} />
-              )}
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
-
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <ExpenseHistory expenses={expenses} />
-        </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <IncomeHistory incomes={incomes} />
-        </Grid>
-      </Grid>
-    </Container>
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   )
 }
 

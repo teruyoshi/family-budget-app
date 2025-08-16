@@ -11,3 +11,9 @@ export { default as TransactionForm } from './TransactionForm'
 
 // フォーム関連コンポーネント（react-hook-form連携）
 export * from './form'
+
+// ナビゲーション・UI拡張
+export {
+  default as PageTransition,
+  type PageTransitionProps,
+} from './PageTransition'
