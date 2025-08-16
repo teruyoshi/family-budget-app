@@ -20,15 +20,6 @@
 import { TextEncoder, TextDecoder } from 'util'
 
 /**
- * TextEncoderの型定義
- * Node.js の TextEncoder を Web API 互換の型として設定
- */
-interface WebTextEncoder {
-  readonly encoding: string
-  encode(input?: string): Uint8Array
-}
-
-/**
  * TextDecoderの型定義
  * Node.js の TextDecoder を Web API 互換の型として設定
  */
@@ -40,7 +31,7 @@ interface WebTextDecoder {
 }
 
 // グローバル環境にTextEncoder/TextDecoderを正しい型で設定
-global.TextEncoder = TextEncoder as unknown as { new (): WebTextEncoder }
+global.TextEncoder = TextEncoder as any
 global.TextDecoder = TextDecoder as unknown as {
   new (label?: string, options?: TextDecoderOptions): WebTextDecoder
 }
@@ -67,9 +58,8 @@ interface URLSearchParamsLike {
 }
 
 if (!global.URLSearchParams) {
-  global.URLSearchParams = class URLSearchParams
-    implements URLSearchParamsLike
-  {
+  // @ts-ignore
+  global.URLSearchParams = class URLSearchParams {
     private params: Map<string, string> = new Map()
 
     /**
@@ -178,7 +168,8 @@ interface URLLike {
 }
 
 if (!global.URL) {
-  global.URL = class URL implements URLLike {
+  // @ts-ignore
+  global.URL = class URL {
     href: string
     origin: string
     protocol: string

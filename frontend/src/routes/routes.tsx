@@ -1,4 +1,4 @@
-import { lazy, Suspense, ReactElement } from 'react'
+import { lazy, Suspense, type ReactElement } from 'react'
 import PageLoader from '@/components/common/PageLoader'
 import NotFoundPage from '@/components/common/NotFoundPage'
 
@@ -35,7 +35,7 @@ const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
  * Suspenseでラップされたページコンポーネントを作成
  */
 const withSuspense = (
-  Component: React.LazyExoticComponent<() => JSX.Element>
+  Component: React.LazyExoticComponent<() => ReactElement>
 ) => (
   <Suspense fallback={<PageLoader />}>
     <Component />

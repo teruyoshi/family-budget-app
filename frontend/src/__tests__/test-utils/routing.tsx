@@ -188,7 +188,7 @@ export const routeTestHelpers = {
  */
 export const testRoutes = {
   /** 全ての有効なルート */
-  valid: ['/', '/expenses', '/income', '/history', '/settings'],
+  valid: ['/', '/expenses', '/income', '/history', '/settings', '*'] as const,
 
   /** 無効なルート（404になるべき） */
   invalid: ['/nonexistent', '/abc', '/settings/invalid'],

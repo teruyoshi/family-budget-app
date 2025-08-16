@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Container, Box, Toolbar } from '@mui/material'
 import { AppNavigation, AppBreadcrumbs } from '@/components/navigation'
 import { PageTransition } from '@/components/common'
