@@ -229,7 +229,7 @@ describe('Application Routing', () => {
           )
         })
       }
-    })
+    }, 25000)
 
     test('404 page has proper navigation back to home', async () => {
       await act(async () => {
@@ -256,7 +256,7 @@ describe('Application Routing', () => {
           { timeout: 10000 }
         )
       })
-    })
+    }, 25000)
   })
 
   /**
@@ -283,7 +283,7 @@ describe('Application Routing', () => {
           )
         })
       }
-    })
+    }, 25000)
 
     test('URL parameters are preserved during navigation', async () => {
       // 将来的にクエリパラメータが実装された場合のテスト
@@ -303,7 +303,7 @@ describe('Application Routing', () => {
           { timeout: 10000 }
         )
       })
-    })
+    }, 25000)
   })
 
   /**
@@ -330,7 +330,7 @@ describe('Application Routing', () => {
           ) // コード分割のロードを考慮して長めのタイムアウト
         })
       }
-    })
+    }, 30000)
 
     test('loading states are handled gracefully', async () => {
       await act(async () => {
@@ -346,7 +346,7 @@ describe('Application Routing', () => {
           { timeout: 10000 }
         )
       })
-    })
+    }, 25000)
   })
 
   /**

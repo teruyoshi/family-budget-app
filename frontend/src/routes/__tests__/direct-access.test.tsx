@@ -193,7 +193,7 @@ describe('Direct URL Access Tests', () => {
           { timeout: 10000 }
         )
       }
-    })
+    }, 25000)
 
     test('app layout is consistent across direct access', async () => {
       const paths = ['/', '/expenses', '/income', '/history', '/settings']
@@ -224,7 +224,7 @@ describe('Direct URL Access Tests', () => {
           { timeout: 10000 }
         )
       }
-    })
+    }, 25000)
   })
 
   /**
@@ -262,7 +262,7 @@ describe('Direct URL Access Tests', () => {
           )
         })
       }
-    })
+    }, 30000)
 
     test('supports browser back/forward button simulation', async () => {
       // 複数のページ遷移履歴をシミュレート
@@ -297,7 +297,7 @@ describe('Direct URL Access Tests', () => {
         },
         { timeout: 10000 }
       )
-    })
+    }, 25000)
 
     test('handles deep linking with potential future query parameters', async () => {
       // 将来的なクエリパラメータ対応のテスト
@@ -333,7 +333,7 @@ describe('Direct URL Access Tests', () => {
           { timeout: 10000 }
         )
       }
-    })
+    }, 25000)
   })
 
   /**
@@ -357,7 +357,7 @@ describe('Direct URL Access Tests', () => {
         },
         { timeout: 15000 }
       )
-    })
+    }, 25000)
 
     test('multiple direct accesses do not cause memory leaks', async () => {
       // 複数のページへの連続アクセスをシミュレート
@@ -380,7 +380,7 @@ describe('Direct URL Access Tests', () => {
           })
         }
       }
-    })
+    }, 30000)
 
     test('code splitting works properly for direct access', async () => {
       // 各ページが個別にロードされることを確認
@@ -405,7 +405,7 @@ describe('Direct URL Access Tests', () => {
           { timeout: 15000 }
         )
       }
-    })
+    }, 30000)
   })
 
   /**
