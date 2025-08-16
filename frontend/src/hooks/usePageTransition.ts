@@ -10,7 +10,7 @@
  * ```tsx
  * function App() {
  *   const { transitionIn, transitionKey } = usePageTransition()
- *   
+ *
  *   return (
  *     <AppLayout>
  *       <PageTransition key={transitionKey} in={transitionIn}>
@@ -25,13 +25,13 @@ export function usePageTransition() {
   // TODO: 将来実装
   // const location = useLocation()
   // const [transitionIn, setTransitionIn] = useState(true)
-  // 
+  //
   // useEffect(() => {
   //   setTransitionIn(false)
   //   const timer = setTimeout(() => setTransitionIn(true), 50)
   //   return () => clearTimeout(timer)
   // }, [location.pathname])
-  
+
   return {
     transitionIn: true,
     transitionKey: 'static', // location.pathname

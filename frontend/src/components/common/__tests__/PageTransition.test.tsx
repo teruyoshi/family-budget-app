@@ -7,17 +7,13 @@ const theme = createTheme()
 
 // テストヘルパー関数
 const renderWithTheme = (ui: React.ReactElement) => {
-  return render(
-    <ThemeProvider theme={theme}>
-      {ui}
-    </ThemeProvider>
-  )
+  return render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>)
 }
 
 // matchMediaのモック
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -44,7 +40,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
 
@@ -54,7 +50,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       // MUIのFadeコンポーネントが使用されていることを確認（data-testid属性で確認）
       expect(screen.getByText(testContent)).toBeInTheDocument()
       // Fadeのアニメーション用のdivが存在することを確認
@@ -67,7 +63,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       // MUIのSlideコンポーネントが使用されていることを確認
       expect(screen.getByText(testContent)).toBeInTheDocument()
       // Slideのアニメーション用のdivが存在することを確認
@@ -82,7 +78,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       // コンテンツが直接レンダリングされることを確認
       expect(screen.getByText(testContent)).toBeInTheDocument()
       // Boxコンポーネントが使用されていることを確認
@@ -98,7 +94,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
 
@@ -109,7 +105,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
 
@@ -120,7 +116,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
   })
@@ -133,7 +129,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(ref.current).not.toBeNull()
     })
   })
@@ -145,7 +141,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
 
@@ -155,7 +151,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
   })
@@ -168,7 +164,7 @@ describe('PageTransition', () => {
           <div>{testContent}</div>
         </PageTransition>
       )
-      
+
       expect(screen.getByText(testContent)).toBeInTheDocument()
     })
   })

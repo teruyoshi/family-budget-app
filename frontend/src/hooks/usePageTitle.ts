@@ -47,7 +47,7 @@ export function usePageTitle(customTitle?: string): void {
 
   useEffect(() => {
     const appName = '家計簿アプリ'
-    
+
     if (customTitle) {
       // カスタムタイトルが指定された場合
       document.title = `${customTitle} | ${appName}`
@@ -56,7 +56,7 @@ export function usePageTitle(customTitle?: string): void {
 
     // routes.tsx の設定からタイトルを取得
     const currentRoute = getRouteInfo(location.pathname as AppRoute | '*')
-    
+
     if (currentRoute) {
       document.title = `${currentRoute.title} | ${appName}`
     } else {
@@ -85,7 +85,7 @@ export function usePageTitle(customTitle?: string): void {
 export function useCurrentPageTitle() {
   const location = useLocation()
   const currentRoute = getRouteInfo(location.pathname as AppRoute | '*')
-  
+
   return {
     title: currentRoute?.title || 'ページが見つかりません',
     description: currentRoute?.description || '存在しないページへのアクセス',

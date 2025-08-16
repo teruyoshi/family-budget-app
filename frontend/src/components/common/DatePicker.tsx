@@ -132,35 +132,35 @@ function DatePicker({
   helperText,
   ref,
 }: DatePickerProps) {
-    /** 日付変更ハンドラー */
-    const handleChange = (newValue: Dayjs | null) => {
-      if (newValue) {
-        onChange?.(newValue.format('YYYY-MM-DD'))
-      }
+  /** 日付変更ハンドラー */
+  const handleChange = (newValue: Dayjs | null) => {
+    if (newValue) {
+      onChange?.(newValue.format('YYYY-MM-DD'))
     }
+  }
 
-    return (
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
-        <MuiDatePicker
-          name={name}
-          label={label}
-          value={value ? dayjs(value) : null}
-          onChange={handleChange}
-          format="YYYY年MM月DD日"
-          disabled={disabled}
-          slotProps={{
-            textField: {
-              ref,
-              fullWidth: true,
-              sx: { mb: 2 },
-              onBlur,
-              error,
-              helperText,
-            },
-          }}
-        />
-      </LocalizationProvider>
-    )
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ja">
+      <MuiDatePicker
+        name={name}
+        label={label}
+        value={value ? dayjs(value) : null}
+        onChange={handleChange}
+        format="YYYY年MM月DD日"
+        disabled={disabled}
+        slotProps={{
+          textField: {
+            ref,
+            fullWidth: true,
+            sx: { mb: 2 },
+            onBlur,
+            error,
+            helperText,
+          },
+        }}
+      />
+    </LocalizationProvider>
+  )
 }
 
 export default DatePicker

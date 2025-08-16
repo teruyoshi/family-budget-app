@@ -81,19 +81,19 @@ export interface AppNavigationProps {
  * @example
  * ```tsx
  * // カスタマイズ例
- * <AppNavigation 
- *   drawerWidth={280} 
- *   title="My Budget App" 
+ * <AppNavigation
+ *   drawerWidth={280}
+ *   title="My Budget App"
  * />
  * ```
  */
-export default function AppNavigation({ 
-  drawerWidth = 240, 
-  title = '家計簿アプリ' 
+export default function AppNavigation({
+  drawerWidth = 240,
+  title = '家計簿アプリ',
 }: AppNavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
-  
+
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const location = useLocation()
@@ -151,13 +151,13 @@ export default function AppNavigation({
           px: 2,
         }}
       >
-        <Typography 
-          variant="h6" 
-          noWrap 
+        <Typography
+          variant="h6"
+          noWrap
           component="div"
-          sx={{ 
+          sx={{
             fontWeight: 'bold',
-            color: 'primary.main' 
+            color: 'primary.main',
           }}
         >
           {title}
@@ -173,21 +173,24 @@ export default function AppNavigation({
           </IconButton>
         )}
       </Toolbar>
-      
+
       <Divider />
-      
+
       {/* ナビゲーションメニュー */}
       <List>
         {getNavigationRoutes().map((route) => {
-          const Icon = navigationIcons[route.path as keyof typeof navigationIcons]
+          const Icon =
+            navigationIcons[route.path as keyof typeof navigationIcons]
           const isActive = location.pathname === route.path
-          
+
           return (
             <ListItem key={route.path} disablePadding>
               <ListItemButton
                 selected={isActive}
                 onClick={() => handleNavigationClick(route.path as AppRoute)}
-                onKeyDown={(event) => handleKeyDown(event, route.path as AppRoute)}
+                onKeyDown={(event) =>
+                  handleKeyDown(event, route.path as AppRoute)
+                }
                 sx={{
                   minHeight: 48,
                   px: 2.5,
@@ -211,7 +214,7 @@ export default function AppNavigation({
                 >
                   <Icon />
                 </ListItemIcon>
-                <ListItemText 
+                <ListItemText
                   primary={route.title}
                   primaryTypographyProps={{
                     fontSize: '0.95rem',
@@ -247,12 +250,7 @@ export default function AppNavigation({
           >
             <MenuIcon />
           </IconButton>
-          <Typography 
-            variant="h6" 
-            noWrap 
-            component="h1"
-            sx={{ flexGrow: 1 }}
-          >
+          <Typography variant="h6" noWrap component="h1" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
         </Toolbar>

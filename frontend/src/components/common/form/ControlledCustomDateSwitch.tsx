@@ -31,9 +31,7 @@ export default function ControlledCustomDateSwitch({
       control={control}
       render={({ field }) => (
         <FormControlLabel
-          control={
-            <Switch {...field} checked={field.value} color="primary" />
-          }
+          control={<Switch {...field} checked={field.value} color="primary" />}
           label={
             <Typography variant="body2" color="text.secondary">
               日付を指定する

@@ -21,9 +21,9 @@ export interface ControlledAmountInputProps {
  * @component
  * @example
  * ```tsx
- * <ControlledAmountInput 
- *   control={control} 
- *   placeholder="支出金額を入力" 
+ * <ControlledAmountInput
+ *   control={control}
+ *   placeholder="支出金額を入力"
  * />
  * ```
  */

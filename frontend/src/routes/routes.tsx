@@ -1,4 +1,4 @@
-import { lazy, Suspense, ReactElement } from 'react'
+import { lazy, Suspense, type ReactElement } from 'react'
 import PageLoader from '@/components/common/PageLoader'
 import NotFoundPage from '@/components/common/NotFoundPage'
 
@@ -17,12 +17,12 @@ import NotFoundPage from '@/components/common/NotFoundPage'
  * - 全ページコンポーネント実装完了済み
  * - TypeScript の文字列リテラル型による厳密なパス管理
  */
-export type AppRoute = 
-  | '/'           // ダッシュボード（ホーム）- 実装済み
-  | '/expenses'   // 支出管理ページ - 実装済み
-  | '/income'     // 収入管理ページ - 実装済み
-  | '/history'    // 履歴表示ページ - 実装済み
-  | '/settings'   // 設定ページ - 実装済み（基盤のみ）
+export type AppRoute =
+  | '/' // ダッシュボード（ホーム）- 実装済み
+  | '/expenses' // 支出管理ページ - 実装済み
+  | '/income' // 収入管理ページ - 実装済み
+  | '/history' // 履歴表示ページ - 実装済み
+  | '/settings' // 設定ページ - 実装済み（基盤のみ）
 
 // コード分割による遅延ロード
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
@@ -34,7 +34,9 @@ const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
 /**
  * Suspenseでラップされたページコンポーネントを作成
  */
-const withSuspense = (Component: React.LazyExoticComponent<() => JSX.Element>) => (
+const withSuspense = (
+  Component: React.LazyExoticComponent<() => ReactElement>
+) => (
   <Suspense fallback={<PageLoader />}>
     <Component />
   </Suspense>
@@ -65,7 +67,7 @@ export interface RouteInfo {
  * 各ページのメタ情報、コンポーネント、ナビゲーション設定を一元管理。
  * 新しいページ追加時はこの配列に追加することで、
  * ルーティング、ナビゲーションメニュー、メタ情報が自動的に反映されます。
- * 
+ *
  * @remarks
  * - コード分割: React.lazyによる遅延ロード
  * - 404対応: 未知パスのフォールバック設定
@@ -88,7 +90,7 @@ export const routes: RouteInfo[] = [
   },
   {
     path: '/income',
-    title: '収入管理', 
+    title: '収入管理',
     description: '収入の登録と履歴管理',
     element: withSuspense(IncomePage),
     showInNavigation: true,
@@ -129,7 +131,7 @@ export const routes: RouteInfo[] = [
  * ```
  */
 export function getRouteInfo(path: AppRoute | '*'): RouteInfo | undefined {
-  return routes.find(route => route.path === path)
+  return routes.find((route) => route.path === path)
 }
 
 /**
@@ -144,5 +146,5 @@ export function getRouteInfo(path: AppRoute | '*'): RouteInfo | undefined {
  * ```
  */
 export function getNavigationRoutes(): RouteInfo[] {
-  return routes.filter(route => route.showInNavigation)
+  return routes.filter((route) => route.showInNavigation)
 }

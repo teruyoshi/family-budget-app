@@ -21,9 +21,9 @@ export interface ControlledDatePickerProps {
  * @component
  * @example
  * ```tsx
- * <ControlledDatePicker 
- *   control={control} 
- *   label="支出日付" 
+ * <ControlledDatePicker
+ *   control={control}
+ *   label="支出日付"
  * />
  * ```
  */
