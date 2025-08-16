@@ -1,6 +1,4 @@
-import { screen, waitFor, act, render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { AppContent } from '@/App'
+import { screen, waitFor } from '@testing-library/react'
 import { renderAppWithRouter } from '@/__tests__/test-utils/routing'
 
 /**
@@ -31,7 +29,9 @@ describe('Browser History Integration Tests', () => {
       // 設定ページが表示されることを確認
       await waitFor(
         () => {
-          expect(screen.getByRole('heading', { level: 1, name: '設定' })).toBeInTheDocument()
+          expect(
+            screen.getByRole('heading', { level: 1, name: '設定' })
+          ).toBeInTheDocument()
           expect(
             screen.getByRole('menuitem', { name: '設定ページに移動' })
           ).toHaveClass('Mui-selected')
@@ -57,7 +57,9 @@ describe('Browser History Integration Tests', () => {
       // 収入ページが表示されることを確認
       await waitFor(
         () => {
-          expect(screen.getByRole('heading', { level: 1, name: '収入管理' })).toBeInTheDocument()
+          expect(
+            screen.getByRole('heading', { level: 1, name: '収入管理' })
+          ).toBeInTheDocument()
           expect(
             screen.getByRole('menuitem', { name: '収入管理ページに移動' })
           ).toHaveClass('Mui-selected')
@@ -83,7 +85,9 @@ describe('Browser History Integration Tests', () => {
       // 支出ページが表示されることを確認
       await waitFor(
         () => {
-          expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
           expect(
             screen.getByRole('menuitem', { name: '支出管理ページに移動' })
           ).toHaveClass('Mui-selected')
@@ -109,7 +113,9 @@ describe('Browser History Integration Tests', () => {
       // 履歴ページが表示されることを確認
       await waitFor(
         () => {
-          expect(screen.getByRole('heading', { level: 1, name: '取引履歴' })).toBeInTheDocument()
+          expect(
+            screen.getByRole('heading', { level: 1, name: '取引履歴' })
+          ).toBeInTheDocument()
           expect(
             screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
           ).toHaveClass('Mui-selected')

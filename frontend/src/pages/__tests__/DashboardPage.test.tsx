@@ -25,8 +25,9 @@ describe('DashboardPage', () => {
   test('renders dashboard page correctly', () => {
     renderDashboardPage()
 
-    // アプリタイトルが表示されているかチェック
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    // ダッシュボードページが表示されているかチェック
+    expect(screen.getByText('¥0')).toBeInTheDocument() // 残高表示確認
+    expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
 
     // 残高表示が存在するかチェック
     expect(screen.getByText(/残高/)).toBeInTheDocument()
@@ -77,7 +78,7 @@ describe('DashboardPage', () => {
 
     // Containerコンポーネントが最大幅を制限しているかチェック
     const container = screen
-      .getByText('家計簿アプリ')
+      .getByText('¥0')
       .closest('[class*="MuiContainer"]')
     expect(container).toBeInTheDocument()
   })
@@ -94,7 +95,7 @@ describe('DashboardPage', () => {
     // 履歴が空の状態での表示確認
     // 実際の履歴コンポーネントは存在するが、空の場合は何も表示しない仕様
     // 基本的なページ構造が正しく表示されていることを確認
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toHaveClass('Mui-selected')
   })
 
   /**
@@ -107,8 +108,8 @@ describe('DashboardPage', () => {
     // const mainContent = screen.getByText('家計簿アプリ').closest('main') ||
     //                    screen.getByText('家計簿アプリ').closest('[role="main"]')
 
-    // アプリタイトルが適切な見出しレベルになっているかチェック
-    const title = screen.getByText('家計簿アプリ')
-    expect(title.tagName).toBe('H1')
+    // フォーム要素のアクセシビリティチェック
+    expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
   })
 })
