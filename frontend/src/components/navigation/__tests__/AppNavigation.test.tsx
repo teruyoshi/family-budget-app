@@ -219,7 +219,7 @@ describe('AppNavigation Routing Tests', () => {
       // AppBarが適切に配置されているかチェック
       const appBar =
         screen.getByRole('banner') ||
-        screen.getByText('家計簿アプリ').closest('[class*="MuiAppBar"]')
+        screen.getAllByText('家計簿アプリ')[0].closest('[class*="MuiAppBar"]')
       expect(appBar).toBeInTheDocument()
     })
 
@@ -227,9 +227,8 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation drawerWidth={300} />)
 
       // カスタムドロワー幅でAppBarが適切に調整されることを確認
-      const appBar = screen
-        .getByText('家計簿アプリ')
-        .closest('[class*="MuiAppBar"]')
+      const appBars = screen.getAllByText('家計簿アプリ')
+      const appBar = appBars[0].closest('[class*="MuiAppBar"]')
       expect(appBar).toBeInTheDocument()
     })
   })
