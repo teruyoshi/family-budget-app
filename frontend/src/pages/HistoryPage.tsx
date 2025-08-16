@@ -55,7 +55,7 @@ export interface HistoryPageProps {
  * @example
  * ```tsx
  * // 将来的な拡張例（初期設定付き）
- * <HistoryPage 
+ * <HistoryPage
  *   initialDateRange={{ startDate: '2024-01-01', endDate: '2024-12-31' }}
  *   initialTab="expenses"
  * />

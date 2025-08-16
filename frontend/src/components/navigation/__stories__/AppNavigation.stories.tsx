@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
@@ -6,7 +6,7 @@ import AppNavigation from '../AppNavigation'
 
 /**
  * AppNavigationコンポーネントのStorybookストーリー
- * 
+ *
  * ルーティングシナリオ、レスポンシブ対応、テーマ適用、
  * 各種ナビゲーション状態を展示します。
  */
@@ -41,16 +41,16 @@ React Router対応のレスポンシブナビゲーションコンポーネン�
 - Material-UI AppBar + Drawer
 - useMediaQuery によるレスポンシブ判定
 - React Router useLocation/useNavigate フック活用
-        `
-      }
+        `,
+      },
     },
     backgrounds: {
       default: 'light',
       values: [
         { name: 'light', value: '#f5f5f5' },
-        { name: 'dark', value: '#303030' }
-      ]
-    }
+        { name: 'dark', value: '#303030' },
+      ],
+    },
   },
   decorators: [
     (Story, { parameters }) => (
@@ -62,18 +62,18 @@ React Router対応のレスポンシブナビゲーションコンポーネン�
           </div>
         </MemoryRouter>
       </ThemeProvider>
-    )
+    ),
   ],
   argTypes: {
     drawerWidth: {
       control: { type: 'range', min: 200, max: 400, step: 20 },
-      description: 'ドロワーの幅（ピクセル）'
+      description: 'ドロワーの幅（ピクセル）',
     },
     title: {
       control: 'text',
-      description: 'アプリケーションタイトル'
-    }
-  }
+      description: 'アプリケーションタイトル',
+    },
+  },
 } satisfies Meta<typeof AppNavigation>
 
 export default meta
@@ -85,16 +85,17 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/',
     docs: {
       description: {
-        story: 'ダッシュボードページ選択時のデフォルト状態。ダッシュボード項目がアクティブになっています。'
-      }
-    }
-  }
+        story:
+          'ダッシュボードページ選択時のデフォルト状態。ダッシュボード項目がアクティブになっています。',
+      },
+    },
+  },
 }
 
 /**
@@ -103,16 +104,17 @@ export const Default: Story = {
 export const ExpensesActive: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/expenses',
     docs: {
       description: {
-        story: '支出管理ページ選択時の状態。支出管理項目がアクティブハイライトされています。'
-      }
-    }
-  }
+        story:
+          '支出管理ページ選択時の状態。支出管理項目がアクティブハイライトされています。',
+      },
+    },
+  },
 }
 
 /**
@@ -121,16 +123,17 @@ export const ExpensesActive: Story = {
 export const IncomeActive: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/income',
     docs: {
       description: {
-        story: '収入管理ページ選択時の状態。収入管理項目がアクティブハイライトされています。'
-      }
-    }
-  }
+        story:
+          '収入管理ページ選択時の状態。収入管理項目がアクティブハイライトされています。',
+      },
+    },
+  },
 }
 
 /**
@@ -139,16 +142,17 @@ export const IncomeActive: Story = {
 export const HistoryActive: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/history',
     docs: {
       description: {
-        story: '履歴表示ページ選択時の状態。履歴表示項目がアクティブハイライトされています。'
-      }
-    }
-  }
+        story:
+          '履歴表示ページ選択時の状態。履歴表示項目がアクティブハイライトされています。',
+      },
+    },
+  },
 }
 
 /**
@@ -157,16 +161,17 @@ export const HistoryActive: Story = {
 export const SettingsActive: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/settings',
     docs: {
       description: {
-        story: '設定ページ選択時の状態。設定項目がアクティブハイライトされています。'
-      }
-    }
-  }
+        story:
+          '設定ページ選択時の状態。設定項目がアクティブハイライトされています。',
+      },
+    },
+  },
 }
 
 /**
@@ -175,16 +180,17 @@ export const SettingsActive: Story = {
 export const WideDrawer: Story = {
   args: {
     drawerWidth: 320,
-    title: '家計簿アプリ（ワイド）'
+    title: '家計簿アプリ（ワイド）',
   },
   parameters: {
     route: '/',
     docs: {
       description: {
-        story: '幅広ドロワー設定（320px）。より多くの情報を表示したい場合に使用。'
-      }
-    }
-  }
+        story:
+          '幅広ドロワー設定（320px）。より多くの情報を表示したい場合に使用。',
+      },
+    },
+  },
 }
 
 /**
@@ -193,16 +199,17 @@ export const WideDrawer: Story = {
 export const NarrowDrawer: Story = {
   args: {
     drawerWidth: 200,
-    title: '家計簿'
+    title: '家計簿',
   },
   parameters: {
     route: '/',
     docs: {
       description: {
-        story: '狭いドロワー設定（200px）。画面領域を最大限活用したい場合に使用。'
-      }
-    }
-  }
+        story:
+          '狭いドロワー設定（200px）。画面領域を最大限活用したい場合に使用。',
+      },
+    },
+  },
 }
 
 /**
@@ -211,16 +218,17 @@ export const NarrowDrawer: Story = {
 export const CustomTitle: Story = {
   args: {
     drawerWidth: 240,
-    title: 'My Budget Tracker'
+    title: 'My Budget Tracker',
   },
   parameters: {
     route: '/',
     docs: {
       description: {
-        story: 'カスタムアプリケーションタイトルの例。ブランディングや多言語対応に活用。'
-      }
-    }
-  }
+        story:
+          'カスタムアプリケーションタイトルの例。ブランディングや多言語対応に活用。',
+      },
+    },
+  },
 }
 
 /**
@@ -229,7 +237,7 @@ export const CustomTitle: Story = {
 export const MobileView: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/',
@@ -237,15 +245,16 @@ export const MobileView: Story = {
       name: 'iphone',
       styles: {
         width: '375px',
-        height: '667px'
-      }
+        height: '667px',
+      },
     },
     docs: {
       description: {
-        story: 'モバイルビューでの表示。ハンバーガーメニューによるナビゲーション制御。'
-      }
-    }
-  }
+        story:
+          'モバイルビューでの表示。ハンバーガーメニューによるナビゲーション制御。',
+      },
+    },
+  },
 }
 
 /**
@@ -254,7 +263,7 @@ export const MobileView: Story = {
 export const TabletView: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/expenses',
@@ -262,15 +271,16 @@ export const TabletView: Story = {
       name: 'ipad',
       styles: {
         width: '768px',
-        height: '1024px'
-      }
+        height: '1024px',
+      },
     },
     docs: {
       description: {
-        story: 'タブレットビューでの表示。中間サイズでの最適化されたレイアウト。'
-      }
-    }
-  }
+        story:
+          'タブレットビューでの表示。中間サイズでの最適化されたレイアウト。',
+      },
+    },
+  },
 }
 
 /**
@@ -279,16 +289,17 @@ export const TabletView: Story = {
 export const DarkTheme: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/income',
     backgrounds: { default: 'dark' },
     docs: {
       description: {
-        story: 'ダークテーマでの表示例。将来的なテーマ切り替え機能のプレビュー。'
-      }
-    }
+        story:
+          'ダークテーマでの表示例。将来的なテーマ切り替え機能のプレビュー。',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -300,8 +311,8 @@ export const DarkTheme: Story = {
           </div>
         </MemoryRouter>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 }
 
 /**
@@ -310,7 +321,7 @@ export const DarkTheme: Story = {
 export const AllNavigationStates: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ'
+    title: '家計簿アプリ',
   },
   parameters: {
     route: '/',
@@ -330,10 +341,10 @@ export const AllNavigationStates: Story = {
 - Material Design アイコン使用
 - 直感的なアイコンとラベル組み合わせ
 - アクセシビリティ配慮済み
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 /**
@@ -342,7 +353,7 @@ export const AllNavigationStates: Story = {
 export const InteractiveDemo: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ - インタラクティブ'
+    title: '家計簿アプリ - インタラクティブ',
   },
   parameters: {
     route: '/',
@@ -361,10 +372,10 @@ export const InteractiveDemo: Story = {
 1. 各ナビゲーション項目をクリック
 2. モバイルビューでハンバーガーメニューをテスト
 3. Tabキーでキーボードナビゲーション確認
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 /**
@@ -373,7 +384,7 @@ export const InteractiveDemo: Story = {
 export const AccessibilityDemo: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ - A11Y'
+    title: '家計簿アプリ - A11Y',
   },
   parameters: {
     route: '/settings',
@@ -393,10 +404,10 @@ export const AccessibilityDemo: Story = {
 1. Tabキーでフォーカス移動確認
 2. Enter/Spaceキーで操作実行
 3. スクリーンリーダーでの読み上げ確認
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 /**
@@ -405,7 +416,7 @@ export const AccessibilityDemo: Story = {
 export const PerformanceDemo: Story = {
   args: {
     drawerWidth: 240,
-    title: '家計簿アプリ - パフォーマンス'
+    title: '家計簿アプリ - パフォーマンス',
   },
   parameters: {
     route: '/',
@@ -425,8 +436,8 @@ export const PerformanceDemo: Story = {
 - ナビゲーション切り替え時間
 - メモリ使用量
 - アニメーション FPS
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }

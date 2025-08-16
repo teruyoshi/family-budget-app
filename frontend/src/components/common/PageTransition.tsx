@@ -66,9 +66,9 @@ export interface PageTransitionProps {
  * @example
  * ```tsx
  * // 高度な設定のスライドトランジション
- * <PageTransition 
- *   type="slide" 
- *   direction="left" 
+ * <PageTransition
+ *   type="slide"
+ *   direction="left"
  *   duration={300}
  *   easing="ease-in-out"
  *   appear
@@ -89,68 +89,71 @@ export interface PageTransitionProps {
  * </Box>
  * ```
  */
-const PageTransition = forwardRef<HTMLDivElement, PageTransitionProps>(({
-  children,
-  type = 'fade',
-  duration = 250,
-  direction = 'left',
-  in: inProp = true,
-  easing,
-  appear = true,
-  mountOnEnter = true,
-  unmountOnExit = true,
-  locationKey,
-  transitionProps = {},
-}, ref) => {
-  const theme = useTheme()
-  
-  // SSR安全なメディアクエリ使用（noSsr: trueでクライアントサイド限定）
-  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { 
-    noSsr: true 
-  })
-  
-  // reduced-motion設定時はアニメーション無効化（即座にレンダリング）
-  if (prefersReducedMotion || type === 'none') {
-    return (
-      <Box ref={ref} key={locationKey}>
-        {children}
-      </Box>
+const PageTransition = forwardRef<HTMLDivElement, PageTransitionProps>(
+  (
+    {
+      children,
+      type = 'fade',
+      duration = 250,
+      direction = 'left',
+      in: inProp = true,
+      easing,
+      appear = true,
+      mountOnEnter = true,
+      unmountOnExit = true,
+      locationKey,
+      transitionProps = {},
+    },
+    ref
+  ) => {
+    const theme = useTheme()
+
+    // SSR安全なメディアクエリ使用（noSsr: trueでクライアントサイド限定）
+    const prefersReducedMotion = useMediaQuery(
+      '(prefers-reduced-motion: reduce)',
+      {
+        noSsr: true,
+      }
     )
-  }
 
-  // 共通のトランジションプロパティ（テーマのイージング使用可能）
-  const commonProps = {
-    in: inProp,
-    timeout: duration,
-    appear,
-    mountOnEnter,
-    unmountOnExit,
-    easing: easing || theme.transitions.easing.easeInOut,
-    ...transitionProps,
-  }
+    // reduced-motion設定時はアニメーション無効化（即座にレンダリング）
+    if (prefersReducedMotion || type === 'none') {
+      return (
+        <Box ref={ref} key={locationKey}>
+          {children}
+        </Box>
+      )
+    }
 
-  // スライドトランジション（早期リターン）
-  if (type === 'slide') {
+    // 共通のトランジションプロパティ（テーマのイージング使用可能）
+    const commonProps = {
+      in: inProp,
+      timeout: duration,
+      appear,
+      mountOnEnter,
+      unmountOnExit,
+      easing: easing || theme.transitions.easing.easeInOut,
+      ...transitionProps,
+    }
+
+    // スライドトランジション（早期リターン）
+    if (type === 'slide') {
+      return (
+        <Slide key={locationKey} {...commonProps} direction={direction}>
+          <Box ref={ref}>{children}</Box>
+        </Slide>
+      )
+    }
+
+    // フェードトランジション（デフォルト）
     return (
-      <Slide
-        key={locationKey}
-        {...commonProps}
-        direction={direction}
-      >
+      <Fade key={locationKey} {...commonProps}>
         <Box ref={ref}>{children}</Box>
-      </Slide>
+      </Fade>
     )
   }
-
-  // フェードトランジション（デフォルト）
-  return (
-    <Fade key={locationKey} {...commonProps}>
-      <Box ref={ref}>{children}</Box>
-    </Fade>
-  )
-})
+)
 
 PageTransition.displayName = 'PageTransition'
 
 export default PageTransition
-

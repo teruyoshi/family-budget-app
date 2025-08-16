@@ -13,4 +13,7 @@ export { default as TransactionForm } from './TransactionForm'
 export * from './form'
 
 // ナビゲーション・UI拡張
-export { default as PageTransition, type PageTransitionProps } from './PageTransition'
+export {
+  default as PageTransition,
+  type PageTransitionProps,
+} from './PageTransition'

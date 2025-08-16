@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
@@ -7,7 +7,7 @@ import AppLayout from '@/components/layout/AppLayout'
 
 /**
  * NotFoundPage（404エラーページ）のStorybookストーリー
- * 
+ *
  * ルーティングエラー時の表示、ユーザビリティ、
  * 回復オプションを展示します。
  */
@@ -41,16 +41,16 @@ const meta: Meta<typeof NotFoundPage> = {
 - 責める表現を避けた丁寧な説明
 - 視覚的に分かりやすいアイコンとメッセージ
 - 迷子にならないナビゲーション提供
-        `
-      }
+        `,
+      },
     },
     backgrounds: {
       default: 'light',
       values: [
         { name: 'light', value: '#f5f5f5' },
-        { name: 'dark', value: '#303030' }
-      ]
-    }
+        { name: 'dark', value: '#303030' },
+      ],
+    },
   },
   decorators: [
     (Story) => (
@@ -60,8 +60,8 @@ const meta: Meta<typeof NotFoundPage> = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 } satisfies Meta<typeof NotFoundPage>
 
 export default meta
@@ -74,10 +74,11 @@ export const Standalone: Story = {
   parameters: {
     docs: {
       description: {
-        story: '404エラーページの単体表示。レイアウトなしでのコンポーネント単体の確認用。'
-      }
-    }
-  }
+        story:
+          '404エラーページの単体表示。レイアウトなしでのコンポーネント単体の確認用。',
+      },
+    },
+  },
 }
 
 /**
@@ -92,10 +93,11 @@ export const WithAppLayout: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'AppLayoutと統合された404ページ。実際のアプリケーションでの表示に最も近い状態。ナビゲーションから他ページへの移動が可能。'
-      }
-    }
-  }
+        story:
+          'AppLayoutと統合された404ページ。実際のアプリケーションでの表示に最も近い状態。ナビゲーションから他ページへの移動が可能。',
+      },
+    },
+  },
 }
 
 /**
@@ -126,15 +128,16 @@ export const VariousInvalidUrls: Story = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
+    ),
   ],
   parameters: {
     docs: {
       description: {
-        story: '深いパスや管理者ページなど、様々な無効URLパターンでの404ページ表示例。'
-      }
-    }
-  }
+        story:
+          '深いパスや管理者ページなど、様々な無効URLパターンでの404ページ表示例。',
+      },
+    },
+  },
 }
 
 /**
@@ -151,15 +154,16 @@ export const MobileView: Story = {
       name: 'iphone',
       styles: {
         width: '375px',
-        height: '667px'
-      }
+        height: '667px',
+      },
     },
     docs: {
       description: {
-        story: 'モバイルデバイスでの404ページ表示。コンパクトなレイアウトとタッチフレンドリーなナビゲーション。'
-      }
-    }
-  }
+        story:
+          'モバイルデバイスでの404ページ表示。コンパクトなレイアウトとタッチフレンドリーなナビゲーション。',
+      },
+    },
+  },
 }
 
 /**
@@ -176,15 +180,16 @@ export const TabletView: Story = {
       name: 'ipad',
       styles: {
         width: '768px',
-        height: '1024px'
-      }
+        height: '1024px',
+      },
     },
     docs: {
       description: {
-        story: 'タブレットデバイスでの404ページ表示。中間サイズでの最適化されたレイアウト。'
-      }
-    }
-  }
+        story:
+          'タブレットデバイスでの404ページ表示。中間サイズでの最適化されたレイアウト。',
+      },
+    },
+  },
 }
 
 /**
@@ -202,9 +207,10 @@ export const DarkTheme: Story = {
     backgrounds: { default: 'dark' },
     docs: {
       description: {
-        story: 'ダークテーマでの404ページ表示。暗い背景でも読みやすく、一貫したデザイン。'
-      }
-    }
+        story:
+          'ダークテーマでの404ページ表示。暗い背景でも読みやすく、一貫したデザイン。',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -214,8 +220,8 @@ export const DarkTheme: Story = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 }
 
 /**
@@ -240,10 +246,11 @@ export const NavigationIntegration: Story = {
   parameters: {
     docs: {
       description: {
-        story: '404ページでもナビゲーション機能が継続利用できることを確認するデモ。ユーザーが迷子にならない設計。'
-      }
-    }
-  }
+        story:
+          '404ページでもナビゲーション機能が継続利用できることを確認するデモ。ユーザーが迷子にならない設計。',
+      },
+    },
+  },
 }
 
 /**
@@ -269,10 +276,11 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ機能の確認用デモ。視覚障害者や運動障害者にも使いやすい404ページ。'
-      }
-    }
-  }
+        story:
+          'アクセシビリティ機能の確認用デモ。視覚障害者や運動障害者にも使いやすい404ページ。',
+      },
+    },
+  },
 }
 
 /**
@@ -281,10 +289,23 @@ export const AccessibilityTest: Story = {
 export const ErrorRecoveryScenario: Story = {
   render: () => (
     <AppLayout>
-      <div style={{ padding: '20px', backgroundColor: '#fff3cd', border: '1px solid #ffeaa7', borderRadius: '4px', marginBottom: '20px' }}>
+      <div
+        style={{
+          padding: '20px',
+          backgroundColor: '#fff3cd',
+          border: '1px solid #ffeaa7',
+          borderRadius: '4px',
+          marginBottom: '20px',
+        }}
+      >
         <h3>🔍 エラー回復シナリオテスト</h3>
-        <p><strong>シナリオ:</strong> ユーザーが古いブックマークまたは無効なリンクからアクセス</p>
-        <p><strong>期待動作:</strong></p>
+        <p>
+          <strong>シナリオ:</strong>{' '}
+          ユーザーが古いブックマークまたは無効なリンクからアクセス
+        </p>
+        <p>
+          <strong>期待動作:</strong>
+        </p>
         <ol>
           <li>明確な404メッセージ表示</li>
           <li>ナビゲーションは正常機能</li>
@@ -304,15 +325,16 @@ export const ErrorRecoveryScenario: Story = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
+    ),
   ],
   parameters: {
     docs: {
       description: {
-        story: 'ユーザーエラー回復のシナリオテスト。古いブックマークや無効リンクからの適切な回復を支援。'
-      }
-    }
-  }
+        story:
+          'ユーザーエラー回復のシナリオテスト。古いブックマークや無効リンクからの適切な回復を支援。',
+      },
+    },
+  },
 }
 
 /**
@@ -322,13 +344,33 @@ export const DeveloperDebug: Story = {
   render: () => (
     <AppLayout>
       <div style={{ padding: '20px' }}>
-        <div style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '4px', marginBottom: '20px', fontFamily: 'monospace', fontSize: '12px' }}>
+        <div
+          style={{
+            backgroundColor: '#f8f9fa',
+            padding: '15px',
+            borderRadius: '4px',
+            marginBottom: '20px',
+            fontFamily: 'monospace',
+            fontSize: '12px',
+          }}
+        >
           <h4>🔧 開発者向けデバッグ情報</h4>
-          <p><strong>Current URL:</strong> /nonexistent-debug-page</p>
-          <p><strong>Matched Route:</strong> * (catch-all)</p>
-          <p><strong>Router State:</strong> NotFound</p>
-          <p><strong>Timestamp:</strong> {new Date().toISOString()}</p>
-          <p><strong>User Agent:</strong> {navigator.userAgent.substring(0, 50)}...</p>
+          <p>
+            <strong>Current URL:</strong> /nonexistent-debug-page
+          </p>
+          <p>
+            <strong>Matched Route:</strong> * (catch-all)
+          </p>
+          <p>
+            <strong>Router State:</strong> NotFound
+          </p>
+          <p>
+            <strong>Timestamp:</strong> {new Date().toISOString()}
+          </p>
+          <p>
+            <strong>User Agent:</strong> {navigator.userAgent.substring(0, 50)}
+            ...
+          </p>
         </div>
         <NotFoundPage />
       </div>
@@ -342,13 +384,14 @@ export const DeveloperDebug: Story = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
+    ),
   ],
   parameters: {
     docs: {
       description: {
-        story: '開発者向けの404ページデバッグ表示例。開発環境でのトラブルシューティングに活用。'
-      }
-    }
-  }
+        story:
+          '開発者向けの404ページデバッグ表示例。開発環境でのトラブルシューティングに活用。',
+      },
+    },
+  },
 }

@@ -1,11 +1,14 @@
 import { screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { renderWithRouter, renderAppWithRouter } from '@/__tests__/test-utils/routing'
+import {
+  renderWithRouter,
+  renderAppWithRouter,
+} from '@/__tests__/test-utils/routing'
 import NotFoundPage from '../NotFoundPage'
 
 /**
  * NotFoundPage（404エラーページ）の包括的テストスイート
- * 
+ *
  * 404エラーハンドリング、ユーザビリティ、アクセシビリティ、
  * ナビゲーション復帰機能をテストします。
  */
@@ -18,18 +21,26 @@ describe('NotFoundPage Tests', () => {
       renderWithRouter(<NotFoundPage />)
 
       // 基本的な404メッセージが表示されているかチェック
-      expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      expect(screen.getByText('お探しのページは存在しません。')).toBeInTheDocument()
+      expect(
+        screen.getByText('404 - ページが見つかりません')
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText('お探しのページは存在しません。')
+      ).toBeInTheDocument()
     })
 
     test('displays helpful error message and guidance', () => {
       renderWithRouter(<NotFoundPage />)
 
       // ユーザーへのガイダンスメッセージをチェック
-      expect(screen.getByText(/お探しのページは存在しません/)).toBeInTheDocument()
-      
+      expect(
+        screen.getByText(/お探しのページは存在しません/)
+      ).toBeInTheDocument()
+
       // 可能であれば、追加のガイダンステキストをチェック
-      const guidanceText = screen.queryByText(/URLを確認|ホームページ|ナビゲーション/)
+      const guidanceText = screen.queryByText(
+        /URLを確認|ホームページ|ナビゲーション/
+      )
       if (guidanceText) {
         expect(guidanceText).toBeInTheDocument()
       }
@@ -57,7 +68,7 @@ describe('NotFoundPage Tests', () => {
         '/random-page',
         '/admin',
         '/api/test',
-        '/completely/unknown/path'
+        '/completely/unknown/path',
       ]
 
       for (const route of unknownRoutes) {
@@ -65,23 +76,30 @@ describe('NotFoundPage Tests', () => {
           renderAppWithRouter({ initialEntries: [route] })
         })
 
-        await waitFor(() => {
-          expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-          expect(screen.getByText('お探しのページは存在しません。')).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            expect(
+              screen.getByText('404 - ページが見つかりません')
+            ).toBeInTheDocument()
+            expect(
+              screen.getByText('お探しのページは存在しません。')
+            ).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
 
     test('handles malformed valid routes', async () => {
       const malformedRoutes = [
-        '/expenses/',      // 末尾スラッシュ
-        '/Expenses',       // 大文字
-        '/INCOME',         // 全て大文字
-        '/history/',       // 末尾スラッシュ
-        '/settings/',      // 末尾スラッシュ
-        '//expenses',      // 重複スラッシュ
+        '/expenses/', // 末尾スラッシュ
+        '/Expenses', // 大文字
+        '/INCOME', // 全て大文字
+        '/history/', // 末尾スラッシュ
+        '/settings/', // 末尾スラッシュ
+        '//expenses', // 重複スラッシュ
         '/expenses//edit', // 深いパス
-        '/settings/advanced' // 深いパス
+        '/settings/advanced', // 深いパス
       ]
 
       for (const route of malformedRoutes) {
@@ -89,24 +107,29 @@ describe('NotFoundPage Tests', () => {
           renderAppWithRouter({ initialEntries: [route] })
         })
 
-        await waitFor(() => {
-          // 404ページまたは正しいページのいずれかが表示される
-          const is404 = screen.queryByText('404 - ページが見つかりません')
-          const isValidPage = screen.queryByText(/支出管理|収入管理|履歴表示|設定|家計簿アプリ/)
-          
-          expect(is404 || isValidPage).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            // 404ページまたは正しいページのいずれかが表示される
+            const is404 = screen.queryByText('404 - ページが見つかりません')
+            const isValidPage = screen.queryByText(
+              /支出管理|収入管理|履歴表示|設定|家計簿アプリ/
+            )
+
+            expect(is404 || isValidPage).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
 
     test('handles special characters in URLs', async () => {
       const specialCharRoutes = [
-        '/expenses%20test',  // URLエンコードされた文字
-        '/income#hash',      // ハッシュ付き
-        '/history?query=1',  // クエリパラメータ（無効パス）
-        '/settings@test',    // 特殊文字
-        '/日本語ページ',      // 日本語文字
-        '/expenses/123',     // 数値パラメータ
+        '/expenses%20test', // URLエンコードされた文字
+        '/income#hash', // ハッシュ付き
+        '/history?query=1', // クエリパラメータ（無効パス）
+        '/settings@test', // 特殊文字
+        '/日本語ページ', // 日本語文字
+        '/expenses/123', // 数値パラメータ
       ]
 
       for (const route of specialCharRoutes) {
@@ -114,11 +137,14 @@ describe('NotFoundPage Tests', () => {
           renderAppWithRouter({ initialEntries: [route] })
         })
 
-        await waitFor(() => {
-          // 適切にハンドリングされることを確認
-          const page = screen.getByRole('main') || document.body
-          expect(page).toBeInTheDocument()
-        }, { timeout: 10000 })
+        await waitFor(
+          () => {
+            // 適切にハンドリングされることを確認
+            const page = screen.getByRole('main') || document.body
+            expect(page).toBeInTheDocument()
+          },
+          { timeout: 10000 }
+        )
       }
     })
   })
@@ -132,31 +158,45 @@ describe('NotFoundPage Tests', () => {
         renderAppWithRouter({ initialEntries: ['/nonexistent'] })
       })
 
-      await waitFor(() => {
-        // 404ページでもナビゲーションが機能することを確認
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-        expect(screen.getByRole('navigation', { name: 'メインナビゲーション' })).toBeInTheDocument()
-        
-        // ナビゲーション項目が利用可能であることを確認
-        const menuItems = screen.getAllByRole('menuitem')
-        expect(menuItems.length).toBeGreaterThan(0)
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          // 404ページでもナビゲーションが機能することを確認
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+          expect(
+            screen.getByRole('navigation', { name: 'メインナビゲーション' })
+          ).toBeInTheDocument()
+
+          // ナビゲーション項目が利用可能であることを確認
+          const menuItems = screen.getAllByRole('menuitem')
+          expect(menuItems.length).toBeGreaterThan(0)
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('navigation from 404 page works correctly', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/invalid-page'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // ナビゲーションメニューからホームページに移動
-      const dashboardLink = screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
-      
+      const dashboardLink = screen.getByRole('menuitem', {
+        name: 'ダッシュボードページに移動',
+      })
+
       await act(async () => {
         await user.click(dashboardLink)
       })
@@ -170,18 +210,26 @@ describe('NotFoundPage Tests', () => {
         renderAppWithRouter({ initialEntries: ['/unknown'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-        
-        // 404ページではどのナビゲーション項目も選択されていないことを確認
-        const selectedItems = screen.getAllByRole('menuitem').filter(item =>
-          item.classList.contains('Mui-selected') || 
-          item.getAttribute('aria-current') === 'page'
-        )
-        
-        // 404ページでは通常、ナビゲーション項目は選択されない
-        expect(selectedItems.length).toBe(0)
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+
+          // 404ページではどのナビゲーション項目も選択されていないことを確認
+          const selectedItems = screen
+            .getAllByRole('menuitem')
+            .filter(
+              (item) =>
+                item.classList.contains('Mui-selected') ||
+                item.getAttribute('aria-current') === 'page'
+            )
+
+          // 404ページでは通常、ナビゲーション項目は選択されない
+          expect(selectedItems.length).toBe(0)
+        },
+        { timeout: 10000 }
+      )
     })
   })
 
@@ -210,11 +258,13 @@ describe('NotFoundPage Tests', () => {
         screen.queryByText(/戻る/),
         screen.queryByText(/ナビゲーション/),
         screen.queryByRole('button'),
-        screen.queryByRole('link')
+        screen.queryByRole('link'),
       ]
 
       // いずれかの復帰オプションが存在することを確認
-      const hasRecoveryOption = recoveryOptions.some(option => option !== null)
+      const hasRecoveryOption = recoveryOptions.some(
+        (option) => option !== null
+      )
       expect(hasRecoveryOption).toBe(true)
     })
 
@@ -223,26 +273,36 @@ describe('NotFoundPage Tests', () => {
         renderAppWithRouter({ initialEntries: ['/missing'] })
       })
 
-      await waitFor(() => {
-        // アプリのブランディング要素が維持されているかチェック
-        expect(screen.getByText('家計簿アプリ')).toBeInTheDocument() // AppBarのタイトル
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-        
-        // アプリの基本的なレイアウト構造が維持されているかチェック
-        expect(screen.getByRole('navigation')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          // アプリのブランディング要素が維持されているかチェック
+          expect(screen.getByText('家計簿アプリ')).toBeInTheDocument() // AppBarのタイトル
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+
+          // アプリの基本的なレイアウト構造が維持されているかチェック
+          expect(screen.getByRole('navigation')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('404 page supports keyboard navigation', async () => {
       const user = userEvent.setup()
-      
+
       await act(async () => {
         renderAppWithRouter({ initialEntries: ['/404test'] })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // キーボードナビゲーションが機能することを確認
       await act(async () => {
@@ -250,9 +310,9 @@ describe('NotFoundPage Tests', () => {
       })
 
       // フォーカス可能な要素が存在することを確認
-      const focusableElements = screen.getAllByRole('button').concat(
-        screen.getAllByRole('menuitem')
-      )
+      const focusableElements = screen
+        .getAllByRole('button')
+        .concat(screen.getAllByRole('menuitem'))
       expect(focusableElements.length).toBeGreaterThan(0)
     })
   })
@@ -264,15 +324,20 @@ describe('NotFoundPage Tests', () => {
     test('404 page handles rapid navigation changes', async () => {
       // 複数の無効URLに連続でアクセス
       const rapidAccessUrls = ['/test1', '/test2', '/test3', '/test4', '/test5']
-      
+
       for (const url of rapidAccessUrls) {
         await act(async () => {
           const { unmount } = renderAppWithRouter({ initialEntries: [url] })
-          
-          await waitFor(() => {
-            expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-          }, { timeout: 5000 })
-          
+
+          await waitFor(
+            () => {
+              expect(
+                screen.getByText('404 - ページが見つかりません')
+              ).toBeInTheDocument()
+            },
+            { timeout: 5000 }
+          )
+
           unmount()
         })
       }
@@ -283,41 +348,54 @@ describe('NotFoundPage Tests', () => {
         renderAppWithRouter({ initialEntries: ['/error-test'] })
       })
 
-      await waitFor(() => {
-        // エラー状態でもページが安定していることを確認
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-        expect(screen.getByRole('navigation')).toBeInTheDocument()
-        
-        // 基本的なアプリ機能が利用可能であることを確認
-        const menuItems = screen.getAllByRole('menuitem')
-        expect(menuItems.length).toBeGreaterThan(0)
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          // エラー状態でもページが安定していることを確認
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+          expect(screen.getByRole('navigation')).toBeInTheDocument()
+
+          // 基本的なアプリ機能が利用可能であることを確認
+          const menuItems = screen.getAllByRole('menuitem')
+          expect(menuItems.length).toBeGreaterThan(0)
+        },
+        { timeout: 10000 }
+      )
     })
 
     test('404 page does not break app routing', async () => {
       // 404ページアクセス後に正常ページに遷移できることを確認
       await act(async () => {
-        renderAppWithRouter({ 
+        renderAppWithRouter({
           initialEntries: ['/invalid', '/expenses'],
-          initialIndex: 0 // 無効ページから開始
+          initialIndex: 0, // 無効ページから開始
         })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
 
       // 正常ページに遷移
       await act(async () => {
-        renderAppWithRouter({ 
+        renderAppWithRouter({
           initialEntries: ['/invalid', '/expenses'],
-          initialIndex: 1 // 有効ページに移動
+          initialIndex: 1, // 有効ページに移動
         })
       })
 
-      await waitFor(() => {
-        expect(screen.getByText('支出管理')).toBeInTheDocument()
-      }, { timeout: 10000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('支出管理')).toBeInTheDocument()
+        },
+        { timeout: 10000 }
+      )
     })
   })
 })

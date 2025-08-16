@@ -59,7 +59,7 @@ export interface AppBreadcrumbsProps {
  * @example
  * ```tsx
  * // カスタムアイテム付き
- * <AppBreadcrumbs 
+ * <AppBreadcrumbs
  *   customItems={[
  *     { label: '詳細ページ', href: '/detail/123' },
  *     { label: '編集' }
@@ -70,7 +70,7 @@ export interface AppBreadcrumbsProps {
  * @example
  * ```tsx
  * // ホームアイコン無し、幅制限付き
- * <AppBreadcrumbs 
+ * <AppBreadcrumbs
  *   showHomeIcon={false}
  *   maxWidth={400}
  * />
@@ -82,13 +82,13 @@ export default function AppBreadcrumbs({
   maxWidth,
 }: AppBreadcrumbsProps) {
   const location = useLocation()
-  
+
   // 現在のルート情報を取得
   const currentRoute = getRouteInfo(location.pathname as AppRoute)
-  
+
   // パンくずアイテムを構築
   const breadcrumbItems = []
-  
+
   // 1. ホーム項目（常に第1階層）
   const isHomePage = location.pathname === '/'
   if (isHomePage) {
@@ -96,7 +96,9 @@ export default function AppBreadcrumbs({
     breadcrumbItems.push({
       label: 'ホーム',
       href: undefined, // 現在ページなのでリンク無し
-      icon: showHomeIcon ? <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> : undefined,
+      icon: showHomeIcon ? (
+        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+      ) : undefined,
       isCurrent: true,
     })
   } else {
@@ -104,11 +106,13 @@ export default function AppBreadcrumbs({
     breadcrumbItems.push({
       label: 'ホーム',
       href: '/',
-      icon: showHomeIcon ? <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" /> : undefined,
+      icon: showHomeIcon ? (
+        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+      ) : undefined,
       isCurrent: false,
     })
   }
-  
+
   // 2. 現在ページ項目（ホーム以外の場合）
   if (!isHomePage && currentRoute) {
     breadcrumbItems.push({
@@ -118,7 +122,7 @@ export default function AppBreadcrumbs({
       isCurrent: true,
     })
   }
-  
+
   // 3. カスタムアイテム（詳細ページ等の深い階層用）
   customItems.forEach((item, index) => {
     breadcrumbItems.push({
@@ -128,12 +132,12 @@ export default function AppBreadcrumbs({
       isCurrent: index === customItems.length - 1 && !item.href, // 最後のアイテムでhrefが無い場合は現在ページ
     })
   })
-  
+
   // パンくずが1項目のみの場合は非表示（ホームページ等）
   if (breadcrumbItems.length <= 1 && isHomePage) {
     return null
   }
-  
+
   return (
     <Breadcrumbs
       aria-label="パンくずナビゲーション"
@@ -151,7 +155,7 @@ export default function AppBreadcrumbs({
     >
       {breadcrumbItems.map((item, index) => {
         const key = `breadcrumb-${index}`
-        
+
         if (item.isCurrent || !item.href) {
           // 現在ページ または リンク無しアイテム
           return (

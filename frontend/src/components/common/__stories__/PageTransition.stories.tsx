@@ -88,15 +88,18 @@ export default meta
 type Story = StoryObj<typeof PageTransition>
 
 // サンプルコンテンツコンポーネント
-const SampleContent = ({ title = 'ページコンテンツ', color = 'primary.main' }) => (
-  <Paper 
-    elevation={3} 
-    sx={{ 
-      p: 4, 
-      minWidth: 300, 
-      minHeight: 200, 
-      display: 'flex', 
-      alignItems: 'center', 
+const SampleContent = ({
+  title = 'ページコンテンツ',
+  color = 'primary.main',
+}) => (
+  <Paper
+    elevation={3}
+    sx={{
+      p: 4,
+      minWidth: 300,
+      minHeight: 200,
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
       bgcolor: color,
       color: 'white',
@@ -124,7 +127,8 @@ export const FadeTransition: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルトのフェードイン/アウト効果。スムーズで汎用的なトランジション。',
+        story:
+          'デフォルトのフェードイン/アウト効果。スムーズで汎用的なトランジション。',
       },
     },
   },
@@ -140,7 +144,8 @@ export const SlideLeft: Story = {
   parameters: {
     docs: {
       description: {
-        story: '左方向へのスライドトランジション。ページ進行の視覚的表現に適している。',
+        story:
+          '左方向へのスライドトランジション。ページ進行の視覚的表現に適している。',
       },
     },
   },
@@ -156,7 +161,8 @@ export const SlideRight: Story = {
   parameters: {
     docs: {
       description: {
-        story: '右方向へのスライドトランジション。戻る操作の視覚的表現に適している。',
+        story:
+          '右方向へのスライドトランジション。戻る操作の視覚的表現に適している。',
       },
     },
   },
@@ -172,7 +178,8 @@ export const CustomEasing: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'カスタムイージング関数を使用したトランジション。より自然な動きを演出。',
+        story:
+          'カスタムイージング関数を使用したトランジション。より自然な動きを演出。',
       },
     },
   },
@@ -186,7 +193,8 @@ export const NoAnimation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アニメーション無し。パフォーマンス重視やアクセシビリティ考慮時に使用。',
+        story:
+          'アニメーション無し。パフォーマンス重視やアクセシビリティ考慮時に使用。',
       },
     },
   },
@@ -200,7 +208,8 @@ export const WithLocationKey: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'React Router の location.key を使用したページ識別。適切なトランジション制御が可能。',
+        story:
+          'React Router の location.key を使用したページ識別。適切なトランジション制御が可能。',
       },
     },
   },
@@ -216,7 +225,8 @@ export const MountControlled: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'マウント・アンマウント動作を細かく制御。メモリ使用量やパフォーマンスの最適化に有効。',
+        story:
+          'マウント・アンマウント動作を細かく制御。メモリ使用量やパフォーマンスの最適化に有効。',
       },
     },
   },
@@ -237,7 +247,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'すべてのプロパティを操作可能なインタラクティブデモ。設定変更の効果を確認できます。',
+        story:
+          'すべてのプロパティを操作可能なインタラクティブデモ。設定変更の効果を確認できます。',
       },
     },
   },
@@ -253,15 +264,21 @@ export const RecommendedContainer: Story = {
   },
   decorators: [
     (Story) => (
-      <Box sx={{ 
-        position: 'relative', 
-        overflow: 'hidden',
-        border: '2px dashed',
-        borderColor: 'divider',
-        borderRadius: 1,
-        p: 2,
-      }}>
-        <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          border: '2px dashed',
+          borderColor: 'divider',
+          borderRadius: 1,
+          p: 2,
+        }}
+      >
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ mb: 2, display: 'block' }}
+        >
           推奨: position: 'relative', overflow: 'hidden' でラップ
         </Typography>
         <Story />
@@ -271,7 +288,8 @@ export const RecommendedContainer: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'React Router での推奨使用パターン。position: relative と overflow: hidden でコンテナをラップ。',
+        story:
+          'React Router での推奨使用パターン。position: relative と overflow: hidden でコンテナをラップ。',
       },
     },
   },
@@ -284,43 +302,74 @@ export const Traceability = {
       page: () => (
         <div>
           <h2>🔗 トレーサビリティ表</h2>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '16px' }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              marginTop: '16px',
+            }}
+          >
             <thead>
               <tr style={{ borderBottom: '2px solid #e0e0e0' }}>
                 <th style={{ padding: '12px', textAlign: 'left' }}>項目</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>関連リソース</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>
+                  関連リソース
+                </th>
                 <th style={{ padding: '12px', textAlign: 'left' }}>説明</th>
               </tr>
             </thead>
             <tbody>
               <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}><strong>PRレビュー対応</strong></td>
                 <td style={{ padding: '12px' }}>
-                  <a href="https://github.com/teruyoshi/family-budget-app/pull/23#pullrequestreview-3123071862" target="_blank">
+                  <strong>PRレビュー対応</strong>
+                </td>
+                <td style={{ padding: '12px' }}>
+                  <a
+                    href="https://github.com/teruyoshi/family-budget-app/pull/23#pullrequestreview-3123071862"
+                    target="_blank"
+                  >
                     PR #23 Review
                   </a>
                 </td>
-                <td style={{ padding: '12px' }}>SSR対応、型安全性、マウント制御などの改善実装</td>
+                <td style={{ padding: '12px' }}>
+                  SSR対応、型安全性、マウント制御などの改善実装
+                </td>
               </tr>
               <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}><strong>設計判断</strong></td>
+                <td style={{ padding: '12px' }}>
+                  <strong>設計判断</strong>
+                </td>
                 <td style={{ padding: '12px' }}>ADR-007 (予定)</td>
-                <td style={{ padding: '12px' }}>ページトランジション設計とパフォーマンス考慮</td>
+                <td style={{ padding: '12px' }}>
+                  ページトランジション設計とパフォーマンス考慮
+                </td>
               </tr>
               <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}><strong>用語集</strong></td>
+                <td style={{ padding: '12px' }}>
+                  <strong>用語集</strong>
+                </td>
                 <td style={{ padding: '12px' }}>docs-src/glossary.md</td>
-                <td style={{ padding: '12px' }}>SSR、トランジション、アクセシビリティ関連用語</td>
+                <td style={{ padding: '12px' }}>
+                  SSR、トランジション、アクセシビリティ関連用語
+                </td>
               </tr>
               <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}><strong>テスト</strong></td>
+                <td style={{ padding: '12px' }}>
+                  <strong>テスト</strong>
+                </td>
                 <td style={{ padding: '12px' }}>PageTransition.test.tsx</td>
-                <td style={{ padding: '12px' }}>コンポーネント動作、reduced-motion対応テスト</td>
+                <td style={{ padding: '12px' }}>
+                  コンポーネント動作、reduced-motion対応テスト
+                </td>
               </tr>
               <tr>
-                <td style={{ padding: '12px' }}><strong>品質ガイド</strong></td>
+                <td style={{ padding: '12px' }}>
+                  <strong>品質ガイド</strong>
+                </td>
                 <td style={{ padding: '12px' }}>docs-src/quality/</td>
-                <td style={{ padding: '12px' }}>アクセシビリティ、パフォーマンス、UX品質基準</td>
+                <td style={{ padding: '12px' }}>
+                  アクセシビリティ、パフォーマンス、UX品質基準
+                </td>
               </tr>
             </tbody>
           </table>

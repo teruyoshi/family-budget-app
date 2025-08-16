@@ -1,11 +1,11 @@
-import { screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { renderWithRouter } from '@/__tests__/test-utils/routing'
 import AppNavigation from '../AppNavigation'
 
 /**
  * AppNavigationコンポーネントのルーティング機能テストスイート
- * 
+ *
  * ナビゲーションクリック、ページ遷移、レスポンシブ動作、
  * キーボードナビゲーション、アクセシビリティ機能をテストします。
  */
@@ -18,11 +18,21 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation />)
 
       // 全てのナビゲーション項目が表示されているかチェック
-      expect(screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })).toBeInTheDocument()
-      expect(screen.getByRole('menuitem', { name: '支出管理ページに移動' })).toBeInTheDocument()
-      expect(screen.getByRole('menuitem', { name: '収入管理ページに移動' })).toBeInTheDocument()
-      expect(screen.getByRole('menuitem', { name: '履歴表示ページに移動' })).toBeInTheDocument()
-      expect(screen.getByRole('menuitem', { name: '設定ページに移動' })).toBeInTheDocument()
+      expect(
+        screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('menuitem', { name: '支出管理ページに移動' })
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('menuitem', { name: '収入管理ページに移動' })
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('menuitem', { name: '履歴表示ページに移動' })
+      ).toBeInTheDocument()
+      expect(
+        screen.getByRole('menuitem', { name: '設定ページに移動' })
+      ).toBeInTheDocument()
     })
 
     test('displays correct icons for each navigation item', () => {
@@ -38,15 +48,19 @@ describe('AppNavigation Routing Tests', () => {
 
     test('highlights active navigation item based on current route', () => {
       // 支出ページでレンダリング
-      renderWithRouter(<AppNavigation />, { 
-        initialEntries: ['/expenses'] 
+      renderWithRouter(<AppNavigation />, {
+        initialEntries: ['/expenses'],
       })
 
-      const expenseMenuItem = screen.getByRole('menuitem', { name: '支出管理ページに移動' })
+      const expenseMenuItem = screen.getByRole('menuitem', {
+        name: '支出管理ページに移動',
+      })
       expect(expenseMenuItem).toHaveClass('Mui-selected')
-      
+
       // 他の項目は選択されていないことを確認
-      const dashboardMenuItem = screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
+      const dashboardMenuItem = screen.getByRole('menuitem', {
+        name: 'ダッシュボードページに移動',
+      })
       expect(dashboardMenuItem).not.toHaveClass('Mui-selected')
     })
   })
@@ -65,14 +79,14 @@ describe('AppNavigation Routing Tests', () => {
         screen.getByRole('menuitem', { name: '支出管理ページに移動' }),
         screen.getByRole('menuitem', { name: '収入管理ページに移動' }),
         screen.getByRole('menuitem', { name: '履歴表示ページに移動' }),
-        screen.getByRole('menuitem', { name: '設定ページに移動' })
+        screen.getByRole('menuitem', { name: '設定ページに移動' }),
       ]
 
       for (const item of navigationItems) {
         expect(item).toBeInTheDocument()
         expect(item).toHaveAttribute('tabindex', '0')
         expect(item).toHaveAttribute('role', 'menuitem')
-        
+
         // クリック可能であることを確認
         await act(async () => {
           await user.click(item)
@@ -84,8 +98,10 @@ describe('AppNavigation Routing Tests', () => {
       const user = userEvent.setup()
       renderWithRouter(<AppNavigation />)
 
-      const dashboardItem = screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
-      
+      const dashboardItem = screen.getByRole('menuitem', {
+        name: 'ダッシュボードページに移動',
+      })
+
       // Enter キーでナビゲーション
       await act(async () => {
         dashboardItem.focus()
@@ -106,12 +122,14 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation />)
 
       // メインナビゲーションのARIAラベルをチェック
-      const navigation = screen.getByRole('navigation', { name: 'メインナビゲーション' })
+      const navigation = screen.getByRole('navigation', {
+        name: 'メインナビゲーション',
+      })
       expect(navigation).toBeInTheDocument()
 
       // 各メニュー項目のARIAラベルをチェック
       const menuItems = screen.getAllByRole('menuitem')
-      menuItems.forEach(item => {
+      menuItems.forEach((item) => {
         expect(item).toHaveAttribute('aria-label')
         expect(item.getAttribute('aria-label')).toMatch(/ページに移動$/)
       })
@@ -126,17 +144,24 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation />)
 
       // ハンバーガーメニューボタンが存在することを確認
-      const hamburgerButton = screen.getByRole('button', { name: 'ナビゲーションメニューを開く' })
+      const hamburgerButton = screen.getByRole('button', {
+        name: 'ナビゲーションメニューを開く',
+      })
       expect(hamburgerButton).toBeInTheDocument()
-      expect(hamburgerButton).toHaveAttribute('aria-label', 'ナビゲーションメニューを開く')
+      expect(hamburgerButton).toHaveAttribute(
+        'aria-label',
+        'ナビゲーションメニューを開く'
+      )
     })
 
     test('mobile drawer can be opened and closed', async () => {
       const user = userEvent.setup()
       renderWithRouter(<AppNavigation />)
 
-      const hamburgerButton = screen.getByRole('button', { name: 'ナビゲーションメニューを開く' })
-      
+      const hamburgerButton = screen.getByRole('button', {
+        name: 'ナビゲーションメニューを開く',
+      })
+
       // ハンバーガーメニューをクリック
       await act(async () => {
         await user.click(hamburgerButton)
@@ -152,13 +177,17 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation />)
 
       // ハンバーガーメニューを開く
-      const hamburgerButton = screen.getByRole('button', { name: 'ナビゲーションメニューを開く' })
+      const hamburgerButton = screen.getByRole('button', {
+        name: 'ナビゲーションメニューを開く',
+      })
       await act(async () => {
         await user.click(hamburgerButton)
       })
 
       // 閉じるボタンが存在する場合はクリック
-      const closeButton = screen.queryByRole('button', { name: 'ナビゲーションを閉じる' })
+      const closeButton = screen.queryByRole('button', {
+        name: 'ナビゲーションを閉じる',
+      })
       if (closeButton) {
         await act(async () => {
           await user.click(closeButton)
@@ -177,7 +206,10 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation title="テスト家計簿" />)
 
       // AppBar内にアプリタイトルが表示されているかチェック
-      const appTitle = screen.getByRole('heading', { level: 1, name: 'テスト家計簿' })
+      const appTitle = screen.getByRole('heading', {
+        level: 1,
+        name: 'テスト家計簿',
+      })
       expect(appTitle).toBeInTheDocument()
     })
 
@@ -185,8 +217,9 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation />)
 
       // AppBarが適切に配置されているかチェック
-      const appBar = screen.getByRole('banner') || 
-                    screen.getByText('家計簿アプリ').closest('[class*="MuiAppBar"]')
+      const appBar =
+        screen.getByRole('banner') ||
+        screen.getByText('家計簿アプリ').closest('[class*="MuiAppBar"]')
       expect(appBar).toBeInTheDocument()
     })
 
@@ -194,7 +227,9 @@ describe('AppNavigation Routing Tests', () => {
       renderWithRouter(<AppNavigation drawerWidth={300} />)
 
       // カスタムドロワー幅でAppBarが適切に調整されることを確認
-      const appBar = screen.getByText('家計簿アプリ').closest('[class*="MuiAppBar"]')
+      const appBar = screen
+        .getByText('家計簿アプリ')
+        .closest('[class*="MuiAppBar"]')
       expect(appBar).toBeInTheDocument()
     })
   })
@@ -223,8 +258,9 @@ describe('AppNavigation Routing Tests', () => {
       expect(navigation).toBeInTheDocument()
 
       // リスト構造が存在することを確認
-      const list = screen.getByRole('list') || 
-                   navigation.querySelector('ul[class*="MuiList"]')
+      const list =
+        screen.getByRole('list') ||
+        navigation.querySelector('ul[class*="MuiList"]')
       expect(list).toBeInTheDocument()
     })
 
@@ -249,7 +285,7 @@ describe('AppNavigation Routing Tests', () => {
       // 全てのインタラクティブ要素にフォーカス可能であることを確認
       const focusableElements = [
         screen.getByRole('button', { name: 'ナビゲーションメニューを開く' }),
-        ...screen.getAllByRole('menuitem')
+        ...screen.getAllByRole('menuitem'),
       ]
 
       for (const element of focusableElements) {
@@ -278,7 +314,7 @@ describe('AppNavigation Routing Tests', () => {
       expect(navigation).toHaveAttribute('aria-label', 'メインナビゲーション')
 
       const menuItems = screen.getAllByRole('menuitem')
-      menuItems.forEach(item => {
+      menuItems.forEach((item) => {
         expect(item).toHaveAttribute('aria-label')
       })
     })
@@ -292,7 +328,7 @@ describe('AppNavigation Routing Tests', () => {
 
       // アイコンとテキストが適切に配置されているかチェック
       const menuItems = screen.getAllByRole('menuitem')
-      menuItems.forEach(item => {
+      menuItems.forEach((item) => {
         const icon = item.querySelector('svg')
         const text = item.querySelector('[class*="MuiListItemText"]')
         expect(icon).toBeInTheDocument()

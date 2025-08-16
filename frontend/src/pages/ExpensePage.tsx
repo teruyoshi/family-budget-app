@@ -51,7 +51,7 @@ export interface ExpensePageProps {
  * @example
  * ```tsx
  * // 将来的な拡張例（初期フィルター付き）
- * <ExpensePage 
+ * <ExpensePage
  *   initialDateRange={{ startDate: '2024-01-01', endDate: '2024-12-31' }}
  *   initialCategoryFilter={['food', 'transport']}
  * />

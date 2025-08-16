@@ -133,13 +133,21 @@ export default function SettingsPage() {
         </Alert>
 
         {/* 将来実装予定の機能一覧 */}
-        <Typography variant="h6" component="h2" sx={{ mb: 3, color: '#1565c0' }}>
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{ mb: 3, color: '#1565c0' }}
+        >
           実装予定の設定項目
         </Typography>
 
         <Box sx={{ mb: 4 }}>
           {/* 外観設定 */}
-          <Typography variant="h6" component="h3" sx={{ mb: 2, color: '#424242' }}>
+          <Typography
+            variant="h6"
+            component="h3"
+            sx={{ mb: 2, color: '#424242' }}
+          >
             🎨 外観設定
           </Typography>
           <Typography variant="body2" sx={{ mb: 3, pl: 2, color: '#666' }}>
@@ -148,14 +156,17 @@ export default function SettingsPage() {
             • 言語設定（日本語・英語）
             <br />
             • フォントサイズ調整
-            <br />
-            • カラーテーマのカスタマイズ
+            <br />• カラーテーマのカスタマイズ
           </Typography>
 
           <Divider sx={{ my: 3 }} />
 
           {/* データ設定 */}
-          <Typography variant="h6" component="h3" sx={{ mb: 2, color: '#424242' }}>
+          <Typography
+            variant="h6"
+            component="h3"
+            sx={{ mb: 2, color: '#424242' }}
+          >
             💾 データ設定
           </Typography>
           <Typography variant="body2" sx={{ mb: 3, pl: 2, color: '#666' }}>
@@ -164,14 +175,17 @@ export default function SettingsPage() {
             • データインポート（他家計簿アプリから移行）
             <br />
             • 自動バックアップ設定
-            <br />
-            • データ削除・リセット
+            <br />• データ削除・リセット
           </Typography>
 
           <Divider sx={{ my: 3 }} />
 
           {/* 通知設定 */}
-          <Typography variant="h6" component="h3" sx={{ mb: 2, color: '#424242' }}>
+          <Typography
+            variant="h6"
+            component="h3"
+            sx={{ mb: 2, color: '#424242' }}
+          >
             🔔 通知設定
           </Typography>
           <Typography variant="body2" sx={{ mb: 3, pl: 2, color: '#666' }}>
@@ -180,14 +194,17 @@ export default function SettingsPage() {
             • 定期入力リマインダー
             <br />
             • レポート自動生成通知
-            <br />
-            • ブラウザ通知の有効/無効
+            <br />• ブラウザ通知の有効/無効
           </Typography>
 
           <Divider sx={{ my: 3 }} />
 
           {/* アプリケーション設定 */}
-          <Typography variant="h6" component="h3" sx={{ mb: 2, color: '#424242' }}>
+          <Typography
+            variant="h6"
+            component="h3"
+            sx={{ mb: 2, color: '#424242' }}
+          >
             ⚙️ アプリケーション設定
           </Typography>
           <Typography variant="body2" sx={{ pl: 2, color: '#666' }}>
@@ -196,8 +213,7 @@ export default function SettingsPage() {
             • デフォルト金額・日付の設定
             <br />
             • 表示形式の設定（通貨、日付フォーマット）
-            <br />
-            • 初期表示ページの設定
+            <br />• 初期表示ページの設定
           </Typography>
         </Box>
 
@@ -211,7 +227,11 @@ export default function SettingsPage() {
             border: '1px solid #e9ecef',
           }}
         >
-          <Typography variant="h6" component="h3" sx={{ mb: 2, color: '#495057' }}>
+          <Typography
+            variant="h6"
+            component="h3"
+            sx={{ mb: 2, color: '#495057' }}
+          >
             現在のアプリケーション情報
           </Typography>
           <Typography variant="body2" sx={{ color: '#6c757d' }}>
@@ -220,8 +240,7 @@ export default function SettingsPage() {
             • 最終更新: React Router 対応完了
             <br />
             • データ保存: ブラウザローカルストレージ（インメモリ）
-            <br />
-            • 対応ブラウザ: Chrome, Firefox, Safari, Edge（最新版）
+            <br />• 対応ブラウザ: Chrome, Firefox, Safari, Edge（最新版）
           </Typography>
         </Box>
       </Paper>

@@ -5,7 +5,7 @@ import { AppContent } from '@/App'
 
 /**
  * ルーティングテスト用のテストユーティリティ
- * 
+ *
  * React Router の MemoryRouter を使用したテスト環境を提供し、
  * ルーティング機能の包括的なテストを可能にします。
  */
@@ -13,7 +13,8 @@ import { AppContent } from '@/App'
 /**
  * MemoryRouter でラップされたレンダリング関数のオプション
  */
-export interface RenderWithRouterOptions extends Omit<RenderOptions, 'wrapper'> {
+export interface RenderWithRouterOptions
+  extends Omit<RenderOptions, 'wrapper'> {
   /** 初期ルートパス */
   initialEntries?: MemoryRouterProps['initialEntries']
   /** 初期インデックス */
@@ -22,11 +23,11 @@ export interface RenderWithRouterOptions extends Omit<RenderOptions, 'wrapper'> 
 
 /**
  * コンポーネントを MemoryRouter でラップしてレンダリング
- * 
+ *
  * @param ui - レンダリングするコンポーネント
  * @param options - レンダリングオプション
  * @returns レンダリング結果とユーティリティ
- * 
+ *
  * @example
  * ```tsx
  * // 特定のルートでページをテスト
@@ -59,10 +60,10 @@ export function renderWithRouter(
 
 /**
  * アプリ全体を MemoryRouter でラップしてレンダリング
- * 
+ *
  * @param options - ルーターオプション
  * @returns レンダリング結果とユーティリティ
- * 
+ *
  * @example
  * ```tsx
  * // 404ページのテスト
@@ -88,10 +89,10 @@ export function renderAppWithRouter({
 
 /**
  * ページ遷移テスト用のヘルパー関数
- * 
+ *
  * @param routes - テスト対象のルート配列
  * @returns ルートごとのテスト結果
- * 
+ *
  * @example
  * ```tsx
  * // 複数ルートの一括テスト
@@ -102,15 +103,15 @@ export function renderAppWithRouter({
  * ```
  */
 export function testMultipleRoutes(routes: string[]) {
-  return routes.map(route => ({
+  return routes.map((route) => ({
     route,
-    ...renderAppWithRouter({ initialEntries: [route] })
+    ...renderAppWithRouter({ initialEntries: [route] }),
   }))
 }
 
 /**
  * ナビゲーション状態をモックする関数
- * 
+ *
  * @param currentPath - 現在のパス
  * @returns モックされたナビゲーション状態
  */
@@ -120,20 +121,20 @@ export function mockNavigationState(currentPath: string) {
     search: '',
     hash: '',
     state: null,
-    key: 'test-key'
+    key: 'test-key',
   }
 }
 
 /**
  * 遅延ロード（Suspense）対応のテストヘルパー
- * 
+ *
  * @param renderFn - レンダリング関数
  * @returns Promise<レンダリング結果>
- * 
+ *
  * @example
  * ```tsx
  * // コード分割されたページのテスト
- * const result = await renderWithSuspense(() => 
+ * const result = await renderWithSuspense(() =>
  *   renderAppWithRouter({ initialEntries: ['/expenses'] })
  * )
  * await waitFor(() => {
@@ -176,10 +177,10 @@ export const routeTestHelpers = {
       '/expenses': '支出管理',
       '/income': '収入管理',
       '/history': '履歴表示',
-      '/settings': '設定'
+      '/settings': '設定',
     }
     return titles[path] || '不明なページ'
-  }
+  },
 }
 
 /**
@@ -188,10 +189,10 @@ export const routeTestHelpers = {
 export const testRoutes = {
   /** 全ての有効なルート */
   valid: ['/', '/expenses', '/income', '/history', '/settings'],
-  
+
   /** 無効なルート（404になるべき） */
   invalid: ['/nonexistent', '/abc', '/settings/invalid'],
-  
+
   /** ナビゲーションに表示されるルート */
-  navigation: ['/', '/expenses', '/income', '/history', '/settings']
+  navigation: ['/', '/expenses', '/income', '/history', '/settings'],
 } as const

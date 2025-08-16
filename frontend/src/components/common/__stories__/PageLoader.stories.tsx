@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline, Box, Typography } from '@mui/material'
@@ -7,7 +7,7 @@ import AppLayout from '@/components/layout/AppLayout'
 
 /**
  * PageLoaderコンポーネントのStorybookストーリー
- * 
+ *
  * ページ読み込み中の表示、Suspenseフォールバック、
  * ローディング状態の視覚化を展示します。
  */
@@ -42,17 +42,17 @@ const meta: Meta<typeof PageLoader> = {
 - ユーザーの不安を軽減する明確な進行表示
 - アプリ全体の統一感維持
 - 素早い表示でユーザー体験向上
-        `
-      }
+        `,
+      },
     },
     backgrounds: {
       default: 'light',
       values: [
         { name: 'light', value: '#f5f5f5' },
         { name: 'dark', value: '#303030' },
-        { name: 'white', value: '#ffffff' }
-      ]
-    }
+        { name: 'white', value: '#ffffff' },
+      ],
+    },
   },
   decorators: [
     (Story) => (
@@ -62,8 +62,8 @@ const meta: Meta<typeof PageLoader> = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 } satisfies Meta<typeof PageLoader>
 
 export default meta
@@ -76,10 +76,11 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'PageLoaderの基本表示。中央配置されたローディングアニメーションとメッセージ。'
-      }
-    }
-  }
+        story:
+          'PageLoaderの基本表示。中央配置されたローディングアニメーションとメッセージ。',
+      },
+    },
+  },
 }
 
 /**
@@ -94,10 +95,11 @@ export const WithinAppLayout: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'AppLayout内でのPageLoader表示。実際のページ遷移時のローディング状態を再現。'
-      }
-    }
-  }
+        story:
+          'AppLayout内でのPageLoader表示。実際のページ遷移時のローディング状態を再現。',
+      },
+    },
+  },
 }
 
 /**
@@ -125,10 +127,11 @@ export const SuspenseFallback: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'React SuspenseとReact.lazyによるコード分割時のフォールバック表示シミュレーション。'
-      }
-    }
-  }
+        story:
+          'React SuspenseとReact.lazyによるコード分割時のフォールバック表示シミュレーション。',
+      },
+    },
+  },
 }
 
 /**
@@ -141,7 +144,14 @@ export const MultipleLoaders: Story = {
         <Typography variant="h4" gutterBottom>
           複数ローディング状態デモ
         </Typography>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '20px',
+            marginTop: '20px',
+          }}
+        >
           <Box sx={{ border: '1px solid #ddd', borderRadius: 1, p: 2 }}>
             <Typography variant="h6" gutterBottom>
               ページA ローディング中
@@ -161,10 +171,11 @@ export const MultipleLoaders: Story = {
   parameters: {
     docs: {
       description: {
-        story: '複数のページまたはコンポーネントが同時にローディング中の状態を表示。'
-      }
-    }
-  }
+        story:
+          '複数のページまたはコンポーネントが同時にローディング中の状態を表示。',
+      },
+    },
+  },
 }
 
 /**
@@ -181,15 +192,16 @@ export const MobileView: Story = {
       name: 'iphone',
       styles: {
         width: '375px',
-        height: '667px'
-      }
+        height: '667px',
+      },
     },
     docs: {
       description: {
-        story: 'モバイルデバイスでのPageLoader表示。小さな画面でも適切に中央配置される。'
-      }
-    }
-  }
+        story:
+          'モバイルデバイスでのPageLoader表示。小さな画面でも適切に中央配置される。',
+      },
+    },
+  },
 }
 
 /**
@@ -206,15 +218,16 @@ export const TabletView: Story = {
       name: 'ipad',
       styles: {
         width: '768px',
-        height: '1024px'
-      }
+        height: '1024px',
+      },
     },
     docs: {
       description: {
-        story: 'タブレットデバイスでのPageLoader表示。中間サイズでの最適化された表示。'
-      }
-    }
-  }
+        story:
+          'タブレットデバイスでのPageLoader表示。中間サイズでの最適化された表示。',
+      },
+    },
+  },
 }
 
 /**
@@ -230,9 +243,10 @@ export const DarkTheme: Story = {
     backgrounds: { default: 'dark' },
     docs: {
       description: {
-        story: 'ダークテーマでのPageLoader表示。暗い背景でも視認性の良いローディング表示。'
-      }
-    }
+        story:
+          'ダークテーマでのPageLoader表示。暗い背景でも視認性の良いローディング表示。',
+      },
+    },
   },
   decorators: [
     (Story) => (
@@ -242,8 +256,8 @@ export const DarkTheme: Story = {
           <Story />
         </MemoryRouter>
       </ThemeProvider>
-    )
-  ]
+    ),
+  ],
 }
 
 /**
@@ -259,13 +273,15 @@ export const RoutingTransition: Story = {
         <Typography variant="body1" paragraph>
           ページ間の遷移時に表示されるローディング状態のシミュレーション。
         </Typography>
-        <Box sx={{ 
-          border: '2px solid #2196f3', 
-          borderRadius: 2, 
-          p: 3, 
-          mt: 3,
-          backgroundColor: 'rgba(33, 150, 243, 0.05)'
-        }}>
+        <Box
+          sx={{
+            border: '2px solid #2196f3',
+            borderRadius: 2,
+            p: 3,
+            mt: 3,
+            backgroundColor: 'rgba(33, 150, 243, 0.05)',
+          }}
+        >
           <Typography variant="body2" gutterBottom color="primary">
             🔄 ページ遷移中: /expenses → /income
           </Typography>
@@ -277,10 +293,11 @@ export const RoutingTransition: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ページ間遷移時のローディング状態シミュレーション。ユーザーに進行状況を明確に伝達。'
-      }
-    }
-  }
+        story:
+          'ページ間遷移時のローディング状態シミュレーション。ユーザーに進行状況を明確に伝達。',
+      },
+    },
+  },
 }
 
 /**
@@ -296,18 +313,24 @@ export const LongLoading: Story = {
         <Typography variant="body1" paragraph>
           重いコンポーネントや大きなデータの読み込み時の表示。
         </Typography>
-        <Box sx={{ 
-          border: '2px solid #ff9800', 
-          borderRadius: 2, 
-          p: 3, 
-          mt: 3,
-          backgroundColor: 'rgba(255, 152, 0, 0.05)'
-        }}>
+        <Box
+          sx={{
+            border: '2px solid #ff9800',
+            borderRadius: 2,
+            p: 3,
+            mt: 3,
+            backgroundColor: 'rgba(255, 152, 0, 0.05)',
+          }}
+        >
           <Typography variant="body2" gutterBottom color="warning.main">
             ⏳ 大きなファイルを読み込み中... （通常より時間がかかります）
           </Typography>
           <PageLoader />
-          <Typography variant="caption" display="block" sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}
+          >
             * このローディングは長時間表示され続ける場合があります
           </Typography>
         </Box>
@@ -317,10 +340,11 @@ export const LongLoading: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長時間のローディング状況をシミュレート。ユーザーの不安を軽減する追加メッセージ付き。'
-      }
-    }
-  }
+        story:
+          '長時間のローディング状況をシミュレート。ユーザーの不安を軽減する追加メッセージ付き。',
+      },
+    },
+  },
 }
 
 /**
@@ -336,17 +360,23 @@ export const WithErrorBoundary: Story = {
         <Typography variant="body1" paragraph>
           ローディング中にエラーが発生した場合の対応例。
         </Typography>
-        <Box sx={{ 
-          border: '2px solid #f44336', 
-          borderRadius: 2, 
-          p: 3, 
-          mt: 3,
-          backgroundColor: 'rgba(244, 67, 54, 0.05)'
-        }}>
+        <Box
+          sx={{
+            border: '2px solid #f44336',
+            borderRadius: 2,
+            p: 3,
+            mt: 3,
+            backgroundColor: 'rgba(244, 67, 54, 0.05)',
+          }}
+        >
           <Typography variant="body2" gutterBottom color="error">
             ❌ ローディング中にエラーが発生しました
           </Typography>
-          <Typography variant="caption" display="block" sx={{ mb: 2, color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            display="block"
+            sx={{ mb: 2, color: 'text.secondary' }}
+          >
             通常はエラー境界でキャッチされ、エラーページに遷移します
           </Typography>
           <PageLoader />
@@ -357,10 +387,11 @@ export const WithErrorBoundary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ローディング中のエラー発生シナリオ。エラー境界と組み合わせた適切なエラーハンドリング。'
-      }
-    }
-  }
+        story:
+          'ローディング中のエラー発生シナリオ。エラー境界と組み合わせた適切なエラーハンドリング。',
+      },
+    },
+  },
 }
 
 /**
@@ -382,13 +413,15 @@ export const AccessibilityTest: Story = {
           <li>視覚的インジケーターとテキストの組み合わせ</li>
           <li>十分なコントラスト比</li>
         </ul>
-        <Box sx={{ 
-          border: '2px solid #4caf50', 
-          borderRadius: 2, 
-          p: 3, 
-          mt: 3,
-          backgroundColor: 'rgba(76, 175, 80, 0.05)'
-        }}>
+        <Box
+          sx={{
+            border: '2px solid #4caf50',
+            borderRadius: 2,
+            p: 3,
+            mt: 3,
+            backgroundColor: 'rgba(76, 175, 80, 0.05)',
+          }}
+        >
           <Typography variant="body2" gutterBottom color="success.main">
             ♿ アクセシビリティ対応ローディング
           </Typography>
@@ -400,10 +433,11 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ機能の確認用デモ。視覚障害者や聴覚障害者にも適切に情報を伝達。'
-      }
-    }
-  }
+        story:
+          'アクセシビリティ機能の確認用デモ。視覚障害者や聴覚障害者にも適切に情報を伝達。',
+      },
+    },
+  },
 }
 
 /**
@@ -419,19 +453,26 @@ export const PerformanceOptimized: Story = {
         <Typography variant="body1" paragraph>
           PageLoaderの軽量性とパフォーマンス最適化の確認。
         </Typography>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '16px',
+            marginTop: '20px',
+          }}
+        >
           {Array.from({ length: 12 }, (_, i) => (
-            <Box 
+            <Box
               key={i}
-              sx={{ 
-                border: '1px solid #ddd', 
-                borderRadius: 1, 
+              sx={{
+                border: '1px solid #ddd',
+                borderRadius: 1,
                 p: 2,
                 minHeight: '150px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
               }}
             >
               <Typography variant="caption" gutterBottom>
@@ -441,7 +482,11 @@ export const PerformanceOptimized: Story = {
             </Box>
           ))}
         </div>
-        <Typography variant="caption" display="block" sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}>
+        <Typography
+          variant="caption"
+          display="block"
+          sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}
+        >
           * 12個同時表示でのパフォーマンステスト
         </Typography>
       </div>
@@ -450,8 +495,9 @@ export const PerformanceOptimized: Story = {
   parameters: {
     docs: {
       description: {
-        story: '複数のPageLoaderを同時表示してパフォーマンスを確認。軽量設計により多数表示でも滑らか。'
-      }
-    }
-  }
+        story:
+          '複数のPageLoaderを同時表示してパフォーマンスを確認。軽量設計により多数表示でも滑らか。',
+      },
+    },
+  },
 }

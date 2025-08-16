@@ -61,10 +61,10 @@ describe('DashboardPage', () => {
 
     // 履歴コンポーネントが存在することを確認
     // 空の状態では履歴コンポーネントは何も表示しないが、Grid構造は存在する
-    const gridContainers = screen.getAllByRole('generic').filter(
-      el => el.className.includes('MuiGrid-container')
-    )
-    
+    const gridContainers = screen
+      .getAllByRole('generic')
+      .filter((el) => el.className.includes('MuiGrid-container'))
+
     // Grid構造が存在することで履歴エリアの存在を確認
     expect(gridContainers.length).toBeGreaterThan(0)
   })
@@ -76,7 +76,9 @@ describe('DashboardPage', () => {
     renderDashboardPage()
 
     // Containerコンポーネントが最大幅を制限しているかチェック
-    const container = screen.getByText('家計簿アプリ').closest('[class*="MuiContainer"]')
+    const container = screen
+      .getByText('家計簿アプリ')
+      .closest('[class*="MuiContainer"]')
     expect(container).toBeInTheDocument()
   })
 
@@ -102,9 +104,9 @@ describe('DashboardPage', () => {
     renderDashboardPage()
 
     // メインコンテンツエリアがランドマークとして認識されるかチェック
-    // const mainContent = screen.getByText('家計簿アプリ').closest('main') || 
+    // const mainContent = screen.getByText('家計簿アプリ').closest('main') ||
     //                    screen.getByText('家計簿アプリ').closest('[role="main"]')
-    
+
     // アプリタイトルが適切な見出しレベルになっているかチェック
     const title = screen.getByText('家計簿アプリ')
     expect(title.tagName).toBe('H1')

@@ -55,7 +55,7 @@ export interface IncomePageProps {
  * @example
  * ```tsx
  * // 将来的な拡張例（初期フィルター付き）
- * <IncomePage 
+ * <IncomePage
  *   initialDateRange={{ startDate: '2024-01-01', endDate: '2024-12-31' }}
  *   initialSourceFilter={['salary', 'bonus', 'investment']}
  * />

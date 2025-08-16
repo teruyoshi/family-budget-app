@@ -75,9 +75,9 @@ export interface AppLayoutProps {
  * @example
  * ```tsx
  * // カスタマイズされた使用例
- * <AppLayout 
- *   maxWidth="lg" 
- *   backgroundColor="#f0f0f0" 
+ * <AppLayout
+ *   maxWidth="lg"
+ *   backgroundColor="#f0f0f0"
  *   drawerWidth={280}
  *   title="My Custom App"
  * >
@@ -109,10 +109,7 @@ export default function AppLayout({
     >
       {/* ナビゲーション */}
       {showNavigation && (
-        <AppNavigation 
-          drawerWidth={drawerWidth}
-          title={title}
-        />
+        <AppNavigation drawerWidth={drawerWidth} title={title} />
       )}
 
       {/* メインコンテンツエリア */}
@@ -120,7 +117,7 @@ export default function AppLayout({
         component="main"
         sx={{
           flexGrow: 1,
-          width: showNavigation 
+          width: showNavigation
             ? { md: `calc(100% - ${drawerWidth}px)` }
             : '100%',
           minHeight: '100vh',
@@ -128,7 +125,7 @@ export default function AppLayout({
       >
         {/* AppBar のスペース確保 */}
         {showNavigation && <Toolbar />}
-        
+
         {/* ページコンテンツ */}
         <Container
           maxWidth={maxWidth}
@@ -139,11 +136,9 @@ export default function AppLayout({
         >
           {/* パンくずナビゲーション */}
           {showBreadcrumbs && <AppBreadcrumbs />}
-          
+
           {enableTransitions ? (
-            <PageTransition type={transitionType}>
-              {children}
-            </PageTransition>
+            <PageTransition type={transitionType}>{children}</PageTransition>
           ) : (
             children
           )}
