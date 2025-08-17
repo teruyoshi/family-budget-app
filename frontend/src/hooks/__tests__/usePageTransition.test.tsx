@@ -19,12 +19,11 @@ describe('usePageTransition', () => {
     expect(result.current.transitionKey).toBe('/dashboard')
   })
 
-  it('ページ変更時にtransitionInが一時的にfalseになる', () => {
-    // この実装では、各フックインスタンスは独立しているため
-    // 実際のアプリケーションでは React Router の navigation で
-    // 同一コンポーネント内でのパス変更時にトランジションが発生する
+  it('異なるパスでも初期状態では常にtransitionIn: trueを返す', () => {
+    // 各フックインスタンスは独立しているため、
+    // 異なるパスでも初期状態では常に true を返す
 
-    // 新しいページのフックは初期状態では true を返す
+    // ダッシュボードページ
     const wrapper1 = createWrapper(['/dashboard'])
     const { result: result1 } = renderHook(() => usePageTransition(), {
       wrapper: wrapper1,
@@ -32,7 +31,7 @@ describe('usePageTransition', () => {
     expect(result1.current.transitionIn).toBe(true)
     expect(result1.current.transitionKey).toBe('/dashboard')
 
-    // 別のページも初期状態では true を返す（期待通り）
+    // 設定ページ
     const wrapper2 = createWrapper(['/settings'])
     const { result: result2 } = renderHook(() => usePageTransition(), {
       wrapper: wrapper2,
