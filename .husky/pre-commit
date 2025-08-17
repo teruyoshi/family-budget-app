@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# プロジェクトルートからフロントエンドディレクトリで lint-staged 実行
+cd "$(dirname "$0")/../frontend" && npx lint-staged
