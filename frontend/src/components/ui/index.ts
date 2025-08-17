@@ -7,4 +7,6 @@
 
 // 基本入力コンポーネント
 export { default as AmountInput, type AmountInputProps } from './AmountInput'
+export { default as AmountText, type AmountTextProps } from './AmountText'
+export { default as AppTitle, type AppTitleProps } from './AppTitle'
 export { default as TextInput, type TextInputProps } from './TextInput'

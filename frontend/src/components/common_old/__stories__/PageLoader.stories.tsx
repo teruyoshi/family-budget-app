@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Box, CssBaseline, Typography } from '@mui/material'
 import PageLoader from '../PageLoader'
-import AppLayout from '@/components/layout/AppLayout'
+import AppLayout from '@/components/layout_old/AppLayout'
 
 /**
  * PageLoaderコンポーネントのStorybookストーリー
