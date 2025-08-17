@@ -1,177 +1,104 @@
-import { useMoney, useMoneyFormat } from '@/hooks'
-import { parseMoneyString } from '@/lib/format'
-import TextInput from '@/components/common_old/TextInput'
+import TextInput from './TextInput'
 import { amountInputStyles } from './AmountInput.styles'
+import { useAmountInput } from './hooks/useAmountInput'
 import type { SxProps, Theme } from '@mui/material'
 
 /**
- * TextInputに直接渡すprops型定義
- *
- * AmountInputからTextInputに透過的に渡されるプロパティを集約。
+ * 金額入力コンポーネントのProps
  */
-interface TextInputPassThroughProps {
-  /** プレースホルダーテキスト（例: "金額を入力してください"） */
-  placeholder?: string
-
-  /** MUI sx propsによるカスタムスタイル */
-  sx?: SxProps<Theme>
-
-  /** 必須項目として扱うかどうか（バリデーション表示用） */
-  required?: boolean
-
-  /** 全幅で表示するかどうか（デフォルト: true） */
-  fullWidth?: boolean
-
+export interface AmountInputProps {
   /**
-   * MUI TextFieldのバリアント
-   * @default "outlined"
+   * 現在の金額
+   * @default 0
+   * @example 15000
    */
+  value?: number
+  /**
+   * 金額変更時のコールバック
+   * @param value 入力された数値
+   */
+  onChange?: (value: number) => void
+  /** プレースホルダーテキスト */
+  placeholder?: string
+  /** MUIスタイル設定 */
+  sx?: SxProps<Theme>
+  /** 必須入力項目かどうか */
+  required?: boolean
+  /** 全幅表示するかどうか */
+  fullWidth?: boolean
+  /** MUI TextFieldのバリアント */
   variant?: 'outlined' | 'filled' | 'standard'
-
-  /** フィールドのラベル（内部でaria-labelに設定される） */
+  /** フィールドラベル */
   label?: string
-
-  /** アクセシビリティ用説明（aria-describedby） */
+  /** アクセシビリティ説明 */
   'aria-describedby'?: string
-
-  /** エラー状態を表示するかどうか */
+  /** エラー状態 */
   error?: boolean
-
-  /** エラーメッセージテキスト */
+  /** エラーメッセージ */
   helperText?: string
-
-  /** フィールド名（react-hook-form用） */
+  /** フィールド名 */
   name?: string
-
-  /** フォーカス失ったときのコールバック（react-hook-form用） */
+  /** フォーカス喪失時コールバック */
   onBlur?: () => void
-
-  /** DOM要素への参照（React 19のref as prop対応） */
+  /** DOM要素参照 */
   ref?: React.Ref<HTMLInputElement>
 }
 
 /**
- * 金額入力コンポーネントのProps型定義
+ * 金額入力コンポーネント
  *
- * 金額入力に特化したプロパティセット。react-hook-form対応で、
- * 自動的に¥記号とカンマ区切りで表示される。
- */
-export interface AmountInputProps extends TextInputPassThroughProps {
-  /**
-   * 現在の金額（数値）
-   * @example 15000 → "¥15,000" と表示
-   */
-  value?: number
-
-  /**
-   * 金額変更時のコールバック関数
-   * @param value 入力された数値（NaNや無効値は渡されない）
-   */
-  onChange?: (value: number) => void
-}
-
-/**
- * 金額入力専用コンポーネント
+ * 数値を自動で¥記号付きカンマ区切り形式にフォーマットする入力フィールド。
+ * react-hook-formとの完全互換性を持ち、右寄せ表示で視認性を向上。
  *
- * 数値入力を統一された金額表示フォーマットに自動変換する特殊なテキスト入力コンポーネント。
- * react-hook-formとの完全な互換性を持ち、自動的にカンマ区切りと¥記号を表示し、
- * 右寄せレイアウトで数値の視認性を向上させます。
+ * @example
+ * // 基本的な使用
+ * <AmountInput
+ *   value={15000}
+ *   onChange={setValue}
+ *   label="支出金額"
+ *   placeholder="金額を入力"
+ * />
  *
- * ## 特徴
- * - react-hook-form完全対応: forwardRefでref転送、Controller連携
- * - 統一フォーマット: lib/format/useMoney + parseMoneyString を使用
- * - 入力中は数値のみを受け付け、自動的に¥15,000形式でフォーマット
- * - 堅牢なパース処理: 統一されたparseMoneyString関数でエラーハンドリング
- * - 右寄せ表示で金額の桁を把握しやすい
- * - プレースホルダーは中央揃えで使いやすさを配慮
- * - 半角数値のみ受け付け、全角数値は自動変換
- *
- * ## 使用例
- *
- * ### react-hook-formでの使用例
- * ```tsx
- * import { useForm, Controller } from 'react-hook-form'
- * import { zodResolver } from '@hookform/resolvers/zod'
- * import { amountInputSchema } from '@/lib/validation/schemas'
- *
- * const { control, handleSubmit } = useForm({
- *   resolver: zodResolver(amountInputSchema)
- * })
- *
+ * @example
+ * // react-hook-formでの使用
  * <Controller
  *   name="amount"
  *   control={control}
  *   render={({ field, fieldState }) => (
  *     <AmountInput
  *       {...field}
- *       placeholder="金額を入力してください"
  *       error={!!fieldState.error}
  *       helperText={fieldState.error?.message}
  *     />
  *   )}
  * />
- * ```
- *
- * ### 従来の使用例（互換性維持）
- * ```tsx
- * <AmountInput
- *   value={amount}
- *   onChange={setAmount}
- *   label="支出金額"
- *   placeholder="金額を入力してください"
- * />
- * ```
  */
-function AmountInput({
-  value = 0,
-  onChange,
-  ref,
-  label,
-  ...textInputProps
-}: AmountInputProps) {
-    const [money, setMoney] = useMoney(value)
-    const { forInput: displayValue } = useMoneyFormat(money)
+function AmountInput(props: AmountInputProps) {
+  const { value = 0, onChange, ...textInputProps } = props
+  const { label } = textInputProps
 
-    const handleChange = (inputValue: string) => {
-      try {
-        // 統一されたパース処理ライブラリを使用
-        // ¥記号、カンマ、全角数字などを適切に処理
-        const numericValue = parseMoneyString(inputValue)
-        setMoney(numericValue)
-        onChange?.(numericValue)
-      } catch (error) {
-        // MAX_SAFE_INTEGERを超える値や無効な入力の場合
-        // エラーを無視して現在の値を維持（UIの安定性を保つ）
-        console.warn(
-          'AmountInput: 入力値が大きすぎるか無効です:',
-          inputValue,
-          error
-        )
-      }
-    }
+  const { amount, handleChange } = useAmountInput(value, onChange)
 
-    return (
-      <TextInput
-        {...textInputProps}
-        ref={ref}
-        type="text"
-        value={displayValue}
-        onChange={handleChange}
-        inputProps={{
-          'aria-label':
-            label ||
-            `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
-          'aria-describedby': textInputProps['aria-describedby'],
-          'aria-invalid': textInputProps.error,
-          inputMode: 'numeric' as const,
-          pattern: '^¥?[0-9,]*$',
-        }}
-        sx={{
-          ...amountInputStyles.inputField,
-          ...textInputProps.sx,
-        }}
-      />
-    )
+  return (
+    <TextInput
+      {...textInputProps}
+      type="text"
+      value={amount}
+      onChange={handleChange}
+      inputProps={{
+        'aria-label':
+          label || `金額入力フィールド、現在の値: ${amount || '未入力'}`,
+        'aria-describedby': textInputProps['aria-describedby'],
+        'aria-invalid': textInputProps.error,
+        inputMode: 'numeric' as const,
+        pattern: '^¥?[0-9,]*$',
+      }}
+      sx={{
+        ...amountInputStyles.inputField,
+        ...textInputProps.sx,
+      }}
+    />
+  )
 }
 
 export default AmountInput

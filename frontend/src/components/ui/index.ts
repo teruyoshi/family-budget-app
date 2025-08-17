@@ -5,5 +5,6 @@
  * 再利用可能な UI パーツを集約し、一貫したインポートを提供します。
  */
 
-// バレルエクスポートは移行完了後に追加予定
-export {}
+// 基本入力コンポーネント
+export { default as AmountInput, type AmountInputProps } from './AmountInput'
+export { default as TextInput, type TextInputProps } from './TextInput'
