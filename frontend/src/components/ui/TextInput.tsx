@@ -8,10 +8,10 @@ import type { SxProps, Theme } from '@mui/material'
  * 様々な入力タイプに対応し、他の入力コンポーネントの基盤としても使用。
  *
  * @example
- * <TextInput value={name} onChange={setName} placeholder="お名前" />
+ * <TextInput value={name} onChange={setName} label="お名前" placeholder="お名前を入力" />
  *
  * @example
- * <TextInput type="email" value={email} onChange={setEmail} required />
+ * <TextInput type="email" value={email} onChange={setEmail} label="メールアドレス" required />
  */
 
 /**
@@ -22,6 +22,8 @@ export interface TextInputProps {
   type?: 'text' | 'number' | 'email' | 'password'
   /** プレースホルダーテキスト */
   placeholder?: string
+  /** フィールドラベル */
+  label?: string
   /** フォーム識別用name属性 */
   name?: string
   /** 入力値 */

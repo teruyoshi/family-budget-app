@@ -18,20 +18,15 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
-          '共通コンポーネント',
+          'UI Components',
           [
             'AmountInput',
             'TextInput',
-            'AmountText',
-            'TextLabel',
-            'DatePicker',
-            'AppTitle',
-            'TransactionForm',
           ],
-          '残高機能',
-          '支出機能',
-          '収入機能',
-          '履歴機能',
+          'Form Components',
+          'Layout Components',
+          'Navigation Components',
+          'Feature Components',
         ],
       },
     },

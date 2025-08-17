@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 import NotFoundPage from '../NotFoundPage'
-import AppLayout from '@/components/layout/AppLayout'
+import AppLayout from '@/components/layout_old/AppLayout'
 
 /**
  * NotFoundPage（404エラーページ）のStorybookストーリー
