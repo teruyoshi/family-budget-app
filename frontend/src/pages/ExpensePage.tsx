@@ -1,5 +1,5 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
-import AppLayout from '@/components/layout/AppLayout'
+import AppLayout from '@/components/layout_old/AppLayout'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { ExpenseHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks/useBudgetManager'

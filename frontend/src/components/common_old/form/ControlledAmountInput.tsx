@@ -1,5 +1,5 @@
 import { type Control, Controller } from 'react-hook-form'
-import { AmountInput } from '@/components/common'
+import { AmountInput } from '@/components/ui'
 import type { TransactionFormData } from '@/lib/validation/schemas'
 
 /**

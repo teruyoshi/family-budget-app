@@ -1,6 +1,6 @@
 import { type ReactElement, Suspense, lazy } from 'react'
-import PageLoader from '@/components/common/PageLoader'
-import NotFoundPage from '@/components/common/NotFoundPage'
+import PageLoader from '@/components/common_old/PageLoader'
+import NotFoundPage from '@/components/common_old/NotFoundPage'
 import type { AppRoute, RouteInfo } from '@/types'
 
 /**
