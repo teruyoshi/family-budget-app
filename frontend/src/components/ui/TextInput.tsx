@@ -124,22 +124,18 @@ export interface TextInputProps {
  * MUI TextFieldをラップした統一的なテキスト入力UI。
  * React 19のref as prop機能により、シンプルで直感的なAPIを提供。
  */
-function TextInput({
-  type = 'text',
-  placeholder,
-  name,
-  value,
-  onChange,
-  onBlur,
-  sx,
-  required = false,
-  fullWidth = true,
-  variant = 'outlined',
-  error = false,
-  helperText,
-  inputProps,
-  ref,
-}: TextInputProps) {
+function TextInput(props: TextInputProps) {
+  const {
+    onChange,
+    ref,
+    type = 'text',
+    required = false,
+    fullWidth = true,
+    variant = 'outlined',
+    error = false,
+    ...textFieldProps
+  } = props
+
   /**
    * 入力値変更ハンドラー
    * @param {React.ChangeEvent<HTMLInputElement>} e - 変更イベント
@@ -150,20 +146,14 @@ function TextInput({
 
   return (
     <TextField
+      {...textFieldProps}
       inputRef={ref}
       type={type}
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      onChange={handleChange}
-      onBlur={onBlur}
       required={required}
       fullWidth={fullWidth}
       variant={variant}
       error={error}
-      helperText={helperText}
-      inputProps={inputProps}
-      sx={sx}
+      onChange={handleChange}
     />
   )
 }
