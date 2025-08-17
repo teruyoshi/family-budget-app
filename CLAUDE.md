@@ -84,20 +84,17 @@ make backend-shell        # バックエンドコンテナ接続
 frontend/
 ├── src/
 │   ├── components/
-│   │   ├── common/              # 汎用コンポーネント（JSDoc完備）
-│   │   │   ├── __stories__/     # Storybookストーリーファイル
-│   │   │   ├── AmountInput.tsx  # 金額入力（¥フォーマット対応）
-│   │   │   ├── AmountText.tsx   # 金額表示（lib/format統一化済み）
+│   │   ├── ui/                  # 基本UIコンポーネント
+│   │   │   ├── AmountInput.tsx  # 金額入力
+│   │   │   ├── AmountText.tsx   # 金額表示
 │   │   │   ├── AppTitle.tsx     # アプリタイトル
 │   │   │   ├── DatePicker.tsx   # 日付選択
-│   │   │   ├── NotFoundPage.tsx # 404エラーページ
-│   │   │   ├── PageLoader.tsx   # ページローディング
 │   │   │   ├── TextInput.tsx    # テキスト入力
 │   │   │   ├── TextLabel.tsx    # ラベル表示
-│   │   │   └── TransactionForm.tsx # 取引フォーム統合
-│   │   └── layout/              # レイアウトコンポーネント
-│   │       ├── AppLayout.tsx    # アプリ共通レイアウト
-│   │       └── index.ts         # バレルエクスポート
+│   │   │   └── index.ts         # バレルエクスポート
+│   │   ├── provider/            # プロバイダーコンポーネント
+│   │   │   └── DateLocalizationProvider.tsx
+│   │   └── layout_old/          # レイアウト（移行前）
 │   ├── pages/                   # ページコンポーネント（React Router）
 │   │   ├── DashboardPage.tsx    # ダッシュボード（ホーム）
 │   │   ├── ExpensePage.tsx      # 支出管理ページ
@@ -138,35 +135,18 @@ frontend/
 - **アーキテクチャ**: pages/routes/layout 分離、型安全なルート管理
 - **品質対策**: ESLint・TypeScript strict・Prettier・husky・lint-staged完備
 
-## 🤖 AI自動ドキュメンテーション運用
+## 🤖 ドキュメンテーション方針
 
-### 基本方針
-- **コンポーネント作成・編集時**: AI自律的にTSDoc・用語集・トレーサビリティ表を更新
-- **管理可能性重視**: 複雑なドキュメントは簡潔化、困難なものは作成しない
-- **段階的適用**: 重要コンポーネントから順次適用、完璧主義を避ける
-
-### TSDoc統一化（完了）
-- **形式**: @remarks, @example, @defaultValue を使用
-- **Props型**: 必ずexportし、react-docgen-typescriptで自動抽出
-- **品質管理**: eslint-plugin-tsdocで構文チェック（将来的に厳格化）
-
-### Storybookトレーサビリティ表（主要コンポーネント適用済み）
-- **連携表**: ADR・用語集・テスト・品質ガイドとの関連性を明示
-- **適用範囲**: AmountInput, AmountText, TransactionForm等の重要コンポーネント
-- **管理負荷**: 管理困難な複雑表は避け、シンプルな構成を維持
-
-### 用語集自動更新（v1.2.0運用中）
-- **新概念検出**: コンポーネント開発時に自動で用語追加
-- **データモデル同期**: Mermaid図の自動更新
-- **更新履歴**: バージョン管理で変更履歴を追跡
+- **簡潔性重視**: 必要最小限の情報のみ記載
+- **TSDoc**: @example中心の実用的なドキュメント
+- **管理負荷軽減**: 複雑なドキュメントは作成しない
 
 ## 🎨 コード規約
-- **TypeScript**: strict mode、包括的TSDocコメント必須
-- **MUI**: コンポーネント優先、sx propsスタイリング
-- **パス**: `@/`エイリアスでsrcディレクトリ参照
-- **エクスポート**: バレルエクスポート（index.ts）で再利用性向上
-- **テスト**: 単体テスト重視（結合テスト最小化で高速化）
-- **精度対策**: 金額はMAX_SAFE_INTEGER範囲内チェック必須（lib/format/money.ts活用）
+- **TypeScript**: strict mode、簡潔なTSDoc
+- **MUI**: sx props、コンポーネント優先
+- **パス**: `@/`エイリアス使用
+- **エクスポート**: バレルエクスポート（index.ts）
+- **テスト**: 単体テスト重視
 
 ## 🔗 関連リソース
 - **用語集**: [docs-src/glossary.md](frontend/docs-src/glossary.md) - v1.2.0（自動更新運用中）
@@ -174,19 +154,15 @@ frontend/
 - **品質ガイド**: [docs-src/quality/](frontend/docs-src/quality/) - アクセシビリティ・パフォーマンス
 - **PRテンプレート**: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) - 品質チェックリスト
 
-## 📈 完了済み主要機能
-- ✅ **React Router 完全実装**: useRoutes + コード分割 + 404対応
-- ✅ **ページベース構造**: 5ページ + レイアウト + テスト完備
-- ✅ **型安全ルート管理**: AppRoute型 + RouteInfo型による厳密管理
-- ✅ **パフォーマンス最適化**: React.lazy + Suspense による初期バンドル削減
-- ✅ **金額フォーマット統一化**: lib/format/money.ts による Single Source of Truth
-- ✅ **フック分離**: useMoney（状態）+ useMoneyFormat（表示）の単一責任分離
-- ✅ **開発インフラ完備**: TDD対応・個別テスト・品質チェック・自動修正・Git hooks・CI/CD
+## 📈 完了済み機能
+- ✅ **React Router**: useRoutes + コード分割 + 404対応
+- ✅ **ページ構成**: 5ページ + レイアウト + テスト
+- ✅ **型安全**: AppRoute型による厳密管理
+- ✅ **UIコンポーネント**: AmountInput, AmountText, AppTitle, DatePicker, TextInput, TextLabel
+- ✅ **プロバイダー**: DateLocalizationProvider分離
+- ✅ **開発環境**: テスト・品質チェック・CI/CD完備
 
-## 🚀 Phase 1: インフラ基盤整備（完了）
-- **usePageTransition実装**: React Router遷移制御（TDD手法）
-- **効率的開発ツール**: 個別ファイルテスト・品質チェック・自動修正
-- **TypeScript強化**: strict mode 100%・ガイドライン策定
-- **コード品質自動化**: ESLint-Prettier統合・husky/lint-staged・CI/CD改善
-- **Form validation統合**: react-hook-form + zod基盤（設計完了）
-- **ディレクトリ構成設計**: 段階的リファクタリング計画策定
+## 🚀 Phase 2: Directory Structure Migration（進行中）
+- **types/**: 共通型定義の移行完了
+- **components/ui/**: 基本UIコンポーネント移行完了
+- **components/provider/**: プロバイダー分離完了
