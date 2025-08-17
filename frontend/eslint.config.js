@@ -31,14 +31,17 @@ export default tseslint.config(
         'prefer-const': 'error', // const推奨
         'no-unused-vars': 'off', // TypeScriptルールに委譲
         '@typescript-eslint/no-unused-vars': 'error',
-        
+
         // import順序整理
-        'sort-imports': ['error', {
-          ignoreCase: false,
-          ignoreDeclarationSort: true, // import-sortプラグインに委譲
-          ignoreMemberSort: false,
-          memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single']
-        }],
+        'sort-imports': [
+          'error',
+          {
+            ignoreCase: false,
+            ignoreDeclarationSort: true, // import-sortプラグインに委譲
+            ignoreMemberSort: false,
+            memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+          },
+        ],
       },
     },
     // Test files configuration
