@@ -17,7 +17,7 @@
 
 // TextEncoder/TextDecoder polyfill for React Router Dom
 // Node.js環境（Jest）では利用できないWeb APIをNode.js util モジュールで補完
-import { TextEncoder, TextDecoder } from 'util'
+import { TextDecoder, TextEncoder } from 'util'
 
 /**
  * TextDecoderの型定義

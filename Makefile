@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test test-file lint-file format-file format-check-file typecheck-file quality-check-file backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
+.PHONY: help up down build rebuild logs clean dev test test-file lint-file format-file format-check-file typecheck-file quality-check-file backend frontend db migrate lint lint-frontend lint-fix-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
 
 # デフォルトターゲット
 help:
@@ -30,6 +30,7 @@ help:
 	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）"
 	@echo "  make lint       - 全Lintチェック実行"
 	@echo "  make lint-frontend - フロントエンドLintチェック実行"
+	@echo "  make lint-fix-frontend - フロントエンドLint自動修正実行"
 	@echo "  make lint-backend  - バックエンドLintチェック実行"
 	@echo "  make format     - 全コードフォーマット実行"
 	@echo "  make format-frontend - フロントエンドコードフォーマット実行"
@@ -184,6 +185,11 @@ lint:
 lint-frontend:
 	@echo "フロントエンドLintを実行中..."
 	docker compose exec frontend npm run lint
+
+# フロントエンドLint自動修正
+lint-fix-frontend:
+	@echo "フロントエンドLint自動修正を実行中..."
+	docker compose exec frontend npm run lint -- --fix
 
 # バックエンドのみLint実行
 lint-backend:

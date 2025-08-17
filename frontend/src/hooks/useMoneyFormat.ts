@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { formatMoneyForInput, formatMoneyForDisplay } from '@/lib/format'
+import { formatMoneyForDisplay, formatMoneyForInput } from '@/lib/format'
 
 /**
  * 金額フォーマットフックの戻り値型定義

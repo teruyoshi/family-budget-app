@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactElement } from 'react'
+import { type ReactElement, Suspense, lazy } from 'react'
 import PageLoader from '@/components/common/PageLoader'
 import NotFoundPage from '@/components/common/NotFoundPage'
 

@@ -1,4 +1,4 @@
-import { Controller, type Control } from 'react-hook-form'
+import { type Control, Controller } from 'react-hook-form'
 import { FormControlLabel, Switch, Typography } from '@mui/material'
 import type { TransactionFormData } from '@/lib/validation/schemas'
 
