@@ -1,4 +1,4 @@
-import { ListItem, ListItemText, Chip } from '@mui/material'
+import { Chip, ListItem, ListItemText } from '@mui/material'
 import { AmountText } from '@/components/common'
 import type { Expense } from '@/hooks'
 
