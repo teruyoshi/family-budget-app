@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import TextLabel from '../../../components/common/TextLabel'
-import AmountText from '../../../components/common/AmountText'
+import TextLabel from '../../../components/common_old/TextLabel'
+import AmountText from '../../../components/common_old/AmountText'
 
 /**
  * 合計支出表示コンポーネントのProps型定義

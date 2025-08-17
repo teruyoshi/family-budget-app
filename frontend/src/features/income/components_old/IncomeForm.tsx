@@ -1,4 +1,4 @@
-import { TransactionForm } from '@/components/common'
+import { TransactionForm } from '@/components/common_old'
 import { type TransactionFormData } from '@/lib/validation/schemas'
 
 /**
