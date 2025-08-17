@@ -1,4 +1,4 @@
-import { Paper, Grid, Box } from '@mui/material'
+import { Box, Grid, Paper } from '@mui/material'
 import AppTitle from '@/components/common/AppTitle'
 import AppLayout from '@/components/layout/AppLayout'
 import { BalanceDisplay } from '@/features/balance'

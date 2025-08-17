@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode } from 'react'
+import { type ReactNode, forwardRef } from 'react'
 import { Box, Fade, Slide, useMediaQuery, useTheme } from '@mui/material'
 
 /**

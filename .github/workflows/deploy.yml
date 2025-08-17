@@ -34,6 +34,16 @@ jobs:
           cd frontend
           npm ci
 
+      - name: Run quality checks
+        run: |
+          cd frontend
+          echo "🔍 デプロイ前品質チェック開始..."
+          npm run format:check
+          npm run typecheck
+          npm run lint
+          npm run test:ci
+          echo "✅ 全品質チェック完了"
+
       - name: Build
         run: |
           cd frontend

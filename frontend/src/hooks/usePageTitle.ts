@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { getRouteInfo, type AppRoute } from '@/routes/routes'
+import { type AppRoute, getRouteInfo } from '@/routes/routes'
 
 /**
  * ページタイトル管理用のカスタムフック

@@ -1,3 +1,6 @@
+import { useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+
 /**
  * React Router用のページトランジションフック
  *
@@ -22,18 +25,28 @@
  * ```
  */
 export function usePageTransition() {
-  // TODO: 将来実装
-  // const location = useLocation()
-  // const [transitionIn, setTransitionIn] = useState(true)
-  //
-  // useEffect(() => {
-  //   setTransitionIn(false)
-  //   const timer = setTimeout(() => setTransitionIn(true), 50)
-  //   return () => clearTimeout(timer)
-  // }, [location.pathname])
+  const location = useLocation()
+  const [transitionIn, setTransitionIn] = useState(true)
+  const previousPathRef = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (previousPathRef.current === null) {
+      // 初回マウント時は前回のパスがないのでトランジションしない
+      previousPathRef.current = location.pathname
+      return
+    }
+
+    if (previousPathRef.current !== location.pathname) {
+      // パスが変更された場合のみトランジション実行
+      setTransitionIn(false)
+      const timer = setTimeout(() => setTransitionIn(true), 50)
+      previousPathRef.current = location.pathname
+      return () => clearTimeout(timer)
+    }
+  }, [location.pathname])
 
   return {
-    transitionIn: true,
-    transitionKey: 'static', // location.pathname
+    transitionIn,
+    transitionKey: location.pathname,
   }
 }

@@ -1,4 +1,4 @@
-import { Paper, Grid, Typography, Box } from '@mui/material'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import AppLayout from '@/components/layout/AppLayout'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { IncomeHistory } from '@/features/history'

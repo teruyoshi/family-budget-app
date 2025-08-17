@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { CssBaseline, Typography, Paper, Box } from '@mui/material'
+import { Box, CssBaseline, Paper, Typography } from '@mui/material'
 import AppLayout from '../AppLayout'
 
 /**

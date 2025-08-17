@@ -2,7 +2,7 @@ import { Breadcrumbs, Link, Typography } from '@mui/material'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import { getRouteInfo, type AppRoute } from '@/routes/routes'
+import { type AppRoute, getRouteInfo } from '@/routes/routes'
 
 /**
  * パンくずナビゲーションコンポーネントのProps型定義
