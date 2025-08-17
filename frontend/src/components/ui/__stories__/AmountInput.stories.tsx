@@ -177,7 +177,7 @@ export const Interactive: Story = {
 // フォームレイアウトでの使用例
 export const InFormLayout: Story = {
   render: function FormLayoutExample(args) {
-    const [expenseAmount, setExpenseAmount] = useState(3000)
+    const [expenseAmount, setExpenseAmount] = useState(args.value || 3000)
     const [incomeAmount, setIncomeAmount] = useState(25000)
 
     return (

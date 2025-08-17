@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import type { Expense, Income } from '@/types'
 
+// 型エクスポート（_old ディレクトリ互換性のため）
+export type { Expense, Income } from '@/types'
+
 /**
  * 家計管理統合カスタムフック
  *

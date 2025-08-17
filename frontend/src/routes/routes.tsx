@@ -3,6 +3,9 @@ import PageLoader from '@/components/common_old/PageLoader'
 import NotFoundPage from '@/components/common_old/NotFoundPage'
 import type { AppRoute, RouteInfo } from '@/types'
 
+// 型エクスポート（_old ディレクトリ互換性のため）
+export type { AppRoute } from '@/types'
+
 /**
  * React Router 用のルート定義と型定義
  *
