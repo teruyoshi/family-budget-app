@@ -2,7 +2,7 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2025年8月16日（Phase 1: 基盤整備開始、効率的テストコマンド追加）
+**最終更新**: 2025年8月17日（Phase 1: インフラ基盤整備完了）
 
 ## 📋 プロジェクト概要
 
@@ -30,10 +30,12 @@ make test-frontend        # フロントエンドテスト（全テスト実行�
 make test-file FILE=テストファイル名  # 特定のテストファイルのみ実行
 make test-backend         # バックエンドテスト  
 make lint-frontend        # ESLintチェック
+make lint-fix-frontend    # ESLint自動修正
 make format-frontend      # Prettierフォーマット
 make npm-install          # 依存関係インストール
 make test-coverage-open   # テストカバレッジをブラウザで表示
 make quality-check        # 統合品質チェック（lint+format+test）
+make quality-check-file FILE=ファイル名  # 個別ファイル品質チェック
 ```
 
 ##### 効率的な単体テスト実行
@@ -129,12 +131,12 @@ frontend/
 ```
 
 ## 🔧 現在の設定情報
-- **プロジェクト名**: FamilyBudgetApp (v0.3.1)
+- **プロジェクト名**: FamilyBudgetApp (v0.4.0)
 - **テスト状況**: 152テスト、17テストスイート全通過
 - **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
 - **ルーティング**: useRoutes、React.lazy、Suspense完全対応
 - **アーキテクチャ**: pages/routes/layout 分離、型安全なルート管理
-- **品質対策**: ESLint・TypeScript strict・テストカバレッジ90%+
+- **品質対策**: ESLint・TypeScript strict・Prettier・husky・lint-staged完備
 
 ## 🤖 AI自動ドキュメンテーション運用
 
@@ -179,3 +181,12 @@ frontend/
 - ✅ **パフォーマンス最適化**: React.lazy + Suspense による初期バンドル削減
 - ✅ **金額フォーマット統一化**: lib/format/money.ts による Single Source of Truth
 - ✅ **フック分離**: useMoney（状態）+ useMoneyFormat（表示）の単一責任分離
+- ✅ **開発インフラ完備**: TDD対応・個別テスト・品質チェック・自動修正・Git hooks・CI/CD
+
+## 🚀 Phase 1: インフラ基盤整備（完了）
+- **usePageTransition実装**: React Router遷移制御（TDD手法）
+- **効率的開発ツール**: 個別ファイルテスト・品質チェック・自動修正
+- **TypeScript強化**: strict mode 100%・ガイドライン策定
+- **コード品質自動化**: ESLint-Prettier統合・husky/lint-staged・CI/CD改善
+- **Form validation統合**: react-hook-form + zod基盤（設計完了）
+- **ディレクトリ構成設計**: 段階的リファクタリング計画策定
