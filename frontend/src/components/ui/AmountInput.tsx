@@ -1,7 +1,7 @@
-import { forwardRef } from 'react'
 import { useMoney, useMoneyFormat } from '@/hooks'
 import { parseMoneyString } from '@/lib/format'
 import TextInput from '@/components/common_old/TextInput'
+import { amountInputStyles } from './AmountInput.styles'
 import type { SxProps, Theme } from '@mui/material'
 
 /**
@@ -28,8 +28,8 @@ interface TextInputPassThroughProps {
    */
   variant?: 'outlined' | 'filled' | 'standard'
 
-  /** アクセシビリティ用ラベル（aria-label） */
-  'aria-label'?: string
+  /** フィールドのラベル（内部でaria-labelに設定される） */
+  label?: string
 
   /** アクセシビリティ用説明（aria-describedby） */
   'aria-describedby'?: string
@@ -45,6 +45,9 @@ interface TextInputPassThroughProps {
 
   /** フォーカス失ったときのコールバック（react-hook-form用） */
   onBlur?: () => void
+
+  /** DOM要素への参照（React 19のref as prop対応） */
+  ref?: React.Ref<HTMLInputElement>
 }
 
 /**
@@ -114,19 +117,18 @@ export interface AmountInputProps extends TextInputPassThroughProps {
  * <AmountInput
  *   value={amount}
  *   onChange={setAmount}
+ *   label="支出金額"
  *   placeholder="金額を入力してください"
  * />
  * ```
  */
-const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
-  function AmountInput(
-    {
-      value = 0,
-      onChange,
-      ...textInputProps
-    },
-    ref
-  ) {
+function AmountInput({
+  value = 0,
+  onChange,
+  ref,
+  label,
+  ...textInputProps
+}: AmountInputProps) {
     const [money, setMoney] = useMoney(value)
     const { forInput: displayValue } = useMoneyFormat(money)
 
@@ -157,7 +159,7 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
         onChange={handleChange}
         inputProps={{
           'aria-label':
-            textInputProps['aria-label'] ||
+            label ||
             `金額入力フィールド、現在の値: ${displayValue || '未入力'}`,
           'aria-describedby': textInputProps['aria-describedby'],
           'aria-invalid': textInputProps.error,
@@ -165,18 +167,11 @@ const AmountInput = forwardRef<HTMLInputElement, AmountInputProps>(
           pattern: '^¥?[0-9,]*$',
         }}
         sx={{
-          '& .MuiInputBase-input': {
-            textAlign: 'right',
-            '&::placeholder': {
-              textAlign: 'center',
-              opacity: 0.6,
-            },
-          },
+          ...amountInputStyles.inputField,
           ...textInputProps.sx,
         }}
       />
     )
-  }
-)
+}
 
 export default AmountInput

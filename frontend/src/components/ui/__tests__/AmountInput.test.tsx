@@ -87,14 +87,14 @@ describe('AmountInput', () => {
   })
 
   describe('アクセシビリティ', () => {
-    test('適切なaria-labelが設定される', () => {
+    test('適切なlabelが設定される', () => {
       const mockOnChange = jest.fn()
 
       render(
         <AmountInput
           value={15000}
           onChange={mockOnChange}
-          aria-label="支出金額入力"
+          label="支出金額入力"
         />
       )
 
@@ -102,7 +102,7 @@ describe('AmountInput', () => {
       expect(input).toBeInTheDocument()
     })
 
-    test('デフォルトのaria-labelが設定される', () => {
+    test('デフォルトのlabelが設定される', () => {
       const mockOnChange = jest.fn()
 
       render(
