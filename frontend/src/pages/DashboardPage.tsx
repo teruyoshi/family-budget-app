@@ -5,7 +5,7 @@ import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { ExpenseHistory, IncomeHistory } from '@/features/history'
-import { useBudgetManager } from '@/hooks'
+import { useBudgetManager } from '@/hooks/useBudgetManager'
 
 /**
  * ダッシュボードページコンポーネントのProps型定義
