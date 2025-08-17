@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
-import TextLabel from '../../../components/common_old/TextLabel'
-import AmountText from '../../../components/common_old/AmountText'
+import { TextLabel, AmountText } from '@/components/common_old'
 
 /**
  * 残高表示コンポーネントのProps型定義

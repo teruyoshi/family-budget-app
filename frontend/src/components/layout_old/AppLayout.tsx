@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { Box, Container, Toolbar } from '@mui/material'
 import { AppBreadcrumbs, AppNavigation } from '@/components/navigation_old'
 import { PageTransition } from '@/components/common_old'
-import { usePageTitle } from '@/hooks'
+import { usePageTitle } from '@/hooks/index_old'
 
 /**
  * アプリケーション共通レイアウトコンポーネントのProps型定義
