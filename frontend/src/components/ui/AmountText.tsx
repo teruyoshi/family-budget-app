@@ -46,9 +46,5 @@ export default function AmountText({
     ...(dataTestId && { 'data-testid': dataTestId }),
   }
 
-  return (
-    <Typography {...typographyProps}>
-      {displayAmount}
-    </Typography>
-  )
+  return <Typography {...typographyProps}>{displayAmount}</Typography>
 }

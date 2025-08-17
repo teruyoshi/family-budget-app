@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import AppTitle from '../AppTitle'
 
 const meta: Meta<typeof AppTitle> = {
@@ -8,14 +8,26 @@ const meta: Meta<typeof AppTitle> = {
     layout: 'centered',
     docs: {
       description: {
-        component: '家計簿アプリの固定タイトルを表示するコンポーネント。Typography ベースでカスタマイズ可能。',
+        component:
+          '家計簿アプリの固定タイトルを表示するコンポーネント。Typography ベースでカスタマイズ可能。',
       },
     },
   },
   argTypes: {
     variant: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2'],
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'subtitle1',
+        'subtitle2',
+        'body1',
+        'body2',
+      ],
       description: 'Typography の variant 設定',
     },
     component: {
@@ -93,7 +105,14 @@ export const Centered: Story = {
 // 複数バリエーション比較
 export const Variants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        padding: '20px',
+      }}
+    >
       <AppTitle variant="h1" />
       <AppTitle variant="h2" />
       <AppTitle variant="h3" />

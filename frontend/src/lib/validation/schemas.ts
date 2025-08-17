@@ -91,7 +91,7 @@ export const datePickerSchema = z.object({
 
 /**
  * 取引フォームデータ型
- * 
+ *
  * transactionFormSchemaから推論される型定義
  */
 export type TransactionFormData = z.infer<typeof transactionFormSchema>

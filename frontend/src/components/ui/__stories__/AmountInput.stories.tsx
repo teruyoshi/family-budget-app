@@ -159,13 +159,7 @@ export const Interactive: Story = {
   render: function InteractiveAmountInput(args) {
     const [value, setValue] = useState(args.value || 0)
 
-    return (
-      <AmountInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    )
+    return <AmountInput {...args} value={value} onChange={setValue} />
   },
   args: {
     label: 'インタラクティブ金額入力',
@@ -181,7 +175,14 @@ export const InFormLayout: Story = {
     const [incomeAmount, setIncomeAmount] = useState(25000)
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          width: '300px',
+        }}
+      >
         <AmountInput
           value={expenseAmount}
           onChange={setExpenseAmount}
@@ -194,10 +195,21 @@ export const InFormLayout: Story = {
           label="収入金額"
           placeholder="収入を入力"
         />
-        <div style={{ marginTop: '16px', padding: '8px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+        <div
+          style={{
+            marginTop: '16px',
+            padding: '8px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '4px',
+          }}
+        >
           <p>支出: ¥{expenseAmount.toLocaleString()}</p>
           <p>収入: ¥{incomeAmount.toLocaleString()}</p>
-          <p><strong>残高: ¥{(incomeAmount - expenseAmount).toLocaleString()}</strong></p>
+          <p>
+            <strong>
+              残高: ¥{(incomeAmount - expenseAmount).toLocaleString()}
+            </strong>
+          </p>
         </div>
       </div>
     )
@@ -206,7 +218,8 @@ export const InFormLayout: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'フォーム内での実際の使用例。複数の金額入力フィールドと計算結果の表示。',
+        story:
+          'フォーム内での実際の使用例。複数の金額入力フィールドと計算結果の表示。',
       },
     },
   },

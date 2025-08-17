@@ -35,11 +35,7 @@ describe('AppTitle', () => {
 
   it('複数のプロパティを同時に適用できる', () => {
     render(
-      <AppTitle 
-        variant="h2" 
-        component="h3" 
-        sx={{ textAlign: 'center' }} 
-      />
+      <AppTitle variant="h2" component="h3" sx={{ textAlign: 'center' }} />
     )
     const title = screen.getByRole('heading', { level: 3 })
     expect(title).toBeInTheDocument()

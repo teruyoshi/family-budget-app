@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Stack } from '@mui/material'
 import TextLabel from '../TextLabel'
 
@@ -9,7 +9,8 @@ const meta: Meta<typeof TextLabel> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'コロン自動付加機能付きのテキストラベルコンポーネント。フォームやデータ表示でのラベル統一化に使用。',
+        component:
+          'コロン自動付加機能付きのテキストラベルコンポーネント。フォームやデータ表示でのラベル統一化に使用。',
       },
     },
   },
@@ -20,7 +21,20 @@ const meta: Meta<typeof TextLabel> = {
     },
     variant: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'overline'],
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'subtitle1',
+        'subtitle2',
+        'body1',
+        'body2',
+        'caption',
+        'overline',
+      ],
       description: 'MUI Typographyのバリアント',
     },
     htmlFor: {
@@ -165,7 +179,7 @@ export const AllVariants: Story = {
           <TextLabel variant="h6">見出し6</TextLabel>
         </Stack>
       </div>
-      
+
       <div>
         <h3>サブタイトルバリアント</h3>
         <Stack spacing={1}>
@@ -173,7 +187,7 @@ export const AllVariants: Story = {
           <TextLabel variant="subtitle2">サブタイトル2</TextLabel>
         </Stack>
       </div>
-      
+
       <div>
         <h3>本文バリアント</h3>
         <Stack spacing={1}>
@@ -200,7 +214,9 @@ export const ColorVariations: Story = {
       <TextLabel sx={{ color: 'error.main' }}>エラー色</TextLabel>
       <TextLabel sx={{ color: 'warning.main' }}>警告色</TextLabel>
       <TextLabel sx={{ color: 'success.main' }}>成功色</TextLabel>
-      <TextLabel sx={{ color: 'text.secondary' }}>セカンダリテキスト色</TextLabel>
+      <TextLabel sx={{ color: 'text.secondary' }}>
+        セカンダリテキスト色
+      </TextLabel>
       <TextLabel sx={{ fontWeight: 'bold' }}>太字</TextLabel>
       <TextLabel sx={{ fontStyle: 'italic' }}>斜体</TextLabel>
       <TextLabel sx={{ textDecoration: 'underline' }}>下線</TextLabel>

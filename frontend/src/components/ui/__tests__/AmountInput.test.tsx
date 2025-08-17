@@ -81,7 +81,7 @@ describe('AmountInput', () => {
     test('適切なlabelが設定される', () => {
       setupAmountInput({
         value: 15000,
-        label: '支出金額入力'
+        label: '支出金額入力',
       })
 
       const input = screen.getByLabelText('支出金額入力')
@@ -102,7 +102,7 @@ describe('AmountInput', () => {
       setupAmountInput({
         value: 0,
         error: true,
-        helperText: '金額を入力してください'
+        helperText: '金額を入力してください',
       })
 
       const input = screen.getByRole('textbox')
@@ -121,7 +121,7 @@ describe('AmountInput', () => {
       setupAmountInput({
         value: 0,
         required: true,
-        placeholder: '必須金額'
+        placeholder: '必須金額',
       })
 
       const input = screen.getByPlaceholderText('必須金額')

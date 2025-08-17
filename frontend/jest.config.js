@@ -27,10 +27,7 @@ export default {
     '<rootDir>/src/**/__tests__/**/*.(ts|tsx)',
     '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
   ],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '.*_old/.*',
-  ],
+  testPathIgnorePatterns: ['/node_modules/', '.*_old/.*'],
   collectCoverageFrom: [
     'src/**/*.(ts|tsx)',
     '!src/**/*.d.ts',

@@ -19,10 +19,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'UI Components',
-          [
-            'AmountInput',
-            'TextInput',
-          ],
+          ['AmountInput', 'TextInput'],
           'Form Components',
           'Layout Components',
           'Navigation Components',

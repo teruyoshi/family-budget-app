@@ -26,10 +26,18 @@ const meta: Meta<typeof AmountText> = {
       description: 'Typographyバリアント',
       control: { type: 'select' },
       options: [
-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'subtitle1', 'subtitle2',
-        'body1', 'body2',
-        'caption', 'overline'
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'subtitle1',
+        'subtitle2',
+        'body1',
+        'body2',
+        'caption',
+        'overline',
       ],
       table: {
         type: { summary: 'TypographyVariant' },
@@ -146,7 +154,12 @@ export const WarningColor: Story = {
 export const RightAligned: Story = {
   args: {
     amount: 75000,
-    sx: { textAlign: 'right', minWidth: '150px', border: '1px solid #ccc', padding: '8px' },
+    sx: {
+      textAlign: 'right',
+      minWidth: '150px',
+      border: '1px solid #ccc',
+      padding: '8px',
+    },
   },
 }
 
@@ -170,19 +183,21 @@ export const AsSpan: Story = {
 // 実用例
 export const CardDisplay: Story = {
   render: (args) => (
-    <div style={{ 
-      border: '1px solid #e0e0e0', 
-      borderRadius: '8px', 
-      padding: '16px', 
-      width: '200px',
-      backgroundColor: '#f5f5f5'
-    }}>
+    <div
+      style={{
+        border: '1px solid #e0e0e0',
+        borderRadius: '8px',
+        padding: '16px',
+        width: '200px',
+        backgroundColor: '#f5f5f5',
+      }}
+    >
       <div style={{ marginBottom: '8px', fontSize: '14px', color: '#666' }}>
         残高
       </div>
-      <AmountText 
+      <AmountText
         {...args}
-        variant="h5" 
+        variant="h5"
         sx={{ color: 'primary.main', fontWeight: 'bold' }}
       />
     </div>
@@ -201,19 +216,21 @@ export const CardDisplay: Story = {
 
 export const IncomeCard: Story = {
   render: (args) => (
-    <div style={{ 
-      border: '1px solid #4caf50', 
-      borderRadius: '8px', 
-      padding: '16px', 
-      width: '180px',
-      backgroundColor: '#e8f5e8'
-    }}>
+    <div
+      style={{
+        border: '1px solid #4caf50',
+        borderRadius: '8px',
+        padding: '16px',
+        width: '180px',
+        backgroundColor: '#e8f5e8',
+      }}
+    >
       <div style={{ marginBottom: '8px', fontSize: '14px', color: '#2e7d32' }}>
         今月の収入
       </div>
-      <AmountText 
+      <AmountText
         {...args}
-        variant="h6" 
+        variant="h6"
         sx={{ color: 'success.main', fontWeight: 'bold' }}
       />
     </div>
@@ -232,19 +249,21 @@ export const IncomeCard: Story = {
 
 export const ExpenseCard: Story = {
   render: (args) => (
-    <div style={{ 
-      border: '1px solid #f44336', 
-      borderRadius: '8px', 
-      padding: '16px', 
-      width: '180px',
-      backgroundColor: '#ffeaea'
-    }}>
+    <div
+      style={{
+        border: '1px solid #f44336',
+        borderRadius: '8px',
+        padding: '16px',
+        width: '180px',
+        backgroundColor: '#ffeaea',
+      }}
+    >
       <div style={{ marginBottom: '8px', fontSize: '14px', color: '#c62828' }}>
         今月の支出
       </div>
-      <AmountText 
+      <AmountText
         {...args}
-        variant="h6" 
+        variant="h6"
         sx={{ color: 'error.main', fontWeight: 'bold' }}
       />
     </div>
@@ -263,12 +282,22 @@ export const ExpenseCard: Story = {
 
 export const TableRow: Story = {
   render: (args) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px', border: '1px solid #e0e0e0' }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '16px',
+        padding: '8px',
+        border: '1px solid #e0e0e0',
+      }}
+    >
       <div style={{ flex: 1 }}>ランチ代</div>
-      <div style={{ width: '80px', color: '#666', fontSize: '14px' }}>2024/01/15</div>
-      <AmountText 
+      <div style={{ width: '80px', color: '#666', fontSize: '14px' }}>
+        2024/01/15
+      </div>
+      <AmountText
         {...args}
-        variant="body2" 
+        variant="body2"
         sx={{ minWidth: '80px', textAlign: 'right' }}
       />
     </div>
@@ -287,21 +316,64 @@ export const TableRow: Story = {
 
 export const SummaryList: Story = {
   render: () => (
-    <div style={{ width: '250px', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '16px' }}>
+    <div
+      style={{
+        width: '250px',
+        border: '1px solid #e0e0e0',
+        borderRadius: '8px',
+        padding: '16px',
+      }}
+    >
       <h3 style={{ margin: '0 0 16px 0', fontSize: '18px' }}>月次サマリー</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <span>収入</span>
-          <AmountText amount={300000} variant="body2" sx={{ color: 'success.main' }} />
+          <AmountText
+            amount={300000}
+            variant="body2"
+            sx={{ color: 'success.main' }}
+          />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <span>支出</span>
-          <AmountText amount={-180000} variant="body2" sx={{ color: 'error.main' }} />
+          <AmountText
+            amount={-180000}
+            variant="body2"
+            sx={{ color: 'error.main' }}
+          />
         </div>
-        <hr style={{ margin: '8px 0', border: 'none', borderTop: '1px solid #e0e0e0' }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <hr
+          style={{
+            margin: '8px 0',
+            border: 'none',
+            borderTop: '1px solid #e0e0e0',
+          }}
+        />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <span style={{ fontWeight: 'bold' }}>残高</span>
-          <AmountText amount={120000} variant="h6" sx={{ color: 'primary.main', fontWeight: 'bold' }} />
+          <AmountText
+            amount={120000}
+            variant="h6"
+            sx={{ color: 'primary.main', fontWeight: 'bold' }}
+          />
         </div>
       </div>
     </div>
@@ -326,25 +398,25 @@ export const CompactList: Story = {
         { description: '書籍代', amount: -2800 },
         { description: 'ボーナス', amount: 50000 },
       ].map((item, index) => (
-        <div 
+        <div
           key={index}
-          style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
             padding: '8px 0',
-            borderBottom: index < 4 ? '1px solid #f0f0f0' : 'none'
+            borderBottom: index < 4 ? '1px solid #f0f0f0' : 'none',
           }}
         >
           <span style={{ fontSize: '14px' }}>{item.description}</span>
-          <AmountText 
-            amount={item.amount} 
-            variant="caption" 
-            sx={{ 
+          <AmountText
+            amount={item.amount}
+            variant="caption"
+            sx={{
               color: item.amount > 0 ? 'success.main' : 'error.main',
               minWidth: '80px',
-              textAlign: 'right'
-            }} 
+              textAlign: 'right',
+            }}
           />
         </div>
       ))}
@@ -354,7 +426,8 @@ export const CompactList: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'コンパクトな取引履歴リストの例。正負で色分けした見やすいレイアウト。',
+        story:
+          'コンパクトな取引履歴リストの例。正負で色分けした見やすいレイアウト。',
       },
     },
   },

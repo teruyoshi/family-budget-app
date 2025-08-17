@@ -47,14 +47,14 @@ export interface DatePickerProps {
 }
 
 function DatePicker(props: DatePickerProps) {
-  const { 
-    value, 
-    onChange, 
-    label, 
-    disabled = false, 
-    name, 
+  const {
+    value,
+    onChange,
+    label,
+    disabled = false,
+    name,
     error = false,
-    ...textFieldProps 
+    ...textFieldProps
   } = props
 
   const handleChange = (newValue: Dayjs | null) => {

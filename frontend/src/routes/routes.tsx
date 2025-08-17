@@ -1,5 +1,5 @@
 import { type ReactElement, Suspense, lazy } from 'react'
-import PageLoader from '@/components/common_old/PageLoader'
+import { PageLoader } from '@/components/ui'
 import NotFoundPage from '@/components/common_old/NotFoundPage'
 import type { AppRoute, RouteInfo } from '@/types'
 
@@ -30,7 +30,6 @@ const withSuspense = (
     <Component />
   </Suspense>
 )
-
 
 /**
  * アプリケーションの全ルート情報

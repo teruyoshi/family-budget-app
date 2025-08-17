@@ -80,9 +80,9 @@ describe('AmountText', () => {
   describe('スタイリング', () => {
     it('sx propsを適用する', () => {
       render(
-        <AmountText 
-          amount={1000} 
-          sx={{ color: 'red', fontSize: '20px' }} 
+        <AmountText
+          amount={1000}
+          sx={{ color: 'red', fontSize: '20px' }}
           data-testid="styled-amount"
         />
       )
@@ -93,12 +93,12 @@ describe('AmountText', () => {
 
     it('複数のスタイルプロパティを適用する', () => {
       render(
-        <AmountText 
-          amount={1000} 
-          sx={{ 
+        <AmountText
+          amount={1000}
+          sx={{
             fontWeight: 'bold',
             textAlign: 'right',
-            backgroundColor: 'yellow'
+            backgroundColor: 'yellow',
           }}
           data-testid="multi-styled-amount"
         />
@@ -113,7 +113,7 @@ describe('AmountText', () => {
   describe('実用的な使用例', () => {
     it('収入表示スタイルで表示する', () => {
       render(
-        <AmountText 
+        <AmountText
           amount={25000}
           variant="h5"
           sx={{ color: 'success.main', fontWeight: 'bold' }}
@@ -127,7 +127,7 @@ describe('AmountText', () => {
 
     it('支出表示スタイルで表示する', () => {
       render(
-        <AmountText 
+        <AmountText
           amount={-15000}
           variant="body2"
           sx={{ color: 'error.main' }}
@@ -141,7 +141,7 @@ describe('AmountText', () => {
 
     it('残高表示スタイルで表示する', () => {
       render(
-        <AmountText 
+        <AmountText
           amount={100000}
           variant="h4"
           component="div"
@@ -176,7 +176,7 @@ describe('AmountText', () => {
   describe('異なるvariantとcomponentの組み合わせ', () => {
     it('h1 variantとdiv componentを組み合わせる', () => {
       render(
-        <AmountText 
+        <AmountText
           amount={50000}
           variant="h1"
           component="div"
@@ -190,7 +190,7 @@ describe('AmountText', () => {
 
     it('caption variantとspan componentを組み合わせる', () => {
       render(
-        <AmountText 
+        <AmountText
           amount={1000}
           variant="caption"
           component="span"

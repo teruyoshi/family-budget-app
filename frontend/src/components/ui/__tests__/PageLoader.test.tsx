@@ -16,7 +16,7 @@ describe('PageLoader', () => {
   it('中央揃えのレイアウトで表示される', () => {
     const { container } = render(<PageLoader />)
     const boxElement = container.firstChild as HTMLElement
-    
+
     expect(boxElement).toHaveStyle({
       display: 'flex',
       'justify-content': 'center',
@@ -27,7 +27,7 @@ describe('PageLoader', () => {
   it('指定された高さを持つ', () => {
     const { container } = render(<PageLoader />)
     const boxElement = container.firstChild as HTMLElement
-    
+
     expect(boxElement).toHaveStyle({
       height: '200px',
     })

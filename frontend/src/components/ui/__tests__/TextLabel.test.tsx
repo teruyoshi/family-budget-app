@@ -58,7 +58,7 @@ describe('TextLabel', () => {
         ユーザー名
       </TextLabel>
     )
-    
+
     const label = screen.getByText('ユーザー名：')
     expect(label).toHaveClass('MuiTypography-subtitle1')
     expect(label).toHaveClass('form-label')

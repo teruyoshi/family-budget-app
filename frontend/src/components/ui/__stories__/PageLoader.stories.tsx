@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Box, Paper } from '@mui/material'
 import { Suspense } from 'react'
 import PageLoader from '../PageLoader'
@@ -10,7 +10,8 @@ const meta: Meta<typeof PageLoader> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'React.lazy による遅延ロード時のSuspense fallbackとして使用されるローディングコンポーネント。',
+        component:
+          'React.lazy による遅延ロード時のSuspense fallbackとして使用されるローディングコンポーネント。',
       },
     },
   },

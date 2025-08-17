@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import DatePicker from '../DatePicker'
 import { DateLocalizationProvider } from '@/components/provider'
@@ -17,7 +17,8 @@ const meta: Meta<typeof DatePicker> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'MUI X DatePickerをベースとした日本語対応の日付選択コンポーネント。react-hook-form対応でISO 8601形式での日付管理。',
+        component:
+          'MUI X DatePickerをベースとした日本語対応の日付選択コンポーネント。react-hook-form対応でISO 8601形式での日付管理。',
       },
     },
   },
@@ -162,12 +163,19 @@ export const Interactive: Story = {
 
 // フォームレイアウトでの使用例
 export const InFormLayout: Story = {
-  render: function FormLayoutExample(args) {
+  render: function FormLayoutExample() {
     const [startDate, setStartDate] = useState('2024-08-01')
     const [endDate, setEndDate] = useState('2024-08-31')
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          width: '300px',
+        }}
+      >
         <DatePicker
           value={startDate}
           onChange={setStartDate}
@@ -180,8 +188,15 @@ export const InFormLayout: Story = {
           label="終了日"
           required
         />
-        <div style={{ padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-          <strong>選択された期間:</strong><br />
+        <div
+          style={{
+            padding: '16px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '4px',
+          }}
+        >
+          <strong>選択された期間:</strong>
+          <br />
           {startDate} 〜 {endDate}
         </div>
       </div>
@@ -195,7 +210,14 @@ export const InFormLayout: Story = {
 // 全バリエーション比較
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '20px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '20px',
+      }}
+    >
       <div>
         <h3>Outlined (Default)</h3>
         <DatePicker label="取引日" value="2024-08-17" />
@@ -214,11 +236,7 @@ export const AllVariants: Story = {
       </div>
       <div>
         <h3>Error State</h3>
-        <DatePicker 
-          label="取引日" 
-          error 
-          helperText="必須項目です" 
-        />
+        <DatePicker label="取引日" error helperText="必須項目です" />
       </div>
       <div>
         <h3>Disabled</h3>

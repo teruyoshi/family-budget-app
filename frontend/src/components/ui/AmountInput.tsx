@@ -86,7 +86,8 @@ function AmountInput(props: AmountInputProps) {
       onChange={handleChange}
       inputProps={{
         'aria-label':
-          textInputProps.label || `金額入力フィールド、現在の値: ${amount || '未入力'}`,
+          textInputProps.label ||
+          `金額入力フィールド、現在の値: ${amount || '未入力'}`,
         'aria-describedby': textInputProps['aria-describedby'],
         'aria-invalid': textInputProps.error,
         inputMode: 'numeric' as const,

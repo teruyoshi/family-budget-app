@@ -10,15 +10,17 @@ const setup = (props = {}) => {
     onChange: mockOnChange,
     ...props,
   }
-  
+
   const result = render(
     <DateLocalizationProvider>
       <DatePicker {...defaultProps} />
     </DateLocalizationProvider>
   )
   // MUI X DatePickerの隠された入力要素を取得
-  const input = result.container.querySelector('input[aria-hidden="true"]') as HTMLInputElement
-  
+  const input = result.container.querySelector(
+    'input[aria-hidden="true"]'
+  ) as HTMLInputElement
+
   return {
     input,
     mockOnChange,
@@ -40,7 +42,9 @@ describe('DatePicker', () => {
 
   it('DatePickerコンポーネントがレンダリングされる', () => {
     setup()
-    expect(screen.getByRole('button', { name: /choose date/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /choose date/i })
+    ).toBeInTheDocument()
   })
 
   it('disabled状態で入力が無効になる', () => {
@@ -84,7 +88,7 @@ describe('DatePicker', () => {
       helperText: '必須項目です',
       disabled: false,
     })
-    
+
     expect(input).toHaveValue('2024年12月25日')
     expect(input).toBeRequired()
     expect(screen.getByText('必須項目です')).toBeInTheDocument()
@@ -95,7 +99,7 @@ describe('DatePicker', () => {
     setup()
     const calendarButton = screen.getByRole('button', { name: /choose date/i })
     expect(calendarButton).toBeInTheDocument()
-    
+
     await userEvent.click(calendarButton)
     // カレンダーが開くことを確認（ポップアップが表示される）
     expect(screen.getByRole('dialog')).toBeInTheDocument()

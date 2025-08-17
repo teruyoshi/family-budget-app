@@ -62,7 +62,7 @@ describe('TextInput', () => {
   test('エラー状態が適切に設定される', () => {
     setupTextInput({
       error: true,
-      helperText: 'エラーメッセージ'
+      helperText: 'エラーメッセージ',
     })
 
     const helperText = screen.getByText('エラーメッセージ')

@@ -192,13 +192,7 @@ export const Interactive: Story = {
   render: function InteractiveTextInput(args) {
     const [value, setValue] = useState(args.value || '')
 
-    return (
-      <TextInput
-        {...args}
-        value={value}
-        onChange={setValue}
-      />
-    )
+    return <TextInput {...args} value={value} onChange={setValue} />
   },
   args: {
     placeholder: '自由に入力してください',
@@ -215,7 +209,14 @@ export const InFormLayout: Story = {
     const [age, setAge] = useState('')
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '300px' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          width: '300px',
+        }}
+      >
         <TextInput
           value={name}
           onChange={setName}
@@ -242,8 +243,17 @@ export const InFormLayout: Story = {
           onChange={setAge}
           placeholder="年齢"
         />
-        <div style={{ marginTop: '16px', padding: '8px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-          <p><strong>入力値:</strong></p>
+        <div
+          style={{
+            marginTop: '16px',
+            padding: '8px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '4px',
+          }}
+        >
+          <p>
+            <strong>入力値:</strong>
+          </p>
           <p>名前: {name || '(未入力)'}</p>
           <p>メール: {email || '(未入力)'}</p>
           <p>パスワード: {'*'.repeat(password.length) || '(未入力)'}</p>
@@ -297,7 +307,8 @@ export const WithValidation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'リアルタイムバリデーションの実装例。メールアドレス形式をチェック。',
+        story:
+          'リアルタイムバリデーションの実装例。メールアドレス形式をチェック。',
       },
     },
   },
