@@ -7,17 +7,12 @@ import type { SxProps, Theme } from '@mui/material'
  * 金額入力コンポーネントのProps
  */
 export interface AmountInputProps {
-  /**
-   * 現在の金額
-   * @default 0
-   * @example 15000
-   */
+  /** 現在の金額 */
   value?: number
-  /**
-   * 金額変更時のコールバック
-   * @param value 入力された数値
-   */
+  /** 金額変更時のコールバック */
   onChange?: (value: number) => void
+  /** フォーカス喪失時コールバック */
+  onBlur?: () => void
   /** プレースホルダーテキスト */
   placeholder?: string
   /** MUIスタイル設定 */
@@ -38,39 +33,24 @@ export interface AmountInputProps {
   helperText?: string
   /** フィールド名 */
   name?: string
-  /** フォーカス喪失時コールバック */
-  onBlur?: () => void
-  /** DOM要素参照 */
+  /** DOM要素への参照（React 19準拠） */
   ref?: React.Ref<HTMLInputElement>
 }
 
 /**
  * 金額入力コンポーネント
  *
- * 数値を自動で¥記号付きカンマ区切り形式にフォーマットする入力フィールド。
- * react-hook-formとの完全互換性を持ち、右寄せ表示で視認性を向上。
+ * React 19準拠のref as prop対応。
+ * シンプルなアンコントロールドな金額入力フィールド。
+ * 数値を自動で¥記号付きカンマ区切り形式にフォーマット。
  *
  * @example
- * // 基本的な使用
  * <AmountInput
  *   value={15000}
  *   onChange={setValue}
  *   label="支出金額"
  *   placeholder="金額を入力"
- * />
- *
- * @example
- * // react-hook-formでの使用
- * <Controller
- *   name="amount"
- *   control={control}
- *   render={({ field, fieldState }) => (
- *     <AmountInput
- *       {...field}
- *       error={!!fieldState.error}
- *       helperText={fieldState.error?.message}
- *     />
- *   )}
+ *   ref={inputRef}
  * />
  */
 function AmountInput(props: AmountInputProps) {
