@@ -42,7 +42,7 @@ function FormWrapper({
         name="useCustomDate"
         label={label}
       />
-      
+
       <Box sx={{ mt: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
         <Button type="submit" variant="contained" size="small">
           送信
@@ -147,32 +147,72 @@ export const SettingsForm: Story = {
       },
     })
 
-    const [autoSave, enableNotifications, darkMode] = watch(['autoSave', 'enableNotifications', 'darkMode'])
+    const [autoSave, enableNotifications, darkMode] = watch([
+      'autoSave',
+      'enableNotifications',
+      'darkMode',
+    ])
 
-    const onSubmit = (data: { autoSave: boolean; enableNotifications: boolean; darkMode: boolean }) => {
+    const onSubmit = (data: {
+      autoSave: boolean
+      enableNotifications: boolean
+      darkMode: boolean
+    }) => {
       console.log('設定データ:', data)
     }
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            maxWidth: 400,
+          }}
+        >
           <Box>
-            <Typography variant="h6" gutterBottom>アプリケーション設定</Typography>
-            
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, ml: 1 }}>
-              <ControlledCustomDateSwitch<{ autoSave: boolean; enableNotifications: boolean; darkMode: boolean }, 'autoSave'>
+            <Typography variant="h6" gutterBottom>
+              アプリケーション設定
+            </Typography>
+
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', gap: 1, ml: 1 }}
+            >
+              <ControlledCustomDateSwitch<
+                {
+                  autoSave: boolean
+                  enableNotifications: boolean
+                  darkMode: boolean
+                },
+                'autoSave'
+              >
                 control={control}
                 name="autoSave"
                 label="自動保存を有効にする"
               />
-              
-              <ControlledCustomDateSwitch<{ autoSave: boolean; enableNotifications: boolean; darkMode: boolean }, 'enableNotifications'>
+
+              <ControlledCustomDateSwitch<
+                {
+                  autoSave: boolean
+                  enableNotifications: boolean
+                  darkMode: boolean
+                },
+                'enableNotifications'
+              >
                 control={control}
                 name="enableNotifications"
                 label="通知を有効にする"
               />
-              
-              <ControlledCustomDateSwitch<{ autoSave: boolean; enableNotifications: boolean; darkMode: boolean }, 'darkMode'>
+
+              <ControlledCustomDateSwitch<
+                {
+                  autoSave: boolean
+                  enableNotifications: boolean
+                  darkMode: boolean
+                },
+                'darkMode'
+              >
                 control={control}
                 name="darkMode"
                 label="ダークモードを使用する"
@@ -181,7 +221,9 @@ export const SettingsForm: Story = {
           </Box>
 
           <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-            <Typography variant="h6" gutterBottom>現在の設定</Typography>
+            <Typography variant="h6" gutterBottom>
+              現在の設定
+            </Typography>
             <Typography variant="body2">
               自動保存: {autoSave ? 'ON' : 'OFF'}
             </Typography>
@@ -219,31 +261,57 @@ export const MultipleFields: Story = {
       },
     })
 
-    const [feature1, feature2, feature3] = watch(['feature1', 'feature2', 'feature3'])
+    const [feature1, feature2, feature3] = watch([
+      'feature1',
+      'feature2',
+      'feature3',
+    ])
 
-    const onSubmit = (data: { feature1: boolean; feature2: boolean; feature3: boolean }) => {
+    const onSubmit = (data: {
+      feature1: boolean
+      feature2: boolean
+      feature3: boolean
+    }) => {
       console.log('機能設定データ:', data)
     }
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}>
-          <Typography variant="h6" gutterBottom>機能設定</Typography>
-          
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            maxWidth: 400,
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            機能設定
+          </Typography>
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <ControlledCustomDateSwitch<{ feature1: boolean; feature2: boolean; feature3: boolean }, 'feature1'>
+            <ControlledCustomDateSwitch<
+              { feature1: boolean; feature2: boolean; feature3: boolean },
+              'feature1'
+            >
               control={control}
               name="feature1"
               label="高度な分析機能"
             />
-            
-            <ControlledCustomDateSwitch<{ feature1: boolean; feature2: boolean; feature3: boolean }, 'feature2'>
+
+            <ControlledCustomDateSwitch<
+              { feature1: boolean; feature2: boolean; feature3: boolean },
+              'feature2'
+            >
               control={control}
               name="feature2"
               label="エクスポート機能"
             />
-            
-            <ControlledCustomDateSwitch<{ feature1: boolean; feature2: boolean; feature3: boolean }, 'feature3'>
+
+            <ControlledCustomDateSwitch<
+              { feature1: boolean; feature2: boolean; feature3: boolean },
+              'feature3'
+            >
               control={control}
               name="feature3"
               label="リアルタイム同期"
@@ -252,7 +320,8 @@ export const MultipleFields: Story = {
 
           <Box sx={{ mt: 2, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
             <Typography variant="body2" color="info.contrastText">
-              有効な機能数: {[feature1, feature2, feature3].filter(Boolean).length} / 3
+              有効な機能数:{' '}
+              {[feature1, feature2, feature3].filter(Boolean).length} / 3
             </Typography>
             <Box sx={{ mt: 1 }}>
               <Typography variant="body2" color="info.contrastText">
@@ -281,15 +350,16 @@ export const MultipleFields: Story = {
  */
 export const InteractiveTest: Story = {
   render: () => {
-    const { control, handleSubmit, watch, setValue } = useForm<TransactionFormData>({
-      defaultValues: {
-        amount: 0,
-        description: '',
-        category: '',
-        date: '',
-        useCustomDate: false,
-      },
-    })
+    const { control, handleSubmit, watch, setValue } =
+      useForm<TransactionFormData>({
+        defaultValues: {
+          amount: 0,
+          description: '',
+          category: '',
+          date: '',
+          useCustomDate: false,
+        },
+      })
 
     const currentValue = watch('useCustomDate')
 
@@ -316,17 +386,13 @@ export const InteractiveTest: Story = {
           name="useCustomDate"
           label="カスタム機能を有効にする"
         />
-        
+
         <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             プリセット操作:
           </Typography>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={toggleSwitch}
-            >
+            <Button variant="outlined" size="small" onClick={toggleSwitch}>
               切り替え
             </Button>
             <Button
@@ -357,19 +423,20 @@ export const InteractiveTest: Story = {
           </Typography>
         </Box>
 
-        <Box sx={{ mt: 2, p: 1, bgcolor: currentValue ? 'success.light' : 'grey.100', borderRadius: 1 }}>
-          <Typography variant="body2">
-            スイッチの詳細情報:
-          </Typography>
+        <Box
+          sx={{
+            mt: 2,
+            p: 1,
+            bgcolor: currentValue ? 'success.light' : 'grey.100',
+            borderRadius: 1,
+          }}
+        >
+          <Typography variant="body2">スイッチの詳細情報:</Typography>
           <Typography variant="body2">
             • 状態: {currentValue ? '有効' : '無効'}
           </Typography>
-          <Typography variant="body2">
-            • 値: {String(currentValue)}
-          </Typography>
-          <Typography variant="body2">
-            • 型: {typeof currentValue}
-          </Typography>
+          <Typography variant="body2">• 値: {String(currentValue)}</Typography>
+          <Typography variant="body2">• 型: {typeof currentValue}</Typography>
         </Box>
       </Box>
     )
@@ -394,35 +461,57 @@ export const NestedForm: Story = {
           preferences: {
             emailNotifications: true,
             smsNotifications: false,
-          }
-        }
+          },
+        },
       },
     })
 
     const preferences = watch('user.preferences')
 
-    const onSubmit = (data: { user: { preferences: { emailNotifications: boolean; smsNotifications: boolean } } }) => {
+    const onSubmit = (data: {
+      user: {
+        preferences: { emailNotifications: boolean; smsNotifications: boolean }
+      }
+    }) => {
       console.log('ネストしたフォームデータ:', data)
     }
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <Typography variant="h6" gutterBottom>ユーザー設定</Typography>
-        
+        <Typography variant="h6" gutterBottom>
+          ユーザー設定
+        </Typography>
+
         <Box sx={{ ml: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Typography variant="subtitle1" gutterBottom>通知設定</Typography>
-          
+          <Typography variant="subtitle1" gutterBottom>
+            通知設定
+          </Typography>
+
           <ControlledCustomDateSwitch<
-            { user: { preferences: { emailNotifications: boolean; smsNotifications: boolean } } },
+            {
+              user: {
+                preferences: {
+                  emailNotifications: boolean
+                  smsNotifications: boolean
+                }
+              }
+            },
             'user.preferences.emailNotifications'
           >
             control={control}
             name="user.preferences.emailNotifications"
             label="Eメール通知"
           />
-          
+
           <ControlledCustomDateSwitch<
-            { user: { preferences: { emailNotifications: boolean; smsNotifications: boolean } } },
+            {
+              user: {
+                preferences: {
+                  emailNotifications: boolean
+                  smsNotifications: boolean
+                }
+              }
+            },
             'user.preferences.smsNotifications'
           >
             control={control}

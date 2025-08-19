@@ -1,4 +1,9 @@
-import { type Control, Controller, type FieldPath, type FieldValues } from 'react-hook-form'
+import {
+  type Control,
+  Controller,
+  type FieldPath,
+  type FieldValues,
+} from 'react-hook-form'
 import { Box } from '@mui/material'
 import { DatePicker } from '@/components/ui'
 import FormErrorMessage from './FormErrorMessage'
@@ -8,7 +13,7 @@ import FormErrorMessage from './FormErrorMessage'
  */
 export interface ControlledDatePickerProps<
   TFieldValues extends FieldValues = FieldValues,
-  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
   /** react-hook-formのcontrolオブジェクト */
   control: Control<TFieldValues>
@@ -33,7 +38,7 @@ export interface ControlledDatePickerProps<
  *   name="date"
  *   label="支出日付"
  * />
- * 
+ *
  * // カスタムフォーム型の場合
  * interface EventForm {
  *   eventDate: string
@@ -48,7 +53,7 @@ export interface ControlledDatePickerProps<
  */
 export default function ControlledDatePicker<
   TFieldValues extends FieldValues = FieldValues,
-  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,
@@ -60,11 +65,7 @@ export default function ControlledDatePicker<
       control={control}
       render={({ field, fieldState: { error } }) => (
         <Box>
-          <DatePicker
-            {...field}
-            label={label}
-            error={!!error}
-          />
+          <DatePicker {...field} label={label} error={!!error} />
           <FormErrorMessage error={error} />
         </Box>
       )}

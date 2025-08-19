@@ -1,4 +1,9 @@
-import { type Control, Controller, type FieldPath, type FieldValues } from 'react-hook-form'
+import {
+  type Control,
+  Controller,
+  type FieldPath,
+  type FieldValues,
+} from 'react-hook-form'
 import { FormControlLabel, Switch, Typography } from '@mui/material'
 
 /**
@@ -6,7 +11,7 @@ import { FormControlLabel, Switch, Typography } from '@mui/material'
  */
 export interface ControlledCustomDateSwitchProps<
   TFieldValues extends FieldValues = FieldValues,
-  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
   /** react-hook-formのcontrolオブジェクト */
   control: Control<TFieldValues>
@@ -31,7 +36,7 @@ export interface ControlledCustomDateSwitchProps<
  *   name="useCustomDate"
  *   label="日付を指定する"
  * />
- * 
+ *
  * // カスタムフォーム型の場合
  * interface SettingsForm {
  *   enableNotifications: boolean
@@ -46,7 +51,7 @@ export interface ControlledCustomDateSwitchProps<
  */
 export default function ControlledCustomDateSwitch<
   TFieldValues extends FieldValues = FieldValues,
-  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   control,
   name,

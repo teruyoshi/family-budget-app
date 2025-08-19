@@ -43,7 +43,7 @@ function FormWrapper({
           name="date"
           label={label}
         />
-        
+
         <Box sx={{ mt: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
           <Button type="submit" variant="contained" size="small">
             送信
@@ -107,12 +107,17 @@ function ValidationFormWrapper() {
           name="date"
           label="支出日付"
         />
-        
+
         <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
           <Button type="submit" variant="contained" size="small">
             送信
           </Button>
-          <Button onClick={triggerError} variant="outlined" size="small" color="error">
+          <Button
+            onClick={triggerError}
+            variant="outlined"
+            size="small"
+            color="error"
+          >
             エラー表示
           </Button>
           <Button onClick={clearError} variant="outlined" size="small">
@@ -218,37 +223,67 @@ export const MultipleFields: Story = {
       },
     })
 
-    const [startDate, endDate, reminderDate] = watch(['startDate', 'endDate', 'reminderDate'])
+    const [startDate, endDate, reminderDate] = watch([
+      'startDate',
+      'endDate',
+      'reminderDate',
+    ])
 
-    const onSubmit = (data: { startDate: string; endDate: string; reminderDate: string }) => {
+    const onSubmit = (data: {
+      startDate: string
+      endDate: string
+      reminderDate: string
+    }) => {
       console.log('複数フィールドデータ:', data)
     }
 
     return (
       <DateLocalizationProvider>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              maxWidth: 400,
+            }}
+          >
             <Box>
-              <Typography variant="subtitle2" gutterBottom>開始日</Typography>
-              <ControlledDatePicker<{ startDate: string; endDate: string; reminderDate: string }, 'startDate'>
+              <Typography variant="subtitle2" gutterBottom>
+                開始日
+              </Typography>
+              <ControlledDatePicker<
+                { startDate: string; endDate: string; reminderDate: string },
+                'startDate'
+              >
                 control={control}
                 name="startDate"
                 label="開始日を選択"
               />
             </Box>
-            
+
             <Box>
-              <Typography variant="subtitle2" gutterBottom>終了日</Typography>
-              <ControlledDatePicker<{ startDate: string; endDate: string; reminderDate: string }, 'endDate'>
+              <Typography variant="subtitle2" gutterBottom>
+                終了日
+              </Typography>
+              <ControlledDatePicker<
+                { startDate: string; endDate: string; reminderDate: string },
+                'endDate'
+              >
                 control={control}
                 name="endDate"
                 label="終了日を選択"
               />
             </Box>
-            
+
             <Box>
-              <Typography variant="subtitle2" gutterBottom>リマインダー日</Typography>
-              <ControlledDatePicker<{ startDate: string; endDate: string; reminderDate: string }, 'reminderDate'>
+              <Typography variant="subtitle2" gutterBottom>
+                リマインダー日
+              </Typography>
+              <ControlledDatePicker<
+                { startDate: string; endDate: string; reminderDate: string },
+                'reminderDate'
+              >
                 control={control}
                 name="reminderDate"
                 label="リマインダー日を選択"
@@ -256,7 +291,9 @@ export const MultipleFields: Story = {
             </Box>
 
             <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-              <Typography variant="h6" gutterBottom>選択された日付</Typography>
+              <Typography variant="h6" gutterBottom>
+                選択された日付
+              </Typography>
               <Typography variant="body2">
                 開始日: {startDate || '未選択'}
               </Typography>
@@ -268,7 +305,14 @@ export const MultipleFields: Story = {
               </Typography>
               {startDate && endDate && (
                 <Typography variant="body1" sx={{ mt: 1, fontWeight: 'bold' }}>
-                  期間: {Math.ceil((new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24) + 1)}日間
+                  期間:{' '}
+                  {Math.ceil(
+                    (new Date(endDate).getTime() -
+                      new Date(startDate).getTime()) /
+                      (1000 * 60 * 60 * 24) +
+                      1
+                  )}
+                  日間
                 </Typography>
               )}
             </Box>
@@ -288,14 +332,15 @@ export const MultipleFields: Story = {
  */
 export const InteractiveTest: Story = {
   render: () => {
-    const { control, handleSubmit, watch, setValue } = useForm<TransactionFormData>({
-      defaultValues: {
-        amount: 0,
-        description: '',
-        category: '',
-        date: '',
-      },
-    })
+    const { control, handleSubmit, watch, setValue } =
+      useForm<TransactionFormData>({
+        defaultValues: {
+          amount: 0,
+          description: '',
+          category: '',
+          date: '',
+        },
+      })
 
     const currentDate = watch('date')
 
@@ -308,7 +353,9 @@ export const InteractiveTest: Story = {
     }
 
     const today = new Date().toISOString().split('T')[0]
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+    const yesterday = new Date(Date.now() - 86400000)
+      .toISOString()
+      .split('T')[0]
     const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0]
 
     return (
@@ -319,7 +366,7 @@ export const InteractiveTest: Story = {
             name="date"
             label="日付を選択またはプリセットを使用"
           />
-          
+
           <Box sx={{ mt: 2 }}>
             <Typography variant="body2" color="text.secondary" gutterBottom>
               プリセット日付:
@@ -374,18 +421,17 @@ export const InteractiveTest: Story = {
 
           {currentDate && (
             <Box sx={{ mt: 2, p: 1, bgcolor: 'info.light', borderRadius: 1 }}>
-              <Typography variant="body2">
-                選択された日付の詳細:
-              </Typography>
+              <Typography variant="body2">選択された日付の詳細:</Typography>
               <Typography variant="body2">
                 • 日付: {new Date(currentDate).toLocaleDateString('ja-JP')}
               </Typography>
               <Typography variant="body2">
-                • 曜日: {new Date(currentDate).toLocaleDateString('ja-JP', { weekday: 'long' })}
+                • 曜日:{' '}
+                {new Date(currentDate).toLocaleDateString('ja-JP', {
+                  weekday: 'long',
+                })}
               </Typography>
-              <Typography variant="body2">
-                • ISO形式: {currentDate}
-              </Typography>
+              <Typography variant="body2">• ISO形式: {currentDate}</Typography>
             </Box>
           )}
         </Box>
