@@ -93,10 +93,18 @@ export default function TransactionForm({
       <ControlledCustomDateSwitch control={control} name="useCustomDate" />
 
       {useCustomDate && (
-        <ControlledDatePicker control={control} name="date" label={datePickerLabel} />
+        <ControlledDatePicker
+          control={control}
+          name="date"
+          label={datePickerLabel}
+        />
       )}
 
-      <ControlledAmountInput control={control} name="amount" placeholder={placeholder} />
+      <ControlledAmountInput
+        control={control}
+        name="amount"
+        placeholder={placeholder}
+      />
 
       <Button
         type="submit"

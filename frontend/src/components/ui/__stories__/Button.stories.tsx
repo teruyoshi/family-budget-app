@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { action } from '@storybook/addon-actions'
 import { Box } from '@mui/material'
 import { Button } from '@/components/ui'
 
@@ -183,13 +182,7 @@ export const PaddingVariations: Story = {
 export const FormSubmitButton: Story = {
   render: () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}>
-      <Button
-        type="submit"
-        variant="contained"
-        color="success"
-        fullWidth
-        onClick={action('form-submit')}
-      >
+      <Button type="submit" variant="contained" color="success" fullWidth>
         データを保存
       </Button>
       <Button
@@ -252,12 +245,7 @@ export const ApplicationUsage: Story = {
       {/* フォームボタン */}
       <Box>
         <h4>フォーム送信ボタン</h4>
-        <Button
-          variant="contained"
-          color="success"
-          fullWidth
-          onClick={action('expense-submit')}
-        >
+        <Button variant="contained" color="success" fullWidth>
           支出を登録
         </Button>
       </Box>
@@ -265,11 +253,7 @@ export const ApplicationUsage: Story = {
       {/* 危険なアクション */}
       <Box>
         <h4>危険なアクション</h4>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={action('delete-action')}
-        >
+        <Button variant="contained" color="error">
           削除する
         </Button>
       </Box>
@@ -310,30 +294,15 @@ export const CustomStyles: Story = {
 
 // インタラクティブテスト
 export const InteractiveTest: Story = {
-  render: () => {
-    const handleClick = action('button-clicked')
-
-    return (
-      <Box
-        sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}
-      >
-        <p>下のボタンをクリックしてActionsタブで動作を確認</p>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-          fullWidth
-        >
-          クリックテスト
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => handleClick('outlined-button')}
-        >
-          アウトラインボタン
-        </Button>
-      </Box>
-    )
-  },
+  render: () => (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}>
+      <p>各種ボタンの表示確認</p>
+      <Button variant="contained" color="primary" fullWidth>
+        プライマリボタン
+      </Button>
+      <Button variant="outlined" color="secondary">
+        セカンダリボタン
+      </Button>
+    </Box>
+  ),
 }

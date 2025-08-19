@@ -25,11 +25,7 @@ function TestFormWrapper({
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <ControlledDatePicker
-          control={control}
-          name="date"
-          label="支出日付"
-        />
+        <ControlledDatePicker control={control} name="date" label="支出日付" />
         <button type="submit">Submit</button>
       </Box>
     </DateLocalizationProvider>

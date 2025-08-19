@@ -37,11 +37,7 @@ function FormWrapper({
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledDatePicker
-          control={control}
-          name="date"
-          label={label}
-        />
+        <ControlledDatePicker control={control} name="date" label={label} />
 
         <Box sx={{ mt: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
           <Button type="submit" variant="contained" size="small">
@@ -100,11 +96,7 @@ function ValidationFormWrapper() {
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledDatePicker
-          control={control}
-          name="date"
-          label="支出日付"
-        />
+        <ControlledDatePicker control={control} name="date" label="支出日付" />
 
         <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
           <Button type="submit" variant="contained" size="small">
