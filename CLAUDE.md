@@ -2,7 +2,7 @@
 
 このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
 
-**最終更新**: 2025年8月17日（Phase 1: インフラ基盤整備完了）
+**最終更新**: 2025年8月19日（Phase 2: Directory Structure Migration 進行中）
 
 ## 📋 プロジェクト概要
 
@@ -85,15 +85,22 @@ frontend/
 ├── src/
 │   ├── components/
 │   │   ├── ui/                  # 基本UIコンポーネント
-│   │   │   ├── AmountInput.tsx  # 金額入力
+│   │   │   ├── AmountInput.tsx  # 金額入力（¥記号付きカンマ区切り）
 │   │   │   ├── AmountText.tsx   # 金額表示
 │   │   │   ├── AppTitle.tsx     # アプリタイトル
-│   │   │   ├── DatePicker.tsx   # 日付選択
+│   │   │   ├── DatePicker.tsx   # 日付選択（MUI X）
+│   │   │   ├── NumberInput.tsx  # 数値入力（軽量版）
+│   │   │   ├── PageLoader.tsx   # ローディング表示
 │   │   │   ├── TextInput.tsx    # テキスト入力
 │   │   │   ├── TextLabel.tsx    # ラベル表示
 │   │   │   └── index.ts         # バレルエクスポート
+│   │   ├── forms/               # フォーム関連コンポーネント
+│   │   │   ├── ControlledAmountInput.tsx  # react-hook-form連携金額入力
+│   │   │   ├── FormErrorMessage.tsx       # エラーメッセージ表示
+│   │   │   └── index.ts         # バレルエクスポート
 │   │   ├── provider/            # プロバイダーコンポーネント
-│   │   │   └── DateLocalizationProvider.tsx
+│   │   │   ├── DateLocalizationProvider.tsx
+│   │   │   └── index.ts         # バレルエクスポート
 │   │   └── layout_old/          # レイアウト（移行前）
 │   ├── pages/                   # ページコンポーネント（React Router）
 │   │   ├── DashboardPage.tsx    # ダッシュボード（ホーム）
@@ -143,10 +150,11 @@ frontend/
 
 ## 🎨 コード規約
 - **TypeScript**: strict mode、簡潔なTSDoc
-- **MUI**: sx props、コンポーネント優先
+- **React 19**: ref as prop パターン、forwardRef不使用
+- **MUI**: sx props、slotProps活用、コンポーネント優先
 - **パス**: `@/`エイリアス使用
 - **エクスポート**: バレルエクスポート（index.ts）
-- **テスト**: 単体テスト重視
+- **テスト**: 単体テスト重視、Storybook連携
 
 ## 🔗 関連リソース
 - **用語集**: [docs-src/glossary.md](frontend/docs-src/glossary.md) - v1.2.0（自動更新運用中）
@@ -158,11 +166,16 @@ frontend/
 - ✅ **React Router**: useRoutes + コード分割 + 404対応
 - ✅ **ページ構成**: 5ページ + レイアウト + テスト
 - ✅ **型安全**: AppRoute型による厳密管理
-- ✅ **UIコンポーネント**: AmountInput, AmountText, AppTitle, DatePicker, TextInput, TextLabel
+- ✅ **UIコンポーネント**: AmountInput, AmountText, AppTitle, DatePicker, NumberInput, PageLoader, TextInput, TextLabel
+- ✅ **フォームコンポーネント**: ControlledAmountInput, FormErrorMessage
 - ✅ **プロバイダー**: DateLocalizationProvider分離
-- ✅ **開発環境**: テスト・品質チェック・CI/CD完備
+- ✅ **開発環境**: テスト・品質チェック・CI/CD・Firebase Hosting完備
+- ✅ **React 19対応**: ref as prop パターン適用
 
 ## 🚀 Phase 2: Directory Structure Migration（進行中）
-- **types/**: 共通型定義の移行完了
-- **components/ui/**: 基本UIコンポーネント移行完了
-- **components/provider/**: プロバイダー分離完了
+- ✅ **types/**: 共通型定義の移行完了
+- ✅ **components/ui/**: 基本UIコンポーネント移行完了（8コンポーネント）
+- ✅ **components/forms/**: フォーム関連コンポーネント移行完了（2コンポーネント）
+- ✅ **components/provider/**: プロバイダー分離完了
+- 🔄 **components/layout/**: レイアウトコンポーネント移行（未着手）
+- 🔄 **components/navigation/**: ナビゲーションコンポーネント移行（未着手）
