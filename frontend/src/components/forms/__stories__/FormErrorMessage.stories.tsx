@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { FieldError } from 'react-hook-form'
 import { Box } from '@mui/material'
-import FormErrorMessage from './FormErrorMessage'
+import FormErrorMessage from '../FormErrorMessage'
 
 const meta: Meta<typeof FormErrorMessage> = {
   title: 'Components/Forms/FormErrorMessage',
