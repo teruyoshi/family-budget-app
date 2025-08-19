@@ -34,7 +34,7 @@ make lint-fix-frontend    # ESLint自動修正
 make format-frontend      # Prettierフォーマット
 make npm-install          # 依存関係インストール
 make test-coverage-open   # テストカバレッジをブラウザで表示
-make quality-check        # 統合品質チェック（lint+format+test）
+make quality-check-frontend # 統合品質チェック（Prettier+ESLint+TypeScript+Jest+Build）
 make quality-check-file FILE=ファイル名  # 個別ファイル品質チェック
 ```
 
@@ -88,6 +88,7 @@ frontend/
 │   │   │   ├── AmountInput.tsx  # 金額入力（¥記号付きカンマ区切り）
 │   │   │   ├── AmountText.tsx   # 金額表示
 │   │   │   ├── AppTitle.tsx     # アプリタイトル
+│   │   │   ├── Button.tsx       # MUI Button統合
 │   │   │   ├── DatePicker.tsx   # 日付選択（MUI X）
 │   │   │   ├── NumberInput.tsx  # 数値入力（軽量版）
 │   │   │   ├── PageLoader.tsx   # ローディング表示
@@ -95,8 +96,11 @@ frontend/
 │   │   │   ├── TextLabel.tsx    # ラベル表示
 │   │   │   └── index.ts         # バレルエクスポート
 │   │   ├── forms/               # フォーム関連コンポーネント
-│   │   │   ├── ControlledAmountInput.tsx  # react-hook-form連携金額入力
-│   │   │   ├── FormErrorMessage.tsx       # エラーメッセージ表示
+│   │   │   ├── ControlledAmountInput.tsx    # react-hook-form連携金額入力
+│   │   │   ├── ControlledCustomDateSwitch.tsx # 日付切替スイッチ（ジェネリック型）
+│   │   │   ├── ControlledDatePicker.tsx     # 日付選択（react-hook-form連携）
+│   │   │   ├── FormErrorMessage.tsx         # エラーメッセージ表示
+│   │   │   ├── TransactionForm.tsx          # 取引フォーム（支出・収入）
 │   │   │   └── index.ts         # バレルエクスポート
 │   │   ├── provider/            # プロバイダーコンポーネント
 │   │   │   ├── DateLocalizationProvider.tsx
@@ -135,12 +139,12 @@ frontend/
 ```
 
 ## 🔧 現在の設定情報
-- **プロジェクト名**: FamilyBudgetApp (v0.4.0)
-- **テスト状況**: 152テスト、17テストスイート全通過
+- **プロジェクト名**: FamilyBudgetApp (v0.4.1)
+- **テスト状況**: 240テスト、25テストスイート全通過
 - **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
 - **ルーティング**: useRoutes、React.lazy、Suspense完全対応
 - **アーキテクチャ**: pages/routes/layout 分離、型安全なルート管理
-- **品質対策**: ESLint・TypeScript strict・Prettier・husky・lint-staged完備
+- **品質対策**: 5段階品質チェック（Prettier+ESLint+TypeScript+Jest+Build）
 
 ## 🤖 ドキュメンテーション方針
 
@@ -166,16 +170,18 @@ frontend/
 - ✅ **React Router**: useRoutes + コード分割 + 404対応
 - ✅ **ページ構成**: 5ページ + レイアウト + テスト
 - ✅ **型安全**: AppRoute型による厳密管理
-- ✅ **UIコンポーネント**: AmountInput, AmountText, AppTitle, DatePicker, NumberInput, PageLoader, TextInput, TextLabel
-- ✅ **フォームコンポーネント**: ControlledAmountInput, FormErrorMessage
+- ✅ **UIコンポーネント**: AmountInput, AmountText, AppTitle, Button, DatePicker, NumberInput, PageLoader, TextInput, TextLabel（9コンポーネント）
+- ✅ **フォームコンポーネント**: ControlledAmountInput, ControlledCustomDateSwitch, ControlledDatePicker, FormErrorMessage, TransactionForm（5コンポーネント）
 - ✅ **プロバイダー**: DateLocalizationProvider分離
 - ✅ **開発環境**: テスト・品質チェック・CI/CD・Firebase Hosting完備
 - ✅ **React 19対応**: ref as prop パターン適用
 
-## 🚀 Phase 2: Directory Structure Migration（進行中）
+## 🚀 Phase 2: Directory Structure Migration（進行中 - 60%完了）
 - ✅ **types/**: 共通型定義の移行完了
-- ✅ **components/ui/**: 基本UIコンポーネント移行完了（8コンポーネント）
-- ✅ **components/forms/**: フォーム関連コンポーネント移行完了（2コンポーネント）
+- ✅ **components/ui/**: 基本UIコンポーネント移行完了（9コンポーネント + Button追加）
+- ✅ **components/forms/**: フォーム関連コンポーネント移行完了（5コンポーネント + ジェネリック型対応）
 - ✅ **components/provider/**: プロバイダー分離完了
+- ✅ **品質保証**: 5段階チェック（Prettier+ESLint+TypeScript+Jest+Build）導入
+- ✅ **テスト・ドキュメント**: 240テスト + 包括的Storybookドキュメント完備
 - 🔄 **components/layout/**: レイアウトコンポーネント移行（未着手）
 - 🔄 **components/navigation/**: ナビゲーションコンポーネント移行（未着手）
