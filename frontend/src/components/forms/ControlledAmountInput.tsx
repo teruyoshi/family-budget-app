@@ -1,4 +1,9 @@
-import { type Control, Controller, type FieldPath, type FieldValues } from 'react-hook-form'
+import {
+  type Control,
+  Controller,
+  type FieldPath,
+  type FieldValues,
+} from 'react-hook-form'
 import { Box } from '@mui/material'
 import { AmountInput } from '@/components/ui'
 import FormErrorMessage from './FormErrorMessage'
@@ -6,7 +11,9 @@ import FormErrorMessage from './FormErrorMessage'
 /**
  * コントロール済み金額入力のProps型定義
  */
-export interface ControlledAmountInputProps<TFieldValues extends FieldValues = FieldValues> {
+export interface ControlledAmountInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+> {
   /** react-hook-formのcontrolオブジェクト */
   control: Control<TFieldValues>
   /** フィールド名 */
@@ -30,7 +37,7 @@ export interface ControlledAmountInputProps<TFieldValues extends FieldValues = F
  *   name="amount"
  *   placeholder="支出金額を入力"
  * />
- * 
+ *
  * // カスタムフォーム型の場合
  * interface CustomForm {
  *   price: number
@@ -43,16 +50,17 @@ export interface ControlledAmountInputProps<TFieldValues extends FieldValues = F
  * />
  * ```
  */
-export default function ControlledAmountInput<TFieldValues extends FieldValues = FieldValues>({
-  control,
-  name,
-  placeholder,
-}: ControlledAmountInputProps<TFieldValues>) {
+export default function ControlledAmountInput<
+  TFieldValues extends FieldValues = FieldValues,
+>({ control, name, placeholder }: ControlledAmountInputProps<TFieldValues>) {
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+      render={({
+        field: { value, onChange, onBlur },
+        fieldState: { error },
+      }) => (
         <Box>
           <AmountInput
             value={typeof value === 'number' ? value : 0}

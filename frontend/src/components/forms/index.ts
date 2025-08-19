@@ -6,7 +6,13 @@
  */
 
 // フォーム入力コンポーネント
-export { default as ControlledAmountInput, type ControlledAmountInputProps } from './ControlledAmountInput'
+export {
+  default as ControlledAmountInput,
+  type ControlledAmountInputProps,
+} from './ControlledAmountInput'
 
 // フォーム支援コンポーネント
-export { default as FormErrorMessage, type FormErrorMessageProps } from './FormErrorMessage'
+export {
+  default as FormErrorMessage,
+  type FormErrorMessageProps,
+} from './FormErrorMessage'

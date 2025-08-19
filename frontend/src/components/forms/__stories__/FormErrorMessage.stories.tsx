@@ -10,7 +10,8 @@ const meta: Meta<typeof FormErrorMessage> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'react-hook-formのエラーを受け取り、MUIのFormHelperTextで表示するコンポーネント。エラーがない場合は何も表示しない。',
+        component:
+          'react-hook-formのエラーを受け取り、MUIのFormHelperTextで表示するコンポーネント。エラーがない場合は何も表示しない。',
       },
     },
   },
@@ -107,7 +108,8 @@ export const LongErrorMessage: Story = {
   args: {
     error: {
       type: 'validate',
-      message: 'パスワードは8文字以上で、大文字・小文字・数字・記号をそれぞれ1文字以上含む必要があります。また、連続する同じ文字は使用できません。',
+      message:
+        'パスワードは8文字以上で、大文字・小文字・数字・記号をそれぞれ1文字以上含む必要があります。また、連続する同じ文字は使用できません。',
     } as FieldError,
   },
 }

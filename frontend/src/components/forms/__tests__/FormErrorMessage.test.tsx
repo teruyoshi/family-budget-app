@@ -30,7 +30,7 @@ describe('FormErrorMessage', () => {
     }
 
     render(<FormErrorMessage error={error} />)
-    
+
     const helperText = screen.getByText('正しい形式で入力してください')
     expect(helperText).toBeInTheDocument()
     expect(helperText).toHaveClass('MuiFormHelperText-root')
@@ -53,7 +53,9 @@ describe('FormErrorMessage', () => {
 
     rerender(<FormErrorMessage error={maxLengthError} />)
     expect(screen.getByText('10文字以下で入力してください')).toBeInTheDocument()
-    expect(screen.queryByText('3文字以上で入力してください')).not.toBeInTheDocument()
+    expect(
+      screen.queryByText('3文字以上で入力してください')
+    ).not.toBeInTheDocument()
   })
 
   it('空文字のエラーメッセージでも表示される', () => {

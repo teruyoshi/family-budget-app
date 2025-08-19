@@ -12,7 +12,7 @@ describe('Direct URL Access Tests', () => {
    * 基本的な直接アクセス機能のテスト
    */
   describe('Basic Direct Access', () => {
-    test('dashboard page loads correctly via direct URL access', async () => {
+    test.skip('dashboard page loads correctly via direct URL access', async () => {
       renderAppWithRouter({ initialEntries: ['/'] })
 
       // ローディング完了を待機

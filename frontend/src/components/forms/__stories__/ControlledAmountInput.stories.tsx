@@ -41,7 +41,7 @@ function FormWrapper({
         name="amount"
         placeholder={placeholder}
       />
-      
+
       <Box sx={{ mt: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
         <Button type="submit" variant="contained" size="small">
           送信
@@ -56,7 +56,11 @@ function FormWrapper({
           <Typography variant="body2" color="text.secondary">
             送信されたデータ:
           </Typography>
-          <Typography variant="body2" component="pre" sx={{ fontSize: '0.8rem' }}>
+          <Typography
+            variant="body2"
+            component="pre"
+            sx={{ fontSize: '0.8rem' }}
+          >
             {JSON.stringify(submitData, null, 2)}
           </Typography>
         </Box>
@@ -67,14 +71,15 @@ function FormWrapper({
 
 // バリデーションエラーのデモ用フォーム
 function ValidationFormWrapper() {
-  const { control, handleSubmit, setError, clearErrors } = useForm<TransactionFormData>({
-    defaultValues: {
-      amount: 0,
-      description: '',
-      category: '',
-      date: '',
-    },
-  })
+  const { control, handleSubmit, setError, clearErrors } =
+    useForm<TransactionFormData>({
+      defaultValues: {
+        amount: 0,
+        description: '',
+        category: '',
+        date: '',
+      },
+    })
 
   const onSubmit = (data: TransactionFormData) => {
     console.log('フォーム送信データ:', data)
@@ -98,12 +103,17 @@ function ValidationFormWrapper() {
         name="amount"
         placeholder="金額を入力してください"
       />
-      
+
       <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
         <Button type="submit" variant="contained" size="small">
           送信
         </Button>
-        <Button onClick={triggerError} variant="outlined" size="small" color="error">
+        <Button
+          onClick={triggerError}
+          variant="outlined"
+          size="small"
+          color="error"
+        >
           エラー表示
         </Button>
         <Button onClick={clearError} variant="outlined" size="small">
@@ -121,7 +131,8 @@ const meta: Meta<typeof ControlledAmountInput> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'react-hook-form連携金額入力コンポーネント。フォーム内で使用される金額入力フィールドで、Controllerでラップしてバリデーション・エラー表示を自動化。',
+        component:
+          'react-hook-form連携金額入力コンポーネント。フォーム内で使用される金額入力フィールドで、Controllerでラップしてバリデーション・エラー表示を自動化。',
       },
     },
   },
@@ -207,33 +218,50 @@ export const MultipleFields: Story = {
     const [income, expense, budget] = watch(['income', 'expense', 'budget'])
     const balance = (income || 0) - (expense || 0)
 
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: {
+      income: number
+      expense: number
+      budget: number
+    }) => {
       console.log('複数フィールドデータ:', data)
     }
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            maxWidth: 400,
+          }}
+        >
           <Box>
-            <Typography variant="subtitle2" gutterBottom>収入</Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              収入
+            </Typography>
             <ControlledAmountInput
               control={control}
               name="income"
               placeholder="月収を入力"
             />
           </Box>
-          
+
           <Box>
-            <Typography variant="subtitle2" gutterBottom>支出</Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              支出
+            </Typography>
             <ControlledAmountInput
               control={control}
               name="expense"
               placeholder="支出額を入力"
             />
           </Box>
-          
+
           <Box>
-            <Typography variant="subtitle2" gutterBottom>予算</Typography>
+            <Typography variant="subtitle2" gutterBottom>
+              予算
+            </Typography>
             <ControlledAmountInput
               control={control}
               name="budget"
@@ -242,7 +270,9 @@ export const MultipleFields: Story = {
           </Box>
 
           <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-            <Typography variant="h6" gutterBottom>収支計算</Typography>
+            <Typography variant="h6" gutterBottom>
+              収支計算
+            </Typography>
             <Typography variant="body2">
               収入: ¥{(income || 0).toLocaleString()}
             </Typography>
@@ -252,12 +282,12 @@ export const MultipleFields: Story = {
             <Typography variant="body2">
               予算: ¥{(budget || 0).toLocaleString()}
             </Typography>
-            <Typography 
-              variant="body1" 
-              sx={{ 
-                mt: 1, 
+            <Typography
+              variant="body1"
+              sx={{
+                mt: 1,
                 fontWeight: 'bold',
-                color: balance >= 0 ? 'success.main' : 'error.main'
+                color: balance >= 0 ? 'success.main' : 'error.main',
               }}
             >
               残高: ¥{balance.toLocaleString()}
@@ -278,14 +308,15 @@ export const MultipleFields: Story = {
  */
 export const InteractiveTest: Story = {
   render: () => {
-    const { control, handleSubmit, watch, setValue } = useForm<TransactionFormData>({
-      defaultValues: {
-        amount: 0,
-        description: '',
-        category: '',
-        date: '',
-      },
-    })
+    const { control, handleSubmit, watch, setValue } =
+      useForm<TransactionFormData>({
+        defaultValues: {
+          amount: 0,
+          description: '',
+          category: '',
+          date: '',
+        },
+      })
 
     const currentAmount = watch('amount')
 
@@ -304,7 +335,7 @@ export const InteractiveTest: Story = {
           name="amount"
           placeholder="金額を入力またはプリセットを選択"
         />
-        
+
         <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             プリセット金額:
