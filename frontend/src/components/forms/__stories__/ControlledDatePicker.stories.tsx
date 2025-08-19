@@ -19,9 +19,8 @@ function FormWrapper({
   const { control, handleSubmit, watch } = useForm<TransactionFormData>({
     defaultValues: {
       amount: 0,
-      description: '',
-      category: '',
       date: defaultDate,
+      useCustomDate: false,
     },
   })
 
@@ -38,7 +37,7 @@ function FormWrapper({
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledDatePicker<TransactionFormData, 'date'>
+        <ControlledDatePicker
           control={control}
           name="date"
           label={label}
@@ -78,9 +77,8 @@ function ValidationFormWrapper() {
     useForm<TransactionFormData>({
       defaultValues: {
         amount: 0,
-        description: '',
-        category: '',
         date: '',
+        useCustomDate: false,
       },
     })
 
@@ -102,7 +100,7 @@ function ValidationFormWrapper() {
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledDatePicker<TransactionFormData, 'date'>
+        <ControlledDatePicker
           control={control}
           name="date"
           label="支出日付"
@@ -336,9 +334,8 @@ export const InteractiveTest: Story = {
       useForm<TransactionFormData>({
         defaultValues: {
           amount: 0,
-          description: '',
-          category: '',
           date: '',
+          useCustomDate: false,
         },
       })
 
@@ -361,7 +358,7 @@ export const InteractiveTest: Story = {
     return (
       <DateLocalizationProvider>
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-          <ControlledDatePicker<TransactionFormData, 'date'>
+          <ControlledDatePicker
             control={control}
             name="date"
             label="日付を選択またはプリセットを使用"

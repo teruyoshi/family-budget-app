@@ -15,16 +15,15 @@ function TestFormWrapper({
   const { control, handleSubmit } = useForm<TransactionFormData>({
     defaultValues: {
       amount: 0,
-      description: '',
-      category: '',
       date: '',
+      useCustomDate: false,
       ...defaultValues,
     },
   })
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <ControlledAmountInput<TransactionFormData>
+      <ControlledAmountInput
         control={control}
         name="amount"
         placeholder="金額を入力してください"

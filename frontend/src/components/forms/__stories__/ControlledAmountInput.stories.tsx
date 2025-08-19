@@ -18,9 +18,8 @@ function FormWrapper({
   const { control, handleSubmit, watch } = useForm<TransactionFormData>({
     defaultValues: {
       amount: defaultAmount,
-      description: '',
-      category: '',
       date: '',
+      useCustomDate: false,
     },
   })
 
@@ -36,7 +35,7 @@ function FormWrapper({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-      <ControlledAmountInput<TransactionFormData>
+      <ControlledAmountInput
         control={control}
         name="amount"
         placeholder={placeholder}
@@ -75,9 +74,8 @@ function ValidationFormWrapper() {
     useForm<TransactionFormData>({
       defaultValues: {
         amount: 0,
-        description: '',
-        category: '',
         date: '',
+        useCustomDate: false,
       },
     })
 
@@ -98,7 +96,7 @@ function ValidationFormWrapper() {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-      <ControlledAmountInput<TransactionFormData>
+      <ControlledAmountInput
         control={control}
         name="amount"
         placeholder="金額を入力してください"
@@ -312,9 +310,8 @@ export const InteractiveTest: Story = {
       useForm<TransactionFormData>({
         defaultValues: {
           amount: 0,
-          description: '',
-          category: '',
           date: '',
+          useCustomDate: false,
         },
       })
 
@@ -330,7 +327,7 @@ export const InteractiveTest: Story = {
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledAmountInput<TransactionFormData>
+        <ControlledAmountInput
           control={control}
           name="amount"
           placeholder="金額を入力またはプリセットを選択"

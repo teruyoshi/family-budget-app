@@ -18,8 +18,6 @@ function FormWrapper({
   const { control, handleSubmit, watch } = useForm<TransactionFormData>({
     defaultValues: {
       amount: 0,
-      description: '',
-      category: '',
       date: '',
       useCustomDate: defaultValue,
     },
@@ -37,7 +35,7 @@ function FormWrapper({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-      <ControlledCustomDateSwitch<TransactionFormData, 'useCustomDate'>
+      <ControlledCustomDateSwitch
         control={control}
         name="useCustomDate"
         label={label}
@@ -354,8 +352,6 @@ export const InteractiveTest: Story = {
       useForm<TransactionFormData>({
         defaultValues: {
           amount: 0,
-          description: '',
-          category: '',
           date: '',
           useCustomDate: false,
         },
@@ -381,7 +377,7 @@ export const InteractiveTest: Story = {
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledCustomDateSwitch<TransactionFormData, 'useCustomDate'>
+        <ControlledCustomDateSwitch
           control={control}
           name="useCustomDate"
           label="カスタム機能を有効にする"

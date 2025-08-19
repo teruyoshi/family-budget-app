@@ -66,7 +66,7 @@ describe('TextLabel', () => {
   })
 
   it('空のchildrenでもコロンが表示される', () => {
-    render(<TextLabel></TextLabel>)
+    render(<TextLabel>{''}</TextLabel>)
     expect(screen.getByText('：')).toBeInTheDocument()
   })
 

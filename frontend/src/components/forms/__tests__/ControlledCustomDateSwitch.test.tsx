@@ -15,8 +15,6 @@ function TestFormWrapper({
   const { control, handleSubmit } = useForm<TransactionFormData>({
     defaultValues: {
       amount: 0,
-      description: '',
-      category: '',
       date: '',
       useCustomDate: false,
       ...defaultValues,
@@ -25,7 +23,7 @@ function TestFormWrapper({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <ControlledCustomDateSwitch<TransactionFormData, 'useCustomDate'>
+      <ControlledCustomDateSwitch
         control={control}
         name="useCustomDate"
         label="日付を指定する"

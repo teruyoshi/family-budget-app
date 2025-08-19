@@ -16,9 +16,8 @@ function TestFormWrapper({
   const { control, handleSubmit } = useForm<TransactionFormData>({
     defaultValues: {
       amount: 0,
-      description: '',
-      category: '',
       date: '',
+      useCustomDate: false,
       ...defaultValues,
     },
   })
@@ -26,7 +25,7 @@ function TestFormWrapper({
   return (
     <DateLocalizationProvider>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <ControlledDatePicker<TransactionFormData, 'date'>
+        <ControlledDatePicker
           control={control}
           name="date"
           label="支出日付"
