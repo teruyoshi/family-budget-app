@@ -36,7 +36,7 @@ function FormWrapper({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-      <ControlledAmountInput
+      <ControlledAmountInput<TransactionFormData>
         control={control}
         name="amount"
         placeholder={placeholder}
@@ -93,7 +93,7 @@ function ValidationFormWrapper() {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-      <ControlledAmountInput
+      <ControlledAmountInput<TransactionFormData>
         control={control}
         name="amount"
         placeholder="金額を入力してください"
@@ -299,7 +299,7 @@ export const InteractiveTest: Story = {
 
     return (
       <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
-        <ControlledAmountInput
+        <ControlledAmountInput<TransactionFormData>
           control={control}
           name="amount"
           placeholder="金額を入力またはプリセットを選択"

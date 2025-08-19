@@ -24,7 +24,7 @@ function TestFormWrapper({
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <ControlledAmountInput
+      <ControlledAmountInput<TransactionFormData>
         control={control}
         name="amount"
         placeholder="金額を入力してください"
