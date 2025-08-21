@@ -1,42 +1,18 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   AppBar,
   Box,
-  Divider,
   Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import {
-  Close as CloseIcon,
-  Dashboard as DashboardIcon,
-  TrendingDown as ExpenseIcon,
-  History as HistoryIcon,
-  TrendingUp as IncomeIcon,
-  Menu as MenuIcon,
-  Settings as SettingsIcon,
-} from '@mui/icons-material'
-import { type AppRoute, getNavigationRoutes } from '@/routes/routes'
-
-/**
- * ナビゲーションアイコンマッピング
- */
-const navigationIcons = {
-  '/': DashboardIcon,
-  '/expenses': ExpenseIcon,
-  '/income': IncomeIcon,
-  '/history': HistoryIcon,
-  '/settings': SettingsIcon,
-} as const
+import { Menu as MenuIcon } from '@mui/icons-material'
+import { type AppRoute } from '@/routes/routes'
+import AppDrawerContent from './AppDrawerContent'
 
 /**
  * アプリケーションナビゲーションコンポーネントのProps型定義
@@ -96,7 +72,6 @@ export default function AppNavigation({
 
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const location = useLocation()
   const navigate = useNavigate()
 
   /**
@@ -136,98 +111,6 @@ export default function AppNavigation({
       handleNavigationClick(path)
     }
   }
-
-  /**
-   * ドロワーコンテンツ
-   */
-  const drawerContent = (
-    <Box>
-      {/* ドロワーヘッダー */}
-      <Toolbar
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          px: 2,
-        }}
-      >
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{
-            fontWeight: 'bold',
-            color: 'primary.main',
-          }}
-        >
-          {title}
-        </Typography>
-        {isMobile && (
-          <IconButton
-            color="inherit"
-            aria-label="ナビゲーションを閉じる"
-            edge="end"
-            onClick={handleDrawerClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        )}
-      </Toolbar>
-
-      <Divider />
-
-      {/* ナビゲーションメニュー */}
-      <List>
-        {getNavigationRoutes().map((route) => {
-          const Icon =
-            navigationIcons[route.path as keyof typeof navigationIcons]
-          const isActive = location.pathname === route.path
-
-          return (
-            <ListItem key={route.path} disablePadding>
-              <ListItemButton
-                selected={isActive}
-                onClick={() => handleNavigationClick(route.path as AppRoute)}
-                onKeyDown={(event) =>
-                  handleKeyDown(event, route.path as AppRoute)
-                }
-                sx={{
-                  minHeight: 48,
-                  px: 2.5,
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.light',
-                    color: 'primary.contrastText',
-                    '&:hover': {
-                      backgroundColor: 'primary.main',
-                    },
-                  },
-                }}
-                aria-label={`${route.title}ページに移動`}
-                role="menuitem"
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: 3,
-                    color: isActive ? 'inherit' : 'text.secondary',
-                  }}
-                >
-                  <Icon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={route.title}
-                  primaryTypographyProps={{
-                    fontSize: '0.95rem',
-                    fontWeight: isActive ? 'medium' : 'regular',
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          )
-        })}
-      </List>
-    </Box>
-  )
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -280,7 +163,13 @@ export default function AppNavigation({
             },
           }}
         >
-          {drawerContent}
+          <AppDrawerContent
+            title={title}
+            isMobile={isMobile}
+            onDrawerClose={handleDrawerClose}
+            onNavigationClick={handleNavigationClick}
+            onKeyDown={handleKeyDown}
+          />
         </Drawer>
 
         {/* デスクトップ用ドロワー */}
@@ -295,7 +184,13 @@ export default function AppNavigation({
           }}
           open
         >
-          {drawerContent}
+          <AppDrawerContent
+            title={title}
+            isMobile={isMobile}
+            onDrawerClose={handleDrawerClose}
+            onNavigationClick={handleNavigationClick}
+            onKeyDown={handleKeyDown}
+          />
         </Drawer>
       </Box>
     </Box>
