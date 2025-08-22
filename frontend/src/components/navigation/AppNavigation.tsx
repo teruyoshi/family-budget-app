@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Drawer, useMediaQuery, useTheme } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { type AppRoute } from '@/routes/routes'
 import AppTopBar from './AppTopBar'
-import AppDrawerContent from './AppDrawerContent'
+import AppDrawer from './AppDrawer'
 
 /**
  * アプリケーションナビゲーションコンポーネントのProps型定義
@@ -113,59 +113,16 @@ export default function AppNavigation({
       />
 
       {/* ナビゲーションドロワー */}
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="メインナビゲーション"
-        role="navigation"
-      >
-        {/* モバイル用ドロワー */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          ModalProps={{
-            keepMounted: true, // モバイルパフォーマンス向上
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          <AppDrawerContent
-            title={title}
-            isMobile={isMobile}
-            onDrawerClose={handleDrawerClose}
-            onNavigationClick={handleNavigationClick}
-            onKeyDown={handleKeyDown}
-          />
-        </Drawer>
-
-        {/* デスクトップ用ドロワー */}
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          <AppDrawerContent
-            title={title}
-            isMobile={isMobile}
-            onDrawerClose={handleDrawerClose}
-            onNavigationClick={handleNavigationClick}
-            onKeyDown={handleKeyDown}
-          />
-        </Drawer>
-      </Box>
+      <AppDrawer
+        drawerWidth={drawerWidth}
+        title={title}
+        isMobile={isMobile}
+        mobileOpen={mobileOpen}
+        onDrawerClose={handleDrawerClose}
+        onDrawerTransitionEnd={handleDrawerTransitionEnd}
+        onNavigationClick={handleNavigationClick}
+        onKeyDown={handleKeyDown}
+      />
     </Box>
   )
 }
