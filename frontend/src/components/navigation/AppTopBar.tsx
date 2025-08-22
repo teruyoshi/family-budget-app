@@ -1,9 +1,4 @@
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  useTheme,
-} from '@mui/material'
+import { AppBar, IconButton, Toolbar, useTheme } from '@mui/material'
 import { Menu as MenuIcon } from '@mui/icons-material'
 import { AppTitle } from '@/components/ui'
 
@@ -72,12 +67,12 @@ export default function AppTopBar({
         >
           <MenuIcon />
         </IconButton>
-        <AppTitle 
+        <AppTitle
           title={title}
-          variant="h6" 
-          component="h1" 
-          noWrap 
-          sx={{ flexGrow: 1 }} 
+          variant="h6"
+          component="h1"
+          noWrap
+          sx={{ flexGrow: 1 }}
         />
       </Toolbar>
     </AppBar>

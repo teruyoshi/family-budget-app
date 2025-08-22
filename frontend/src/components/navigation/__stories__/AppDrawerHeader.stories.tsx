@@ -85,7 +85,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのヘッダー表示。デスクトップ表示時はタイトルのみが表示されます。',
+        story:
+          'デフォルト設定でのヘッダー表示。デスクトップ表示時はタイトルのみが表示されます。',
       },
     },
   },
@@ -105,7 +106,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示。タイトルと共にクローズボタンが表示されます。',
+        story:
+          'モバイル端末での表示。タイトルと共にクローズボタンが表示されます。',
       },
     },
   },
@@ -122,7 +124,8 @@ export const CustomTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
+        story:
+          'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
       },
     },
   },
@@ -139,7 +142,8 @@ export const LongTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。AppTitleコンポーネントによる適切な表示処理を確認。',
+        story:
+          '長いタイトルでの表示テスト。AppTitleコンポーネントによる適切な表示処理を確認。',
       },
     },
   },
@@ -159,7 +163,8 @@ export const LongTitleMobile: Story = {
     },
     docs: {
       description: {
-        story: '長いタイトル + モバイル表示での動作。クローズボタンとの配置バランスを確認。',
+        story:
+          '長いタイトル + モバイル表示での動作。クローズボタンとの配置バランスを確認。',
       },
     },
   },
@@ -188,7 +193,8 @@ export const CompactWidth: Story = {
   parameters: {
     docs: {
       description: {
-        story: '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
+        story:
+          '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
       },
     },
   },
@@ -237,7 +243,8 @@ export const TabletView: Story = {
     },
     docs: {
       description: {
-        story: 'タブレット端末での表示。モバイル扱いでクローズボタンが表示されます。',
+        story:
+          'タブレット端末での表示。モバイル扱いでクローズボタンが表示されます。',
       },
     },
   },
@@ -274,7 +281,8 @@ export const WithInteraction: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'クローズボタンのクリック動作テスト。Actionsタブでクローズイベントを確認できます。',
+        story:
+          'クローズボタンのクリック動作テスト。Actionsタブでクローズイベントを確認できます。',
       },
     },
   },
@@ -291,7 +299,8 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。toolbar role、aria-label、キーボードナビゲーションを検証。',
+        story:
+          'アクセシビリティ要素の確認。toolbar role、aria-label、キーボードナビゲーションを検証。',
       },
     },
   },
@@ -308,7 +317,8 @@ export const EmptyTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '空のタイトルでの表示テスト。タイトルが空でもレイアウトが正常に機能することを確認。',
+        story:
+          '空のタイトルでの表示テスト。タイトルが空でもレイアウトが正常に機能することを確認。',
       },
     },
   },
@@ -328,7 +338,8 @@ export const EmptyTitleMobile: Story = {
     },
     docs: {
       description: {
-        story: '空のタイトル + モバイル表示での動作。クローズボタンのみが表示される状態を確認。',
+        story:
+          '空のタイトル + モバイル表示での動作。クローズボタンのみが表示される状態を確認。',
       },
     },
   },

@@ -29,9 +29,7 @@ const mockRouteWithoutIcon: RouteInfo = {
 // テスト用のラッパーコンポーネント
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </BrowserRouter>
 )
 
@@ -203,7 +201,7 @@ describe('NavigationMenuItem', () => {
   it('非アクティブなルートで正しいスタイルが適用される', () => {
     // 異なるルートでテスト
     const differentRoute = { ...mockRoute, path: '/expenses' as const }
-    
+
     render(
       <TestWrapper>
         <NavigationMenuItem

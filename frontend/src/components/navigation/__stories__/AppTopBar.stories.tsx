@@ -76,7 +76,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのトップバー表示。ドロワー幅240px、タイトルは「家計簿アプリ」。',
+        story:
+          'デフォルト設定でのトップバー表示。ドロワー幅240px、タイトルは「家計簿アプリ」。',
       },
     },
   },
@@ -110,7 +111,8 @@ export const LongTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。noWrapにより文字が省略される動作を確認。',
+        story:
+          '長いタイトルでの表示テスト。noWrapにより文字が省略される動作を確認。',
       },
     },
   },
@@ -144,7 +146,8 @@ export const WideDrawer: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ドロワー幅320pxでの拡張表示。広いドロワーに対するAppBarの調整を確認。',
+        story:
+          'ドロワー幅320pxでの拡張表示。広いドロワーに対するAppBarの調整を確認。',
       },
     },
   },
@@ -164,7 +167,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示シミュレーション。ハンバーガーメニューボタンが表示される。',
+        story:
+          'モバイル端末での表示シミュレーション。ハンバーガーメニューボタンが表示される。',
       },
     },
   },
@@ -184,7 +188,8 @@ export const TabletView: Story = {
     },
     docs: {
       description: {
-        story: 'タブレット端末での表示シミュレーション。中間サイズでのレスポンシブ動作を確認。',
+        story:
+          'タブレット端末での表示シミュレーション。中間サイズでのレスポンシブ動作を確認。',
       },
     },
   },
@@ -204,7 +209,8 @@ export const DesktopView: Story = {
     },
     docs: {
       description: {
-        story: 'デスクトップ端末での表示シミュレーション。ハンバーガーメニューは非表示になる。',
+        story:
+          'デスクトップ端末での表示シミュレーション。ハンバーガーメニューは非表示になる。',
       },
     },
   },
@@ -224,7 +230,8 @@ export const WithInteraction: Story = {
     },
     docs: {
       description: {
-        story: 'ハンバーガーメニューボタンのクリック動作テスト。モバイル表示でのインタラクションを確認。',
+        story:
+          'ハンバーガーメニューボタンのクリック動作テスト。モバイル表示でのインタラクションを確認。',
       },
     },
   },
@@ -244,7 +251,8 @@ export const AccessibilityTest: Story = {
     },
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。ARIA属性、見出し要素、キーボードナビゲーションを検証。',
+        story:
+          'アクセシビリティ要素の確認。ARIA属性、見出し要素、キーボードナビゲーションを検証。',
       },
     },
   },

@@ -2,7 +2,6 @@ import { List } from '@mui/material'
 import { getNavigationRoutes } from '@/routes/routes'
 import NavigationMenuItem from './NavigationMenuItem'
 
-
 /**
  * ナビゲーションメニューコンポーネントのProps型定義
  */

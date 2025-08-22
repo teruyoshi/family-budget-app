@@ -81,7 +81,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのナビゲーションメニュー表示。全てのページへのリンクが表示されます。',
+        story:
+          'デフォルト設定でのナビゲーションメニュー表示。全てのページへのリンクが表示されます。',
       },
     },
   },
@@ -100,7 +101,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示。メニュー項目クリック時にドロワーが自動的に閉じられます。',
+        story:
+          'モバイル端末での表示。メニュー項目クリック時にドロワーが自動的に閉じられます。',
       },
     },
   },
@@ -154,7 +156,8 @@ export const WithInteraction: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'メニュー項目のクリック動作テスト。Actionsタブでドロワークローズイベントを確認できます。',
+        story:
+          'メニュー項目のクリック動作テスト。Actionsタブでドロワークローズイベントを確認できます。',
       },
     },
   },
@@ -170,7 +173,8 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。List要素、menuitem role、キーボードナビゲーションを検証。',
+        story:
+          'アクセシビリティ要素の確認。List要素、menuitem role、キーボードナビゲーションを検証。',
       },
     },
   },
@@ -198,7 +202,8 @@ export const CompactWidth: Story = {
   parameters: {
     docs: {
       description: {
-        story: '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
+        story:
+          '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
       },
     },
   },

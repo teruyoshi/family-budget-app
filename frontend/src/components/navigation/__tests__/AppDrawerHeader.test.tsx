@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -9,9 +9,7 @@ const theme = createTheme()
 // テスト用のラッパーコンポーネント
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </BrowserRouter>
 )
 
@@ -40,13 +38,14 @@ describe('AppDrawerHeader', () => {
   })
 
   it('Toolbarが正しく表示される', () => {
-    render(
+    const { container } = render(
       <TestWrapper>
         <AppDrawerHeader {...defaultProps} />
       </TestWrapper>
     )
 
-    const toolbar = screen.getByRole('toolbar')
+    // MUI Toolbarクラスを持つ要素を確認
+    const toolbar = container.querySelector('.MuiToolbar-root')
     expect(toolbar).toBeInTheDocument()
   })
 
@@ -64,10 +63,7 @@ describe('AppDrawerHeader', () => {
   it('デスクトップ表示時はクローズボタンが表示されない', () => {
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={false}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={false} />
       </TestWrapper>
     )
 
@@ -78,10 +74,7 @@ describe('AppDrawerHeader', () => {
   it('モバイル表示時はクローズボタンが表示される', () => {
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 
@@ -93,15 +86,12 @@ describe('AppDrawerHeader', () => {
   it('モバイル時のクローズボタンに正しいaria-labelが設定される', () => {
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 
     const closeButton = screen.getByRole('button')
-    expect(closeButton).toHaveAttribute('aria-label', 'ドロワーを閉じる')
+    expect(closeButton).toHaveAttribute('aria-label', 'ナビゲーションを閉じる')
   })
 
   it('クローズボタンクリック時にonDrawerCloseが呼ばれる', async () => {
@@ -109,10 +99,7 @@ describe('AppDrawerHeader', () => {
 
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 
@@ -124,13 +111,10 @@ describe('AppDrawerHeader', () => {
 
   it('カスタムタイトルが正しく表示される', () => {
     const customTitle = 'My Budget App'
-    
+
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          title={customTitle}
-        />
+        <AppDrawerHeader {...defaultProps} title={customTitle} />
       </TestWrapper>
     )
 
@@ -138,14 +122,12 @@ describe('AppDrawerHeader', () => {
   })
 
   it('長いタイトルが正しく表示される', () => {
-    const longTitle = 'ファミリー家計簿管理システム - 総合収支管理アプリケーション'
-    
+    const longTitle =
+      'ファミリー家計簿管理システム - 総合収支管理アプリケーション'
+
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          title={longTitle}
-        />
+        <AppDrawerHeader {...defaultProps} title={longTitle} />
       </TestWrapper>
     )
 
@@ -153,17 +135,14 @@ describe('AppDrawerHeader', () => {
   })
 
   it('空のタイトルでも正常に動作する', () => {
-    render(
+    const { container } = render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          title=""
-        />
+        <AppDrawerHeader {...defaultProps} title="" />
       </TestWrapper>
     )
 
     // AppTitleコンポーネントが空の文字列でも動作することを確認
-    const toolbar = screen.getByRole('toolbar')
+    const toolbar = container.querySelector('.MuiToolbar-root')
     expect(toolbar).toBeInTheDocument()
   })
 
@@ -172,16 +151,16 @@ describe('AppDrawerHeader', () => {
 
     render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 
     const closeButton = screen.getByRole('button')
-    closeButton.focus()
-    await user.keyboard('{Enter}')
+
+    await act(async () => {
+      closeButton.focus()
+      await user.keyboard('{Enter}')
+    })
 
     expect(mockOnDrawerClose).toHaveBeenCalledTimes(1)
   })
@@ -189,7 +168,7 @@ describe('AppDrawerHeader', () => {
   it('複数のプロパティが同時に適用される', async () => {
     const user = userEvent.setup()
 
-    render(
+    const { container } = render(
       <TestWrapper>
         <AppDrawerHeader
           title="Test App"
@@ -200,28 +179,25 @@ describe('AppDrawerHeader', () => {
     )
 
     expect(screen.getByText('Test App')).toBeInTheDocument()
-    expect(screen.getByRole('toolbar')).toBeInTheDocument()
-    
+    expect(container.querySelector('.MuiToolbar-root')).toBeInTheDocument()
+
     const closeButton = screen.getByRole('button')
     expect(closeButton).toBeInTheDocument()
-    
+
     await user.click(closeButton)
     expect(mockOnDrawerClose).toHaveBeenCalledTimes(1)
   })
 
   it('Toolbarの構造が正しく配置される', () => {
-    render(
+    const { container } = render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 
-    const toolbar = screen.getByRole('toolbar')
+    const toolbar = container.querySelector('.MuiToolbar-root')
     expect(toolbar).toBeInTheDocument()
-    
+
     // タイトルとクローズボタンがツールバー内に存在
     expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
     expect(screen.getByRole('button')).toBeInTheDocument()
@@ -230,10 +206,7 @@ describe('AppDrawerHeader', () => {
   it('デスクトップとモバイルの表示切り替えが正しく動作する', () => {
     const { rerender } = render(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={false}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={false} />
       </TestWrapper>
     )
 
@@ -243,10 +216,7 @@ describe('AppDrawerHeader', () => {
     // モバイルに切り替え
     rerender(
       <TestWrapper>
-        <AppDrawerHeader
-          {...defaultProps}
-          isMobile={true}
-        />
+        <AppDrawerHeader {...defaultProps} isMobile={true} />
       </TestWrapper>
     )
 

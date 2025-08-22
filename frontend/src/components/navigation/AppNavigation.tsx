@@ -57,7 +57,7 @@ export default function AppNavigation({
   title = '家計簿アプリ',
 }: AppNavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
-  
+
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -65,7 +65,7 @@ export default function AppNavigation({
    * ハンバーガーメニュートグル処理
    */
   const handleMenuToggle = () => {
-    setMobileOpen(prev => !prev)
+    setMobileOpen((prev) => !prev)
   }
 
   /**

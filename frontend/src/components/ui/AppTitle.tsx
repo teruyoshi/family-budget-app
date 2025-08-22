@@ -10,17 +10,17 @@ import { Typography, type TypographyProps } from '@mui/material'
  * ```tsx
  * // デフォルトタイトル
  * <AppTitle />
- * 
+ *
  * // カスタムタイトル
  * <AppTitle title="My Budget App" />
- * 
+ *
  * // スタイル・バリアントカスタマイズ
- * <AppTitle 
+ * <AppTitle
  *   title="家計簿システム"
- *   variant="h3" 
- *   sx={{ color: 'primary.main' }} 
+ *   variant="h3"
+ *   sx={{ color: 'primary.main' }}
  * />
- * 
+ *
  * // ナビゲーション用（折り返しなし・flexGrow）
  * <AppTitle
  *   title="Budget Manager"
@@ -43,20 +43,15 @@ export interface AppTitleProps {
   noWrap?: boolean
 }
 
-function AppTitle({ 
-  title = '家計簿アプリ', 
-  variant = 'h4', 
-  component = 'h1', 
+function AppTitle({
+  title = '家計簿アプリ',
+  variant = 'h4',
+  component = 'h1',
   sx,
-  noWrap = false 
+  noWrap = false,
 }: AppTitleProps) {
   return (
-    <Typography 
-      variant={variant} 
-      component={component} 
-      sx={sx}
-      noWrap={noWrap}
-    >
+    <Typography variant={variant} component={component} sx={sx} noWrap={noWrap}>
       {title}
     </Typography>
   )

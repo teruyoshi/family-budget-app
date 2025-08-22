@@ -12,7 +12,7 @@ import {
   Settings as SettingsIcon,
 } from '@mui/icons-material'
 import NavigationMenuItem from '../NavigationMenuItem'
-import type { RouteInfo } from '@/types'
+import type { RouteInfo, AppRoute } from '@/types'
 
 const theme = createTheme()
 
@@ -61,7 +61,7 @@ const routes: RouteInfo[] = [
 ]
 
 const routeWithoutIcon: RouteInfo = {
-  path: '/no-icon',
+  path: '/settings' as AppRoute,
   title: 'アイコンなし',
   description: 'アイコンを持たないルート',
   element: <div>No Icon</div>,
@@ -144,7 +144,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのメニュー項目表示。ダッシュボードアイコンと共に表示。',
+        story:
+          'デフォルト設定でのメニュー項目表示。ダッシュボードアイコンと共に表示。',
       },
     },
   },
@@ -224,7 +225,8 @@ export const WithoutIcon: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アイコンを持たないメニュー項目。アイコン部分は空白で表示されます。',
+        story:
+          'アイコンを持たないメニュー項目。アイコン部分は空白で表示されます。',
       },
     },
   },
@@ -244,7 +246,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示。クリック時にドロワーが自動的に閉じられます。',
+        story:
+          'モバイル端末での表示。クリック時にドロワーが自動的に閉じられます。',
       },
     },
   },
@@ -281,7 +284,8 @@ export const AllItems: Story = {
   parameters: {
     docs: {
       description: {
-        story: '全てのメニュー項目を一覧表示。実際のナビゲーションメニューの見た目を確認できます。',
+        story:
+          '全てのメニュー項目を一覧表示。実際のナビゲーションメニューの見た目を確認できます。',
       },
     },
   },
@@ -297,7 +301,8 @@ export const WithInteraction: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'メニュー項目のクリック動作テスト。Actionsタブでイベント発火を確認できます。',
+        story:
+          'メニュー項目のクリック動作テスト。Actionsタブでイベント発火を確認できます。',
       },
     },
   },
@@ -313,7 +318,8 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。ARIA属性、ロール、キーボードナビゲーションを検証。',
+        story:
+          'アクセシビリティ要素の確認。ARIA属性、ロール、キーボードナビゲーションを検証。',
       },
     },
   },

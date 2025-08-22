@@ -59,7 +59,7 @@ describe('AppTitle', () => {
 
   it('ナビゲーション用設定が正しく動作する', () => {
     render(
-      <AppTitle 
+      <AppTitle
         title="Budget Manager"
         variant="h6"
         component="h1"
@@ -77,11 +77,11 @@ describe('AppTitle', () => {
 
   it('複数のプロパティを同時に適用できる', () => {
     render(
-      <AppTitle 
-        title="カスタムアプリ" 
-        variant="h2" 
-        component="h3" 
-        sx={{ textAlign: 'center' }} 
+      <AppTitle
+        title="カスタムアプリ"
+        variant="h2"
+        component="h3"
+        sx={{ textAlign: 'center' }}
       />
     )
     const title = screen.getByRole('heading', { level: 3 })

@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { Dashboard, TrendingDown, TrendingUp } from '@mui/icons-material'
 import NavigationMenu from '../NavigationMenu'
 
 const theme = createTheme()
@@ -9,9 +10,7 @@ const theme = createTheme()
 // テスト用のラッパーコンポーネント
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </BrowserRouter>
 )
 
@@ -27,7 +26,7 @@ jest.mock('@/routes/routes', () => {
       description: '家計簿の概要と主要機能へのアクセス',
       element: <div>Dashboard</div>,
       showInNavigation: true,
-      icon: require('@mui/icons-material').Dashboard,
+      icon: Dashboard,
     },
     {
       path: '/expenses',
@@ -35,7 +34,7 @@ jest.mock('@/routes/routes', () => {
       description: '支出の登録と履歴管理',
       element: <div>Expenses</div>,
       showInNavigation: true,
-      icon: require('@mui/icons-material').TrendingDown,
+      icon: TrendingDown,
     },
     {
       path: '/income',
@@ -43,10 +42,10 @@ jest.mock('@/routes/routes', () => {
       description: '収入の登録と履歴管理',
       element: <div>Income</div>,
       showInNavigation: true,
-      icon: require('@mui/icons-material').TrendingUp,
+      icon: TrendingUp,
     },
   ])
-  
+
   return {
     getNavigationRoutes: mockGetNavigationRoutes,
   }
@@ -56,15 +55,15 @@ describe('NavigationMenu', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     // モック関数をリセットして元の値に戻す
-    const { getNavigationRoutes } = require('@/routes/routes')
-    getNavigationRoutes.mockReturnValue([
+    const mockModule = jest.requireMock('@/routes/routes')
+    mockModule.getNavigationRoutes.mockReturnValue([
       {
         path: '/',
         title: 'ダッシュボード',
         description: '家計簿の概要と主要機能へのアクセス',
         element: <div>Dashboard</div>,
         showInNavigation: true,
-        icon: require('@mui/icons-material').Dashboard,
+        icon: Dashboard,
       },
       {
         path: '/expenses',
@@ -72,7 +71,7 @@ describe('NavigationMenu', () => {
         description: '支出の登録と履歴管理',
         element: <div>Expenses</div>,
         showInNavigation: true,
-        icon: require('@mui/icons-material').TrendingDown,
+        icon: TrendingDown,
       },
       {
         path: '/income',
@@ -80,7 +79,7 @@ describe('NavigationMenu', () => {
         description: '収入の登録と履歴管理',
         element: <div>Income</div>,
         showInNavigation: true,
-        icon: require('@mui/icons-material').TrendingUp,
+        icon: TrendingUp,
       },
     ])
   })
@@ -88,10 +87,7 @@ describe('NavigationMenu', () => {
   it('基本的なレンダリングが正しく動作する', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -104,10 +100,7 @@ describe('NavigationMenu', () => {
   it('Listコンポーネントが正しく表示される', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -119,10 +112,7 @@ describe('NavigationMenu', () => {
   it('すべてのメニュー項目がmenuitem roleを持つ', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -134,10 +124,7 @@ describe('NavigationMenu', () => {
   it('各メニュー項目に正しいpropsが渡される', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={true}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={true} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -156,10 +143,7 @@ describe('NavigationMenu', () => {
 
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={true}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={true} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -178,10 +162,7 @@ describe('NavigationMenu', () => {
 
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -195,15 +176,12 @@ describe('NavigationMenu', () => {
 
   it('空のナビゲーションルートでも正常に動作する', () => {
     // getNavigationRoutes を空配列を返すようにモック
-    const { getNavigationRoutes } = require('@/routes/routes')
-    getNavigationRoutes.mockReturnValue([])
+    const mockModule = jest.requireMock('@/routes/routes')
+    mockModule.getNavigationRoutes.mockReturnValue([])
 
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -216,10 +194,7 @@ describe('NavigationMenu', () => {
   it('複数のプロパティが同時に適用される', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={true}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={true} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -234,17 +209,17 @@ describe('NavigationMenu', () => {
   it('メニュー項目の順序が正しく保持される', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
     const menuItems = screen.getAllByRole('menuitem')
-    
+
     // aria-label属性で順序を確認
-    expect(menuItems[0]).toHaveAttribute('aria-label', 'ダッシュボードページに移動')
+    expect(menuItems[0]).toHaveAttribute(
+      'aria-label',
+      'ダッシュボードページに移動'
+    )
     expect(menuItems[1]).toHaveAttribute('aria-label', '支出管理ページに移動')
     expect(menuItems[2]).toHaveAttribute('aria-label', '収入管理ページに移動')
   })
@@ -252,10 +227,7 @@ describe('NavigationMenu', () => {
   it('各メニュー項目に一意のkeyが設定される', () => {
     render(
       <TestWrapper>
-        <NavigationMenu
-          isMobile={false}
-          onDrawerClose={mockOnDrawerClose}
-        />
+        <NavigationMenu isMobile={false} onDrawerClose={mockOnDrawerClose} />
       </TestWrapper>
     )
 
@@ -263,9 +235,9 @@ describe('NavigationMenu', () => {
     // 代わりに各項目が正しく個別に表示されることを確認
     const menuItems = screen.getAllByRole('menuitem')
     expect(menuItems).toHaveLength(3)
-    
+
     // 重複がないことを確認するために、各項目のテキストが一意であることをチェック
-    const texts = menuItems.map(item => item.textContent)
+    const texts = menuItems.map((item) => item.textContent)
     const uniqueTexts = [...new Set(texts)]
     expect(uniqueTexts).toHaveLength(3)
   })

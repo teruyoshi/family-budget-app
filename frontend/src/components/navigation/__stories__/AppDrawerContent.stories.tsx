@@ -85,7 +85,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのドロワーコンテンツ表示。ヘッダー、区切り線、ナビゲーションメニューが統合表示されます。',
+        story:
+          'デフォルト設定でのドロワーコンテンツ表示。ヘッダー、区切り線、ナビゲーションメニューが統合表示されます。',
       },
     },
   },
@@ -105,7 +106,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示。ヘッダーにクローズボタンが表示され、メニュー選択時に自動クローズされます。',
+        story:
+          'モバイル端末での表示。ヘッダーにクローズボタンが表示され、メニュー選択時に自動クローズされます。',
       },
     },
   },
@@ -122,7 +124,8 @@ export const CustomTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
+        story:
+          'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
       },
     },
   },
@@ -139,7 +142,8 @@ export const LongTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。タイトルの折り返し・省略表示を確認できます。',
+        story:
+          '長いタイトルでの表示テスト。タイトルの折り返し・省略表示を確認できます。',
       },
     },
   },
@@ -168,7 +172,8 @@ export const CompactWidth: Story = {
   parameters: {
     docs: {
       description: {
-        story: '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
+        story:
+          '幅200pxでのコンパクト表示。狭い領域でも適切に表示されることを確認。',
       },
     },
   },
@@ -217,7 +222,8 @@ export const TabletView: Story = {
     },
     docs: {
       description: {
-        story: 'タブレット端末での表示。モバイル扱いでクローズボタンが表示されます。',
+        story:
+          'タブレット端末での表示。モバイル扱いでクローズボタンが表示されます。',
       },
     },
   },
@@ -237,7 +243,8 @@ export const DesktopView: Story = {
     },
     docs: {
       description: {
-        story: 'デスクトップ端末での表示。クローズボタンは非表示で永続的な表示となります。',
+        story:
+          'デスクトップ端末での表示。クローズボタンは非表示で永続的な表示となります。',
       },
     },
   },
@@ -254,7 +261,8 @@ export const WithInteraction: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'インタラクション動作テスト。Actionsタブでクローズイベントやナビゲーションイベントを確認できます。',
+        story:
+          'インタラクション動作テスト。Actionsタブでクローズイベントやナビゲーションイベントを確認できます。',
       },
     },
   },
@@ -271,7 +279,8 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。見出し要素、区切り線、メニュー項目の構造を検証。',
+        story:
+          'アクセシビリティ要素の確認。見出し要素、区切り線、メニュー項目の構造を検証。',
       },
     },
   },
@@ -288,7 +297,8 @@ export const EmptyTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '空のタイトルでの表示テスト。タイトルが空でもレイアウトが正常に機能することを確認。',
+        story:
+          '空のタイトルでの表示テスト。タイトルが空でもレイアウトが正常に機能することを確認。',
       },
     },
   },

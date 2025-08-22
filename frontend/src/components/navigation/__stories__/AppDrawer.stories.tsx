@@ -97,7 +97,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのドロワー表示。デスクトップ用永続的ドロワーが常時表示されます。',
+        story:
+          'デフォルト設定でのドロワー表示。デスクトップ用永続的ドロワーが常時表示されます。',
       },
     },
   },
@@ -119,7 +120,8 @@ export const MobileClosed: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末でのドロワー（閉じた状態）。一時的ドロワーが非表示になっています。',
+        story:
+          'モバイル端末でのドロワー（閉じた状態）。一時的ドロワーが非表示になっています。',
       },
     },
   },
@@ -141,7 +143,8 @@ export const MobileOpen: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末でのドロワー（開いた状態）。一時的ドロワーがオーバーレイ表示されます。',
+        story:
+          'モバイル端末でのドロワー（開いた状態）。一時的ドロワーがオーバーレイ表示されます。',
       },
     },
   },
@@ -160,7 +163,8 @@ export const CustomTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
+        story:
+          'カスタムタイトルでの表示例。英語タイトルでの国際化対応を確認できます。',
       },
     },
   },
@@ -179,7 +183,8 @@ export const CompactWidth: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ドロワー幅200pxでのコンパクト表示。狭い画面や省スペース設計での使用例。',
+        story:
+          'ドロワー幅200pxでのコンパクト表示。狭い画面や省スペース設計での使用例。',
       },
     },
   },
@@ -220,7 +225,8 @@ export const TabletView: Story = {
     },
     docs: {
       description: {
-        story: 'タブレット端末での表示。モバイル扱いで一時的ドロワーとして動作します。',
+        story:
+          'タブレット端末での表示。モバイル扱いで一時的ドロワーとして動作します。',
       },
     },
   },
@@ -232,16 +238,16 @@ export const TabletView: Story = {
 export const InteractiveControl: Story = {
   render: (args) => {
     const [mobileOpen, setMobileOpen] = useState(false)
-    
+
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen)
     }
-    
+
     const handleDrawerClose = () => {
       setMobileOpen(false)
       args.onDrawerClose()
     }
-    
+
     return (
       <BrowserRouter>
         <ThemeProvider theme={theme}>
@@ -280,7 +286,8 @@ export const InteractiveControl: Story = {
     },
     docs: {
       description: {
-        story: 'インタラクティブなドロワー制御デモ。ボタンでドロワーの開閉を制御できます。',
+        story:
+          'インタラクティブなドロワー制御デモ。ボタンでドロワーの開閉を制御できます。',
       },
     },
   },
@@ -299,7 +306,8 @@ export const LongTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。タイトルの折り返し・省略表示を確認できます。',
+        story:
+          '長いタイトルでの表示テスト。タイトルの折り返し・省略表示を確認できます。',
       },
     },
   },
@@ -318,7 +326,8 @@ export const AccessibilityTest: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。navigation role、aria-label、キーボードナビゲーションを検証。',
+        story:
+          'アクセシビリティ要素の確認。navigation role、aria-label、キーボードナビゲーションを検証。',
       },
     },
   },

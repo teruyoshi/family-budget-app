@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { DateLocalizationProvider } from '@/components/provider'
-import AppNavigation from './AppNavigation'
+import AppNavigation from '../AppNavigation'
 
 const theme = createTheme()
 
@@ -71,7 +71,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定でのナビゲーション表示。タイトルは「家計簿アプリ」、ドロワー幅は240px。',
+        story:
+          'デフォルト設定でのナビゲーション表示。タイトルは「家計簿アプリ」、ドロワー幅は240px。',
       },
     },
   },
@@ -103,7 +104,8 @@ export const WideDrawer: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ドロワー幅を320pxに拡張した表示。メニュー項目が多い場合やアイコンとテキストを並列表示する場合に適用。',
+        story:
+          'ドロワー幅を320pxに拡張した表示。メニュー項目が多い場合やアイコンとテキストを並列表示する場合に適用。',
       },
     },
   },
@@ -119,7 +121,8 @@ export const CompactDrawer: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'ドロワー幅を200pxに縮小したコンパクト表示。画面スペースを最大限活用したい場合に適用。',
+        story:
+          'ドロワー幅を200pxに縮小したコンパクト表示。画面スペースを最大限活用したい場合に適用。',
       },
     },
   },
@@ -135,7 +138,8 @@ export const LongTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。タイトルの折り返しやレスポンシブ動作を確認。',
+        story:
+          '長いタイトルでの表示テスト。タイトルの折り返しやレスポンシブ動作を確認。',
       },
     },
   },
@@ -152,7 +156,8 @@ export const MobileView: Story = {
     },
     docs: {
       description: {
-        story: 'モバイル端末での表示シミュレーション。ハンバーガーメニューとドロワーの動作を確認。',
+        story:
+          'モバイル端末での表示シミュレーション。ハンバーガーメニューとドロワーの動作を確認。',
       },
     },
   },
@@ -169,7 +174,8 @@ export const TabletView: Story = {
     },
     docs: {
       description: {
-        story: 'タブレット端末での表示シミュレーション。中間サイズでのレスポンシブ動作を確認。',
+        story:
+          'タブレット端末での表示シミュレーション。中間サイズでのレスポンシブ動作を確認。',
       },
     },
   },
@@ -186,7 +192,8 @@ export const DesktopView: Story = {
     },
     docs: {
       description: {
-        story: 'デスクトップ端末での表示シミュレーション。常時表示ドロワーとAppBarの動作を確認。',
+        story:
+          'デスクトップ端末での表示シミュレーション。常時表示ドロワーとAppBarの動作を確認。',
       },
     },
   },

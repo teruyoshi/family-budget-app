@@ -41,10 +41,7 @@ export default function AppDrawerContent({
         onDrawerClose={onDrawerClose}
       />
       <Divider />
-      <NavigationMenu
-        isMobile={isMobile}
-        onDrawerClose={onDrawerClose}
-      />
+      <NavigationMenu isMobile={isMobile} onDrawerClose={onDrawerClose} />
     </Box>
   )
 }

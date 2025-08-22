@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { Dashboard } from '@mui/icons-material'
 import AppDrawer from '../AppDrawer'
 
 const theme = createTheme()
@@ -9,14 +10,9 @@ const theme = createTheme()
 // テスト用のラッパーコンポーネント
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
+    <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </BrowserRouter>
 )
-
-// モックされた関数
-const mockOnDrawerClose = jest.fn()
 
 // getNavigationRoutes のモック
 jest.mock('@/routes/routes', () => ({
@@ -27,41 +23,39 @@ jest.mock('@/routes/routes', () => ({
       description: '家計簿の概要と主要機能へのアクセス',
       element: <div>Dashboard</div>,
       showInNavigation: true,
-      icon: require('@mui/icons-material').Dashboard,
+      icon: Dashboard,
     },
   ],
 }))
 
 describe('AppDrawer', () => {
-  const defaultProps = {
-    drawerWidth: 240,
-    title: '家計簿アプリ',
-    isMobile: false,
-    mobileOpen: false,
-    onDrawerClose: mockOnDrawerClose,
-  }
-
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('基本的なレンダリングが正しく動作する', () => {
-    render(
+  const setup = (props = {}) => {
+    const mockOnDrawerClose = jest.fn()
+    const defaultProps = {
+      drawerWidth: 240,
+      title: '家計簿アプリ',
+      isMobile: false,
+      mobileOpen: false,
+      onDrawerClose: mockOnDrawerClose,
+    }
+    const mergedProps = { ...defaultProps, ...props }
+    const renderResult = render(
       <TestWrapper>
-        <AppDrawer {...defaultProps} />
+        <AppDrawer {...mergedProps} />
       </TestWrapper>
     )
+    return { ...renderResult, mockOnDrawerClose }
+  }
+
+  it('基本的なレンダリングが正しく動作する', () => {
+    setup()
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2) // モバイルとデスクトップ両方のドロワー
   })
 
   it('デスクトップ用ドロワーが正しく表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer {...defaultProps} />
-      </TestWrapper>
-    )
+    setup()
 
     // permanent variant のドロワーが存在することを確認
     // MUIのDrawerコンポーネントはクラス名で識別可能
@@ -71,31 +65,16 @@ describe('AppDrawer', () => {
   })
 
   it('モバイル用ドロワーが正しく表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          isMobile={true}
-          mobileOpen={true}
-        />
-      </TestWrapper>
-    )
+    setup({ isMobile: true, mobileOpen: true })
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    // モバイル時もモバイルとデスクトップ両方のドロワーが存在する
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2)
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2)
   })
 
   it('ドロワー幅が正しく適用される', () => {
     const customWidth = 280
-    
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          drawerWidth={customWidth}
-        />
-      </TestWrapper>
-    )
+    setup({ drawerWidth: customWidth })
 
     const nav = screen.getByRole('navigation')
     expect(nav).toBeInTheDocument()
@@ -104,170 +83,96 @@ describe('AppDrawer', () => {
 
   it('カスタムタイトルが正しく表示される', () => {
     const customTitle = 'My Budget App'
-    
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          title={customTitle}
-        />
-      </TestWrapper>
-    )
+    setup({ title: customTitle })
 
-    expect(screen.getByText(customTitle)).toBeInTheDocument()
+    expect(screen.getAllByText(customTitle)).toHaveLength(2) // モバイルとデスクトップ両方のドロワー
   })
 
   it('モバイルドロワーが開いている状態で正しく表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          isMobile={true}
-          mobileOpen={true}
-        />
-      </TestWrapper>
-    )
+    setup({ isMobile: true, mobileOpen: true })
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    // モバイル時もモバイルとデスクトップ両方のドロワーが表示されることを確認
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2)
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2)
   })
 
   it('モバイルドロワーが閉じている状態で正しく動作する', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          isMobile={true}
-          mobileOpen={false}
-        />
-      </TestWrapper>
-    )
+    setup({ isMobile: true, mobileOpen: false })
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
     // ドロワーが閉じていても要素は存在する（visibility や transform で制御）
   })
 
   it('ドロワーコンテンツが正しく表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer {...defaultProps} />
-      </TestWrapper>
-    )
+    setup()
 
     // AppDrawerContent の内容が表示されることを確認
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
-    expect(screen.getByText('ダッシュボード')).toBeInTheDocument()
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2) // モバイルとデスクトップ両方のドロワー
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2) // モバイルとデスクトップ両方のドロワー
   })
 
   it('複数のプロパティが同時に適用される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          drawerWidth={300}
-          title="Test App"
-          isMobile={true}
-          mobileOpen={true}
-          onDrawerClose={mockOnDrawerClose}
-        />
-      </TestWrapper>
-    )
+    setup({
+      drawerWidth: 300,
+      title: 'Test App',
+      isMobile: true,
+      mobileOpen: true,
+    })
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('Test App')).toBeInTheDocument()
-    expect(screen.getByText('ダッシュボード')).toBeInTheDocument()
+    // モバイル時もモバイルとデスクトップ両方のドロワーが表示されることを確認
+    expect(screen.getAllByText('Test App')).toHaveLength(2)
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2)
   })
 
   it('ナビゲーション要素のアクセシビリティ属性が正しく設定される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer {...defaultProps} />
-      </TestWrapper>
-    )
+    setup()
 
     const nav = screen.getByRole('navigation')
     expect(nav).toHaveAttribute('aria-label', 'メインナビゲーション')
   })
 
   it('ドロワーコンテンツが両方のドロワーで共有される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          isMobile={true}
-          mobileOpen={true}
-        />
-      </TestWrapper>
-    )
+    setup({ isMobile: true, mobileOpen: true })
 
     // 同じコンテンツが両方のドロワーに表示される
     // （モバイル用とデスクトップ用）
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
-    expect(screen.getByText('ダッシュボード')).toBeInTheDocument()
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2)
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2)
   })
 
   it('遷移状態の処理が正しく動作する', async () => {
     const user = userEvent.setup()
+    const { mockOnDrawerClose } = setup({ isMobile: true, mobileOpen: true })
 
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          isMobile={true}
-          mobileOpen={true}
-        />
-      </TestWrapper>
-    )
+    // メニュー項目が表示されることを確認
+    expect(screen.getAllByText('ダッシュボード')).toHaveLength(2)
 
-    // ナビゲーション要素が存在することを確認
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-
-    // メニュー項目をクリック
-    const menuItem = screen.getByText('ダッシュボード')
-    await user.click(menuItem)
+    // メニュー項目をクリック（最初の要素を選択）
+    const menuItems = screen.getAllByRole('menuitem')
+    await user.click(menuItems[0])
 
     // ドロワークローズが呼ばれることを確認
     expect(mockOnDrawerClose).toHaveBeenCalled()
   })
 
   it('空のタイトルでも正常に動作する', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          title=""
-        />
-      </TestWrapper>
-    )
+    setup({ title: '' })
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
     // 空のタイトルでもコンポーネントがクラッシュしないことを確認
   })
 
   it('最小幅でも正常に表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          drawerWidth={200}
-        />
-      </TestWrapper>
-    )
+    setup({ drawerWidth: 200 })
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2)
   })
 
   it('最大幅でも正常に表示される', () => {
-    render(
-      <TestWrapper>
-        <AppDrawer
-          {...defaultProps}
-          drawerWidth={400}
-        />
-      </TestWrapper>
-    )
+    setup({ drawerWidth: 400 })
 
     expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('家計簿アプリ')).toBeInTheDocument()
+    expect(screen.getAllByText('家計簿アプリ')).toHaveLength(2)
   })
 })

@@ -98,7 +98,7 @@ describe('DatePicker', () => {
     setup()
     const calendarButton = screen.getByRole('button', { name: /choose date/i })
     expect(calendarButton).toBeInTheDocument()
-    
+
     // ボタンがクリック可能であることを確認（実際のクリックは警告を避けるため行わない）
     expect(calendarButton).not.toBeDisabled()
     expect(calendarButton).toHaveAttribute('type', 'button')

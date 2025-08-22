@@ -66,7 +66,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'デフォルト設定での表示。タイトルは「家計簿アプリ」、variantはh4。',
+        story:
+          'デフォルト設定での表示。タイトルは「家計簿アプリ」、variantはh4。',
       },
     },
   },
@@ -134,7 +135,8 @@ export const NavigationTitle: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'AppBar等のナビゲーションで使用するタイトル。noWrapとflexGrowを設定。',
+        story:
+          'AppBar等のナビゲーションで使用するタイトル。noWrapとflexGrowを設定。',
       },
     },
   },
@@ -252,7 +254,8 @@ export const Variants: Story = {
     layout: 'fullscreen',
     docs: {
       description: {
-        story: '全てのvariantオプションの表示比較。サイズ感やフォントウェイトの違いを確認。',
+        story:
+          '全てのvariantオプションの表示比較。サイズ感やフォントウェイトの違いを確認。',
       },
     },
   },
