@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Box, Drawer } from '@mui/material'
 import AppDrawerContent from './AppDrawerContent'
+import { appDrawerStyles } from './AppDrawer.styles'
 
 /**
  * アプリケーションドロワーコンポーネントのProps型定義
@@ -93,13 +94,7 @@ export default function AppDrawer({
         ModalProps={{
           keepMounted: true, // モバイルパフォーマンス向上
         }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: drawerWidth,
-          },
-        }}
+        sx={appDrawerStyles.mobileDrawer(drawerWidth)}
       >
         <AppDrawerContent
           title={title}
@@ -111,13 +106,7 @@ export default function AppDrawer({
       {/* デスクトップ用ドロワー */}
       <Drawer
         variant="permanent"
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: drawerWidth,
-          },
-        }}
+        sx={appDrawerStyles.desktopDrawer(drawerWidth)}
         open
       >
         <AppDrawerContent
