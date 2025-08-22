@@ -1,17 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  AppBar,
-  Box,
-  Drawer,
-  IconButton,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
-import { Menu as MenuIcon } from '@mui/icons-material'
+import { Box, Drawer, useMediaQuery, useTheme } from '@mui/material'
 import { type AppRoute } from '@/routes/routes'
+import AppTopBar from './AppTopBar'
 import AppDrawerContent from './AppDrawerContent'
 
 /**
@@ -114,30 +105,12 @@ export default function AppNavigation({
 
   return (
     <Box sx={{ display: 'flex' }}>
-      {/* AppBar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          zIndex: theme.zIndex.drawer + 1,
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="ナビゲーションメニューを開く"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="h1" sx={{ flexGrow: 1 }}>
-            {title}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {/* トップバー */}
+      <AppTopBar
+        drawerWidth={drawerWidth}
+        title={title}
+        onMenuToggle={handleDrawerToggle}
+      />
 
       {/* ナビゲーションドロワー */}
       <Box
