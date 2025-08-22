@@ -1,5 +1,4 @@
 import { Box, Divider } from '@mui/material'
-import { type AppRoute } from '@/routes/routes'
 import AppDrawerHeader from './AppDrawerHeader'
 import NavigationMenu from './NavigationMenu'
 
@@ -13,10 +12,6 @@ export interface AppDrawerContentProps {
   isMobile: boolean
   /** ドロワーを閉じる処理 */
   onDrawerClose: () => void
-  /** ナビゲーションクリック処理 */
-  onNavigationClick: (path: AppRoute) => void
-  /** キーボードナビゲーション処理 */
-  onKeyDown: (event: React.KeyboardEvent, path: AppRoute) => void
 }
 
 /**
@@ -30,8 +25,6 @@ export interface AppDrawerContentProps {
  *   title="家計簿アプリ"
  *   isMobile={isMobile}
  *   onDrawerClose={handleDrawerClose}
- *   onNavigationClick={handleNavigationClick}
- *   onKeyDown={handleKeyDown}
  * />
  * ```
  */
@@ -39,8 +32,6 @@ export default function AppDrawerContent({
   title,
   isMobile,
   onDrawerClose,
-  onNavigationClick,
-  onKeyDown,
 }: AppDrawerContentProps) {
   return (
     <Box>
@@ -51,8 +42,8 @@ export default function AppDrawerContent({
       />
       <Divider />
       <NavigationMenu
-        onNavigationClick={onNavigationClick}
-        onKeyDown={onKeyDown}
+        isMobile={isMobile}
+        onDrawerClose={onDrawerClose}
       />
     </Box>
   )

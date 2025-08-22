@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { Box, Drawer } from '@mui/material'
-import { type AppRoute } from '@/routes/routes'
 import AppDrawerContent from './AppDrawerContent'
 
 /**
@@ -16,12 +16,6 @@ export interface AppDrawerProps {
   mobileOpen: boolean
   /** ドロワーを閉じる処理 */
   onDrawerClose: () => void
-  /** ドロワー遷移終了処理 */
-  onDrawerTransitionEnd: () => void
-  /** ナビゲーションクリック処理 */
-  onNavigationClick: (path: AppRoute) => void
-  /** キーボードナビゲーション処理 */
-  onKeyDown: (event: React.KeyboardEvent, path: AppRoute) => void
 }
 
 /**
@@ -55,9 +49,6 @@ export interface AppDrawerProps {
  *   isMobile={isMobile}
  *   mobileOpen={mobileOpen}
  *   onDrawerClose={handleDrawerClose}
- *   onDrawerTransitionEnd={handleDrawerTransitionEnd}
- *   onNavigationClick={handleNavigationClick}
- *   onKeyDown={handleKeyDown}
  * />
  * ```
  */
@@ -67,10 +58,25 @@ export default function AppDrawer({
   isMobile,
   mobileOpen,
   onDrawerClose,
-  onDrawerTransitionEnd,
-  onNavigationClick,
-  onKeyDown,
 }: AppDrawerProps) {
+  const [isClosing, setIsClosing] = useState(false)
+
+  /**
+   * ドロワー遷移終了処理
+   */
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false)
+  }
+
+  /**
+   * ドロワーを閉じる処理（内部状態考慮）
+   */
+  const handleDrawerClose = () => {
+    if (!isClosing) {
+      setIsClosing(true)
+      onDrawerClose()
+    }
+  }
   return (
     <Box
       component="nav"
@@ -82,8 +88,8 @@ export default function AppDrawer({
       <Drawer
         variant="temporary"
         open={mobileOpen}
-        onTransitionEnd={onDrawerTransitionEnd}
-        onClose={onDrawerClose}
+        onTransitionEnd={handleDrawerTransitionEnd}
+        onClose={handleDrawerClose}
         ModalProps={{
           keepMounted: true, // モバイルパフォーマンス向上
         }}
@@ -98,9 +104,7 @@ export default function AppDrawer({
         <AppDrawerContent
           title={title}
           isMobile={isMobile}
-          onDrawerClose={onDrawerClose}
-          onNavigationClick={onNavigationClick}
-          onKeyDown={onKeyDown}
+          onDrawerClose={handleDrawerClose}
         />
       </Drawer>
 
@@ -119,9 +123,7 @@ export default function AppDrawer({
         <AppDrawerContent
           title={title}
           isMobile={isMobile}
-          onDrawerClose={onDrawerClose}
-          onNavigationClick={onNavigationClick}
-          onKeyDown={onKeyDown}
+          onDrawerClose={handleDrawerClose}
         />
       </Drawer>
     </Box>

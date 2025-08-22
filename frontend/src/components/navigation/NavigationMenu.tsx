@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   List,
   ListItem,
@@ -30,10 +30,10 @@ const navigationIcons = {
  * ナビゲーションメニューコンポーネントのProps型定義
  */
 export interface NavigationMenuProps {
-  /** ナビゲーションクリック処理 */
-  onNavigationClick: (path: AppRoute) => void
-  /** キーボードナビゲーション処理 */
-  onKeyDown: (event: React.KeyboardEvent, path: AppRoute) => void
+  /** モバイル表示かどうか */
+  isMobile: boolean
+  /** ドロワーを閉じる処理（モバイル時のナビゲーション後に実行） */
+  onDrawerClose: () => void
 }
 
 /**
@@ -44,16 +44,37 @@ export interface NavigationMenuProps {
  * @example
  * ```tsx
  * <NavigationMenu
- *   onNavigationClick={handleNavigationClick}
- *   onKeyDown={handleKeyDown}
+ *   isMobile={isMobile}
+ *   onDrawerClose={handleDrawerClose}
  * />
  * ```
  */
 export default function NavigationMenu({
-  onNavigationClick,
-  onKeyDown,
+  isMobile,
+  onDrawerClose,
 }: NavigationMenuProps) {
   const location = useLocation()
+  const navigate = useNavigate()
+
+  /**
+   * ナビゲーションアイテムクリック処理
+   */
+  const handleNavigationClick = (path: AppRoute) => {
+    navigate(path)
+    if (isMobile) {
+      onDrawerClose()
+    }
+  }
+
+  /**
+   * キーボードナビゲーション処理
+   */
+  const handleKeyDown = (event: React.KeyboardEvent, path: AppRoute) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleNavigationClick(path)
+    }
+  }
 
   return (
     <List>
@@ -65,8 +86,8 @@ export default function NavigationMenu({
           <ListItem key={route.path} disablePadding>
             <ListItemButton
               selected={isActive}
-              onClick={() => onNavigationClick(route.path as AppRoute)}
-              onKeyDown={(event) => onKeyDown(event, route.path as AppRoute)}
+              onClick={() => handleNavigationClick(route.path as AppRoute)}
+              onKeyDown={(event) => handleKeyDown(event, route.path as AppRoute)}
               sx={{
                 minHeight: 48,
                 px: 2.5,

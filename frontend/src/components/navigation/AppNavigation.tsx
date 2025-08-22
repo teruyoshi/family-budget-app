@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
-import { type AppRoute } from '@/routes/routes'
 import AppTopBar from './AppTopBar'
 import AppDrawer from './AppDrawer'
 
@@ -59,48 +57,22 @@ export default function AppNavigation({
   title = '家計簿アプリ',
 }: AppNavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [isClosing, setIsClosing] = useState(false)
-
+  
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const navigate = useNavigate()
 
   /**
-   * モバイルドロワーの開閉処理
+   * ハンバーガーメニュートグル処理
+   */
+  const handleMenuToggle = () => {
+    setMobileOpen(prev => !prev)
+  }
+
+  /**
+   * ドロワーを閉じる処理
    */
   const handleDrawerClose = () => {
-    setIsClosing(true)
     setMobileOpen(false)
-  }
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false)
-  }
-
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen)
-    }
-  }
-
-  /**
-   * ナビゲーションアイテムクリック処理
-   */
-  const handleNavigationClick = (path: AppRoute) => {
-    navigate(path)
-    if (isMobile) {
-      handleDrawerClose()
-    }
-  }
-
-  /**
-   * キーボードナビゲーション処理
-   */
-  const handleKeyDown = (event: React.KeyboardEvent, path: AppRoute) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      handleNavigationClick(path)
-    }
   }
 
   return (
@@ -109,7 +81,7 @@ export default function AppNavigation({
       <AppTopBar
         drawerWidth={drawerWidth}
         title={title}
-        onMenuToggle={handleDrawerToggle}
+        onMenuToggle={handleMenuToggle}
       />
 
       {/* ナビゲーションドロワー */}
@@ -119,9 +91,6 @@ export default function AppNavigation({
         isMobile={isMobile}
         mobileOpen={mobileOpen}
         onDrawerClose={handleDrawerClose}
-        onDrawerTransitionEnd={handleDrawerTransitionEnd}
-        onNavigationClick={handleNavigationClick}
-        onKeyDown={handleKeyDown}
       />
     </Box>
   )
