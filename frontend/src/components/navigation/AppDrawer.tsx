@@ -78,6 +78,18 @@ export default function AppDrawer({
       onDrawerClose()
     }
   }
+
+  /**
+   * 共通のドロワーコンテンツ
+   */
+  const drawerContent = (
+    <AppDrawerContent
+      title={title}
+      isMobile={isMobile}
+      onDrawerClose={handleDrawerClose}
+    />
+  )
+
   return (
     <Box
       component="nav"
@@ -96,11 +108,7 @@ export default function AppDrawer({
         }}
         sx={appDrawerStyles.mobileDrawer(drawerWidth)}
       >
-        <AppDrawerContent
-          title={title}
-          isMobile={isMobile}
-          onDrawerClose={handleDrawerClose}
-        />
+        {drawerContent}
       </Drawer>
 
       {/* デスクトップ用ドロワー */}
@@ -109,11 +117,7 @@ export default function AppDrawer({
         sx={appDrawerStyles.desktopDrawer(drawerWidth)}
         open
       >
-        <AppDrawerContent
-          title={title}
-          isMobile={isMobile}
-          onDrawerClose={handleDrawerClose}
-        />
+        {drawerContent}
       </Drawer>
     </Box>
   )
