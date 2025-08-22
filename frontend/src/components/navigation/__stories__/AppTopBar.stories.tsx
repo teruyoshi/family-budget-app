@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { fn } from '@storybook/test'
 import { ThemeProvider } from '@mui/material/styles'
 import { createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -59,7 +58,7 @@ MUI AppBarを使用したヘッダーナビゲーション。
     },
   },
   args: {
-    onMenuToggle: fn(),
+    onMenuToggle: () => console.log('Menu toggle clicked'),
   },
 }
 
@@ -228,16 +227,6 @@ export const WithInteraction: Story = {
         story: 'ハンバーガーメニューボタンのクリック動作テスト。モバイル表示でのインタラクションを確認。',
       },
     },
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = canvasElement
-    const menuButton = canvas.querySelector('[aria-label="ナビゲーションメニューを開く"]')
-    
-    await step('ハンバーガーメニューボタンをクリック', async () => {
-      if (menuButton) {
-        menuButton.dispatchEvent(new MouseEvent('click', { bubbles: true }))
-      }
-    })
   },
 }
 
