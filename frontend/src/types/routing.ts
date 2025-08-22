@@ -5,7 +5,8 @@
  * 型安全なルーティングとナビゲーション管理を提供します。
  */
 
-import { type ReactElement } from 'react'
+import { type ComponentType, type ReactElement } from 'react'
+import type { SvgIconProps } from '@mui/material'
 
 /**
  * アプリケーション内の利用可能なルートパス
@@ -39,4 +40,6 @@ export interface RouteInfo {
   element: ReactElement
   /** ナビゲーションメニューでの表示有無 */
   showInNavigation: boolean
+  /** ナビゲーション用アイコン */
+  icon?: ComponentType<SvgIconProps>
 }

@@ -2,6 +2,13 @@ import { type ReactElement, Suspense, lazy } from 'react'
 import { PageLoader } from '@/components/ui'
 import NotFoundPage from '@/components/common_old/NotFoundPage'
 import type { AppRoute, RouteInfo } from '@/types'
+import {
+  Dashboard as DashboardIcon,
+  TrendingDown as ExpenseIcon,
+  History as HistoryIcon,
+  TrendingUp as IncomeIcon,
+  Settings as SettingsIcon,
+} from '@mui/icons-material'
 
 // 型エクスポート（_old ディレクトリ互換性のため）
 export type { AppRoute } from '@/types'
@@ -50,6 +57,7 @@ export const routes: RouteInfo[] = [
     description: '家計簿の概要と主要機能へのアクセス',
     element: withSuspense(DashboardPage),
     showInNavigation: true,
+    icon: DashboardIcon,
   },
   {
     path: '/expenses',
@@ -57,6 +65,7 @@ export const routes: RouteInfo[] = [
     description: '支出の登録と履歴管理',
     element: withSuspense(ExpensePage),
     showInNavigation: true,
+    icon: ExpenseIcon,
   },
   {
     path: '/income',
@@ -64,6 +73,7 @@ export const routes: RouteInfo[] = [
     description: '収入の登録と履歴管理',
     element: withSuspense(IncomePage),
     showInNavigation: true,
+    icon: IncomeIcon,
   },
   {
     path: '/history',
@@ -71,6 +81,7 @@ export const routes: RouteInfo[] = [
     description: '全ての取引履歴の一覧表示',
     element: withSuspense(HistoryPage),
     showInNavigation: true,
+    icon: HistoryIcon,
   },
   {
     path: '/settings',
@@ -78,6 +89,7 @@ export const routes: RouteInfo[] = [
     description: 'アプリケーションの設定管理',
     element: withSuspense(SettingsPage),
     showInNavigation: true,
+    icon: SettingsIcon,
   },
   {
     path: '*',
