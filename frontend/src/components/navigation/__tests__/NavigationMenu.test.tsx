@@ -19,8 +19,8 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 const mockOnDrawerClose = jest.fn()
 
 // getNavigationRoutes のモック
-jest.mock('@/routes/routes', () => ({
-  getNavigationRoutes: () => [
+jest.mock('@/routes/routes', () => {
+  const mockGetNavigationRoutes = jest.fn(() => [
     {
       path: '/',
       title: 'ダッシュボード',
@@ -45,12 +45,44 @@ jest.mock('@/routes/routes', () => ({
       showInNavigation: true,
       icon: require('@mui/icons-material').TrendingUp,
     },
-  ],
-}))
+  ])
+  
+  return {
+    getNavigationRoutes: mockGetNavigationRoutes,
+  }
+})
 
 describe('NavigationMenu', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    // モック関数をリセットして元の値に戻す
+    const { getNavigationRoutes } = require('@/routes/routes')
+    getNavigationRoutes.mockReturnValue([
+      {
+        path: '/',
+        title: 'ダッシュボード',
+        description: '家計簿の概要と主要機能へのアクセス',
+        element: <div>Dashboard</div>,
+        showInNavigation: true,
+        icon: require('@mui/icons-material').Dashboard,
+      },
+      {
+        path: '/expenses',
+        title: '支出管理',
+        description: '支出の登録と履歴管理',
+        element: <div>Expenses</div>,
+        showInNavigation: true,
+        icon: require('@mui/icons-material').TrendingDown,
+      },
+      {
+        path: '/income',
+        title: '収入管理',
+        description: '収入の登録と履歴管理',
+        element: <div>Income</div>,
+        showInNavigation: true,
+        icon: require('@mui/icons-material').TrendingUp,
+      },
+    ])
   })
 
   it('基本的なレンダリングが正しく動作する', () => {
@@ -163,7 +195,8 @@ describe('NavigationMenu', () => {
 
   it('空のナビゲーションルートでも正常に動作する', () => {
     // getNavigationRoutes を空配列を返すようにモック
-    jest.mocked(require('@/routes/routes').getNavigationRoutes).mockReturnValue([])
+    const { getNavigationRoutes } = require('@/routes/routes')
+    getNavigationRoutes.mockReturnValue([])
 
     render(
       <TestWrapper>

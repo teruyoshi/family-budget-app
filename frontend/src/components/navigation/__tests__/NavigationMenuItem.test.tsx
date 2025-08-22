@@ -40,13 +40,14 @@ const mockNavigate = jest.fn()
 const mockOnDrawerClose = jest.fn()
 
 // react-router-dom のモック
-const mockUseLocation = jest.fn(() => ({ pathname: '/' }))
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-  useLocation: mockUseLocation,
-}))
+jest.mock('react-router-dom', () => {
+  const mockUseLocation = jest.fn(() => ({ pathname: '/' }))
+  return {
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+    useLocation: mockUseLocation,
+  }
+})
 
 describe('NavigationMenuItem', () => {
   beforeEach(() => {
@@ -185,9 +186,6 @@ describe('NavigationMenuItem', () => {
   })
 
   it('アクティブなルートで正しいスタイルが適用される', () => {
-    // アクティブなルートのテスト用に useLocation をモック
-    mockUseLocation.mockReturnValue({ pathname: '/' })
-
     render(
       <TestWrapper>
         <NavigationMenuItem
@@ -203,13 +201,13 @@ describe('NavigationMenuItem', () => {
   })
 
   it('非アクティブなルートで正しいスタイルが適用される', () => {
-    // 非アクティブなルートのテスト用に useLocation をモック
-    mockUseLocation.mockReturnValue({ pathname: '/expenses' })
-
+    // 異なるルートでテスト
+    const differentRoute = { ...mockRoute, path: '/expenses' as const }
+    
     render(
       <TestWrapper>
         <NavigationMenuItem
-          route={mockRoute}
+          route={differentRoute}
           isMobile={false}
           onDrawerClose={mockOnDrawerClose}
         />
