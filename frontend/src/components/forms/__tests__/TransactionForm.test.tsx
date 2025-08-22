@@ -159,12 +159,16 @@ describe('TransactionForm', () => {
     const submitButton = screen.getByRole('button', { name: '登録する' })
 
     // 初期状態（金額0）では送信ボタンが無効
-    expect(submitButton).toBeDisabled()
+    await waitFor(() => {
+      expect(submitButton).toBeDisabled()
+    })
 
     // 無効な金額では送信ボタンは無効のまま
     const amountInput = screen.getByRole('textbox')
     fireEvent.change(amountInput, { target: { value: '¥-100' } })
-    expect(submitButton).toBeDisabled()
+    await waitFor(() => {
+      expect(submitButton).toBeDisabled()
+    })
   })
 
   it('有効な入力があると送信ボタンが有効になる', async () => {
@@ -197,7 +201,9 @@ describe('TransactionForm', () => {
     await waitFor(() => {
       expect(screen.getByDisplayValue('¥5,000')).toBeInTheDocument()
     })
-    expect(screen.getByRole('switch')).toBeChecked()
+    await waitFor(() => {
+      expect(screen.getByRole('switch')).toBeChecked()
+    })
   })
 
   it('buttonColorが正しくButtonコンポーネントに適用される', () => {
