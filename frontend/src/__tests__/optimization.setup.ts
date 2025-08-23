@@ -1,11 +1,23 @@
 /**
  * テスト最適化設定ファイル
  *
- * フロントエンドテストのパフォーマンス向上とタイムアウト対策を提供。
- * MUIコンポーネントテスト、非同期処理の最適化に特化。
+ * React 19 + MUI v6 環境でのテストパフォーマンス向上とact()警告対策を提供。
  *
- * 注意: 警告の抑制は行いません。全ての警告・エラーは適切に表示され、
- * 開発者が問題を認識できるようにします。
+ * ## 主な機能
+ * - Jest タイマー最適化
+ * - MUI 最適化テーマ（動的インポート対応）
+ * - テストデータ生成ヘルパー
+ * - プリセット設定
+ *
+ * @example
+ * ```typescript
+ * // テスト用最適化テーマの使用
+ * const theme = await testOptimization.createOptimizedTheme()
+ * render(<ThemeProvider theme={theme}>{component}</ThemeProvider>)
+ * ```
+ *
+ * @see {@link https://jestjs.io/docs/configuration | Jest Configuration}
+ * @see {@link ../docs-src/quality/test-optimization.md | Test Optimization Guide}
  */
 
 /**
@@ -28,8 +40,17 @@ afterAll(() => {
  */
 export const testOptimization = {
   /**
-   * MUIコンポーネント用の軽量テストテーマ
-   * アニメーション無効化でテスト実行時間を短縮
+   * MUIコンポーネント用の軽量テストテーマを動的に作成
+   *
+   * アニメーション・Rippleエフェクトを無効化してテスト実行時間を短縮。
+   * ESLint準拠の動的インポートを使用。
+   *
+   * @returns MUI最適化テーマオブジェクト
+   * @example
+   * ```typescript
+   * const theme = await testOptimization.createOptimizedTheme()
+   * render(<ThemeProvider theme={theme}>{component}</ThemeProvider>)
+   * ```
    */
   createOptimizedTheme: async () => {
     const { createTheme } = await import('@mui/material/styles')
@@ -55,17 +76,32 @@ export const testOptimization = {
   },
 
   /**
-   * 効率的な非同期テスト待機
-   * MUIの非同期処理に最適化されたwaitFor設定
+   * MUI非同期処理に最適化されたwaitFor設定
+   *
+   * @example
+   * ```typescript
+   * await waitFor(() => {
+   *   expect(element).toBeInTheDocument()
+   * }, testOptimization.waitForOptions)
+   * ```
    */
   waitForOptions: {
     timeout: 5000, // MUI対応で5秒
-    interval: 100, // チェック間隔
+    interval: 100, // チェック間隔100ms
   },
 
   /**
-   * テストデータの生成最適化
-   * 大量データテスト用の軽量モック
+   * 軽量テストデータ生成
+   *
+   * 大量データテスト用の効率的なモックデータ作成
+   *
+   * @param count 生成するデータ数
+   * @returns テストデータ配列
+   * @example
+   * ```typescript
+   * const mockData = testOptimization.createMockData(100)
+   * expect(mockData).toHaveLength(100)
+   * ```
    */
   createMockData: (count: number) => {
     return Array.from({ length: count }, (_, index) => ({
@@ -76,8 +112,18 @@ export const testOptimization = {
   },
 
   /**
-   * モック関数のバッチ作成
-   * メモリ効率を考慮したモック管理
+   * メモリ効率的なモック関数バッチ管理
+   *
+   * 複数のモック関数を一括で作成・管理
+   *
+   * @param mockNames モック関数名の配列
+   * @returns モック管理オブジェクト
+   * @example
+   * ```typescript
+   * const mocks = testOptimization.createMockBatch(['onClick', 'onChange'])
+   * expect(mocks.get('onClick')).toBeCalledTimes(1)
+   * mocks.reset() // 全モックをリセット
+   * ```
    */
   createMockBatch: (mockNames: string[]) => {
     const mocks = new Map<string, jest.Mock>()
