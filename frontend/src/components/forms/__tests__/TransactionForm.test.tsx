@@ -1,13 +1,34 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DateLocalizationProvider } from '@/components/provider'
 import TransactionForm from '../TransactionForm'
 import type { TransactionFormData } from '@/lib/validation/schemas'
 
+// テスト用の最適化テーマ（MUI警告対策）
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+
+const testTheme = createTheme({
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true, // Ripple エフェクト無効化
+        disableTouchRipple: true,
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
+})
+
 // テストヘルパー関数
 function renderWithProvider(component: React.ReactElement) {
   return render(
-    <DateLocalizationProvider>{component}</DateLocalizationProvider>
+    <ThemeProvider theme={testTheme}>
+      <DateLocalizationProvider>{component}</DateLocalizationProvider>
+    </ThemeProvider>
   )
 }
 
@@ -52,7 +73,9 @@ describe('TransactionForm', () => {
 
     // カスタム日付スイッチをオン
     const customDateSwitch = screen.getByRole('switch')
-    await user.click(customDateSwitch)
+    await act(async () => {
+      await user.click(customDateSwitch)
+    })
 
     // スイッチがチェックされていることを確認
     await waitFor(() => {
@@ -70,11 +93,15 @@ describe('TransactionForm', () => {
 
     // 金額を入力
     const amountInput = screen.getByRole('textbox')
-    await user.type(amountInput, '1000')
+    await act(async () => {
+      await user.type(amountInput, '1000')
+    })
 
-    // フォームを送信
-    const submitButton = screen.getByRole('button', { name: '登録する' })
-    await user.click(submitButton)
+    // フォームを送信 - react-hook-form内部の状態更新をact()でラップ
+    await act(async () => {
+      const submitButton = screen.getByRole('button', { name: '登録する' })
+      await user.click(submitButton)
+    })
 
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith(
@@ -97,15 +124,21 @@ describe('TransactionForm', () => {
 
     // カスタム日付スイッチをオン
     const customDateSwitch = screen.getByRole('switch')
-    await user.click(customDateSwitch)
+    await act(async () => {
+      await user.click(customDateSwitch)
+    })
 
     // 金額を入力
     const amountInput = screen.getByRole('textbox')
-    await user.type(amountInput, '2500')
+    await act(async () => {
+      await user.type(amountInput, '2500')
+    })
 
     // フォームを送信
-    const submitButton = screen.getByRole('button', { name: '登録する' })
-    await user.click(submitButton)
+    await act(async () => {
+      const submitButton = screen.getByRole('button', { name: '登録する' })
+      await user.click(submitButton)
+    })
 
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith(
@@ -128,7 +161,9 @@ describe('TransactionForm', () => {
 
     // カスタム日付スイッチをオン
     const customDateSwitch = screen.getByRole('switch')
-    await user.click(customDateSwitch)
+    await act(async () => {
+      await user.click(customDateSwitch)
+    })
 
     await waitFor(() => {
       expect(customDateSwitch).toBeChecked()
@@ -136,11 +171,15 @@ describe('TransactionForm', () => {
 
     // 金額を入力
     const amountInput = screen.getByRole('textbox')
-    await user.type(amountInput, '3000')
+    await act(async () => {
+      await user.type(amountInput, '3000')
+    })
 
-    // フォームを送信
-    const submitButton = screen.getByRole('button', { name: '登録する' })
-    await user.click(submitButton)
+    // フォームを送信 - reset()による状態更新も含めてact()でラップ
+    await act(async () => {
+      const submitButton = screen.getByRole('button', { name: '登録する' })
+      await user.click(submitButton)
+    })
 
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalled()
@@ -179,7 +218,9 @@ describe('TransactionForm', () => {
     const amountInput = screen.getByRole('textbox')
 
     // 有効な金額を入力
-    await user.type(amountInput, '1500')
+    await act(async () => {
+      await user.type(amountInput, '1500')
+    })
 
     await waitFor(() => {
       expect(submitButton).not.toBeDisabled()
@@ -239,10 +280,14 @@ describe('TransactionForm', () => {
 
     // 金額を入力
     const amountInput = screen.getByRole('textbox')
-    await user.type(amountInput, '2000')
+    await act(async () => {
+      await user.type(amountInput, '2000')
+    })
 
     // Enterキーを押す
-    await user.keyboard('{Enter}')
+    await act(async () => {
+      await user.keyboard('{Enter}')
+    })
 
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledWith(

@@ -16,8 +16,16 @@ import AppBreadcrumbs from '../AppBreadcrumbs'
 const theme = createTheme()
 
 // getRouteInfo のモック
-const mockGetRouteInfo = (path: string) => {
-  const routes: Record<string, any> = {
+interface RouteInfo {
+  path: string
+  title: string
+  description: string
+  showInNavigation: boolean
+  icon: React.ComponentType
+}
+
+const mockGetRouteInfo = (path: string): RouteInfo | null => {
+  const routes: Record<string, RouteInfo> = {
     '/': {
       path: '/',
       title: 'ダッシュボード',
@@ -138,7 +146,8 @@ export const Default: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: 'デフォルト設定での支出管理ページのパンくず表示。ホーム > 支出管理の階層構造。',
+        story:
+          'デフォルト設定での支出管理ページのパンくず表示。ホーム > 支出管理の階層構造。',
       },
     },
   },
@@ -197,7 +206,8 @@ export const WithoutHomeIcon: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: 'ホームアイコンを非表示にした場合。テキストのみのシンプルなパンくず表示。',
+        story:
+          'ホームアイコンを非表示にした場合。テキストのみのシンプルなパンくず表示。',
       },
     },
   },
@@ -217,7 +227,8 @@ export const WithCustomItems: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: 'カスタムアイテムを追加した場合。詳細ページや編集ページなどの深い階層ナビゲーション。',
+        story:
+          'カスタムアイテムを追加した場合。詳細ページや編集ページなどの深い階層ナビゲーション。',
       },
     },
   },
@@ -239,7 +250,8 @@ export const MultipleCustomItems: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: '複数のカスタムアイテムを持つ深い階層のパンくず。最大5階層までの表示例。',
+        story:
+          '複数のカスタムアイテムを持つ深い階層のパンくず。最大5階層までの表示例。',
       },
     },
   },
@@ -252,7 +264,10 @@ export const WithMaxWidth: Story = {
   args: {
     maxWidth: 300,
     customItems: [
-      { label: 'とても長いカテゴリ名のページ', href: '/expenses/long-category' },
+      {
+        label: 'とても長いカテゴリ名のページ',
+        href: '/expenses/long-category',
+      },
       { label: 'さらに長い詳細ページタイトル' },
     ],
   },
@@ -260,7 +275,8 @@ export const WithMaxWidth: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: '最大幅を300pxに制限した場合。長いテキストは省略記号で表示される。',
+        story:
+          '最大幅を300pxに制限した場合。長いテキストは省略記号で表示される。',
       },
     },
   },
@@ -278,7 +294,8 @@ export const Compact: Story = {
     path: '/settings',
     docs: {
       description: {
-        story: 'アイコン非表示＋幅制限でのコンパクト表示。狭いスペースでの使用に適している。',
+        story:
+          'アイコン非表示＋幅制限でのコンパクト表示。狭いスペースでの使用に適している。',
       },
     },
   },
@@ -290,12 +307,13 @@ export const Compact: Story = {
 export const LongTitles: Story = {
   args: {
     customItems: [
-      { 
-        label: '非常に長いカテゴリ名のページでテキストオーバーフローの動作を確認する', 
-        href: '/long-category' 
+      {
+        label:
+          '非常に長いカテゴリ名のページでテキストオーバーフローの動作を確認する',
+        href: '/long-category',
       },
-      { 
-        label: 'さらに長い詳細ページのタイトルでテキスト省略の確認' 
+      {
+        label: 'さらに長い詳細ページのタイトルでテキスト省略の確認',
       },
     ],
   },
@@ -303,7 +321,8 @@ export const LongTitles: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: '長いタイトルでの表示テスト。テキストオーバーフローの動作とレイアウト崩れの防止を確認。',
+        story:
+          '長いタイトルでの表示テスト。テキストオーバーフローの動作とレイアウト崩れの防止を確認。',
       },
     },
   },
@@ -332,10 +351,10 @@ export const AllPatterns: Story = {
       {/* カスタムアイテム付き */}
       <Box>
         <MemoryRouter initialEntries={['/history']}>
-          <AppBreadcrumbs 
+          <AppBreadcrumbs
             customItems={[
               { label: '詳細ページ', href: '/detail' },
-              { label: '編集' }
+              { label: '編集' },
             ]}
           />
         </MemoryRouter>
@@ -344,11 +363,9 @@ export const AllPatterns: Story = {
       {/* 幅制限付き */}
       <Box>
         <MemoryRouter initialEntries={['/settings']}>
-          <AppBreadcrumbs 
+          <AppBreadcrumbs
             maxWidth={250}
-            customItems={[
-              { label: '長いカテゴリ名のページ', href: '/long' }
-            ]}
+            customItems={[{ label: '長いカテゴリ名のページ', href: '/long' }]}
           />
         </MemoryRouter>
       </Box>
@@ -377,7 +394,8 @@ export const WithInteraction: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: 'パンくずリンクのクリック動作テスト。Actionsタブでナビゲーションイベントを確認。',
+        story:
+          'パンくずリンクのクリック動作テスト。Actionsタブでナビゲーションイベントを確認。',
       },
     },
   },
@@ -391,7 +409,8 @@ export const AccessibilityTest: Story = {
     path: '/expenses',
     docs: {
       description: {
-        story: 'アクセシビリティ要素の確認。aria-label、キーボードナビゲーション、スクリーンリーダー対応。',
+        story:
+          'アクセシビリティ要素の確認。aria-label、キーボードナビゲーション、スクリーンリーダー対応。',
       },
     },
   },

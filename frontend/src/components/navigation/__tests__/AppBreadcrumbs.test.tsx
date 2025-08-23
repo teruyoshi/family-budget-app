@@ -7,22 +7,24 @@ import AppBreadcrumbs from '../AppBreadcrumbs'
 const theme = createTheme()
 
 // テスト用のラッパーコンポーネント
-const TestWrapper = ({ 
-  children, 
-  initialEntries = ['/'] 
-}: { 
-  children: React.ReactNode
-  initialEntries?: string[]
-}) => (
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
     <ThemeProvider theme={theme}>{children}</ThemeProvider>
   </BrowserRouter>
 )
 
 // getRouteInfo のモック
+interface RouteInfo {
+  path: string
+  title: string
+  description: string
+  showInNavigation: boolean
+  icon: React.ComponentType
+}
+
 jest.mock('@/routes/routes', () => ({
-  getRouteInfo: jest.fn((path: string) => {
-    const routes: Record<string, any> = {
+  getRouteInfo: jest.fn((path: string): RouteInfo | null => {
+    const routes: Record<string, RouteInfo> = {
       '/': {
         path: '/',
         title: 'ダッシュボード',
@@ -59,10 +61,10 @@ jest.mock('react-router-dom', () => ({
 describe('AppBreadcrumbs', () => {
   const setup = (props = {}, pathname = '/') => {
     mockUseLocation.mockReturnValue({ pathname })
-    
+
     const defaultProps = {}
     const mergedProps = { ...defaultProps, ...props }
-    
+
     const renderResult = render(
       <TestWrapper>
         <AppBreadcrumbs {...mergedProps} />
@@ -106,7 +108,7 @@ describe('AppBreadcrumbs', () => {
     setup({}, '/expenses')
 
     const currentPage = screen.getByText('支出管理')
-    expect(currentPage.tagName.toLowerCase()).toBe('span') // Typography renders as span
+    expect(currentPage.tagName.toLowerCase()).toBe('p') // Typography renders as p by default
   })
 
   it('ホームリンクが正しく設定される', () => {
@@ -136,9 +138,7 @@ describe('AppBreadcrumbs', () => {
   })
 
   it('カスタムアイテムのリンクが正しく設定される', () => {
-    const customItems = [
-      { label: '詳細ページ', href: '/detail/123' },
-    ]
+    const customItems = [{ label: '詳細ページ', href: '/detail/123' }]
 
     setup({ customItems }, '/expenses')
 
@@ -155,7 +155,7 @@ describe('AppBreadcrumbs', () => {
     setup({ customItems }, '/expenses')
 
     const editItem = screen.getByText('編集')
-    expect(editItem.tagName.toLowerCase()).toBe('span') // Typography renders as span
+    expect(editItem.tagName.toLowerCase()).toBe('p') // Typography renders as p by default
   })
 
   it('maxWidthプロパティが適用される', () => {
@@ -188,15 +188,18 @@ describe('AppBreadcrumbs', () => {
 
   it('複数のプロパティが同時に適用される', () => {
     const customItems = [{ label: 'カスタム項目' }]
-    const { container } = setup({
-      showHomeIcon: false,
-      maxWidth: 500,
-      customItems,
-    }, '/income')
+    const { container } = setup(
+      {
+        showHomeIcon: false,
+        maxWidth: 500,
+        customItems,
+      },
+      '/income'
+    )
 
     expect(screen.queryByTestId('HomeIcon')).not.toBeInTheDocument()
     expect(screen.getByText('カスタム項目')).toBeInTheDocument()
-    
+
     const breadcrumbs = container.querySelector('.MuiBreadcrumbs-root')
     expect(breadcrumbs).toHaveStyle({ maxWidth: '500px' })
   })
@@ -212,7 +215,7 @@ describe('AppBreadcrumbs', () => {
     const { container } = setup({}, '/expenses')
 
     const breadcrumbItems = container.querySelectorAll('.MuiBreadcrumbs-li > *')
-    breadcrumbItems.forEach(item => {
+    breadcrumbItems.forEach((item) => {
       const styles = window.getComputedStyle(item)
       expect(styles.overflow).toBe('hidden')
       expect(styles.textOverflow).toBe('ellipsis')
@@ -236,9 +239,11 @@ describe('AppBreadcrumbs', () => {
 
     setup({ customItems }, '/expenses')
 
-    const items = screen.getAllByRole('link').concat(screen.getAllByText(/第\d項目/))
-    const labels = items.map(item => item.textContent)
-    
+    const items = screen
+      .getAllByRole('link')
+      .concat(screen.getAllByText(/第\d項目/))
+    const labels = items.map((item) => item.textContent)
+
     expect(labels).toContain('第1項目')
     expect(labels).toContain('第2項目')
     expect(labels).toContain('第3項目')

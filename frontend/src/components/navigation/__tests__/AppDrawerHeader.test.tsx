@@ -4,7 +4,23 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import AppDrawerHeader from '../AppDrawerHeader'
 
-const theme = createTheme()
+// テスト用の最適化テーマ（Ripple エフェクト無効化）
+const theme = createTheme({
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true, // Ripple エフェクト無効化でact()警告を回避
+        disableTouchRipple: true,
+      },
+    },
+    MuiIconButton: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true,
+      },
+    },
+  },
+})
 
 // テスト用のラッパーコンポーネント
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -104,7 +120,11 @@ describe('AppDrawerHeader', () => {
     )
 
     const closeButton = screen.getByRole('button')
-    await user.click(closeButton)
+
+    // MUIボタンのクリックイベントをact()でラップ
+    await act(async () => {
+      await user.click(closeButton)
+    })
 
     expect(mockOnDrawerClose).toHaveBeenCalledTimes(1)
   })
@@ -184,7 +204,10 @@ describe('AppDrawerHeader', () => {
     const closeButton = screen.getByRole('button')
     expect(closeButton).toBeInTheDocument()
 
-    await user.click(closeButton)
+    // MUIボタンのクリックイベントをact()でラップ
+    await act(async () => {
+      await user.click(closeButton)
+    })
     expect(mockOnDrawerClose).toHaveBeenCalledTimes(1)
   })
 
@@ -239,7 +262,11 @@ describe('AppDrawerHeader', () => {
     )
 
     const closeButton = screen.getByRole('button')
-    await user.click(closeButton)
+
+    // MUIボタンのクリックイベントをact()でラップ
+    await act(async () => {
+      await user.click(closeButton)
+    })
 
     expect(customOnDrawerClose).toHaveBeenCalledTimes(1)
     expect(mockOnDrawerClose).not.toHaveBeenCalled()

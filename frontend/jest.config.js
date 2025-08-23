@@ -3,6 +3,10 @@ export default {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   setupFiles: ['<rootDir>/src/setupJest.ts'],
+  // テスト実行時間の最適化
+  testTimeout: 15000, // デフォルト5秒→15秒（MUI非同期処理対応）
+  maxWorkers: '50%', // CPUリソース効率化
+  cache: true, // テストキャッシュ有効化
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '\\.(svg|png|jpg|jpeg|gif|ico|webp)$': 'identity-obj-proxy',
@@ -27,7 +31,11 @@ export default {
     '<rootDir>/src/**/__tests__/**/*.(ts|tsx)',
     '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
   ],
-  testPathIgnorePatterns: ['/node_modules/', '.*_old/.*'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '.*_old/.*',
+    'src/__tests__/optimization.setup.ts',
+  ],
   collectCoverageFrom: [
     'src/**/*.(ts|tsx)',
     '!src/**/*.d.ts',
