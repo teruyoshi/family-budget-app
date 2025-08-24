@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
-import TextLabel from '../../../components/common_old/TextLabel'
-import AmountText from '../../../components/common_old/AmountText'
+import { TextLabel, AmountText } from '@/components/ui'
 
 /**
  * 合計収入表示コンポーネントのProps型定義

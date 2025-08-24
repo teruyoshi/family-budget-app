@@ -1,5 +1,5 @@
 import { Chip, ListItem, ListItemText } from '@mui/material'
-import { AmountText } from '@/components/common_old'
+import { AmountText } from '@/components/ui'
 import type { Expense } from '@/hooks'
 
 /**
