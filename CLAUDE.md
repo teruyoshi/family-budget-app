@@ -52,10 +52,10 @@ make down                # 全サービス停止
 
 ## 📁 現在のアーキテクチャ
 
-**Phase 2: Directory Structure Migration 完了間近 (85%)**
+**Phase 2: Directory Structure Migration 進行中 (70%)**
 
 - **コンポーネント総数**: 28コンポーネント（ui: 10, forms: 6, navigation: 10, layout: 2）
-- **テスト状況**: 240テスト、25テストスイート全通過（継続的に保持）
+- **テスト状況**: 352テスト、33スイート全通過（78スキップ含む）
 - **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
 
 詳細なアーキテクチャは **[参照ドキュメント](docs-src/README.md)** を参照。
@@ -69,14 +69,20 @@ make down                # 全サービス停止
 
 詳細な規約は **[品質ガイド](docs-src/quality/README.md)** を参照。
 
-## 🚀 現在のタスク: Phase 2 残り作業 (15%)
+## 🚀 現在のタスク: Phase 2 残り作業 (30%)
 
-- 🔄 **旧ディレクトリ削除**: common_old, layout_old, navigation_old 最終削除
-- 🔄 **features/配下**: components_old ディレクトリの統合と削除
+- 🔄 **旧ディレクトリ削除**: 7箇所の*_oldディレクトリ削除
+  - components/: common_old, layout_old, navigation_old
+  - features/: 4箇所のcomponents_old統合・削除
 - 🔄 **最終検証**: 全テスト通過とビルド確認
+- 🔄 **ドキュメント同期**: コードベース変更に伴うドキュメント更新
 
 ## 📚 参照ドキュメント
 
+### 🎯 プロジェクト全体理解
+- **[完全版プロジェクト要約](docs-src/project-summary.md)** - ユーザー視点・技術・運用の統合概要
+
+### 詳細リファレンス
 詳細情報・背景知識・ガイドは以下を参照：
 - **[参照ドキュメント概要](docs-src/README.md)** - 全体サイトマップ・運用方針
 - **[オンボーディング](docs-src/onboarding/README.md)** - 環境構築・トラブル解決
