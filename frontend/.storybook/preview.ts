@@ -78,7 +78,7 @@ const preview: Preview = {
           'UI Components', // 基本UIコンポーネント
           [
             'AmountInput',
-            'AmountText', 
+            'AmountText',
             'AppTitle',
             'Button',
             'DatePicker',
@@ -104,12 +104,7 @@ const preview: Preview = {
             'NavigationMenu',
           ],
           'Feature Components', // 機能別コンポーネント
-          [
-            'Balance',
-            'Expenses',
-            'Income',
-            'History',
-          ],
+          ['Balance', 'Expenses', 'Income', 'History'],
           '*', // その他
         ],
         method: 'alphabetical',
@@ -119,7 +114,7 @@ const preview: Preview = {
 
     // 🔧 Layout設定 - ドキュメント表示の最適化
     layout: 'fullscreen',
-    
+
     // 📊 Measure & Outline アドオン設定
     measure: {
       results: {

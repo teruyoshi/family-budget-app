@@ -77,12 +77,14 @@ src/
 ## 🧪 テスト戦略（352テスト + 33スイート）
 
 ### テスト構成
-- **単体テスト**: __tests__/でco-locatedパターン
+
+- **単体テスト**: **tests**/でco-locatedパターン
 - **統合テスト**: ルーティング、データフロー統合テスト
 - **Storybookテスト**: コンポーネントストーリー + ドキュメント
 - **パフォーマンス最適化**: Jest timeout延長、act()警告解決、Ripple無効化
 
 ### テスト実行例
+
 ```bash
 # 特定コンポーネントのテスト
 make test-file FILE=AmountInput.test.tsx
@@ -97,12 +99,14 @@ make test-file FILE="Controlled"     # フォーム関連
 ## 📝 開発規約 & 品質保証
 
 ### コード品質
+
 - **TypeScript strict mode** - 厳密な型チェック
 - **MUI v6** - sx props + slotProps活用
 - **React 19** - ref as propパターン（forwardRef不使用）
 - **ESLint + Prettier** - 自動整形 + コード品質チェック
 
 ### 5段階品質チェック
+
 1. **Prettier** - コードフォーマット
 2. **ESLint** - コード品質・ベストプラクティス
 3. **TypeScript** - 型チェック
@@ -110,6 +114,7 @@ make test-file FILE="Controlled"     # フォーム関連
 5. **Vite Build** - プロダクションビルド確認
 
 ### アーキテクチャ原則
+
 - **コンポーネント分離** - ui/forms/navigation/layoutで機能別分離
 - **バレルエクスポート** - index.tsで統一インポート
 - **型安全** - 7つの型定義ファイルで厳密管理
@@ -118,13 +123,15 @@ make test-file FILE="Controlled"     # フォーム関連
 ## 🔗 関連リソース
 
 ### 🎯 開発中によく使用
+
 - **[緊急デバッグガイド](../docs-src/howto/debugging-guide.md)** - 1分基本確認・5分詳細診断
 - **[テスト効率化ガイド](../docs-src/howto/testing-efficient.md)** - テスト実行最適化・デバッグ手順
 - **統合ドキュメント**: [Storybook](http://localhost:6006) - コンポーネントカタログ + 使用例
 - **テストカバレッジ**: [Coverage Report](./coverage/lcov-report/index.html)
 
 ### 📖 リファレンス
-- **APIドキュメント**: [TypeDoc](./docs/index.html) - 型定義 + API仕様  
+
+- **APIドキュメント**: [TypeDoc](./docs/index.html) - 型定義 + API仕様
 - **用語集**: [docs-src/glossary.md](../docs-src/glossary.md) - ドメイン用語定義
 - **品質ガイド**: [docs-src/quality/](../docs-src/quality/) - a11y/性能方針
 

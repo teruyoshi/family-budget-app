@@ -12,5 +12,8 @@ export {
   type UseMoneyFormatReturn,
 } from './useMoneyFormat'
 
+// ページ関連フック
+export { usePageTitle, useCurrentPageTitle } from './usePageTitle'
+
 // 型定義のみエクスポート（実装は移行済み）
 export type { Expense, Income } from '@/types'
