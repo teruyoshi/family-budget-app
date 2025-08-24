@@ -19,3 +19,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TERUYOSHI_FAMILY_BUDGET_APP }}
           channelId: live
           projectId: teruyoshi-family-budget-app
+          entryPoint: frontend
