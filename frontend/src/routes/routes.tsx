@@ -1,6 +1,17 @@
 import { type ReactElement, Suspense, lazy } from 'react'
-import PageLoader from '@/components/common/PageLoader'
-import NotFoundPage from '@/components/common/NotFoundPage'
+import { PageLoader } from '@/components/ui'
+import NotFoundPage from '@/components/common_old/NotFoundPage'
+import type { AppRoute, RouteInfo } from '@/types'
+import {
+  Dashboard as DashboardIcon,
+  TrendingDown as ExpenseIcon,
+  History as HistoryIcon,
+  TrendingUp as IncomeIcon,
+  Settings as SettingsIcon,
+} from '@mui/icons-material'
+
+// 型エクスポート（_old ディレクトリ互換性のため）
+export type { AppRoute } from '@/types'
 
 /**
  * React Router 用のルート定義と型定義
@@ -8,21 +19,6 @@ import NotFoundPage from '@/components/common/NotFoundPage'
  * アプリケーション内のルーティング設定と型安全性を一元管理します。
  * コード分割とエラーハンドリングを含む包括的なルーティング設定を提供します。
  */
-
-/**
- * アプリケーション内の利用可能なルートパス
- *
- * @remarks
- * - 型安全なナビゲーションとルート管理を提供
- * - 全ページコンポーネント実装完了済み
- * - TypeScript の文字列リテラル型による厳密なパス管理
- */
-export type AppRoute =
-  | '/' // ダッシュボード（ホーム）- 実装済み
-  | '/expenses' // 支出管理ページ - 実装済み
-  | '/income' // 収入管理ページ - 実装済み
-  | '/history' // 履歴表示ページ - 実装済み
-  | '/settings' // 設定ページ - 実装済み（基盤のみ）
 
 // コード分割による遅延ロード
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'))
@@ -43,25 +39,6 @@ const withSuspense = (
 )
 
 /**
- * ルート情報の型定義
- *
- * ルート設定、メタ情報、コンポーネントを一元管理する構造化されたルート情報。
- * コード分割とナビゲーション設定を統合した設計となっています。
- */
-export interface RouteInfo {
-  /** ルートパス */
-  path: AppRoute | '*'
-  /** ページタイトル */
-  title: string
-  /** ページの説明 */
-  description: string
-  /** レンダリングするコンポーネント */
-  element: ReactElement
-  /** ナビゲーションメニューでの表示有無 */
-  showInNavigation: boolean
-}
-
-/**
  * アプリケーションの全ルート情報
  *
  * 各ページのメタ情報、コンポーネント、ナビゲーション設定を一元管理。
@@ -80,6 +57,7 @@ export const routes: RouteInfo[] = [
     description: '家計簿の概要と主要機能へのアクセス',
     element: withSuspense(DashboardPage),
     showInNavigation: true,
+    icon: DashboardIcon,
   },
   {
     path: '/expenses',
@@ -87,6 +65,7 @@ export const routes: RouteInfo[] = [
     description: '支出の登録と履歴管理',
     element: withSuspense(ExpensePage),
     showInNavigation: true,
+    icon: ExpenseIcon,
   },
   {
     path: '/income',
@@ -94,6 +73,7 @@ export const routes: RouteInfo[] = [
     description: '収入の登録と履歴管理',
     element: withSuspense(IncomePage),
     showInNavigation: true,
+    icon: IncomeIcon,
   },
   {
     path: '/history',
@@ -101,6 +81,7 @@ export const routes: RouteInfo[] = [
     description: '全ての取引履歴の一覧表示',
     element: withSuspense(HistoryPage),
     showInNavigation: true,
+    icon: HistoryIcon,
   },
   {
     path: '/settings',
@@ -108,6 +89,7 @@ export const routes: RouteInfo[] = [
     description: 'アプリケーションの設定管理',
     element: withSuspense(SettingsPage),
     showInNavigation: true,
+    icon: SettingsIcon,
   },
   {
     path: '*',

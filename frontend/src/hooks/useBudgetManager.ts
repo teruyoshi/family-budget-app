@@ -1,34 +1,8 @@
 import { useState } from 'react'
+import type { Expense, Income } from '@/types'
 
-/**
- * 支出データの型定義
- *
- * 家計管理システムでの支出記録を表現するデータ構造。
- * 日付は日本語フォーマットで保存され、表示用に最適化されています。
- */
-export interface Expense {
-  /** 支出記録の一意識別子（タイムスタンプベース） */
-  id: string
-  /** 支出金額（正の数値） */
-  amount: number
-  /** 日本語フォーマットのタイムスタンプ（例: "2024/08/12(月)"） */
-  timestamp: string
-}
-
-/**
- * 収入データの型定義
- *
- * 家計管理システムでの収入記録を表現するデータ構造。
- * 支出データと同様の構造で、一貫したデータ管理を実現します。
- */
-export interface Income {
-  /** 収入記録の一意識別子（タイムスタンプベース） */
-  id: string
-  /** 収入金額（正の数値） */
-  amount: number
-  /** 日本語フォーマットのタイムスタンプ（例: "2024/08/12(月)"） */
-  timestamp: string
-}
+// 型エクスポート（_old ディレクトリ互換性のため）
+export type { Expense, Income } from '@/types'
 
 /**
  * 家計管理統合カスタムフック

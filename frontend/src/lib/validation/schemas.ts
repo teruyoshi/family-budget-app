@@ -72,14 +72,6 @@ export const transactionFormSchema = z.object({
 })
 
 /**
- * 取引フォームデータ型定義
- *
- * react-hook-form のフォームデータ型として使用。
- * zodスキーマから自動生成される型安全な定義です。
- */
-export type TransactionFormData = z.infer<typeof transactionFormSchema>
-
-/**
  * 金額入力フィールド用スキーマ
  *
  * AmountInputコンポーネント単体でのバリデーション用。
@@ -87,11 +79,6 @@ export type TransactionFormData = z.infer<typeof transactionFormSchema>
 export const amountInputSchema = z.object({
   amount: amountSchema,
 })
-
-/**
- * 金額入力データ型定義
- */
-export type AmountInputData = z.infer<typeof amountInputSchema>
 
 /**
  * 日付選択フィールド用スキーマ
@@ -103,6 +90,18 @@ export const datePickerSchema = z.object({
 })
 
 /**
- * 日付選択データ型定義
+ * 取引フォームデータ型
+ *
+ * transactionFormSchemaから推論される型定義
+ */
+export type TransactionFormData = z.infer<typeof transactionFormSchema>
+
+/**
+ * 金額入力データ型
+ */
+export type AmountInputData = z.infer<typeof amountInputSchema>
+
+/**
+ * 日付選択データ型
  */
 export type DatePickerData = z.infer<typeof datePickerSchema>

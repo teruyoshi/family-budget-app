@@ -1,7 +1,7 @@
 import { Alert, Box, Divider, Paper, Typography } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import InfoIcon from '@mui/icons-material/Info'
-import AppLayout from '@/components/layout/AppLayout'
+import AppLayout from '@/components/layout_old/AppLayout'
 
 /**
  * 設定ページコンポーネントのProps型定義

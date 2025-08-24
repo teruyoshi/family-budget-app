@@ -27,7 +27,7 @@ help:
 	@echo "  make test-coverage-frontend - フロントエンドカバレッジテスト + ブラウザ表示 (http://localhost:8090)"
 	@echo "  make coverage-serve-frontend - カバレッジレポートサーバー起動（バックグラウンド） (http://localhost:8090)"
 	@echo "  make coverage-stop-frontend  - カバレッジレポートサーバー停止"
-	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）"
+	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest + Build）"
 	@echo "  make lint       - 全Lintチェック実行"
 	@echo "  make lint-frontend - フロントエンドLintチェック実行"
 	@echo "  make lint-fix-frontend - フロントエンドLint自動修正実行"
@@ -386,7 +386,7 @@ coverage-stop-frontend:
 	@echo "カバレッジレポートサーバーを停止中..."
 	@pkill -f "python.*8090.*lcov-report" 2>/dev/null || echo "サーバーは既に停止しています"
 
-# フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）
+# フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest + Build）
 quality-check-frontend:
 	@echo "========================================================"
 	@echo "🔍 フロントエンド品質確認を開始します..."
@@ -432,10 +432,21 @@ quality-check-frontend:
 		exit 1; \
 	fi
 	@echo ""
+	@echo "🏗️  5. ビルドチェック実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm run build; then \
+		echo "✅ ビルドチェック: 合格"; \
+	else \
+		echo "❌ ビルドチェック: 不合格"; \
+		echo "💡 ビルドエラーを修正してください"; \
+		exit 1; \
+	fi
+	@echo ""
 	@echo "========================================================"
 	@echo "🎉 フロントエンド品質確認が完了しました！"
 	@echo "✅ Prettier: フォーマット適合"
 	@echo "✅ ESLint: 静的解析合格"
 	@echo "✅ TypeScript: 型チェック合格"
 	@echo "✅ Jest: 全テスト合格"
+	@echo "✅ Build: ビルド成功"
 	@echo "========================================================"

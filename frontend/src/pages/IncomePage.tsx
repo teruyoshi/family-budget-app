@@ -1,8 +1,8 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
-import AppLayout from '@/components/layout/AppLayout'
+import AppLayout from '@/components/layout_old/AppLayout'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { IncomeHistory } from '@/features/history'
-import { useBudgetManager } from '@/hooks'
+import { useBudgetManager } from '@/hooks/useBudgetManager'
 
 /**
  * 収入管理ページコンポーネントのProps型定義

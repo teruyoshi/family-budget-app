@@ -1,8 +1,8 @@
 # CLAUDE.md
 
-このファイルは、Claude Code (claude.ai/code) 専用の開発ガイダンスです。
+**二層ドキュメント化方針採用**：実行ガイド特化版
 
-**最終更新**: 2025年8月16日（Phase 1: 基盤整備開始、効率的テストコマンド追加）
+**最終更新**: 2025年8月24日
 
 ## 📋 プロジェクト概要
 
@@ -26,156 +26,89 @@
 
 #### 開発・テスト
 ```bash
-make test-frontend        # フロントエンドテスト（全テスト実行）
-make test-file FILE=テストファイル名  # 特定のテストファイルのみ実行
-make test-backend         # バックエンドテスト  
-make lint-frontend        # ESLintチェック
-make format-frontend      # Prettierフォーマット
-make npm-install          # 依存関係インストール
-make test-coverage-open   # テストカバレッジをブラウザで表示
-make quality-check        # 統合品質チェック（lint+format+test）
-```
-
-##### 効率的な単体テスト実行
-```bash
-# 特定のテストファイルのみ実行（開発時推奨）
-make test-file FILE=usePageTransition.test.tsx
-make test-file FILE=AmountInput.test.tsx
-make test-file FILE=useMoney.test.ts
-
-# 複数のテストファイルを部分マッチで実行
-make test-file FILE="Money"  # useMoney.test.ts, money.test.ts等が対象
-```
-
-#### ドキュメント・Storybook
-```bash
-make storybook-frontend           # Storybookサーバー起動（ポート6006）
-make storybook-stop-frontend      # Storybookサーバー停止
+make test-frontend               # フロントエンドテスト（全テスト実行）
+make test-file FILE=ファイル名   # 特定のテストファイルのみ実行
+make lint-frontend               # ESLintチェック
+make format-frontend             # Prettierフォーマット
+make quality-check-frontend      # 5段階統合品質チェック
 ```
 
 #### コンテナ操作
 ```bash
-make up                   # 全サービス起動
-make dev                  # 開発環境（ログ表示）
-make down                 # 全サービス停止
-make frontend-shell       # フロントエンドコンテナ接続
-make backend-shell        # バックエンドコンテナ接続
+make up                  # 全サービス起動
+make dev                 # 開発環境（ログ表示）
+make down                # 全サービス停止
 ```
 
 ### 作業完了基準
-- **テスト通過**: コミット前に `make test-frontend` で全テスト通過確認
-- **単体テスト**: 開発中は `make test-file FILE=テストファイル名` で効率的テスト実行
-- **品質チェック**: `make lint-frontend` でコード品質確認
-- **AI自動ドキュメンテーション**: コンポーネント作成・修正時に TSDoc・用語集を自動更新
+- **テスト通過**: `make test-frontend` で全テスト通過確認
+- **品質チェック**: `make quality-check-frontend` でコード品質確認
 - **Claude署名**: GitHubコメント・コミットメッセージに `🤖 Generated with [Claude Code](https://claude.ai/code)` 署名
 
+### 🚨 問題発生時の対処
+**即座にアクセス**: **[緊急デバッグガイド](docs-src/howto/debugging-guide.md)** - 1分で基本確認、5分で詳細診断
 
 ### 開発環境URL
 - **フロントエンド**: http://localhost:5173
 - **バックエンドAPI**: http://localhost:8080  
-- **phpMyAdmin**: http://localhost:8081 (root/root)
-- **Storybook（統合ドキュメント）**: http://localhost:6006
+- **Storybook**: http://localhost:6006
 
 ## 📁 現在のアーキテクチャ
 
-```
-frontend/
-├── src/
-│   ├── components/
-│   │   ├── common/              # 汎用コンポーネント（JSDoc完備）
-│   │   │   ├── __stories__/     # Storybookストーリーファイル
-│   │   │   ├── AmountInput.tsx  # 金額入力（¥フォーマット対応）
-│   │   │   ├── AmountText.tsx   # 金額表示（lib/format統一化済み）
-│   │   │   ├── AppTitle.tsx     # アプリタイトル
-│   │   │   ├── DatePicker.tsx   # 日付選択
-│   │   │   ├── NotFoundPage.tsx # 404エラーページ
-│   │   │   ├── PageLoader.tsx   # ページローディング
-│   │   │   ├── TextInput.tsx    # テキスト入力
-│   │   │   ├── TextLabel.tsx    # ラベル表示
-│   │   │   └── TransactionForm.tsx # 取引フォーム統合
-│   │   └── layout/              # レイアウトコンポーネント
-│   │       ├── AppLayout.tsx    # アプリ共通レイアウト
-│   │       └── index.ts         # バレルエクスポート
-│   ├── pages/                   # ページコンポーネント（React Router）
-│   │   ├── DashboardPage.tsx    # ダッシュボード（ホーム）
-│   │   ├── ExpensePage.tsx      # 支出管理ページ
-│   │   ├── IncomePage.tsx       # 収入管理ページ
-│   │   ├── HistoryPage.tsx      # 履歴表示ページ
-│   │   ├── SettingsPage.tsx     # 設定ページ
-│   │   ├── __tests__/           # ページテスト
-│   │   └── index.ts             # バレルエクスポート
-│   ├── routes/                  # ルーティング設定
-│   │   └── routes.tsx           # useRoutes + コード分割対応
-│   ├── features/
-│   │   ├── balance/             # 残高表示機能
-│   │   ├── expenses/            # 支出管理機能
-│   │   ├── income/              # 収入管理機能
-│   │   └── history/             # 履歴表示機能
-│   ├── hooks/
-│   │   ├── useBudgetManager.ts  # 統合家計簿管理フック
-│   │   ├── useMoney.ts          # 金額状態管理
-│   │   ├── useMoneyFormat.ts    # 金額フォーマット専用
-│   │   └── __tests__/           # フックテスト
-│   ├── lib/
-│   │   └── format/
-│   │       ├── money.ts         # 金額フォーマットライブラリ
-│   │       └── __tests__/
-│   └── App.tsx                  # メインアプリ（useRoutes+BrowserRouter）
-├── .storybook/                  # Storybook設定
-├── docs/                       # TypeDoc生成ドキュメント
-├── coverage/                   # テストカバレッジレポート
-└── typedoc.json                # TypeDoc設定
+**Phase 2: Directory Structure Migration (70%)**
 
-```
-
-## 🔧 現在の設定情報
-- **プロジェクト名**: FamilyBudgetApp (v0.3.1)
-- **テスト状況**: 152テスト、17テストスイート全通過
+- **コンポーネント総数**: 28コンポーネント（ui: 10, forms: 6, navigation: 10, layout: 2）
+- **テスト状況**: 352テスト、33スイート全通過（78スキップ含む）
 - **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
-- **ルーティング**: useRoutes、React.lazy、Suspense完全対応
-- **アーキテクチャ**: pages/routes/layout 分離、型安全なルート管理
-- **品質対策**: ESLint・TypeScript strict・テストカバレッジ90%+
 
-## 🤖 AI自動ドキュメンテーション運用
+詳細なアーキテクチャは **[参照ドキュメント](docs-src/README.md)** を参照。
 
-### 基本方針
-- **コンポーネント作成・編集時**: AI自律的にTSDoc・用語集・トレーサビリティ表を更新
-- **管理可能性重視**: 複雑なドキュメントは簡潔化、困難なものは作成しない
-- **段階的適用**: 重要コンポーネントから順次適用、完璧主義を避ける
+## 🎨 コード規約（簡潔版）
 
-### TSDoc統一化（完了）
-- **形式**: @remarks, @example, @defaultValue を使用
-- **Props型**: 必ずexportし、react-docgen-typescriptで自動抽出
-- **品質管理**: eslint-plugin-tsdocで構文チェック（将来的に厳格化）
+- **TypeScript**: strict mode、簡潔なTSDoc
+- **React 19**: ref as prop パターン、forwardRef不使用
+- **MUI**: sx props、slotProps活用
+- **エクスポート**: バレルエクスポート（index.ts）使用
 
-### Storybookトレーサビリティ表（主要コンポーネント適用済み）
-- **連携表**: ADR・用語集・テスト・品質ガイドとの関連性を明示
-- **適用範囲**: AmountInput, AmountText, TransactionForm等の重要コンポーネント
-- **管理負荷**: 管理困難な複雑表は避け、シンプルな構成を維持
+詳細な規約は **[品質ガイド](docs-src/quality/README.md)** を参照。
 
-### 用語集自動更新（v1.2.0運用中）
-- **新概念検出**: コンポーネント開発時に自動で用語追加
-- **データモデル同期**: Mermaid図の自動更新
-- **更新履歴**: バージョン管理で変更履歴を追跡
+## 🎯 現在のタスク: Phase 2 残り作業 (30%)
 
-## 🎨 コード規約
-- **TypeScript**: strict mode、包括的TSDocコメント必須
-- **MUI**: コンポーネント優先、sx propsスタイリング
-- **パス**: `@/`エイリアスでsrcディレクトリ参照
-- **エクスポート**: バレルエクスポート（index.ts）で再利用性向上
-- **テスト**: 単体テスト重視（結合テスト最小化で高速化）
-- **精度対策**: 金額はMAX_SAFE_INTEGER範囲内チェック必須（lib/format/money.ts活用）
+### 即座に実行可能なタスク
+- 🔄 **旧ディレクトリ削除**: 7箇所の*_oldディレクトリ削除
+  - components/: common_old, layout_old, navigation_old  
+  - features/: 4箇所のcomponents_old統合・削除
+- 🔄 **最終検証**: 全テスト通過とビルド確認
+- 🔄 **ドキュメント同期**: コードベース変更に伴うドキュメント更新
 
-## 🔗 関連リソース
-- **用語集**: [docs-src/glossary.md](frontend/docs-src/glossary.md) - v1.2.0（自動更新運用中）
-- **ADR**: [docs-src/adr/](frontend/docs-src/adr/) - 技術判断記録（自動生成対応）
-- **品質ガイド**: [docs-src/quality/](frontend/docs-src/quality/) - アクセシビリティ・パフォーマンス
-- **PRテンプレート**: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) - 品質チェックリスト
+### Phase 2 完了判定基準
+1. 全*_oldディレクトリが削除済み
+2. `make test-frontend` 352テスト全通過
+3. `make quality-check-frontend` 5段階チェック全通過
+4. インポートエラー・参照エラー0件
 
-## 📈 完了済み主要機能
-- ✅ **React Router 完全実装**: useRoutes + コード分割 + 404対応
-- ✅ **ページベース構造**: 5ページ + レイアウト + テスト完備
-- ✅ **型安全ルート管理**: AppRoute型 + RouteInfo型による厳密管理
-- ✅ **パフォーマンス最適化**: React.lazy + Suspense による初期バンドル削減
-- ✅ **金額フォーマット統一化**: lib/format/money.ts による Single Source of Truth
-- ✅ **フック分離**: useMoney（状態）+ useMoneyFormat（表示）の単一責任分離
+**参考**: **[Phase 2移行ADR](docs-src/adr/0004-phase2-directory-structure-migration.md)** - 設計判断・完了条件詳細
+
+## 📚 開発支援ドキュメント
+
+### 🎯 全体理解・オンボーディング
+- **[完全版プロジェクト要約](docs-src/project-summary.md)** - ユーザー視点・技術・運用の統合概要
+- **[参照ドキュメント概要](docs-src/README.md)** - ドキュメント構造・ナビゲーション
+- **[環境構築ガイド](docs-src/onboarding/README.md)** - セットアップ・初回起動・トラブル解決
+
+### 🛠 日常開発で使用
+- **[開発ワークフローガイド](docs-src/howto/development-workflow.md)** - 効率的な開発手順
+- **[テスト効率化ガイド](docs-src/howto/testing-efficient.md)** - テスト実行・デバッグ最適化
+- **[5段階品質チェック](docs-src/howto/code-quality.md)** - 品質チェックの使い方
+- **[アーキテクチャ制約](docs-src/architecture/README.md)** - 禁止事項・必須ルール
+
+### 📋 深いリファレンス
+- **[テスト戦略詳細](docs-src/testing/README.md)** - カバレッジ目標・品質基準
+- **[品質規約詳細](docs-src/quality/README.md)** - TypeScript・性能・a11y基準
+- **[技術判断記録](docs-src/adr/README.md)** - 設計決定・技術選択の経緯
+- **[API仕様](docs-src/api/README.md)** - OpenAPI・クライアント生成
+- **[リリース運用](docs-src/release/README.md)** - バージョニング・デプロイ戦略
+
+### 🔧 システム保守
+- **[ドキュメント保守](docs-src/maintenance/README.md)** - 更新フロー・品質管理
+- **[自動化スクリプト](docs-src/scripts/)** - ヘルスチェック・メトリクス更新
