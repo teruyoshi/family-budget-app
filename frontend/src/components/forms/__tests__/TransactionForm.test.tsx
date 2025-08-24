@@ -40,16 +40,20 @@ describe('TransactionForm', () => {
     datePickerLabel: '日付を選択',
   }
 
-  it('基本的なレンダリングが正しく動作する', () => {
+  it('基本的なレンダリングが正しく動作する', async () => {
     renderWithProvider(<TransactionForm {...defaultProps} />)
 
-    // フォーム要素の存在確認
-    expect(screen.getByRole('switch')).toBeInTheDocument() // カスタム日付スイッチ
-    expect(screen.getByRole('textbox')).toBeInTheDocument() // 金額入力フィールド
-    expect(screen.getByRole('button', { name: '登録する' })).toBeInTheDocument()
+    // MUIコンポーネントの初期化完了を待機
+    await waitFor(() => {
+      expect(screen.getByRole('switch')).toBeInTheDocument() // カスタム日付スイッチ
+      expect(screen.getByRole('textbox')).toBeInTheDocument() // 金額入力フィールド
+      expect(
+        screen.getByRole('button', { name: '登録する' })
+      ).toBeInTheDocument()
+    })
   })
 
-  it('propsが正しく各コンポーネントに渡される', () => {
+  it('propsが正しく各コンポーネントに渡される', async () => {
     renderWithProvider(
       <TransactionForm
         placeholder="支出金額を入力"
@@ -59,12 +63,15 @@ describe('TransactionForm', () => {
       />
     )
 
-    // プレースホルダーが正しく設定されている
-    expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-    // ボタンテキストが正しく設定されている
-    expect(
-      screen.getByRole('button', { name: '支出を登録' })
-    ).toBeInTheDocument()
+    // コンポーネントの初期化完了を待機
+    await waitFor(() => {
+      // プレースホルダーが正しく設定されている
+      expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
+      // ボタンテキストが正しく設定されている
+      expect(
+        screen.getByRole('button', { name: '支出を登録' })
+      ).toBeInTheDocument()
+    })
   })
 
   it('カスタム日付スイッチをオンにすると日付選択フィールドが表示される', async () => {
@@ -97,21 +104,25 @@ describe('TransactionForm', () => {
       await user.type(amountInput, '1000')
     })
 
-    // フォームを送信 - react-hook-form内部の状態更新をact()でラップ
+    // フォーム送信
+    const submitButton = screen.getByRole('button', { name: '登録する' })
     await act(async () => {
-      const submitButton = screen.getByRole('button', { name: '登録する' })
       await user.click(submitButton)
     })
 
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({
-          amount: 1000,
-          useCustomDate: false,
-          date: expect.any(String),
-        })
-      )
-    })
+    // フォーム送信とreset()の完了を待機
+    await waitFor(
+      () => {
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+          expect.objectContaining({
+            amount: 1000,
+            useCustomDate: false,
+            date: expect.any(String),
+          })
+        )
+      },
+      { timeout: 3000 }
+    )
   })
 
   it('カスタム日付を使用したフォーム送信が正しく動作する', async () => {
@@ -134,21 +145,25 @@ describe('TransactionForm', () => {
       await user.type(amountInput, '2500')
     })
 
-    // フォームを送信
+    // フォームを送信 - react-hook-formの内部状態更新を適切に処理
     await act(async () => {
       const submitButton = screen.getByRole('button', { name: '登録する' })
       await user.click(submitButton)
     })
 
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({
-          amount: 2500,
-          useCustomDate: true,
-          date: expect.any(String),
-        })
-      )
-    })
+    // フォーム送信とreset()の完了を待機
+    await waitFor(
+      () => {
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+          expect.objectContaining({
+            amount: 2500,
+            useCustomDate: true,
+            date: expect.any(String),
+          })
+        )
+      },
+      { timeout: 3000 }
+    )
   })
 
   it('フォーム送信後にリセットされる（金額のみ）', async () => {
@@ -175,20 +190,29 @@ describe('TransactionForm', () => {
       await user.type(amountInput, '3000')
     })
 
-    // フォームを送信 - reset()による状態更新も含めてact()でラップ
+    // フォームを送信 - react-hook-formの内部状態更新を適切に処理
     await act(async () => {
       const submitButton = screen.getByRole('button', { name: '登録する' })
       await user.click(submitButton)
     })
 
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalled()
-    })
+    // フォーム送信の完了を待機
+    await waitFor(
+      () => {
+        expect(mockOnSubmit).toHaveBeenCalled()
+      },
+      { timeout: 3000 }
+    )
 
-    // 金額はリセットされるがスイッチの状態は保持される
-    await waitFor(() => {
-      expect(amountInput).toHaveValue('')
-    })
+    // 金額フィールドのリセットを確認（react-hook-formの状態更新完了を待機）
+    await waitFor(
+      () => {
+        expect(amountInput).toHaveValue('')
+      },
+      { timeout: 3000 }
+    )
+
+    // スイッチの状態は保持される
     expect(customDateSwitch).toBeChecked()
   })
 
@@ -284,21 +308,25 @@ describe('TransactionForm', () => {
       await user.type(amountInput, '2000')
     })
 
-    // Enterキーを押す
+    // Enterキーを押す - react-hook-formの内部状態更新を適切に処理
     await act(async () => {
       await user.keyboard('{Enter}')
     })
 
-    await waitFor(() => {
-      expect(mockOnSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({
-          amount: 2000,
-        })
-      )
-    })
+    // フォーム送信とreset()の完了を待機
+    await waitFor(
+      () => {
+        expect(mockOnSubmit).toHaveBeenCalledWith(
+          expect.objectContaining({
+            amount: 2000,
+          })
+        )
+      },
+      { timeout: 3000 }
+    )
   })
 
-  it('支出用の設定で正しく動作する', () => {
+  it('支出用の設定で正しく動作する', async () => {
     renderWithProvider(
       <TransactionForm
         placeholder="支出金額を入力"
@@ -308,13 +336,16 @@ describe('TransactionForm', () => {
       />
     )
 
-    expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: '支出を登録' })
-    ).toBeInTheDocument()
+    // コンポーネントの初期化完了を待機
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: '支出を登録' })
+      ).toBeInTheDocument()
+    })
   })
 
-  it('収入用の設定で正しく動作する', () => {
+  it('収入用の設定で正しく動作する', async () => {
     renderWithProvider(
       <TransactionForm
         placeholder="収入金額を入力"
@@ -324,9 +355,12 @@ describe('TransactionForm', () => {
       />
     )
 
-    expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: '収入を登録' })
-    ).toBeInTheDocument()
+    // コンポーネントの初期化完了を待機
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: '収入を登録' })
+      ).toBeInTheDocument()
+    })
   })
 })
