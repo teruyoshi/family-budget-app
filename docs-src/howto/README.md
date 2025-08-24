@@ -7,12 +7,15 @@
 ### 開発環境
 - `testing-efficient.md` - テストの効率的な実行方法
 - `storybook-docs.md` - Storybook自動ドキュメント生成
-- `theme-customization.md` - MUIテーマカスタマイズ手順
+- `theme.md` - MUIテーマカスタマイズ手順
+- `seed.md` - 開発用データ再現性・統一化
+
+### ワークフロー・効率化
+- `development-workflow.md` - 日常開発の最適化フロー
+- `debugging-guide.md` - デバッグ・トラブルシューティング
 
 ### 品質管理
 - `code-quality.md` - 5段階品質チェックの使い方
-- `performance-optimization.md` - パフォーマンス最適化手順
-- `accessibility-check.md` - アクセシビリティチェック方法
 
 ## 🎯 ガイド方針
 
