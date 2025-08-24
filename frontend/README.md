@@ -1,6 +1,6 @@
 # フロントエンド - FamilyBudgetApp (v0.4.1)
 
-**Phase 2: Directory Structure Migration 完了間近 (85%)**
+**Phase 2: Directory Structure Migration (70%)**
 
 React 19 + TypeScript + Viteで構築された現代的な家計簿アプリのフロントエンドです。コンポーネントベースアーキテクチャで再利用性と保守性を重視しています。
 
@@ -15,7 +15,7 @@ React 19 + TypeScript + Viteで構築された現代的な家計簿アプリの�
 
 ```bash
 # Docker環境（推奨） - Makefile使用
-make test-frontend               # テスト実行（240テスト）
+make test-frontend               # テスト実行（352テスト）
 make test-file FILE=ファイル名    # 特定テストのみ実行
 make lint-frontend               # ESLintチェック
 make format-frontend             # Prettierフォーマット
@@ -74,7 +74,7 @@ src/
 └── App.tsx                      # メインアプリ（useRoutes）
 ```
 
-## 🧪 テスト戦略（240テスト + 25スイート）
+## 🧪 テスト戦略（352テスト + 33スイート）
 
 ### テスト構成
 - **単体テスト**: __tests__/でco-locatedパターン
@@ -117,10 +117,15 @@ make test-file FILE="Controlled"     # フォーム関連
 
 ## 🔗 関連リソース
 
+### 🎯 開発中によく使用
+- **[緊急デバッグガイド](../docs-src/howto/debugging-guide.md)** - 1分基本確認・5分詳細診断
+- **[テスト効率化ガイド](../docs-src/howto/testing-efficient.md)** - テスト実行最適化・デバッグ手順
 - **統合ドキュメント**: [Storybook](http://localhost:6006) - コンポーネントカタログ + 使用例
-- **APIドキュメント**: [TypeDoc](./docs/index.html) - 型定義 + API仕様
 - **テストカバレッジ**: [Coverage Report](./coverage/lcov-report/index.html)
-- **用語集**: [docs-src/glossary.md](./docs-src/glossary.md) - ドメイン用語定義
-- **品質ガイド**: [docs-src/quality/](./docs-src/quality/) - a11y/性能方針
+
+### 📖 リファレンス
+- **APIドキュメント**: [TypeDoc](./docs/index.html) - 型定義 + API仕様  
+- **用語集**: [docs-src/glossary.md](../docs-src/glossary.md) - ドメイン用語定義
+- **品質ガイド**: [docs-src/quality/](../docs-src/quality/) - a11y/性能方針
 
 詳細な実装例やベストプラクティスはStorybookやコード内TSDocコメントを参照してください。
