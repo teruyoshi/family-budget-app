@@ -8,13 +8,19 @@ describe('NotFoundPage', () => {
 
       // タイトルが表示される
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
-      expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
+      expect(
+        screen.getByText('404 - ページが見つかりません')
+      ).toBeInTheDocument()
 
       // メッセージが表示される
-      expect(screen.getByText('お探しのページは存在しません。')).toBeInTheDocument()
+      expect(
+        screen.getByText('お探しのページは存在しません。')
+      ).toBeInTheDocument()
 
       // ホームリンクが表示される
-      expect(screen.getByRole('link', { name: 'ダッシュボードに戻る' })).toBeInTheDocument()
+      expect(
+        screen.getByRole('link', { name: 'ダッシュボードに戻る' })
+      ).toBeInTheDocument()
     })
   })
 
@@ -22,14 +28,18 @@ describe('NotFoundPage', () => {
     it('ダッシュボードリンクが正しいhref属性を持つ', () => {
       render(<NotFoundPage />)
 
-      const homeLink = screen.getByRole('link', { name: 'ダッシュボードに戻る' })
+      const homeLink = screen.getByRole('link', {
+        name: 'ダッシュボードに戻る',
+      })
       expect(homeLink).toHaveAttribute('href', '/')
     })
 
     it('リンクが適切なスタイルを持つ', () => {
       render(<NotFoundPage />)
 
-      const homeLink = screen.getByRole('link', { name: 'ダッシュボードに戻る' })
+      const homeLink = screen.getByRole('link', {
+        name: 'ダッシュボードに戻る',
+      })
       expect(homeLink).toHaveStyle({
         color: '#1976d2',
         textDecoration: 'none',
@@ -60,7 +70,9 @@ describe('NotFoundPage', () => {
     it('リンクが適切にフォーカス可能', () => {
       render(<NotFoundPage />)
 
-      const homeLink = screen.getByRole('link', { name: 'ダッシュボードに戻る' })
+      const homeLink = screen.getByRole('link', {
+        name: 'ダッシュボードに戻る',
+      })
       homeLink.focus()
       expect(homeLink).toHaveFocus()
     })
@@ -72,26 +84,28 @@ describe('NotFoundPage', () => {
 
       // 見出し
       expect(screen.getByRole('heading')).toBeInTheDocument()
-      
+
       // 説明テキスト
-      expect(screen.getByText('お探しのページは存在しません。')).toBeInTheDocument()
-      
+      expect(
+        screen.getByText('お探しのページは存在しません。')
+      ).toBeInTheDocument()
+
       // ナビゲーションリンク
       expect(screen.getByRole('link')).toBeInTheDocument()
     })
 
     it('適切なDOM構造を持つ', () => {
       const { container } = render(<NotFoundPage />)
-      
+
       // ルートdiv要素
       expect(container.firstChild).toBeInstanceOf(HTMLDivElement)
-      
+
       // h1要素
       expect(container.querySelector('h1')).toBeInTheDocument()
-      
+
       // p要素
       expect(container.querySelector('p')).toBeInTheDocument()
-      
+
       // a要素
       expect(container.querySelector('a')).toBeInTheDocument()
     })

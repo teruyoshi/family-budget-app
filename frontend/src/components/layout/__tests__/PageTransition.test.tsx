@@ -237,7 +237,7 @@ describe('PageTransition', () => {
 
     it('追加のtransitionPropsが適用される', () => {
       const customProps = { 'data-testid': 'custom-transition' }
-      
+
       renderWithTheme(
         <PageTransition transitionProps={customProps}>
           <div>{testContent}</div>
@@ -251,7 +251,7 @@ describe('PageTransition', () => {
   describe('forwardRef対応', () => {
     it('refが正しく転送される', () => {
       const ref = React.createRef<HTMLDivElement>()
-      
+
       renderWithTheme(
         <PageTransition ref={ref}>
           <div>{testContent}</div>

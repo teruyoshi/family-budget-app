@@ -52,7 +52,7 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   </BrowserRouter>
 )
 
-// getNavigationRoutes のモック
+// getNavigationRoutes と getRouteInfo のモック
 jest.mock('@/routes/routes', () => ({
   getNavigationRoutes: () => [
     {
@@ -64,6 +64,19 @@ jest.mock('@/routes/routes', () => ({
       icon: Dashboard,
     },
   ],
+  getRouteInfo: (path: string) => {
+    if (path === '/') {
+      return {
+        path: '/',
+        title: 'ダッシュボード',
+        description: '家計簿の概要と主要機能へのアクセス',
+        element: <div>Dashboard</div>,
+        showInNavigation: true,
+        icon: Dashboard,
+      }
+    }
+    return undefined
+  },
 }))
 
 // usePageTitle のモック

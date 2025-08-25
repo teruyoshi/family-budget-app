@@ -105,10 +105,7 @@ export default meta
 type Story = StoryObj<typeof PageTransition>
 
 // サンプルコンテンツコンポーネント
-const SampleContent = ({ 
-  title = 'ページコンテンツ',
-  color = '#1976d2' 
-}) => (
+const SampleContent = ({ title = 'ページコンテンツ', color = '#1976d2' }) => (
   <Paper
     elevation={3}
     sx={{
@@ -184,9 +181,14 @@ export const スライド方向バリエーション: Story = {
   render: () => {
     const directions = ['left', 'right', 'up', 'down'] as const
     const colors = ['#1976d2', '#2e7d32', '#ed6c02', '#d32f2f']
-    
+
     return (
-      <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
+      <Stack
+        direction="row"
+        spacing={2}
+        flexWrap="wrap"
+        justifyContent="center"
+      >
         {directions.map((direction, index) => (
           <PageTransition
             key={direction}
@@ -220,7 +222,8 @@ export const スライド方向バリエーション: Story = {
   parameters: {
     docs: {
       description: {
-        story: '4つのスライド方向（left, right, up, down）のデモンストレーション。',
+        story:
+          '4つのスライド方向（left, right, up, down）のデモンストレーション。',
       },
     },
   },
@@ -261,7 +264,8 @@ export const カスタム設定: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'アニメーション時間、イージング、マウント制御をカスタマイズした例。',
+        story:
+          'アニメーション時間、イージング、マウント制御をカスタマイズした例。',
       },
     },
   },
@@ -309,25 +313,41 @@ export const 低速アニメーション: Story = {
 export const インタラクティブデモ: Story = {
   render: function InteractivePageTransition() {
     const [transitionKey, setTransitionKey] = useState(0)
-    const [currentType, setCurrentType] = useState<'fade' | 'slide' | 'none'>('fade')
-    const [currentDirection, setCurrentDirection] = useState<'left' | 'right' | 'up' | 'down'>('left')
-    
+    const [currentType, setCurrentType] = useState<'fade' | 'slide' | 'none'>(
+      'fade'
+    )
+    const [currentDirection, setCurrentDirection] = useState<
+      'left' | 'right' | 'up' | 'down'
+    >('left')
+
     const pages = [
       { title: 'ページ 1', color: '#1976d2' },
       { title: 'ページ 2', color: '#2e7d32' },
       { title: 'ページ 3', color: '#ed6c02' },
       { title: 'ページ 4', color: '#d32f2f' },
     ]
-    
+
     const currentPage = pages[transitionKey % pages.length]
-    
+
     const triggerTransition = () => {
-      setTransitionKey(prev => prev + 1)
+      setTransitionKey((prev) => prev + 1)
     }
-    
+
     return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-        <Stack direction="row" spacing={2} flexWrap="wrap" justifyContent="center">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 3,
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={2}
+          flexWrap="wrap"
+          justifyContent="center"
+        >
           <Button
             variant="outlined"
             onClick={() => setCurrentType('fade')}
@@ -350,7 +370,7 @@ export const インタラクティブデモ: Story = {
             なし
           </Button>
         </Stack>
-        
+
         {currentType === 'slide' && (
           <Stack direction="row" spacing={1}>
             {(['left', 'right', 'up', 'down'] as const).map((dir) => (
@@ -366,7 +386,7 @@ export const インタラクティブデモ: Story = {
             ))}
           </Stack>
         )}
-        
+
         <PageTransition
           key={transitionKey}
           type={currentType}
@@ -374,17 +394,10 @@ export const インタラクティブデモ: Story = {
           duration={300}
           locationKey={transitionKey.toString()}
         >
-          <SampleContent
-            title={currentPage.title}
-            color={currentPage.color}
-          />
+          <SampleContent title={currentPage.title} color={currentPage.color} />
         </PageTransition>
-        
-        <Button
-          variant="contained"
-          onClick={triggerTransition}
-          size="large"
-        >
+
+        <Button variant="contained" onClick={triggerTransition} size="large">
           次のページへ遷移
         </Button>
       </Box>
@@ -393,7 +406,8 @@ export const インタラクティブデモ: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'トランジションタイプや方向を動的に変更できるインタラクティブなデモ。実際のページ遷移をシミュレートします。',
+        story:
+          'トランジションタイプや方向を動的に変更できるインタラクティブなデモ。実際のページ遷移をシミュレートします。',
       },
     },
   },
