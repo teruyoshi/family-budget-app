@@ -20,9 +20,9 @@ const meta: Meta<typeof PageLoader> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const デフォルト: Story = {}
 
-export const InContainer: Story = {
+export const コンテナ内: Story = {
   decorators: [
     (Story) => (
       <Paper sx={{ width: 400, height: 300, p: 2 }}>

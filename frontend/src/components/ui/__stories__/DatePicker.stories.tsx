@@ -64,7 +64,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // 基本的な表示
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     label: '日付を選択',
   },
@@ -79,7 +79,7 @@ export const WithValue: Story = {
 }
 
 // 必須項目
-export const Required: Story = {
+export const 必須項目: Story = {
   args: {
     label: '取引日',
     required: true,
@@ -87,7 +87,7 @@ export const Required: Story = {
 }
 
 // エラー状態
-export const WithError: Story = {
+export const エラー状態: Story = {
   args: {
     label: '取引日',
     error: true,
@@ -136,7 +136,7 @@ export const CustomStyle: Story = {
 }
 
 // インタラクティブ例
-export const Interactive: Story = {
+export const インタラクティブ: Story = {
   render: function InteractiveExample(args) {
     const [date, setDate] = useState(args.value || '2024-08-17')
 
@@ -162,7 +162,7 @@ export const Interactive: Story = {
 }
 
 // フォームレイアウトでの使用例
-export const InFormLayout: Story = {
+export const フォームレイアウト内: Story = {
   render: function FormLayoutExample() {
     const [startDate, setStartDate] = useState('2024-08-01')
     const [endDate, setEndDate] = useState('2024-08-31')

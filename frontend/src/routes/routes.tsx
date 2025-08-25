@@ -1,6 +1,6 @@
 import { type ReactElement, Suspense, lazy } from 'react'
 import { PageLoader } from '@/components/ui'
-import NotFoundPage from '@/components/common_old/NotFoundPage'
+import { NotFoundPage } from '@/components/layout'
 import type { AppRoute, RouteInfo } from '@/types'
 import {
   Dashboard as DashboardIcon,

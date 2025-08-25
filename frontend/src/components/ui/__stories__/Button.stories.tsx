@@ -72,7 +72,7 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 // 基本的な使用例
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     children: 'ボタン',
   },
@@ -293,7 +293,7 @@ export const CustomStyles: Story = {
 }
 
 // インタラクティブテスト
-export const InteractiveTest: Story = {
+export const インタラクティブテスト: Story = {
   render: () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}>
       <p>各種ボタンの表示確認</p>

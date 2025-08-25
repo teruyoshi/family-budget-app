@@ -3,7 +3,7 @@ import HistoryList from '../HistoryList'
 
 const meta: Meta<typeof HistoryList> = {
   component: HistoryList,
-  title: 'features/history/common/HistoryList',
+  title: '機能/history/common/HistoryList',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
@@ -33,7 +33,7 @@ export const IncomeList: StoryObj<typeof HistoryList> = {
   },
 }
 
-export const Empty: StoryObj<typeof HistoryList> = {
+export const 空: StoryObj<typeof HistoryList> = {
   args: {
     items: [],
     title: '履歴なし',

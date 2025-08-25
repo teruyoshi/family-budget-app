@@ -55,11 +55,12 @@ make down                # 全サービス停止
 
 ## 📁 現在のアーキテクチャ
 
-**Phase 2: Directory Structure Migration (70%)**
+**Phase 2: Directory Structure Migration (85%)**
 
 - **コンポーネント総数**: 28コンポーネント（ui: 10, forms: 6, navigation: 10, layout: 2）
 - **テスト状況**: 352テスト、33スイート全通過（78スキップ含む）
 - **主要機能**: React Router SPA、ページベース構造、コード分割、404対応
+- **最新完了**: NotFoundPage移行、AppLayoutテスト・ストーリー完成、プロジェクト日本語統一
 
 詳細なアーキテクチャは **[参照ドキュメント](docs-src/README.md)** を参照。
 
@@ -72,14 +73,21 @@ make down                # 全サービス停止
 
 詳細な規約は **[品質ガイド](docs-src/quality/README.md)** を参照。
 
-## 🎯 現在のタスク: Phase 2 残り作業 (30%)
+## 🎯 現在のタスク: Phase 2 残り作業 (15%)
+
+### 完了済み作業 ✅
+- ✅ **NotFoundPage移行**: layout ディレクトリへの移動完了
+- ✅ **AppLayoutテスト・ストーリー**: 包括的なテストとStorybookストーリー作成
+- ✅ **プロジェクト日本語統一**: 
+  - Storybookタイトル・エクスポート名の日本語化
+  - HTML言語属性（lang="ja"）設定
+  - インターフェース用語の統一
 
 ### 即座に実行可能なタスク
 - 🔄 **旧ディレクトリ削除**: 7箇所の*_oldディレクトリ削除
   - components/: common_old, layout_old, navigation_old  
   - features/: 4箇所のcomponents_old統合・削除
 - 🔄 **最終検証**: 全テスト通過とビルド確認
-- 🔄 **ドキュメント同期**: コードベース変更に伴うドキュメント更新
 
 ### Phase 2 完了判定基準
 1. 全*_oldディレクトリが削除済み

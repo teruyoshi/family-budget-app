@@ -9,7 +9,7 @@ import NavigationMenu from '../NavigationMenu'
 const theme = createTheme()
 
 const meta: Meta<typeof NavigationMenu> = {
-  title: 'Components/Navigation/NavigationMenu',
+  title: 'コンポーネント/ナビゲーション/NavigationMenu',
   component: NavigationMenu,
   parameters: {
     layout: 'padded',
@@ -74,7 +74,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのナビゲーションメニュー
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     isMobile: false,
   },

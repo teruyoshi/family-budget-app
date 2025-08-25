@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import AmountText from '../AmountText'
 
 const meta: Meta<typeof AmountText> = {
-  title: 'UI Components/AmountText',
+  title: 'UIコンポーネント/AmountText',
   component: AmountText,
   parameters: {
     layout: 'centered',
@@ -66,7 +66,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // 基本ストーリー
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     amount: 25000,
   },
@@ -91,7 +91,7 @@ export const ZeroAmount: Story = {
   },
 }
 
-export const LargeAmount: Story = {
+export const 大きな金額: Story = {
   args: {
     amount: 1234567890,
   },

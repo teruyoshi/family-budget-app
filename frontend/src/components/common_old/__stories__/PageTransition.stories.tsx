@@ -3,7 +3,7 @@ import { Box, Paper, Typography } from '@mui/material'
 import PageTransition from '../PageTransition'
 
 const meta: Meta<typeof PageTransition> = {
-  title: 'Common/PageTransition',
+  title: '共通/PageTransition',
   component: PageTransition,
   parameters: {
     layout: 'centered',
@@ -112,7 +112,7 @@ const SampleContent = ({
 )
 
 // 基本ストーリー
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     children: <SampleContent />,
   },
@@ -233,7 +233,7 @@ export const MountControlled: Story = {
 }
 
 // コントロール可能なインタラクティブストーリー
-export const Interactive: Story = {
+export const インタラクティブ: Story = {
   args: {
     type: 'fade',
     duration: 300,

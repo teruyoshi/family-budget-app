@@ -15,7 +15,7 @@ import AppLayout from '@/components/layout_old/AppLayout'
 const theme = createTheme()
 
 const meta: Meta<typeof NotFoundPage> = {
-  title: 'Pages/NotFoundPage',
+  title: 'ページ/NotFoundPage',
   component: NotFoundPage,
   parameters: {
     layout: 'fullscreen',

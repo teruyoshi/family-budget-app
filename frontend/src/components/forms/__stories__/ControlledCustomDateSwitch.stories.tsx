@@ -69,7 +69,7 @@ function FormWrapper({
 }
 
 const meta: Meta<typeof ControlledCustomDateSwitch> = {
-  title: 'Components/Forms/ControlledCustomDateSwitch',
+  title: 'コンポーネント/フォーム/ControlledCustomDateSwitch',
   component: ControlledCustomDateSwitch,
   parameters: {
     layout: 'padded',
@@ -103,7 +103,7 @@ type Story = StoryObj<typeof ControlledCustomDateSwitch>
 /**
  * デフォルト状態（スイッチOFF）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   render: () => <FormWrapper />,
 }
 
@@ -346,7 +346,7 @@ export const MultipleFields: Story = {
 /**
  * インタラクティブテスト（スイッチの変化を確認）
  */
-export const InteractiveTest: Story = {
+export const インタラクティブテスト: Story = {
   render: () => {
     const { control, handleSubmit, watch, setValue } =
       useForm<TransactionFormData>({

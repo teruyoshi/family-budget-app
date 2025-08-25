@@ -61,7 +61,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルト表示
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {},
   parameters: {
     docs: {
@@ -76,7 +76,7 @@ export const Default: Story = {
 /**
  * カスタムタイトル
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     title: 'My Budget App',
   },

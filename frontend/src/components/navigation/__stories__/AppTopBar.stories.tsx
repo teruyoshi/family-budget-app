@@ -8,7 +8,7 @@ import AppTopBar from '../AppTopBar'
 const theme = createTheme()
 
 const meta: Meta<typeof AppTopBar> = {
-  title: 'Components/Navigation/AppTopBar',
+  title: 'コンポーネント/ナビゲーション/AppTopBar',
   component: AppTopBar,
   parameters: {
     layout: 'fullscreen',
@@ -68,7 +68,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのトップバー表示
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     drawerWidth: 240,
     title: '家計簿アプリ',
@@ -86,7 +86,7 @@ export const Default: Story = {
 /**
  * カスタムタイトルでの表示
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     drawerWidth: 240,
     title: 'My Budget Manager',
@@ -138,7 +138,7 @@ export const CompactDrawer: Story = {
 /**
  * ワイドドロワー幅での表示
  */
-export const WideDrawer: Story = {
+export const 幅広ドロワー: Story = {
   args: {
     drawerWidth: 320,
     title: '家計簿アプリ',

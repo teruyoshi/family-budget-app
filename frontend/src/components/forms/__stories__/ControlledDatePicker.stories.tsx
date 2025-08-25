@@ -120,7 +120,7 @@ function ValidationFormWrapper() {
 }
 
 const meta: Meta<typeof ControlledDatePicker> = {
-  title: 'Components/Forms/ControlledDatePicker',
+  title: 'コンポーネント/フォーム/ControlledDatePicker',
   component: ControlledDatePicker,
   parameters: {
     layout: 'padded',
@@ -154,7 +154,7 @@ type Story = StoryObj<typeof ControlledDatePicker>
 /**
  * デフォルト状態（空の日付入力）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   render: () => <FormWrapper />,
 }
 
@@ -320,7 +320,7 @@ export const MultipleFields: Story = {
 /**
  * インタラクティブテスト（日付の変化を確認）
  */
-export const InteractiveTest: Story = {
+export const インタラクティブテスト: Story = {
   render: () => {
     const { control, handleSubmit, watch, setValue } =
       useForm<TransactionFormData>({

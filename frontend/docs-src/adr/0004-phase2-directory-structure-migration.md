@@ -141,6 +141,12 @@ src/
 - ✅ テスト継続性 - 240テスト + 25スイート全通過維持
 - ✅ ドキュメント更新 - CLAUDE.md、glossary.md、README.md更新完了
 
+### 最新完了作業（85%）
+
+- ✅ NotFoundPage移行 - components/common_old → components/layout移行完了
+- ✅ AppLayoutテスト・ストーリー作成 - 包括的テストスイート + 9つのStorybookストーリー完成
+- ✅ プロジェクト日本語統一 - Storybookタイトル・エクスポート名・HTML言語設定完了
+
 ### 残り作業（15%）
 
 - 🔄 旧ディレクトリ削除 - common_old, layout_old, navigation_old最終削除

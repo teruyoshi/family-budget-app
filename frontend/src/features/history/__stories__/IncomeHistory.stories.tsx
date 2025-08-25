@@ -3,7 +3,7 @@ import IncomeHistory from '../IncomeHistory'
 
 const meta: Meta<typeof IncomeHistory> = {
   component: IncomeHistory,
-  title: 'features/history/IncomeHistory',
+  title: '機能/history/IncomeHistory',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
@@ -18,7 +18,7 @@ export const WithIncomes: StoryObj<typeof IncomeHistory> = {
   },
 }
 
-export const Empty: StoryObj<typeof IncomeHistory> = {
+export const 空: StoryObj<typeof IncomeHistory> = {
   args: {
     incomes: [],
   },

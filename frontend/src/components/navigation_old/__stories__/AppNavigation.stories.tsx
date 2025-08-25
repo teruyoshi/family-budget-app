@@ -14,7 +14,7 @@ import AppNavigation from '../AppNavigation'
 const theme = createTheme()
 
 const meta: Meta<typeof AppNavigation> = {
-  title: 'Navigation/AppNavigation',
+  title: 'ナビゲーション/AppNavigation',
   component: AppNavigation,
   parameters: {
     layout: 'fullscreen',
@@ -82,7 +82,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトナビゲーション（ダッシュボード）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     drawerWidth: 240,
     title: '家計簿アプリ',
@@ -177,7 +177,7 @@ export const SettingsActive: Story = {
 /**
  * カスタムドロワー幅
  */
-export const WideDrawer: Story = {
+export const 幅広ドロワー: Story = {
   args: {
     drawerWidth: 320,
     title: '家計簿アプリ（ワイド）',
@@ -215,7 +215,7 @@ export const NarrowDrawer: Story = {
 /**
  * カスタムタイトル
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     drawerWidth: 240,
     title: 'My Budget Tracker',
@@ -350,7 +350,7 @@ export const AllNavigationStates: Story = {
 /**
  * インタラクションテスト用
  */
-export const InteractiveDemo: Story = {
+export const インタラクティブデモ: Story = {
   args: {
     drawerWidth: 240,
     title: '家計簿アプリ - インタラクティブ',

@@ -42,7 +42,7 @@ const SampleContent = ({
 )
 
 const meta: Meta<typeof AppLayout> = {
-  title: 'Layout/AppLayout',
+  title: 'レイアウト/AppLayout',
   component: AppLayout,
   parameters: {
     layout: 'fullscreen',
@@ -139,7 +139,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトレイアウト
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     maxWidth: 'md',
     backgroundColor: '#f5f5f5',
@@ -307,7 +307,7 @@ export const NoNavigation: Story = {
 /**
  * カスタム背景色
  */
-export const CustomBackground: Story = {
+export const カスタム背景: Story = {
   args: {
     maxWidth: 'md',
     backgroundColor: '#e8f5e8',
@@ -341,7 +341,7 @@ export const CustomBackground: Story = {
 /**
  * トランジション無効
  */
-export const NoTransitions: Story = {
+export const トランジションなし: Story = {
   args: {
     maxWidth: 'md',
     backgroundColor: '#f5f5f5',

@@ -1,9 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
+import { ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { DateLocalizationProvider } from '@/components/provider'
 import AmountInput from '../AmountInput'
 
+const theme = createTheme()
+
 const meta: Meta<typeof AmountInput> = {
-  title: 'UI Components/AmountInput',
+  title: 'UIコンポーネント/AmountInput',
   component: AmountInput,
   parameters: {
     layout: 'centered',
@@ -14,6 +20,16 @@ const meta: Meta<typeof AmountInput> = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <DateLocalizationProvider>
+          <Story />
+        </DateLocalizationProvider>
+      </ThemeProvider>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     value: {
@@ -90,7 +106,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // 基本ストーリー
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     value: 0,
     placeholder: '金額を入力',
@@ -98,7 +114,7 @@ export const Default: Story = {
 }
 
 // ラベル付き
-export const WithLabel: Story = {
+export const ラベル付き: Story = {
   args: {
     value: 15000,
     label: '支出金額',
@@ -107,7 +123,7 @@ export const WithLabel: Story = {
 }
 
 // 必須項目
-export const Required: Story = {
+export const 必須項目: Story = {
   args: {
     value: 0,
     label: '収入金額',
@@ -117,7 +133,7 @@ export const Required: Story = {
 }
 
 // エラー状態
-export const WithError: Story = {
+export const エラー状態: Story = {
   args: {
     value: 0,
     label: '金額',
@@ -128,7 +144,7 @@ export const WithError: Story = {
 }
 
 // バリアント - Filled
-export const FilledVariant: Story = {
+export const フィルドバリアント: Story = {
   args: {
     value: 25000,
     label: '予算金額',
@@ -137,7 +153,7 @@ export const FilledVariant: Story = {
 }
 
 // バリアント - Standard
-export const StandardVariant: Story = {
+export const スタンダードバリアント: Story = {
   args: {
     value: 50000,
     label: '目標金額',
@@ -146,7 +162,7 @@ export const StandardVariant: Story = {
 }
 
 // 大きな金額での表示
-export const LargeAmount: Story = {
+export const 大きな金額: Story = {
   args: {
     value: 1234567,
     label: '年収',
@@ -155,7 +171,7 @@ export const LargeAmount: Story = {
 }
 
 // インタラクティブストーリー（状態管理あり）
-export const Interactive: Story = {
+export const インタラクティブ: Story = {
   render: function InteractiveAmountInput(args) {
     const [value, setValue] = useState(args.value || 0)
 
@@ -169,7 +185,7 @@ export const Interactive: Story = {
 }
 
 // フォームレイアウトでの使用例
-export const InFormLayout: Story = {
+export const フォームレイアウト内: Story = {
   render: function FormLayoutExample(args) {
     const [expenseAmount, setExpenseAmount] = useState(args.value || 3000)
     const [incomeAmount, setIncomeAmount] = useState(25000)

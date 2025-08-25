@@ -123,7 +123,7 @@ function ValidationFormWrapper() {
 }
 
 const meta: Meta<typeof ControlledAmountInput> = {
-  title: 'Components/Forms/ControlledAmountInput',
+  title: 'コンポーネント/フォーム/ControlledAmountInput',
   component: ControlledAmountInput,
   parameters: {
     layout: 'padded',
@@ -157,7 +157,7 @@ type Story = StoryObj<typeof ControlledAmountInput>
 /**
  * デフォルト状態（空の金額入力）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   render: () => <FormWrapper />,
 }
 
@@ -178,7 +178,7 @@ export const CustomPlaceholder: Story = {
 /**
  * 大きな金額の表示例
  */
-export const LargeAmount: Story = {
+export const 大きな金額: Story = {
   render: () => <FormWrapper defaultAmount={1234567} />,
 }
 
@@ -304,7 +304,7 @@ export const MultipleFields: Story = {
 /**
  * インタラクティブテスト（入力値の変化を確認）
  */
-export const InteractiveTest: Story = {
+export const インタラクティブテスト: Story = {
   render: () => {
     const { control, handleSubmit, watch, setValue } =
       useForm<TransactionFormData>({

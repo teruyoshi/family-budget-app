@@ -1,6 +1,6 @@
 # フロントエンド - FamilyBudgetApp (v0.4.1)
 
-**Phase 2: Directory Structure Migration (70%)**
+**Phase 2: Directory Structure Migration (85%)**
 
 React 19 + TypeScript + Viteで構築された現代的な家計簿アプリのフロントエンドです。コンポーネントベースアーキテクチャで再利用性と保守性を重視しています。
 

@@ -18,7 +18,7 @@ const preview: Preview = {
       toc: {
         contentsSelector: '.sbdocs-content',
         headingSelector: 'h1, h2, h3',
-        title: 'Contents',
+        title: '目次',
         disable: false,
         unsafeTocHtml: false,
       },
@@ -46,15 +46,15 @@ const preview: Preview = {
     viewport: {
       viewports: {
         mobile: {
-          name: 'Mobile',
+          name: 'モバイル',
           styles: { width: '375px', height: '667px' },
         },
         tablet: {
-          name: 'Tablet',
+          name: 'タブレット',
           styles: { width: '768px', height: '1024px' },
         },
         desktop: {
-          name: 'Desktop',
+          name: 'デスクトップ',
           styles: { width: '1200px', height: '800px' },
         },
       },

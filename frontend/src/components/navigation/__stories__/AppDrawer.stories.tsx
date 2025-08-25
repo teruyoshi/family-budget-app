@@ -10,7 +10,7 @@ import AppDrawer from '../AppDrawer'
 const theme = createTheme()
 
 const meta: Meta<typeof AppDrawer> = {
-  title: 'Components/Navigation/AppDrawer',
+  title: 'コンポーネント/ナビゲーション/AppDrawer',
   component: AppDrawer,
   parameters: {
     layout: 'fullscreen',
@@ -87,7 +87,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのデスクトップドロワー
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     drawerWidth: 240,
     title: '家計簿アプリ',
@@ -153,7 +153,7 @@ export const MobileOpen: Story = {
 /**
  * カスタムタイトル
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     drawerWidth: 240,
     title: 'My Budget Manager',

@@ -3,7 +3,7 @@ import HistoryItem from '../HistoryItem'
 
 const meta: Meta<typeof HistoryItem> = {
   component: HistoryItem,
-  title: 'features/history/common/HistoryItem',
+  title: '機能/history/common/HistoryItem',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta

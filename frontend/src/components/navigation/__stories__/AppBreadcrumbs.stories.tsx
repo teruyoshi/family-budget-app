@@ -71,7 +71,7 @@ jest.mock('@/routes/routes', () => ({
 }))
 
 const meta: Meta<typeof AppBreadcrumbs> = {
-  title: 'Components/Navigation/AppBreadcrumbs',
+  title: 'コンポーネント/ナビゲーション/AppBreadcrumbs',
   component: AppBreadcrumbs,
   parameters: {
     layout: 'padded',
@@ -141,7 +141,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのパンくず表示（支出管理ページ）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   parameters: {
     path: '/expenses',
     docs: {

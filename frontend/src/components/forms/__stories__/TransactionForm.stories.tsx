@@ -5,7 +5,7 @@ import TransactionForm from '../TransactionForm'
 import type { TransactionFormData } from '@/lib/validation/schemas'
 
 const meta: Meta<typeof TransactionForm> = {
-  title: 'Forms/TransactionForm',
+  title: 'フォーム/TransactionForm',
   component: TransactionForm,
   parameters: {
     layout: 'centered',
@@ -62,7 +62,7 @@ export default meta
 type Story = StoryObj<typeof TransactionForm>
 
 // 基本的な使用例
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     placeholder: '金額を入力してください',
     buttonText: '登録する',

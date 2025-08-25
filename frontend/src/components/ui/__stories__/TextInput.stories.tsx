@@ -3,7 +3,7 @@ import { useState } from 'react'
 import TextInput from '../TextInput'
 
 const meta: Meta<typeof TextInput> = {
-  title: 'UI Components/TextInput',
+  title: 'UIコンポーネント/TextInput',
   component: TextInput,
   parameters: {
     layout: 'centered',
@@ -98,7 +98,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // 基本ストーリー
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     value: '',
     placeholder: 'テキストを入力',
@@ -142,7 +142,7 @@ export const NumberInput: Story = {
 }
 
 // 必須項目
-export const Required: Story = {
+export const 必須項目: Story = {
   args: {
     value: '',
     placeholder: '必須項目です',
@@ -151,7 +151,7 @@ export const Required: Story = {
 }
 
 // エラー状態
-export const WithError: Story = {
+export const エラー状態: Story = {
   args: {
     value: '',
     placeholder: 'テキストを入力',
@@ -161,19 +161,19 @@ export const WithError: Story = {
 }
 
 // バリアント - Filled
-export const FilledVariant: Story = {
+export const フィルドバリアント: Story = {
   args: {
     value: 'サンプル',
-    placeholder: 'Filledバリアント',
+    placeholder: 'フィルドバリアント',
     variant: 'filled',
   },
 }
 
 // バリアント - Standard
-export const StandardVariant: Story = {
+export const スタンダードバリアント: Story = {
   args: {
     value: 'サンプル',
-    placeholder: 'Standardバリアント',
+    placeholder: 'スタンダードバリアント',
     variant: 'standard',
   },
 }
@@ -188,7 +188,7 @@ export const FixedWidth: Story = {
 }
 
 // インタラクティブストーリー
-export const Interactive: Story = {
+export const インタラクティブ: Story = {
   render: function InteractiveTextInput(args) {
     const [value, setValue] = useState(args.value || '')
 
@@ -201,7 +201,7 @@ export const Interactive: Story = {
 }
 
 // フォームでの使用例
-export const InFormLayout: Story = {
+export const フォームレイアウト内: Story = {
   render: function FormLayoutExample() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')

@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 import FormErrorMessage from '../FormErrorMessage'
 
 const meta: Meta<typeof FormErrorMessage> = {
-  title: 'Components/Forms/FormErrorMessage',
+  title: 'コンポーネント/フォーム/FormErrorMessage',
   component: FormErrorMessage,
   parameters: {
     layout: 'padded',
@@ -44,7 +44,7 @@ export const NoError: Story = {
 /**
  * 必須フィールドエラー
  */
-export const RequiredError: Story = {
+export const 必須エラー: Story = {
   args: {
     error: {
       type: 'required',

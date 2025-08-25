@@ -9,7 +9,7 @@ import AppNavigation from '../AppNavigation'
 const theme = createTheme()
 
 const meta: Meta<typeof AppNavigation> = {
-  title: 'Components/Navigation/AppNavigation',
+  title: 'コンポーネント/ナビゲーション/AppNavigation',
   component: AppNavigation,
   parameters: {
     layout: 'fullscreen',
@@ -66,7 +66,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのナビゲーション表示
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {},
   parameters: {
     docs: {
@@ -81,7 +81,7 @@ export const Default: Story = {
 /**
  * カスタムタイトルでの表示
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     title: 'My Budget App',
   },
@@ -97,7 +97,7 @@ export const CustomTitle: Story = {
 /**
  * カスタムドロワー幅での表示
  */
-export const WideDrawer: Story = {
+export const 幅広ドロワー: Story = {
   args: {
     drawerWidth: 320,
   },

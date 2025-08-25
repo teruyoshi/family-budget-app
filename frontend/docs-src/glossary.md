@@ -34,6 +34,8 @@
 | **ディレクトリ分離**   | Directory Separation        | コンポーネントを機能別ディレクトリに分離 | ui/forms/layout/navigation/provider      |
 | **バレルエクスポート** | Barrel Export               | index.tsでの統一エクスポートパターン     | 各ディレクトリにindex.ts配置必須         |
 | **ジェネリック型**     | Generic Types               | 再利用可能な型パラメータ化コンポーネント | ControlledCustomDateSwitchで実装         |
+| **NotFoundPage移行**   | NotFoundPage Migration      | 404エラーページのlayoutディレクトリ移行  | common_old削除、バレルエクスポート統合   |
+| **日本語統一**         | Japanese Localization       | プロジェクト全体の日本語化               | Storybook・HTML lang・インターフェース   |
 
 ### テスト・品質関連
 

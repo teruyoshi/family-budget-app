@@ -3,12 +3,12 @@ import ExpenseInput from '../ExpenseInput'
 
 const meta: Meta<typeof ExpenseInput> = {
   component: ExpenseInput,
-  title: 'features/expenses/ExpenseInput',
+  title: '機能/expenses/ExpenseInput',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
 
-export const Default: StoryObj<typeof ExpenseInput> = {
+export const デフォルト: StoryObj<typeof ExpenseInput> = {
   args: {
     value: 1500,
     onChange: (value: number) => console.log('Changed:', value),
@@ -16,7 +16,7 @@ export const Default: StoryObj<typeof ExpenseInput> = {
   },
 }
 
-export const Empty: StoryObj<typeof ExpenseInput> = {
+export const 空: StoryObj<typeof ExpenseInput> = {
   args: {
     value: 0,
     onChange: (value: number) => console.log('Changed:', value),

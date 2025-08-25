@@ -53,7 +53,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // 基本的な表示
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     children: '残高',
   },
@@ -102,7 +102,7 @@ export const FormLabel: Story = {
 }
 
 // 空のchildren
-export const Empty: Story = {
+export const 空: Story = {
   args: {
     children: '',
   },

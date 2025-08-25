@@ -9,7 +9,7 @@ import AppDrawerContent from '../AppDrawerContent'
 const theme = createTheme()
 
 const meta: Meta<typeof AppDrawerContent> = {
-  title: 'Components/Navigation/AppDrawerContent',
+  title: 'コンポーネント/ナビゲーション/AppDrawerContent',
   component: AppDrawerContent,
   parameters: {
     layout: 'padded',
@@ -77,7 +77,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのドロワーコンテンツ
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     title: '家計簿アプリ',
     isMobile: false,
@@ -116,7 +116,7 @@ export const MobileView: Story = {
 /**
  * カスタムタイトル
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     title: 'My Budget Manager',
     isMobile: false,

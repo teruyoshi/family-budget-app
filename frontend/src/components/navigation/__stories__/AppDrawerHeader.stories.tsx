@@ -9,7 +9,7 @@ import AppDrawerHeader from '../AppDrawerHeader'
 const theme = createTheme()
 
 const meta: Meta<typeof AppDrawerHeader> = {
-  title: 'Components/Navigation/AppDrawerHeader',
+  title: 'コンポーネント/ナビゲーション/AppDrawerHeader',
   component: AppDrawerHeader,
   parameters: {
     layout: 'padded',
@@ -77,7 +77,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのヘッダー（デスクトップ）
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     title: '家計簿アプリ',
     isMobile: false,
@@ -116,7 +116,7 @@ export const MobileView: Story = {
 /**
  * カスタムタイトル
  */
-export const CustomTitle: Story = {
+export const カスタムタイトル: Story = {
   args: {
     title: 'My Budget Manager',
     isMobile: false,

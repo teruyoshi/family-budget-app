@@ -3,12 +3,12 @@ import IncomeInput from '../IncomeInput'
 
 const meta: Meta<typeof IncomeInput> = {
   component: IncomeInput,
-  title: 'features/income/IncomeInput',
+  title: '機能/income/IncomeInput',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
 
-export const Default: StoryObj<typeof IncomeInput> = {
+export const デフォルト: StoryObj<typeof IncomeInput> = {
   args: {
     value: 50000,
     onChange: (value: number) => console.log('Changed:', value),
@@ -16,7 +16,7 @@ export const Default: StoryObj<typeof IncomeInput> = {
   },
 }
 
-export const Empty: StoryObj<typeof IncomeInput> = {
+export const 空: StoryObj<typeof IncomeInput> = {
   args: {
     value: 0,
     onChange: (value: number) => console.log('Changed:', value),

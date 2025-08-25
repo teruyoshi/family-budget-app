@@ -69,7 +69,7 @@ const routeWithoutIcon: RouteInfo = {
 }
 
 const meta: Meta<typeof NavigationMenuItem> = {
-  title: 'Components/Navigation/NavigationMenuItem',
+  title: 'コンポーネント/ナビゲーション/NavigationMenuItem',
   component: NavigationMenuItem,
   parameters: {
     layout: 'padded',
@@ -137,7 +137,7 @@ type Story = StoryObj<typeof meta>
 /**
  * デフォルトのメニュー項目
  */
-export const Default: Story = {
+export const デフォルト: Story = {
   args: {
     route: routes[0], // Dashboard
   },

@@ -3,18 +3,18 @@ import TotalIncomeDisplay from '../TotalIncomeDisplay'
 
 const meta: Meta<typeof TotalIncomeDisplay> = {
   component: TotalIncomeDisplay,
-  title: 'features/income/TotalIncomeDisplay',
+  title: '機能/income/TotalIncomeDisplay',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
 
-export const Default: StoryObj<typeof TotalIncomeDisplay> = {
+export const デフォルト: StoryObj<typeof TotalIncomeDisplay> = {
   args: {
     totalAmount: 250000,
   },
 }
 
-export const LargeAmount: StoryObj<typeof TotalIncomeDisplay> = {
+export const 大きな金額: StoryObj<typeof TotalIncomeDisplay> = {
   args: {
     totalAmount: 1000000,
   },
