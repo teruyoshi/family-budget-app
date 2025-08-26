@@ -4,7 +4,7 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   setupFiles: ['<rootDir>/src/setupJest.ts'],
   // テスト実行時間の最適化
-  testTimeout: 30000, // デフォルト5秒→30秒（MUI非同期処理対応・品質チェック最適化）
+  testTimeout: 15000, // デフォルト5秒→15秒（MUI非同期処理対応・パフォーマンス最適化）
 
   // React 19 + Jest環境でのact()警告対策
   testEnvironmentOptions: {
