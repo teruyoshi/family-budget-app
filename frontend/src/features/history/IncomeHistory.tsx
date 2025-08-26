@@ -1,4 +1,4 @@
-import { HistoryList } from './common_old'
+import { HistoryList } from './common'
 import type { Expense } from '@/hooks'
 
 /**

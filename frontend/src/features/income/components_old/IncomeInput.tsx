@@ -1,4 +1,4 @@
-import AmountInput from '../../../components/common_old/AmountInput'
+import { AmountInput } from '@/components/ui'
 
 /**
  * 収入金額入力コンポーネントのProps型定義

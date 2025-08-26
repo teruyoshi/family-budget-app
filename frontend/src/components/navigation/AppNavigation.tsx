@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
 import AppTopBar from './AppTopBar'
 import AppDrawer from './AppDrawer'
@@ -52,7 +52,7 @@ export interface AppNavigationProps {
  * />
  * ```
  */
-export default function AppNavigation({
+const AppNavigation = memo(function AppNavigation({
   drawerWidth = 240,
   title = '家計簿アプリ',
 }: AppNavigationProps) {
@@ -64,16 +64,16 @@ export default function AppNavigation({
   /**
    * ハンバーガーメニュートグル処理
    */
-  const handleMenuToggle = () => {
+  const handleMenuToggle = useCallback(() => {
     setMobileOpen((prev) => !prev)
-  }
+  }, [])
 
   /**
    * ドロワーを閉じる処理
    */
-  const handleDrawerClose = () => {
+  const handleDrawerClose = useCallback(() => {
     setMobileOpen(false)
-  }
+  }, [])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -94,4 +94,6 @@ export default function AppNavigation({
       />
     </Box>
   )
-}
+})
+
+export default AppNavigation

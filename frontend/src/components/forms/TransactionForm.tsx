@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box } from '@mui/material'
@@ -48,7 +49,7 @@ export interface TransactionFormProps {
  * ```
  */
 
-export default function TransactionForm({
+const TransactionForm = memo(function TransactionForm({
   placeholder,
   buttonText,
   buttonColor,
@@ -56,6 +57,16 @@ export default function TransactionForm({
   onSubmit,
   defaultValues = {},
 }: TransactionFormProps) {
+  const memoizedDefaultValues = useMemo(
+    () => ({
+      amount: 0,
+      date: new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' }),
+      useCustomDate: false,
+      ...defaultValues,
+    }),
+    [defaultValues]
+  )
+
   const {
     control,
     handleSubmit,
@@ -64,25 +75,23 @@ export default function TransactionForm({
     formState: { isValid },
   } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionFormSchema),
-    defaultValues: {
-      amount: 0,
-      date: new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' }),
-      useCustomDate: false,
-      ...defaultValues,
-    },
+    defaultValues: memoizedDefaultValues,
     mode: 'onChange',
   })
 
   const useCustomDate = watch('useCustomDate')
 
-  const handleFormSubmit: SubmitHandler<TransactionFormData> = (data) => {
-    onSubmit?.(data)
-    reset({
-      amount: 0,
-      date: data.date,
-      useCustomDate: data.useCustomDate,
-    })
-  }
+  const handleFormSubmit: SubmitHandler<TransactionFormData> = useMemo(
+    () => (data) => {
+      onSubmit?.(data)
+      reset({
+        amount: 0,
+        date: data.date,
+        useCustomDate: data.useCustomDate,
+      })
+    },
+    [onSubmit, reset]
+  )
 
   return (
     <Box
@@ -117,4 +126,6 @@ export default function TransactionForm({
       </Button>
     </Box>
   )
-}
+})
+
+export default TransactionForm

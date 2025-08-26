@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react'
 import { useMoney, useMoneyFormat } from '@/hooks'
 import { parseMoneyString } from '@/lib/format'
 
@@ -16,20 +17,30 @@ export function useAmountInput(
   onChange?: (value: number) => void
 ) {
   const [money, setMoney] = useMoney(value)
-  const amount = useMoneyFormat(money).forInput
+  const formatted = useMoneyFormat(money)
 
-  const handleChange = (inputValue: string) => {
-    try {
-      const numericValue = parseMoneyString(inputValue)
-      setMoney(numericValue)
-      onChange?.(numericValue)
-    } catch (error) {
-      console.warn('AmountInput: 無効な入力値:', inputValue, error)
-    }
-  }
+  // フォーマット結果をメモ化
+  const amount = useMemo(() => formatted.forInput, [formatted.forInput])
 
-  return {
-    amount,
-    handleChange,
-  }
+  // ハンドラーをメモ化
+  const handleChange = useCallback(
+    (inputValue: string) => {
+      try {
+        const numericValue = parseMoneyString(inputValue)
+        setMoney(numericValue)
+        onChange?.(numericValue)
+      } catch (error) {
+        console.warn('AmountInput: 無効な入力値:', inputValue, error)
+      }
+    },
+    [setMoney, onChange]
+  )
+
+  return useMemo(
+    () => ({
+      amount,
+      handleChange,
+    }),
+    [amount, handleChange]
+  )
 }

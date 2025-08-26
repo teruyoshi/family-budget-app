@@ -1,6 +1,6 @@
 import { Box, Grid, Paper } from '@mui/material'
 import { AppTitle } from '@/components/ui'
-import AppLayout from '@/components/layout_old/AppLayout'
+import AppLayout from '@/components/layout/AppLayout'
 import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'

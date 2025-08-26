@@ -11,7 +11,7 @@ export interface BalanceDisplayProps {
 
 /**
  * 家計残高表示コンポーネント
- * 
+ *
  * 現在の残高を中央揃えで表示します。
  * 残高の正負に関わらず緑色で表示されます。
  */
