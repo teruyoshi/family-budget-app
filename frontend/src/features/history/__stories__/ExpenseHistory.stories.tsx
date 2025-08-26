@@ -3,7 +3,7 @@ import ExpenseHistory from '../ExpenseHistory'
 
 const meta: Meta<typeof ExpenseHistory> = {
   component: ExpenseHistory,
-  title: 'features/history/ExpenseHistory',
+  title: '機能/history/ExpenseHistory',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
@@ -18,7 +18,7 @@ export const WithExpenses: StoryObj<typeof ExpenseHistory> = {
   },
 }
 
-export const Empty: StoryObj<typeof ExpenseHistory> = {
+export const 空: StoryObj<typeof ExpenseHistory> = {
   args: {
     expenses: [],
   },

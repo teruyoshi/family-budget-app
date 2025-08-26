@@ -1,6 +1,12 @@
 # Family Budget App
 
-家計簿管理のためのモダンなフルスタックWebアプリケーション。収支管理、カテゴリ別予算設定、データ可視化機能を提供します。
+**家族向け家計管理のための現代的フルスタックWebアプリケーション**
+
+## 🏠 対象ユーザー・利用シナリオ
+
+- **家族利用**: 夫婦・親子での共同家計管理
+- **個人利用**: 一人暮らしの支出管理・節約意識向上
+- **計画的消費**: 家計状況を踏まえたリスク回避型予算決定
 
 ## 🌐 デモサイト
 
@@ -27,25 +33,10 @@
 
 ## 🛠 技術スタック
 
-### フロントエンド
-- **React 19** - 最新のReactフィーチャー対応
-- **TypeScript** - 型安全性とコード品質
-- **Vite** - 高速ビルドツール
-- **Material-UI (MUI) v6** - Material Designコンポーネントライブラリ
-- **Emotion** - CSS-in-JSスタイリングソリューション
-- **Jest + React Testing Library** - コンポーネントテスト環境
-
-### バックエンド
-- **Go 1.21** - 高性能APIサーバー
-- **Gin** - 軽量Webフレームワーク
-- **GORM** - 型安全なORM
-- **MySQL 8.0** - リレーショナルデータベース
-
-### 開発・インフラ
-- **Docker & Docker Compose** - コンテナ化開発環境
-- **Jest + React Testing Library** - コンポーネントテスト（ハイブリッド配置戦略）
-- **ESLint & Prettier** - コード品質・フォーマッティング
-- **phpMyAdmin** - データベース管理UI
+- **フロントエンド**: React 19 + TypeScript + Vite + MUI v6
+- **バックエンド**: Go 1.21 + Gin + GORM + MySQL 8.0
+- **インフラ**: Docker Compose + GitHub Actions + Firebase Hosting
+- **品質保証**: Jest + ESLint + Prettier + 5段階品質チェック
 
 ## 📦 プロジェクト構造
 
@@ -94,199 +85,49 @@ docker compose up -d
 - **API健康状態**: http://localhost:8080/api/health
 - **phpMyAdmin**: http://localhost:8081 (root / root)
 
-## 🔧 開発コマンド
+## 🛠 開発コマンド
 
-### 基本操作
 ```bash
-make help                       # 利用可能なコマンド一覧
-make up                         # 全サービス起動（バックグラウンド）
-make dev                        # 開発環境起動（ログ表示）
-make down                       # 全サービス停止
-make logs                       # 全サービスログ確認
+# 環境管理
+make up          # 全サービス起動
+make dev         # 開発環境起動（ログ表示）
+make down        # 全サービス停止
+
+# 品質チェック
+make test-frontend              # テスト実行
+make quality-check-frontend     # 5段階品質チェック
+make lint-frontend              # ESLintチェック
+make format-frontend            # Prettierフォーマット
 ```
 
-### 開発・テスト
-```bash
-# テスト実行
-make test                       # 全テスト実行
-make test-frontend              # フロントエンドテストのみ
-make test-backend               # バックエンドテストのみ
 
-# Lint・フォーマット実行
-make lint                       # 全Lintチェック実行
-make lint-frontend              # フロントエンドLintのみ
-make lint-backend               # バックエンドLintのみ
-make format-frontend            # フロントエンドコードフォーマット
-make format-frontend-check      # フォーマットチェックのみ
 
-# パッケージ管理
-make npm-install                          # フロントエンド依存関係インストール
-make npm-install-package PKG=react-router # 新パッケージ追加
-make npm-version-minor                    # マイナーバージョンアップ
-make npm-version-patch                    # パッチバージョンアップ
-```
 
-### デバッグ・ログ確認
-```bash
-make frontend                   # フロントエンドログ確認
-make backend                    # バックエンドログ確認
-make frontend-shell             # フロントエンドコンテナ接続
-make backend-shell              # バックエンドコンテナ接続
-```
+## 🚀 開発状況
 
-## 🔄 CI/CD 自動化
+**Phase 2: Directory Structure Migration (70%完了)**
+- 28コンポーネントの機能別分離進行中
+- 352テスト、33スイート全通過
+- 残り作業: 旧ディレクトリ削除・最終検証
 
-### GitHub Actions
-developブランチへのプルリクエスト時に自動実行される品質チェック：
+**次期計画**: フロントエンド品質向上 → バックエンド実装 → 初期バージョンリリース
 
-```yaml
-# .github/workflows/frontend-ci.yml
-name: Frontend CI
-on:
-  pull_request:
-    branches: [develop]
-    paths: ['frontend/**']
-```
+## 📚 詳細ドキュメント
 
-#### 自動実行される品質チェック
-- **TypeScript型チェック**: `tsc --noEmit`
-- **ESLint静的解析**: コードスタイル・品質チェック
-- **Jest テスト**: 67テスト + カバレッジレポート生成
-- **Vite ビルド**: 本番ビルド成功確認
+### 🎯 開発者向け
+- **[開発者ガイド](CLAUDE.md)** - 必須コマンド・作業フロー・緊急時対応
+- **[完全版プロジェクト要約](docs-src/project-summary.md)** - ユーザー視点・技術・運用の統合概要
+- **[フロントエンド詳細](frontend/README.md)** - 技術スタック・アーキテクチャ・テスト戦略
 
-#### CI環境仕様
-- **実行環境**: ubuntu-latest
-- **Node.js**: 18.x LTS
-- **キャッシュ**: npm依存関係の最適化
-- **アーティファクト**: カバレッジレポート（30日保持）
-
-#### ステータス確認
-- プルリクエスト画面で自動ステータス表示
-- 失敗時は詳細ログとエラー箇所を表示
-- テスト失敗時のマージブロック機能
-
-## 🏗 実装済み機能
-
-### ✅ フロントエンド
-- **React 19 + TypeScript + Vite**: モダンな開発環境
-- **Material-UI (MUI) v6**: 統一されたデザインシステム
-- **包括的テスト環境**: 19テスト（5スイート）全通過
-- **コード品質**: ESLint + Prettier自動整形
-- **詳細なコード内ドキュメント**: 実装例・設計原則をコメントで提供
-
-### ✅ バックエンド
-- Go + Gin REST APIサーバー
-- GORM自動マイグレーション
-- MySQL接続・初期データシード
-- カテゴリ管理API (CRUD)
-- ヘルスチェックエンドポイント
-
-### ✅ インフラ・DevOps
-- Docker Compose全サービス構成
-- Makefile開発コマンド体系
-- phpMyAdminデータベース管理UI
-- マルチステージビルド最適化
-
-## 📊 データベーススキーマ
-
-### テーブル構造
-- **users**: ユーザー管理 (id, name, email, timestamps)
-- **categories**: 収支カテゴリ (id, name, type, color, description, timestamps)
-- **transactions**: 取引記録 (id, user_id, category_id, amount, description, date, timestamps)
-- **budgets**: 月次予算 (id, user_id, category_id, amount, month, timestamps)
-
-### 初期データ（GORM自動シード）
-- **支出カテゴリ**: 食費、交通費、娯楽費、光熱費、通信費、医療費
-- **収入カテゴリ**: 給与、副収入
-
-## 🔌 実装済みAPI
-
-### ヘルスチェック
-- `GET /api/health` - ヘルスチェック（データベース接続確認含む）
-
-### カテゴリ管理
-- `GET /api/categories` - カテゴリ一覧取得
-- `POST /api/categories` - 新規カテゴリ作成
-- `GET /api/categories/:id` - 特定カテゴリ取得
-- `PUT /api/categories/:id` - カテゴリ更新
-- `DELETE /api/categories/:id` - カテゴリ削除
-
-## 🗺 開発ロードマップ
-
-### 🚧 フェーズ1: トランザクションAPI実装
-**Transaction CRUD API**
-- [ ] `GET /api/transactions` - 取引一覧（フィルタ・ページネーション対応）
-- [ ] `POST /api/transactions` - 新規取引登録
-- [ ] `PUT /api/transactions/:id` - 取引更新
-- [ ] `DELETE /api/transactions/:id` - 取引削除
-
-### 🚧 フェーズ2: フロントエンド家計簿UI
-**基本コンポーネント**
-- [ ] TransactionForm - 取引入力フォーム
-- [ ] TransactionList - 取引履歴表示
-- [ ] CategorySelector - カテゴリ選択
-- [ ] DatePicker - 日付選択
-- [ ] AmountInput - 金額入力
-
-**ページ実装**
-- [ ] Dashboard - 収支サマリー
-- [ ] Transactions - 取引管理
-- [ ] Categories - カテゴリ管理
-
-### 🚧 フェーズ3: 高度な機能
-- [ ] Budget API + UI - 予算管理機能
-- [ ] データ可視化 - Chart.js/Recharts使用
-- [ ] ユーザー認証 - JWT実装
-- [ ] レポート機能 - 月次/年次レポート
-
-## 🤝 開発ガイドライン
-
-### コード規約
-- TypeScript strict mode必須
-- Material-UI コンポーネント優先使用
-- sx propsによるスタイリング
-- type-only imports最適化
-
-### 開発フロー
-1. **Feature Branch**: 機能ごとにブランチ作成
-2. **TDD**: テスト駆動開発推奨
-3. **Lint**: コミット前の品質チェック必須
-4. **Docker**: 全開発作業はコンテナ内実行
-
-### テスト戦略
-- **単体テスト**: Jest + React Testing Library（__tests__/ディレクトリ）
-- **統合テスト**: フィーチャーフロー（integration/サブディレクトリ）
-- **co-locatedテスト**: シンプルなコンポーネント（*.test.tsx）
-- **MUI適応テスト**: 数値型フィールド、非同期状態管理対応
-- **結合テスト**: APIエンドポイント
-- **E2Eテスト**: 将来実装予定
-
-## 📚 ドキュメント戦略
-
-- **メインREADME**: プロジェクト概要・開発手順
-- **frontend/README.md**: 簡潔な開発ガイド
-- **コード内コメント**: 詳細な実装例・設計原則・使用方法
-- **CLAUDE.md**: Claude専用作業指示
+### 📖 参照・保守
+- **[参照ドキュメント](docs-src/README.md)** - アーキテクチャ・テスト・品質規約・保守ガイド
 
 ## 🐛 トラブルシューティング
 
-### よくある問題
-
-**コンテナが起動しない**
 ```bash
-make down && make clean  # 完全クリーンアップ
-make build && make up    # 再ビルド・起動
-```
-
-**フロントエンド依存関係エラー**
-```bash
-make npm-install  # パッケージ再インストール
-```
-
-**データベース接続エラー**
-```bash
-make db           # データベースログ確認
-make status       # サービス状態確認
+make down && make up     # コンテナ再起動
+make npm-install         # 依存関係再インストール
+make logs                # ログ確認
 ```
 
 ## 📝 ライセンス

@@ -1,7 +1,7 @@
 import { Box, Chip, Grid, Paper, Typography } from '@mui/material'
 import AppLayout from '@/components/layout/AppLayout'
 import { ExpenseHistory, IncomeHistory } from '@/features/history'
-import { useBudgetManager } from '@/hooks'
+import { useBudgetManager } from '@/hooks/useBudgetManager'
 import { formatMoney } from '@/lib/format'
 
 /**

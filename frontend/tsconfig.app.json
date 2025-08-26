@@ -29,5 +29,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/**/*_old/**",
+    "src/components/common_old/**",
+    "src/components/layout_old/**",
+    "src/components/navigation_old/**",
+    "src/features/**/components_old/**",
+    "src/hooks/index_old.ts"
+  ]
 }

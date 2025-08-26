@@ -1,5 +1,8 @@
 export default {
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: [
+    '../src/**/*.stories.@(ts|tsx)',
+    '!../src/**/*_old/**/*.stories.@(ts|tsx)',
+  ],
   addons: ['@storybook/addon-docs'],
 
   framework: {
