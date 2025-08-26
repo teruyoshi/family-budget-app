@@ -7,7 +7,7 @@ import DashboardPage from '../DashboardPage'
  *
  * ダッシュボードページの基本的な表示・機能をテストします。
  */
-describe.skip('DashboardPage', () => {
+describe('DashboardPage', () => {
   /**
    * テストヘルパー: DashboardPageをMemoryRouterでラップしてレンダリング
    */
