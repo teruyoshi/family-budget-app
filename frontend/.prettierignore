@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+storybook-static/
+
+# Coverage reports
+coverage/
+
+# Generated documentation
+docs/
+
+# Package files
+package-lock.json
+*.tgz
+*.tar.gz
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+*.log

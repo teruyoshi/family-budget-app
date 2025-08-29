@@ -1,5 +1,6 @@
 import { BrowserRouter, useRoutes } from 'react-router-dom'
 import { routes } from '@/routes/routes'
+import { DateLocalizationProvider } from '@/components/provider'
 
 /**
  * ルーティングコンポーネント
@@ -82,9 +83,11 @@ export function AppContent() {
  */
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <DateLocalizationProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </DateLocalizationProvider>
   )
 }
 

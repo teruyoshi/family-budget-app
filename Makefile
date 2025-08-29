@@ -1,6 +1,6 @@
 # Makefile for Family Budget App
 
-.PHONY: help up down build rebuild logs clean dev test backend frontend db migrate lint lint-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
+.PHONY: help up down build rebuild logs clean dev test test-file lint-file format-file format-check-file typecheck-file quality-check-file backend frontend db migrate lint lint-frontend lint-fix-frontend lint-backend format format-frontend build-frontend docs-frontend docs-clean-frontend docs-serve-frontend docs-stop-frontend docs-dev-frontend storybook-frontend storybook-stop-frontend generate-stories-frontend generate-stories-frontend-force format-check format-check-frontend npm-version-minor npm-version-patch npm-version-major test-coverage-frontend coverage-serve-frontend coverage-stop-frontend quality-check-frontend
 
 # デフォルトターゲット
 help:
@@ -15,13 +15,22 @@ help:
 	@echo "  make dev        - 開発環境起動（ログ表示付き）"
 	@echo "  make test       - 全テスト実行"
 	@echo "  make test-frontend - フロントエンドテスト実行"
+	@echo "  make test-file FILE=テストファイル名 - 特定のテストファイルのみ実行"
 	@echo "  make test-backend  - バックエンドテスト実行"
+	@echo ""
+	@echo "Individual file quality checks:"
+	@echo "  make lint-file FILE=ファイルパス - 特定ファイルのリント実行"
+	@echo "  make format-file FILE=ファイルパス - 特定ファイルのフォーマット実行"
+	@echo "  make format-check-file FILE=ファイルパス - 特定ファイルのフォーマットチェック"
+	@echo "  make typecheck-file FILE=ファイルパス - 特定ファイルの型チェック"
+	@echo "  make quality-check-file FILE=ファイルパス - 特定ファイルの品質確認統合"
 	@echo "  make test-coverage-frontend - フロントエンドカバレッジテスト + ブラウザ表示 (http://localhost:8090)"
 	@echo "  make coverage-serve-frontend - カバレッジレポートサーバー起動（バックグラウンド） (http://localhost:8090)"
 	@echo "  make coverage-stop-frontend  - カバレッジレポートサーバー停止"
-	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）"
+	@echo "  make quality-check-frontend  - フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest + Build）"
 	@echo "  make lint       - 全Lintチェック実行"
 	@echo "  make lint-frontend - フロントエンドLintチェック実行"
+	@echo "  make lint-fix-frontend - フロントエンドLint自動修正実行"
 	@echo "  make lint-backend  - バックエンドLintチェック実行"
 	@echo "  make format     - 全コードフォーマット実行"
 	@echo "  make format-frontend - フロントエンドコードフォーマット実行"
@@ -94,6 +103,71 @@ test-frontend:
 	@echo "フロントエンドテストを実行中..."
 	docker compose exec frontend npm test
 
+# 特定のテストファイルのみ実行
+test-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make test-file FILE=usePageTransition.test.tsx"; exit 1; fi
+	@echo "特定のテストファイルを実行中: $(FILE)"
+	docker compose exec frontend npm test -- --testPathPatterns=$(FILE) --watchAll=false
+
+# 特定のファイルのみリント実行
+lint-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make lint-file FILE=src/hooks/usePageTransition.ts"; exit 1; fi
+	@echo "特定のファイルをリント中: $(FILE)"
+	docker compose exec frontend npx eslint $(FILE)
+
+# 特定のファイルのみフォーマット実行
+format-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make format-file FILE=src/hooks/usePageTransition.ts"; exit 1; fi
+	@echo "特定のファイルをフォーマット中: $(FILE)"
+	docker compose exec frontend npx prettier --write $(FILE)
+
+# 特定のファイルのフォーマットチェック
+format-check-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make format-check-file FILE=src/hooks/usePageTransition.ts"; exit 1; fi
+	@echo "特定のファイルのフォーマットをチェック中: $(FILE)"
+	docker compose exec frontend npx prettier --check $(FILE)
+
+# 特定のファイルの型チェック (プロジェクト設定使用)
+typecheck-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make typecheck-file FILE=src/hooks/usePageTransition.ts"; exit 1; fi
+	@echo "特定のファイルの型チェック中: $(FILE)"
+	@echo "注意: プロジェクト全体の型チェックを実行しますが、指定ファイルのエラーを確認してください"
+	docker compose exec frontend npm run typecheck
+
+# 特定のファイルの品質確認統合
+quality-check-file:
+	@if [ -z "$(FILE)" ]; then echo "使用例: make quality-check-file FILE=src/hooks/usePageTransition.ts"; exit 1; fi
+	@echo "========================================================"
+	@echo "🔍 ファイル品質確認: $(FILE)"
+	@echo "========================================================"
+	@echo ""
+	@echo "📐 1. Prettierフォーマットチェック..."
+	@if $(MAKE) format-check-file FILE=$(FILE); then \
+		echo "✅ フォーマット: 合格"; \
+	else \
+		echo "❌ フォーマット: 不合格"; \
+		echo "💡 修正するには: make format-file FILE=$(FILE)"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🔧 2. ESLintチェック..."
+	@if $(MAKE) lint-file FILE=$(FILE); then \
+		echo "✅ ESLint: 合格"; \
+	else \
+		echo "❌ ESLint: 不合格"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🎯 3. TypeScriptチェック..."
+	@if $(MAKE) typecheck-file FILE=$(FILE); then \
+		echo "✅ TypeScript: 合格"; \
+	else \
+		echo "❌ TypeScript: 不合格"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "🎉 ファイル品質確認完了: $(FILE)"
+
 # バックエンドのみテスト実行
 test-backend:
 	@echo "バックエンドテストを実行中..."
@@ -111,6 +185,11 @@ lint:
 lint-frontend:
 	@echo "フロントエンドLintを実行中..."
 	docker compose exec frontend npm run lint
+
+# フロントエンドLint自動修正
+lint-fix-frontend:
+	@echo "フロントエンドLint自動修正を実行中..."
+	docker compose exec frontend npm run lint -- --fix
 
 # バックエンドのみLint実行
 lint-backend:
@@ -307,7 +386,7 @@ coverage-stop-frontend:
 	@echo "カバレッジレポートサーバーを停止中..."
 	@pkill -f "python.*8090.*lcov-report" 2>/dev/null || echo "サーバーは既に停止しています"
 
-# フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest）
+# フロントエンド品質確認統合（Prettier + ESLint + TypeScript + Jest + Build）
 quality-check-frontend:
 	@echo "========================================================"
 	@echo "🔍 フロントエンド品質確認を開始します..."
@@ -353,10 +432,21 @@ quality-check-frontend:
 		exit 1; \
 	fi
 	@echo ""
+	@echo "🏗️  5. ビルドチェック実行中..."
+	@echo "--------------------------------------------------------"
+	@if docker compose exec frontend npm run build; then \
+		echo "✅ ビルドチェック: 合格"; \
+	else \
+		echo "❌ ビルドチェック: 不合格"; \
+		echo "💡 ビルドエラーを修正してください"; \
+		exit 1; \
+	fi
+	@echo ""
 	@echo "========================================================"
 	@echo "🎉 フロントエンド品質確認が完了しました！"
 	@echo "✅ Prettier: フォーマット適合"
 	@echo "✅ ESLint: 静的解析合格"
 	@echo "✅ TypeScript: 型チェック合格"
 	@echo "✅ Jest: 全テスト合格"
+	@echo "✅ Build: ビルド成功"
 	@echo "========================================================"

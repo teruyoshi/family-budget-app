@@ -1,8 +1,7 @@
-/**
- * レイアウトコンポーネント用バレルエクスポート
- *
- * 共通レイアウトコンポーネントを統一的にエクスポートします。
- */
-
-export { default as AppLayout } from './AppLayout'
-export type { AppLayoutProps } from './AppLayout'
+// Layout Components - アプリケーション全体のレイアウト管理
+export { default as AppLayout, type AppLayoutProps } from './AppLayout'
+export { default as NotFoundPage } from './NotFoundPage'
+export {
+  default as PageTransition,
+  type PageTransitionProps,
+} from './PageTransition'

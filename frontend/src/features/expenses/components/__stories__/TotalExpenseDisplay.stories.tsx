@@ -3,18 +3,18 @@ import TotalExpenseDisplay from '../TotalExpenseDisplay'
 
 const meta: Meta<typeof TotalExpenseDisplay> = {
   component: TotalExpenseDisplay,
-  title: 'features/expenses/TotalExpenseDisplay',
+  title: '機能/expenses/TotalExpenseDisplay',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
 
-export const Default: StoryObj<typeof TotalExpenseDisplay> = {
+export const デフォルト: StoryObj<typeof TotalExpenseDisplay> = {
   args: {
     totalAmount: 15000,
   },
 }
 
-export const LargeAmount: StoryObj<typeof TotalExpenseDisplay> = {
+export const 大きな金額: StoryObj<typeof TotalExpenseDisplay> = {
   args: {
     totalAmount: 100000,
   },

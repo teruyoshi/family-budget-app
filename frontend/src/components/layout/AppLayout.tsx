@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
-import { Container, Box, Toolbar } from '@mui/material'
-import { AppNavigation, AppBreadcrumbs } from '@/components/navigation'
-import { PageTransition } from '@/components/common'
+import { Box, Container, Toolbar } from '@mui/material'
+import { AppBreadcrumbs, AppNavigation } from '@/components/navigation'
+import { PageTransition } from '@/components/layout'
 import { usePageTitle } from '@/hooks'
 
 /**

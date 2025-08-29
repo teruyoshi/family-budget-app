@@ -3,12 +3,12 @@ import ExpenseForm from '../ExpenseForm'
 
 const meta: Meta<typeof ExpenseForm> = {
   component: ExpenseForm,
-  title: 'features/expenses/ExpenseForm',
+  title: '機能/expenses/ExpenseForm',
   tags: ['autodocs'], // これでDocsページが自動生成
 }
 export default meta
 
-export const Default: StoryObj<typeof ExpenseForm> = {
+export const デフォルト: StoryObj<typeof ExpenseForm> = {
   args: {
     onSubmit: (amount: number, date: string) => {
       console.log('支出登録:', amount, date)

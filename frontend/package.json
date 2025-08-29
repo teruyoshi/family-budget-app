@@ -1,7 +1,7 @@
 {
   "name": "FamilyBudgetApp",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,8 @@
     "docs:clean": "rm -rf docs",
     "docs:serve": "http-server docs -p 3001",
     "storybook": "storybook dev -p 6006 --host 0.0.0.0 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -57,7 +58,9 @@
     "eslint-plugin-tsdoc": "^0.3.0",
     "globals": "^16.3.0",
     "http-server": "^14.1.1",
+    "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
+    "lint-staged": "^16.1.5",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "prettier": "^3.6.2",
@@ -68,5 +71,18 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.1.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
+      "prettier --write"
+    ]
   }
 }

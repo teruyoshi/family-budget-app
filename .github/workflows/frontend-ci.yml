@@ -36,11 +36,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run TypeScript type checking
-        run: npm run typecheck
-      
-      - name: Run ESLint
-        run: npm run lint
+      - name: Run quality checks
+        run: |
+          echo "🔍 統合品質チェック開始..."
+          
+          echo "📐 Prettierフォーマットチェック"
+          npm run format:check
+          
+          echo "🎯 TypeScript型チェック"  
+          npm run typecheck
+          
+          echo "🔧 ESLintチェック"
+          npm run lint
+          
+          echo "✅ 全品質チェック完了"
       
       - name: Run tests with coverage
         run: npm run test:ci

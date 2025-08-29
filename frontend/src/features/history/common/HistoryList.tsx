@@ -1,4 +1,4 @@
-import { Paper, Typography, List, ListSubheader, Divider } from '@mui/material'
+import { Divider, List, ListSubheader, Paper, Typography } from '@mui/material'
 import HistoryItem from './HistoryItem'
 import type { Expense } from '@/hooks'
 

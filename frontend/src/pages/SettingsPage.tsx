@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Alert, Divider } from '@mui/material'
+import { Alert, Box, Divider, Paper, Typography } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import InfoIcon from '@mui/icons-material/Info'
 import AppLayout from '@/components/layout/AppLayout'
