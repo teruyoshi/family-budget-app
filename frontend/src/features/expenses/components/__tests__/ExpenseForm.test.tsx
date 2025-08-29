@@ -11,23 +11,11 @@ const setup = (props = {}) => {
 }
 
 describe('ExpenseForm', () => {
-  test('支出入力用のテキストボックスが表示される', () => {
-    setup()
-    const expenseInput = screen.getByPlaceholderText('支出金額を入力')
-    expect(expenseInput).toBeInTheDocument()
-  })
+  // 支出入力表示テスト（表示確認系、冗長）
 
-  test('支出を登録ボタンが表示される', () => {
-    setup()
-    const submitButton = screen.getByRole('button', { name: '支出を登録' })
-    expect(submitButton).toBeInTheDocument()
-  })
+  // 支出登録ボタン表示テスト（表示確認系、冗長）
 
-  test('日付指定トグルスイッチが表示される', () => {
-    setup()
-    const dateToggle = screen.getByRole('switch', { name: '日付を指定する' })
-    expect(dateToggle).toBeInTheDocument()
-  })
+  // 日付トグル表示テスト（表示確認系、冗長）
 
   test('トグルスイッチを有効にすると日付ピッカーが表示される', () => {
     setup()
