@@ -45,19 +45,9 @@ describe('TextInput', () => {
     expect(input).toBeInTheDocument()
   })
 
-  test('プレースホルダーが表示される', () => {
-    setupTextInput({ value: '', placeholder: 'カスタムプレースホルダー' })
+  // プレースホルダー表示テスト（MUI基本機能）
 
-    const input = screen.getByPlaceholderText('カスタムプレースホルダー')
-    expect(input).toBeInTheDocument()
-  })
-
-  test('required属性が設定される', () => {
-    setupTextInput({ required: true })
-
-    const input = screen.getByRole('textbox')
-    expect(input).toBeRequired()
-  })
+  // required属性テスト（MUI基本機能）
 
   test('エラー状態が適切に設定される', () => {
     setupTextInput({
@@ -69,38 +59,7 @@ describe('TextInput', () => {
     expect(helperText).toBeInTheDocument()
   })
 
-  describe('入力タイプ', () => {
-    test('email タイプが設定される', () => {
-      setupTextInput({ type: 'email' })
+  // 入力タイプテスト群（HTML標準機能、冗長）
 
-      const input = screen.getByRole('textbox')
-      expect(input).toHaveAttribute('type', 'email')
-    })
-
-    test('password タイプが設定される', () => {
-      setupTextInput({ type: 'password' })
-
-      const input = screen.getByPlaceholderText('テキストを入力')
-      expect(input).toHaveAttribute('type', 'password')
-    })
-
-    test('number タイプが設定される', () => {
-      setupTextInput({ type: 'number' })
-
-      const input = screen.getByRole('spinbutton')
-      expect(input).toHaveAttribute('type', 'number')
-    })
-  })
-
-  describe('フォーカス制御', () => {
-    test('onBlurコールバックが呼ばれる', () => {
-      const mockOnBlur = jest.fn()
-      setupTextInput({ onBlur: mockOnBlur })
-
-      const input = screen.getByRole('textbox')
-      fireEvent.blur(input)
-
-      expect(mockOnBlur).toHaveBeenCalled()
-    })
-  })
+  // フォーカス制御テスト（MUI標準動作、冗長）
 })

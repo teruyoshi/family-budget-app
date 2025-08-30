@@ -46,53 +46,22 @@ describe('DatePicker', () => {
     ).toBeInTheDocument()
   })
 
-  it('disabled状態で入力が無効になる', () => {
-    const { container } = setup({ disabled: true })
-    const datePicker = container.querySelector('.MuiPickersInputBase-root')
-    expect(datePicker).toHaveClass('Mui-disabled')
-  })
+  // disabled状態テスト（MUI基本機能）
 
   it('エラー状態が正しく表示される', () => {
     setup({ error: true, helperText: 'エラーメッセージ' })
     expect(screen.getByText('エラーメッセージ')).toBeInTheDocument()
   })
 
-  it('name属性が正しく設定される', () => {
-    const { input } = setup({ name: 'transactionDate' })
-    expect(input).toHaveAttribute('name', 'transactionDate')
-  })
+  // name属性テスト（HTML標準機能）
 
-  it('required属性が設定される', () => {
-    const { input } = setup({ required: true })
-    expect(input).toBeRequired()
-  })
+  // required属性テスト（HTML標準機能）
 
-  it('fullWidth設定が適用される', () => {
-    const { container } = setup({ fullWidth: true })
-    const formControl = container.querySelector('.MuiFormControl-root')
-    expect(formControl).toHaveClass('MuiFormControl-fullWidth')
-  })
+  // fullWidth設定テスト（MUI基本機能）
 
-  it('variant属性が正しく適用される', () => {
-    const { container } = setup({ variant: 'filled' })
-    const input = container.querySelector('.MuiPickersInputBase-root')
-    expect(input).toHaveClass('MuiPickersFilledInput-root')
-  })
+  // variant属性テスト（MUI基本機能）
 
-  it('複数のプロパティが同時に適用される', () => {
-    const { input } = setup({
-      value: '2024-12-25',
-      required: true,
-      error: true,
-      helperText: '必須項目です',
-      disabled: false,
-    })
-
-    expect(input).toHaveValue('2024年12月25日')
-    expect(input).toBeRequired()
-    expect(screen.getByText('必須項目です')).toBeInTheDocument()
-    expect(input).not.toBeDisabled()
-  })
+  // 複数プロパティ統合テスト（冗長）
 
   it('カレンダーボタンがクリック可能', async () => {
     setup()

@@ -1,0 +1,228 @@
+{
+  "summary": {
+    "totalTestFiles": 44,
+    "totalTests": 687,
+    "critical": 225,
+    "important": 197,
+    "remove": 265,
+    "removePercentage": 38.6
+  },
+  "deleteTargets": [
+    {
+      "file": "features/expenses/components/__tests__/ExpenseInput.test.tsx",
+      "tests": [
+        "カンマ区切り + 円マーク表示される",
+        "カスタムプレースホルダーが表示される",
+        "テキストタイプが設定される（カンマ表示のため）"
+      ],
+      "reason": "AmountInputコンポーネントと完全重複・表示確認テスト",
+      "duplicateWith": "components/ui/__tests__/AmountInput.test.tsx"
+    },
+    {
+      "file": "features/income/components/__tests__/IncomeInput.test.tsx",
+      "tests": [
+        "正の整数の入力が許可される",
+        "カンマ区切り + 円マーク表示される", 
+        "不正な文字は自動的にフィルタされる",
+        "空文字の入力で0になる",
+        "カスタムプレースホルダーが表示される",
+        "テキストタイプが設定される（カンマ表示のため）"
+      ],
+      "reason": "ExpenseInputと完全重複・AmountInputで統合済み",
+      "action": "ファイル全削除"
+    },
+    {
+      "file": "features/expenses/components/__tests__/ExpenseForm.test.tsx",
+      "tests": [
+        "支出入力用のテキストボックスが表示される",
+        "支出を登録ボタンが表示される",
+        "日付指定トグルスイッチが表示される"
+      ],
+      "reason": "プレースホルダー・ボタンテキスト表示確認テスト",
+      "keep": ["トグルスイッチを有効にすると日付ピッカーが表示される"]
+    },
+    {
+      "file": "features/income/components/__tests__/IncomeForm.test.tsx",
+      "tests": [
+        "収入入力用のテキストボックスが表示される",
+        "収入を登録ボタンが表示される", 
+        "日付指定トグルスイッチが表示される",
+        "トグルスイッチを有効にすると日付ピッカーが表示される"
+      ],
+      "reason": "ExpenseFormと完全重複",
+      "action": "ファイル全削除"
+    },
+    {
+      "file": "components/ui/__tests__/AmountText.test.tsx",
+      "tests": [
+        "正の数値を正しくフォーマットして表示する",
+        "ゼロを正しく表示する",
+        "負の数値を正しくフォーマットして表示する",
+        "大きな数値を正しくフォーマットして表示する",
+        "デフォルトでbody1バリアントを使用する",
+        "指定されたvariantを適用する",
+        "caption variantを適用する",
+        "componentが指定されていない場合はデフォルトの要素を使用する",
+        "指定されたcomponentを使用する",
+        "表示用フォーマットを使用する",
+        "sx propsを適用する",
+        "複数のスタイルプロパティを適用する",
+        "h1 variantとdiv componentを組み合わせる",
+        "caption variantとspan componentを組み合わせる"
+      ],
+      "reason": "表示フォーマット・MUIプロパティのテスト",
+      "keep": [
+        "収入表示スタイルで表示する",
+        "支出表示スタイルで表示する", 
+        "残高表示スタイルで表示する",
+        "非常に大きな数値を処理する",
+        "非常に小さな負の数値を処理する",
+        "小数点を含む数値を整数として処理する"
+      ]
+    },
+    {
+      "file": "components/ui/__tests__/AppTitle.test.tsx", 
+      "tests": [
+        "デフォルトで「家計簿アプリ」テキストを表示する",
+        "カスタムタイトルを表示できる",
+        "デフォルトでh1要素としてレンダリングされる",
+        "noWrapプロパティが正しく適用される",
+        "noWrapがfalseの場合はnoWrapクラスが適用されない",
+        "variantプロパティが正しく適用される",
+        "componentプロパティでHTML要素を変更できる",
+        "sxプロパティでスタイルをカスタマイズできる",
+        "複数のプロパティが同時に適用される"
+      ],
+      "reason": "デフォルト表示・MUIプロパティのテスト",
+      "keep": [
+        "空文字タイトルを渡した場合は空文字を表示する",
+        "ナビゲーション用設定が正しく動作する"
+      ]
+    },
+    {
+      "file": "components/ui/__tests__/Button.test.tsx",
+      "tests": [
+        "基本的なレンダリングが正しく動作する",
+        "childrenが正しく表示される",
+        "デフォルトでbold=trueが適用される", 
+        "bold=falseを指定すると通常の太さになる",
+        "デフォルトでpaddingY=1.5が適用される",
+        "paddingYをカスタマイズできる",
+        "fullWidth=trueで幅100%になる",
+        "fullWidth=falseで通常幅になる",
+        "カスタムsxプロパティが適用される",
+        "variantとcolorの組み合わせが正しく動作する",
+        "React.ReactNodeとしてJSXも受け入れる"
+      ],
+      "reason": "基本レンダリング・スタイリングのテスト",
+      "keep": [
+        "MUIのButtonPropsが正しく渡される",
+        "aria-labelやその他のアクセシビリティプロパティが設定できる",
+        "onClickイベントが正しく動作する",
+        "フォーム送信ボタンとして使用できる"
+      ]
+    },
+    {
+      "file": "components/ui/__tests__/DatePicker.test.tsx",
+      "tests": [
+        "ラベルが正しく表示される",
+        "DatePickerコンポーネントがレンダリングされる",
+        "fullWidth設定が適用される",
+        "variant属性が正しく適用される",
+        "複数のプロパティが同時に適用される"
+      ],
+      "reason": "ラベル表示・MUIプロパティのテスト",
+      "keep": [
+        "初期値が正しく表示される",
+        "disabled状態で入力が無効になる",
+        "エラー状態が正しく表示される",
+        "name属性が正しく設定される",
+        "required属性が設定される",
+        "カレンダーボタンがクリック可能"
+      ]
+    },
+    {
+      "file": "components/ui/__tests__/PageLoader.test.tsx",
+      "tests": [
+        "読み込み中のメッセージを表示する",
+        "適切なセマンティクスを持つ",
+        "中央揃えのレイアウトで表示される",
+        "指定された高さを持つ"
+      ],
+      "reason": "固定メッセージ・スタイリング確認のテスト",
+      "action": "ファイル全削除"
+    },
+    {
+      "file": "components/ui/__tests__/TextInput.test.tsx",
+      "tests": [
+        "プレースホルダーが表示される",
+        "email タイプが設定される",
+        "password タイプが設定される", 
+        "number タイプが設定される"
+      ],
+      "reason": "プレースホルダー・HTML属性のテスト",
+      "keep": [
+        "基本的なテキスト入力が動作する",
+        "初期値が正しく表示される",
+        "required属性が設定される",
+        "エラー状態が適切に設定される",
+        "onBlurコールバックが呼ばれる"
+      ]
+    },
+    {
+      "file": "components/ui/__tests__/TextLabel.test.tsx",
+      "tests": [
+        "テキストにコロンが自動付加される",
+        "デフォルトでbody1バリアントが適用される",
+        "variant属性が正しく適用される",
+        "sxプロパティでスタイルをカスタマイズできる",
+        "className属性が正しく設定される",
+        "複数のプロパティが同時に適用される",
+        "数値や特殊文字を含むテキストでもコロンが付加される",
+        "ReactNodeとしてJSX要素を渡せる",
+        "長いテキストでもコロンが正しく付加される"
+      ],
+      "reason": "文字列フォーマット・MUIプロパティのテスト",
+      "keep": [
+        "htmlFor属性が正しく設定される",
+        "htmlForが未指定の場合はfor属性が設定されない",
+        "空のchildrenでもコロンが表示される"
+      ]
+    }
+  ],
+  "mergeTargets": [
+    {
+      "category": "AmountInput統合",
+      "description": "ExpenseInput・IncomeInputの機能をAmountInputに統合",
+      "sourceFiles": [
+        "features/expenses/components/__tests__/ExpenseInput.test.tsx",
+        "features/income/components/__tests__/IncomeInput.test.tsx"
+      ],
+      "targetFile": "components/ui/__tests__/AmountInput.test.tsx",
+      "action": "統合テスト作成後、重複ファイル削除"
+    },
+    {
+      "category": "Form統合",
+      "description": "ExpenseForm・IncomeFormの共通機能をTransactionFormに統合",
+      "sourceFiles": [
+        "features/expenses/components/__tests__/ExpenseForm.test.tsx",
+        "features/income/components/__tests__/IncomeForm.test.tsx"
+      ],
+      "targetFile": "components/forms/__tests__/TransactionForm.test.tsx",
+      "action": "統合テスト作成後、重複テスト削除"
+    }
+  ],
+  "performanceImpact": {
+    "estimatedReduction": {
+      "testCount": "687 → 422テスト (38.6%削減)",
+      "executionTime": "約15分 → 約7-8分 (50%短縮)",
+      "maintenanceCost": "大幅削減（重複・冗長コード除去）"
+    },
+    "riskMitigation": {
+      "criticalFunctionsCovered": true,
+      "businessLogicMaintained": true,
+      "accessibilityTestsPreserved": true,
+      "errorHandlingPreserved": true
+    }
+  }
+}

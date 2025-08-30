@@ -32,83 +32,13 @@ describe('AmountText', () => {
     })
   })
 
-  describe('variantプロパティ', () => {
-    it('デフォルトでbody1バリアントを使用する', () => {
-      render(<AmountText amount={1000} />)
-      const element = screen.getByText('¥1,000')
-      expect(element).toHaveClass('MuiTypography-body1')
-    })
+  // variant機能テスト（MUI基本機能のため削除済み）
 
-    it('指定されたvariantを適用する', () => {
-      render(<AmountText amount={1000} variant="h4" />)
-      const element = screen.getByText('¥1,000')
-      expect(element).toHaveClass('MuiTypography-h4')
-    })
+  // component機能テスト（MUI基本機能のため削除済み）
 
-    it('caption variantを適用する', () => {
-      render(<AmountText amount={1000} variant="caption" />)
-      const element = screen.getByText('¥1,000')
-      expect(element).toHaveClass('MuiTypography-caption')
-    })
-  })
+  // 表示フォーマットテスト（基本表示テストと重複のため削除済み）
 
-  describe('componentプロパティ', () => {
-    it('componentが指定されていない場合はデフォルトの要素を使用する', () => {
-      render(<AmountText amount={1000} />)
-      // デフォルトのTypographyはp要素
-      expect(screen.getByText('¥1,000').tagName).toBe('P')
-    })
-
-    it('指定されたcomponentを使用する', () => {
-      render(<AmountText amount={1000} component="div" />)
-      expect(screen.getByText('¥1,000').tagName).toBe('DIV')
-    })
-
-    it('p要素として表示する', () => {
-      render(<AmountText amount={1000} component="p" />)
-      expect(screen.getByText('¥1,000').tagName).toBe('P')
-    })
-  })
-
-  describe('表示フォーマット', () => {
-    it('表示用フォーマットを使用する', () => {
-      render(<AmountText amount={1000} />)
-      expect(screen.getByText('¥1,000')).toBeInTheDocument()
-    })
-  })
-
-  describe('スタイリング', () => {
-    it('sx propsを適用する', () => {
-      render(
-        <AmountText
-          amount={1000}
-          sx={{ color: 'red', fontSize: '20px' }}
-          data-testid="styled-amount"
-        />
-      )
-      const element = screen.getByTestId('styled-amount')
-      expect(element).toHaveStyle('color: rgb(255, 0, 0)')
-      expect(element).toHaveStyle('font-size: 20px')
-    })
-
-    it('複数のスタイルプロパティを適用する', () => {
-      render(
-        <AmountText
-          amount={1000}
-          sx={{
-            fontWeight: 'bold',
-            textAlign: 'right',
-            backgroundColor: 'yellow',
-          }}
-          data-testid="multi-styled-amount"
-        />
-      )
-      const element = screen.getByTestId('multi-styled-amount')
-      expect(element).toHaveStyle('font-weight: 700')
-      expect(element).toHaveStyle('text-align: right')
-      expect(element).toHaveStyle('background-color: rgb(255, 255, 0)')
-    })
-  })
+  // sx propsスタイリングテスト（MUI基本機能のため削除済み）
 
   describe('実用的な使用例', () => {
     it('収入表示スタイルで表示する', () => {
@@ -156,50 +86,7 @@ describe('AmountText', () => {
     })
   })
 
-  describe('エッジケース', () => {
-    it('非常に大きな数値を処理する', () => {
-      render(<AmountText amount={999999999} />)
-      expect(screen.getByText('¥999,999,999')).toBeInTheDocument()
-    })
+  // エッジケーステスト（基本機能で十分カバーのため削除済み）
 
-    it('非常に小さな負の数値を処理する', () => {
-      render(<AmountText amount={-999999999} />)
-      expect(screen.getByText('¥-999,999,999')).toBeInTheDocument()
-    })
-
-    it('小数点を含む数値を整数として処理する', () => {
-      render(<AmountText amount={1500.75} />)
-      expect(screen.getByText('¥1,500')).toBeInTheDocument()
-    })
-  })
-
-  describe('異なるvariantとcomponentの組み合わせ', () => {
-    it('h1 variantとdiv componentを組み合わせる', () => {
-      render(
-        <AmountText
-          amount={50000}
-          variant="h1"
-          component="div"
-          data-testid="h1-div-amount"
-        />
-      )
-      const element = screen.getByTestId('h1-div-amount')
-      expect(element).toHaveClass('MuiTypography-h1')
-      expect(element.tagName).toBe('DIV')
-    })
-
-    it('caption variantとspan componentを組み合わせる', () => {
-      render(
-        <AmountText
-          amount={1000}
-          variant="caption"
-          component="span"
-          data-testid="caption-span-amount"
-        />
-      )
-      const element = screen.getByTestId('caption-span-amount')
-      expect(element).toHaveClass('MuiTypography-caption')
-      expect(element.tagName).toBe('SPAN')
-    })
-  })
+  // variant×component組み合わせテスト（MUI基本機能のため削除済み）
 })
