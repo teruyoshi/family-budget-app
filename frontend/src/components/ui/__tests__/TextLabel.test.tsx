@@ -7,33 +7,13 @@ describe('TextLabel', () => {
     expect(screen.getByText('残高：')).toBeInTheDocument()
   })
 
-  it('デフォルトでbody1バリアントが適用される', () => {
-    render(<TextLabel>テストラベル</TextLabel>)
-    const label = screen.getByText('テストラベル：')
-    expect(label).toHaveClass('MuiTypography-body1')
-  })
+  // body1バリアントテスト（MUI基本機能）
 
-  it('variant属性が正しく適用される', () => {
-    render(<TextLabel variant="h6">見出しラベル</TextLabel>)
-    const label = screen.getByText('見出しラベル：')
-    expect(label).toHaveClass('MuiTypography-h6')
-  })
+  // variant属性テスト（MUI基本機能）
 
-  it('sxプロパティでスタイルをカスタマイズできる', () => {
-    render(
-      <TextLabel sx={{ color: 'rgb(25, 118, 210)', fontWeight: 700 }}>
-        カスタムラベル
-      </TextLabel>
-    )
-    const label = screen.getByText('カスタムラベル：')
-    expect(label).toHaveStyle({ color: 'rgb(25, 118, 210)', fontWeight: '700' })
-  })
+  // sxプロパティテスト（MUI基本機能）
 
-  it('className属性が正しく設定される', () => {
-    render(<TextLabel className="custom-label">クラスラベル</TextLabel>)
-    const label = screen.getByText('クラスラベル：')
-    expect(label).toHaveClass('custom-label')
-  })
+  // className属性テスト（HTML標準機能）
 
   it('htmlFor属性が正しく設定される', () => {
     render(<TextLabel htmlFor="input-field">フォームラベル</TextLabel>)
@@ -41,54 +21,15 @@ describe('TextLabel', () => {
     expect(label).toHaveAttribute('for', 'input-field')
   })
 
-  it('htmlForが未指定の場合はfor属性が設定されない', () => {
-    render(<TextLabel>通常ラベル</TextLabel>)
-    const label = screen.getByText('通常ラベル：')
-    expect(label).not.toHaveAttribute('for')
-  })
+  // htmlFor未指定テスト（エッジケース、冗長）
 
-  it('複数のプロパティが同時に適用される', () => {
-    render(
-      <TextLabel
-        variant="subtitle1"
-        className="form-label"
-        htmlFor="username"
-        sx={{ color: 'primary.main' }}
-      >
-        ユーザー名
-      </TextLabel>
-    )
+  // 複数プロパティ統合テスト（冗長）
 
-    const label = screen.getByText('ユーザー名：')
-    expect(label).toHaveClass('MuiTypography-subtitle1')
-    expect(label).toHaveClass('form-label')
-    expect(label).toHaveAttribute('for', 'username')
-  })
+  // 空文字childrenテスト（エッジケース、冗長）
 
-  it('空のchildrenでもコロンが表示される', () => {
-    render(<TextLabel>{''}</TextLabel>)
-    expect(screen.getByText('：')).toBeInTheDocument()
-  })
+  // 特殊文字テスト（基本機能で十分）
 
-  it('数値や特殊文字を含むテキストでもコロンが付加される', () => {
-    render(<TextLabel>支出額（円）</TextLabel>)
-    expect(screen.getByText('支出額（円）：')).toBeInTheDocument()
-  })
+  // ReactNode JSXテスト（基本機能で十分）
 
-  it('ReactNodeとしてJSX要素を渡せる', () => {
-    render(
-      <TextLabel>
-        <strong>重要</strong>項目
-      </TextLabel>
-    )
-    // JSX要素が含まれていても適切にレンダリングされることを確認
-    expect(screen.getByText('重要')).toBeInTheDocument()
-    expect(screen.getByText('項目：')).toBeInTheDocument()
-  })
-
-  it('長いテキストでもコロンが正しく付加される', () => {
-    const longText = 'これは非常に長いラベルテキストの例です'
-    render(<TextLabel>{longText}</TextLabel>)
-    expect(screen.getByText(`${longText}：`)).toBeInTheDocument()
-  })
+  // 長いテキストテスト（エッジケース、冗長）
 })

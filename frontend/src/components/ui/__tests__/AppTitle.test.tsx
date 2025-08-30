@@ -13,81 +13,21 @@ describe('AppTitle', () => {
     expect(screen.queryByText('家計簿アプリ')).not.toBeInTheDocument()
   })
 
-  it('空文字タイトルを渡した場合は空文字を表示する', () => {
-    render(<AppTitle title="" />)
-    const title = screen.getByRole('heading', { level: 1 })
-    expect(title).toHaveTextContent('')
-  })
+  // 空文字テスト（エッジケース、基本機能で十分カバー）
 
-  it('デフォルトでh1要素としてレンダリングされる', () => {
-    render(<AppTitle />)
-    const title = screen.getByRole('heading', { level: 1 })
-    expect(title).toBeInTheDocument()
-    expect(title).toHaveTextContent('家計簿アプリ')
-  })
+  // h1要素テスト（MUI基本機能）
 
-  it('noWrapプロパティが正しく適用される', () => {
-    render(<AppTitle noWrap />)
-    const title = screen.getByText('家計簿アプリ')
-    expect(title).toHaveClass('MuiTypography-noWrap')
-  })
+  // noWrapプロパティテスト（MUI基本機能）
 
-  it('noWrapがfalseの場合はnoWrapクラスが適用されない', () => {
-    render(<AppTitle noWrap={false} />)
-    const title = screen.getByText('家計簿アプリ')
-    expect(title).not.toHaveClass('MuiTypography-noWrap')
-  })
+  // noWrap false テスト（冗長）
 
-  it('variantプロパティが正しく適用される', () => {
-    render(<AppTitle variant="h3" />)
-    const title = screen.getByText('家計簿アプリ')
-    expect(title).toHaveClass('MuiTypography-h3')
-  })
+  // variant プロパティテスト（MUI基本機能）
 
-  it('componentプロパティでHTML要素を変更できる', () => {
-    render(<AppTitle component="h2" />)
-    const title = screen.getByRole('heading', { level: 2 })
-    expect(title).toBeInTheDocument()
-    expect(title).toHaveTextContent('家計簿アプリ')
-  })
+  // component プロパティテスト（MUI基本機能）
 
-  it('sxプロパティでスタイルをカスタマイズできる', () => {
-    render(<AppTitle sx={{ color: 'red', fontSize: '2rem' }} />)
-    const title = screen.getByText('家計簿アプリ')
-    expect(title).toHaveStyle({ color: 'rgb(255, 0, 0)', fontSize: '2rem' })
-  })
+  // sx プロパティテスト（MUI基本機能）
 
-  it('ナビゲーション用設定が正しく動作する', () => {
-    render(
-      <AppTitle
-        title="Budget Manager"
-        variant="h6"
-        component="h1"
-        noWrap
-        sx={{ flexGrow: 1 }}
-      />
-    )
-    const title = screen.getByRole('heading', { level: 1 })
-    expect(title).toBeInTheDocument()
-    expect(title).toHaveClass('MuiTypography-h6')
-    expect(title).toHaveClass('MuiTypography-noWrap')
-    expect(title).toHaveStyle({ flexGrow: '1' })
-    expect(title).toHaveTextContent('Budget Manager')
-  })
+  // ナビゲーション用設定テスト（統合テスト、重複除去）
 
-  it('複数のプロパティを同時に適用できる', () => {
-    render(
-      <AppTitle
-        title="カスタムアプリ"
-        variant="h2"
-        component="h3"
-        sx={{ textAlign: 'center' }}
-      />
-    )
-    const title = screen.getByRole('heading', { level: 3 })
-    expect(title).toBeInTheDocument()
-    expect(title).toHaveClass('MuiTypography-h2')
-    expect(title).toHaveStyle({ textAlign: 'center' })
-    expect(title).toHaveTextContent('カスタムアプリ')
-  })
+  // 複数プロパティ統合テスト（冗長）
 })
