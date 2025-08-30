@@ -17,6 +17,10 @@ jobs:
   frontend-tests:
     name: Frontend Tests & Quality Checks
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # 並列実行戦略（必要に応じてテスト分割）
+        test-type: [full] # 将来的な分割対応準備
     
     defaults:
       run:
@@ -52,9 +56,12 @@ jobs:
           echo "✅ 全品質チェック完了"
       
       - name: Run tests with coverage
-        run: npm run test:ci
+        run: |
+          # テスト削減後の最適設定（Phase 3: CI最適化）
+          npm run test:ci -- --maxWorkers=75%
         env:
           CI: true
+        timeout-minutes: 8  # 15分 → 8分に短縮（テスト削減効果を反映）
       
       - name: Build application
         run: npm run build
