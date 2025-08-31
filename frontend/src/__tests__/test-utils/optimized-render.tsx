@@ -4,8 +4,8 @@
  * MUIコンポーネントとReact 19の組み合わせでのテスト実行を
  * 大幅に高速化する最適化済みレンダリングヘルパー
  */
-import { ReactElement } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
+import type { ReactElement } from 'react'
+import { render, type RenderOptions } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import { DateLocalizationProvider } from '@/components/provider'

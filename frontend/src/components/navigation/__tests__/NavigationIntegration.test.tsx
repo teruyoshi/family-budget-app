@@ -34,7 +34,13 @@ describe('Navigation Integration Tests', () => {
 
     it('ドロワーコンポーネントが正常にレンダリングされる', () => {
       renderOptimized(
-        <AppDrawer isOpen={true} onDrawerClose={() => {}} drawerWidth={240} />
+        <AppDrawer
+          drawerWidth={240}
+          title="テストアプリ"
+          isMobile={true}
+          mobileOpen={true}
+          onDrawerClose={() => {}}
+        />
       )
 
       // 基本的な存在確認のみ
@@ -42,7 +48,9 @@ describe('Navigation Integration Tests', () => {
     })
 
     it('ナビゲーションメニューが正常にレンダリングされる', () => {
-      renderOptimized(<NavigationMenu />)
+      renderOptimized(
+        <NavigationMenu isMobile={false} onDrawerClose={() => {}} />
+      )
 
       // 基本的な機能確認のみ
       expect(screen.getByText('ダッシュボード')).toBeInTheDocument()
