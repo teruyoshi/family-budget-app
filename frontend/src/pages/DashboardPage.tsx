@@ -1,11 +1,19 @@
 import { Box, Grid, Paper } from '@mui/material'
-import { AppTitle } from '@/components/ui'
+import { Suspense, lazy, memo } from 'react'
+import { AppTitle, PageLoader } from '@/components/ui'
 import AppLayout from '@/components/layout/AppLayout'
 import { BalanceDisplay } from '@/features/balance'
 import { ExpenseForm, TotalExpenseDisplay } from '@/features/expenses'
 import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
-import { ExpenseHistory, IncomeHistory } from '@/features/history'
 import { useBudgetManager } from '@/hooks/useBudgetManager'
+
+// 履歴コンポーネントの動的インポート（重いコンポーネントを遅延ロード）
+const ExpenseHistory = lazy(() => 
+  import('@/features/history').then(module => ({ default: module.ExpenseHistory }))
+)
+const IncomeHistory = lazy(() => 
+  import('@/features/history').then(module => ({ default: module.IncomeHistory }))
+)
 
 /**
  * ダッシュボードページコンポーネントのProps型定義
@@ -56,7 +64,7 @@ export interface DashboardPageProps {
  * <DashboardPage initialView="expenses" showTutorial={false} />
  * ```
  */
-export default function DashboardPage() {
+const DashboardPage = memo(function DashboardPage() {
   const [
     { expenses, incomes, balance, totalExpenseAmount, totalIncomeAmount },
     { addExpense, addIncome },
@@ -96,15 +104,21 @@ export default function DashboardPage() {
         </Grid>
       </Paper>
 
-      {/* 履歴セクション: 支出履歴 + 収入履歴 */}
+      {/* 履歴セクション: 支出履歴 + 収入履歴（遅延ロード） */}
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <ExpenseHistory expenses={expenses} />
+          <Suspense fallback={<PageLoader />}>
+            <ExpenseHistory expenses={expenses} />
+          </Suspense>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <IncomeHistory incomes={incomes} />
+          <Suspense fallback={<PageLoader />}>
+            <IncomeHistory incomes={incomes} />
+          </Suspense>
         </Grid>
       </Grid>
     </AppLayout>
   )
-}
+})
+
+export default DashboardPage
