@@ -70,6 +70,7 @@ export default {
     '/node_modules/',
     '.*_old/.*',
     'src/__tests__/optimization.setup.ts',
+    'src/__tests__/test-utils/test-theme.config.ts',
     // Phase 2で削除されたテストファイルのパターン
     'src/components/common_old/',
     'src/components/layout_old/',

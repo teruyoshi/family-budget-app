@@ -9,74 +9,92 @@ import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
-export default tseslint.config(
-  [
-    globalIgnores(['dist', 'coverage', 'docs', 'storybook-static']),
-    {
-      files: ['**/*.{ts,tsx}'],
-      extends: [
-        js.configs.recommended,
-        tseslint.configs.recommended,
-        reactHooks.configs['recommended-latest'],
-        reactRefresh.configs.vite,
-        eslintConfigPrettier, // Prettier競合ルール無効化
-      ],
-      languageOptions: {
-        ecmaVersion: 2020,
-        globals: globals.browser,
-      },
-      rules: {
-        // 品質向上ルール
-        'no-console': ['warn', { allow: ['warn', 'error'] }], // console.log警告（warn・error許可）
-        'prefer-const': 'error', // const推奨
-        'no-unused-vars': 'off', // TypeScriptルールに委譲
-        '@typescript-eslint/no-unused-vars': 'error',
+export default tseslint.config([
+  globalIgnores(['dist', 'coverage', 'docs', 'storybook-static']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+      eslintConfigPrettier, // Prettier競合ルール無効化
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    rules: {
+      // 品質向上ルール
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // console.log警告（warn・error許可）
+      'prefer-const': 'error', // const推奨
+      'no-unused-vars': 'off', // TypeScriptルールに委譲
+      '@typescript-eslint/no-unused-vars': 'error',
 
-        // import順序整理
-        'sort-imports': [
-          'error',
-          {
-            ignoreCase: false,
-            ignoreDeclarationSort: true, // import-sortプラグインに委譲
-            ignoreMemberSort: false,
-            memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-          },
-        ],
-      },
-    },
-    // Test files configuration
-    {
-      files: [
-        '**/__tests__/**/*.{ts,tsx}',
-        '**/*.test.{ts,tsx}',
-        '**/*.spec.{ts,tsx}',
-      ],
-      languageOptions: {
-        ecmaVersion: 2020,
-        globals: {
-          ...globals.browser,
-          ...globals.jest,
+      // import順序整理
+      'sort-imports': [
+        'error',
+        {
+          ignoreCase: false,
+          ignoreDeclarationSort: true, // import-sortプラグインに委譲
+          ignoreMemberSort: false,
+          memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
         },
-      },
-      rules: {
-        // Allow describe, test, it, expect globals in test files
-        '@typescript-eslint/no-unused-expressions': 'off',
-        // テストファイルでのconsole.log許可
-        'no-console': 'off',
-        // テストファイルでのimport順序チェック緩和
-        'sort-imports': 'off',
+      ],
+    },
+  },
+  // Test files configuration
+  {
+    files: [
+      '**/__tests__/**/*.{ts,tsx}',
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
       },
     },
-    // Storybook files configuration
-    {
-      files: ['**/*.stories.{ts,tsx}'],
-      rules: {
-        // Storybookファイルでのconsole.log許可（action表示用）
-        'no-console': 'off',
-        // Storybookファイルでのimport順序チェック緩和
-        'sort-imports': 'off',
-      },
+    rules: {
+      // Allow describe, test, it, expect globals in test files
+      '@typescript-eslint/no-unused-expressions': 'off',
+      // テストファイルでのconsole.log許可
+      'no-console': 'off',
+      // テストファイルでのimport順序チェック緩和
+      'sort-imports': 'off',
     },
-  ],
-  storybook.configs['flat/recommended']
-)
+  },
+  // Storybook files configuration
+  {
+    files: [
+      '**/*.stories.{ts,tsx}',
+      '**/__stories__/**/*.{ts,tsx}',
+      '**/stories/**/*.{ts,tsx}',
+    ],
+    extends: [storybook.configs['flat/recommended']],
+    rules: {
+      // Storybookファイルでのconsole.log許可（action表示用）
+      'no-console': 'off',
+      // Storybookファイルでのimport順序チェック緩和
+      'sort-imports': 'off',
+      // 日本語ストーリー名を許可（プロジェクト日本語統一対応）
+      'storybook/prefer-pascal-case': 'off',
+      // テストファイル系のReact Refreshルールを無効化
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  // Test utility files configuration
+  {
+    files: ['**/__tests__/**/*.{ts,tsx}', '**/test-utils/**/*.{ts,tsx}'],
+    rules: {
+      // テストユーティリティファイルでのReact Refreshルールを無効化
+      'react-refresh/only-export-components': 'off',
+      // テストファイルでのconsole.log許可
+      'no-console': 'off',
+      // テストファイルでのimport順序チェック緩和
+      'sort-imports': 'off',
+    },
+  },
+])
