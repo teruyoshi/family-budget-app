@@ -244,9 +244,7 @@ describe('TransactionForm', () => {
   })
 
   it('buttonColorが正しくButtonコンポーネントに適用される', () => {
-    renderOptimized(
-      <TransactionForm {...defaultProps} buttonColor="success" />
-    )
+    renderOptimized(<TransactionForm {...defaultProps} buttonColor="success" />)
 
     const submitButton = screen.getByRole('button', { name: '登録する' })
     expect(submitButton).toBeInTheDocument()

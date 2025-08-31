@@ -1,6 +1,6 @@
 /**
  * 軽量テストユーティリティ（Phase 3: 環境固有最適化）
- * 
+ *
  * MUIコンポーネントとReact 19の組み合わせでのテスト実行を
  * 大幅に高速化する最適化済みレンダリングヘルパー
  */
@@ -25,7 +25,7 @@ const lightweightTestTheme = createTheme({
       leavingScreen: 0,
     },
   },
-  
+
   // 全コンポーネントでRipple・アニメーション無効化
   components: {
     MuiButtonBase: {
@@ -87,18 +87,14 @@ const lightweightTestTheme = createTheme({
 const MinimalTestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>
     <ThemeProvider theme={lightweightTestTheme}>
-      <DateLocalizationProvider>
-        {children}
-      </DateLocalizationProvider>
+      <DateLocalizationProvider>{children}</DateLocalizationProvider>
     </ThemeProvider>
   </BrowserRouter>
 )
 
 // 超軽量ラッパー（ルーターなし）
 const UltraLightWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightweightTestTheme}>
-    {children}
-  </ThemeProvider>
+  <ThemeProvider theme={lightweightTestTheme}>{children}</ThemeProvider>
 )
 
 // 最適化済みレンダリング関数

@@ -17,7 +17,7 @@ configure({
 
   // テスト環境での詳細なエラー情報を有効化
   testIdAttribute: 'data-testid',
-  
+
   // Phase 3: さらなる最適化設定
   defaultHidden: false, // hidden要素の処理高速化
   asyncWrapper: async (callback) => callback(), // 非同期ラッパー軽量化
@@ -38,7 +38,10 @@ console.error = (...args) => {
     return
   }
   // MUI prop警告の抑制（Phase 4: ボトルネック解決）
-  if (args[0]?.includes('disableUnderline') || args[0]?.includes('disableunderline')) {
+  if (
+    args[0]?.includes('disableUnderline') ||
+    args[0]?.includes('disableunderline')
+  ) {
     return
   }
   // React DOM prop warnings の抑制
