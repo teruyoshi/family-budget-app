@@ -43,8 +43,9 @@ describe('Navigation Integration Tests', () => {
         />
       )
 
-      // 基本的な存在確認のみ
-      expect(screen.getByRole('navigation')).toBeInTheDocument()
+      // 基本的な存在確認のみ（リストとメニューアイテムの存在を確認）
+      expect(screen.getByRole('list')).toBeInTheDocument()
+      expect(screen.getByRole('menuitem')).toBeInTheDocument()
     })
 
     it('ナビゲーションメニューが正常にレンダリングされる', () => {
