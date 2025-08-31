@@ -1,36 +1,8 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { screen, waitFor, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { DateLocalizationProvider } from '@/components/provider'
+import { renderOptimized } from '@/__tests__/test-utils/optimized-render'
 import TransactionForm from '../TransactionForm'
 import type { TransactionFormData } from '@/lib/validation/schemas'
-
-// テスト用の最適化テーマ（MUI警告対策）
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-
-const testTheme = createTheme({
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true, // Ripple エフェクト無効化
-        disableTouchRipple: true,
-      },
-    },
-    MuiButton: {
-      defaultProps: {
-        disableRipple: true,
-      },
-    },
-  },
-})
-
-// テストヘルパー関数
-function renderWithProvider(component: React.ReactElement) {
-  return render(
-    <ThemeProvider theme={testTheme}>
-      <DateLocalizationProvider>{component}</DateLocalizationProvider>
-    </ThemeProvider>
-  )
-}
 
 describe('TransactionForm', () => {
   const defaultProps = {
@@ -41,7 +13,7 @@ describe('TransactionForm', () => {
   }
 
   it('基本的なレンダリングが正しく動作する', async () => {
-    renderWithProvider(<TransactionForm {...defaultProps} />)
+    renderOptimized(<TransactionForm {...defaultProps} />)
 
     // MUIコンポーネントの初期化完了を待機
     await waitFor(() => {
@@ -54,7 +26,7 @@ describe('TransactionForm', () => {
   })
 
   it('propsが正しく各コンポーネントに渡される', async () => {
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm
         placeholder="支出金額を入力"
         buttonText="支出を登録"
@@ -76,7 +48,7 @@ describe('TransactionForm', () => {
 
   it('カスタム日付スイッチをオンにすると日付選択フィールドが表示される', async () => {
     const user = userEvent.setup()
-    renderWithProvider(<TransactionForm {...defaultProps} />)
+    renderOptimized(<TransactionForm {...defaultProps} />)
 
     // カスタム日付スイッチをオン
     const customDateSwitch = screen.getByRole('switch')
@@ -94,7 +66,7 @@ describe('TransactionForm', () => {
     const user = userEvent.setup()
     const mockOnSubmit = jest.fn()
 
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm {...defaultProps} onSubmit={mockOnSubmit} />
     )
 
@@ -129,7 +101,7 @@ describe('TransactionForm', () => {
     const user = userEvent.setup()
     const mockOnSubmit = jest.fn()
 
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm {...defaultProps} onSubmit={mockOnSubmit} />
     )
 
@@ -170,7 +142,7 @@ describe('TransactionForm', () => {
     const user = userEvent.setup()
     const mockOnSubmit = jest.fn()
 
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm {...defaultProps} onSubmit={mockOnSubmit} />
     )
 
@@ -217,7 +189,7 @@ describe('TransactionForm', () => {
   })
 
   it('バリデーションエラーがある場合は送信ボタンが無効になる', async () => {
-    renderWithProvider(<TransactionForm {...defaultProps} />)
+    renderOptimized(<TransactionForm {...defaultProps} />)
 
     const submitButton = screen.getByRole('button', { name: '登録する' })
 
@@ -236,7 +208,7 @@ describe('TransactionForm', () => {
 
   it('有効な入力があると送信ボタンが有効になる', async () => {
     const user = userEvent.setup()
-    renderWithProvider(<TransactionForm {...defaultProps} />)
+    renderOptimized(<TransactionForm {...defaultProps} />)
 
     const submitButton = screen.getByRole('button', { name: '登録する' })
     const amountInput = screen.getByRole('textbox')
@@ -258,7 +230,7 @@ describe('TransactionForm', () => {
       date: '2024-01-15',
     }
 
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm {...defaultProps} defaultValues={defaultValues} />
     )
 
@@ -272,9 +244,7 @@ describe('TransactionForm', () => {
   })
 
   it('buttonColorが正しくButtonコンポーネントに適用される', () => {
-    renderWithProvider(
-      <TransactionForm {...defaultProps} buttonColor="success" />
-    )
+    renderOptimized(<TransactionForm {...defaultProps} buttonColor="success" />)
 
     const submitButton = screen.getByRole('button', { name: '登録する' })
     expect(submitButton).toBeInTheDocument()
@@ -282,7 +252,7 @@ describe('TransactionForm', () => {
   })
 
   it('フォームのアクセシビリティが適切に設定されている', () => {
-    renderWithProvider(<TransactionForm {...defaultProps} />)
+    renderOptimized(<TransactionForm {...defaultProps} />)
 
     // 入力フィールドにプレースホルダーが設定されている
     expect(
@@ -298,7 +268,7 @@ describe('TransactionForm', () => {
     const user = userEvent.setup()
     const mockOnSubmit = jest.fn()
 
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm {...defaultProps} onSubmit={mockOnSubmit} />
     )
 
@@ -327,7 +297,7 @@ describe('TransactionForm', () => {
   })
 
   it('支出用の設定で正しく動作する', async () => {
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm
         placeholder="支出金額を入力"
         buttonText="支出を登録"
@@ -346,7 +316,7 @@ describe('TransactionForm', () => {
   })
 
   it('収入用の設定で正しく動作する', async () => {
-    renderWithProvider(
+    renderOptimized(
       <TransactionForm
         placeholder="収入金額を入力"
         buttonText="収入を登録"

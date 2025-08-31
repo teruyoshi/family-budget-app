@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "test": "jest",
     "test:ci": "jest --coverage --watchAll=false --passWithNoTests",
+    "test:essential": "jest --config essential-tests.config.cjs --watchAll=false --passWithNoTests --verbose",
     "typecheck": "tsc --noEmit",
     "docs": "typedoc",
     "docs:clean": "rm -rf docs",
