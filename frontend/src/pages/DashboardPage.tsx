@@ -8,11 +8,15 @@ import { IncomeForm, TotalIncomeDisplay } from '@/features/income'
 import { useBudgetManager } from '@/hooks/useBudgetManager'
 
 // 履歴コンポーネントの動的インポート（重いコンポーネントを遅延ロード）
-const ExpenseHistory = lazy(() => 
-  import('@/features/history').then(module => ({ default: module.ExpenseHistory }))
+const ExpenseHistory = lazy(() =>
+  import('@/features/history').then((module) => ({
+    default: module.ExpenseHistory,
+  }))
 )
-const IncomeHistory = lazy(() => 
-  import('@/features/history').then(module => ({ default: module.IncomeHistory }))
+const IncomeHistory = lazy(() =>
+  import('@/features/history').then((module) => ({
+    default: module.IncomeHistory,
+  }))
 )
 
 /**

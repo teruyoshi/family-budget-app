@@ -102,30 +102,36 @@ export function useBudgetManager() {
    * @param amount 支出金額
    * @param date 支出日付（YYYY-MM-DD形式）
    */
-  const addExpense = useCallback((amount: number, date: string) => {
-    const dateStr = formatDate(date)
-    const newExpense: Expense = {
-      id: Date.now().toString(),
-      amount,
-      timestamp: dateStr,
-    }
-    setExpenses((prev) => [newExpense, ...prev]) // 最新を先頭に表示
-  }, [formatDate])
+  const addExpense = useCallback(
+    (amount: number, date: string) => {
+      const dateStr = formatDate(date)
+      const newExpense: Expense = {
+        id: Date.now().toString(),
+        amount,
+        timestamp: dateStr,
+      }
+      setExpenses((prev) => [newExpense, ...prev]) // 最新を先頭に表示
+    },
+    [formatDate]
+  )
 
   /**
    * 新規収入登録ハンドラー（メモ化）
    * @param amount 収入金額
    * @param date 収入日付（YYYY-MM-DD形式）
    */
-  const addIncome = useCallback((amount: number, date: string) => {
-    const dateStr = formatDate(date)
-    const newIncome: Income = {
-      id: Date.now().toString(),
-      amount,
-      timestamp: dateStr,
-    }
-    setIncomes((prev) => [newIncome, ...prev]) // 最新を先頭に表示
-  }, [formatDate])
+  const addIncome = useCallback(
+    (amount: number, date: string) => {
+      const dateStr = formatDate(date)
+      const newIncome: Income = {
+        id: Date.now().toString(),
+        amount,
+        timestamp: dateStr,
+      }
+      setIncomes((prev) => [newIncome, ...prev]) // 最新を先頭に表示
+    },
+    [formatDate]
+  )
 
   // 合計支出額を計算（メモ化）
   const totalExpenseAmount = useMemo(

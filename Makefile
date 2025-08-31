@@ -94,14 +94,14 @@ clean:
 # テスト実行
 test:
 	@echo "フロントエンドテストを実行中..."
-	docker compose exec frontend npm test
+	docker compose exec frontend npm run test:ci
 	@echo "バックエンドテストを実行中..."
 	docker compose exec backend go test ./...
 
 # フロントエンドのみテスト実行
 test-frontend:
 	@echo "フロントエンドテストを実行中..."
-	docker compose exec frontend npm test
+	docker compose exec frontend npm run test:ci
 
 # 特定のテストファイルのみ実行
 test-file:
@@ -424,7 +424,7 @@ quality-check-frontend:
 	@echo ""
 	@echo "🧪 4. Jestテスト実行中..."
 	@echo "--------------------------------------------------------"
-	@if docker compose exec frontend npm test; then \
+	@if docker compose exec frontend npm run test:ci; then \
 		echo "✅ Jestテスト: 合格"; \
 	else \
 		echo "❌ Jestテスト: 不合格"; \

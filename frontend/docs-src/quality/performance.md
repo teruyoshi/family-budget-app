@@ -12,14 +12,15 @@
 
 ### Bundle Size 予算
 
-| カテゴリ      | 目標値            | 現在値 | 改善効果 | 監視方法     |
-| ------------- | ----------------- | ------ | -------- | ------------ |
+| カテゴリ      | 目標値            | 現在値 | 改善効果  | 監視方法                 |
+| ------------- | ----------------- | ------ | --------- | ------------------------ |
 | **Total JS**  | < 300KB (gzipped) | ~200KB | ✅43%削減 | rollup-plugin-visualizer |
-| **Total CSS** | < 50KB (gzipped)  | ~25KB  | 維持     | size-limit   |
-| **Images**    | < 200KB           | ~50KB  | 維持     | imagemin     |
-| **Fonts**     | < 100KB           | ~45KB  | 維持     | font-display |
+| **Total CSS** | < 50KB (gzipped)  | ~25KB  | 維持      | size-limit               |
+| **Images**    | < 200KB           | ~50KB  | 維持      | imagemin                 |
+| **Fonts**     | < 100KB           | ~45KB  | 維持      | font-display             |
 
 **🚀 Issue #73パフォーマンス改善成果**:
+
 - **メインバンドル**: 635kB → 363kB (**43%削減**)
 - **TransactionForm**: 369kB → 9kB (**97%削減**)
 - **戦略的チャンク分割**: ライブラリ種別8チャンク、長期キャッシュ対応
@@ -162,6 +163,7 @@ import _ from 'lodash' // 70KB+
 ```
 
 **🔍 バンドル分析レポート**: `dist/bundle-analysis.html`
+
 - ビルド後に自動生成される詳細な分析レポート
 - gzipサイズ・brotliサイズ表示対応
 - 依存関係の可視化とサイズ内訳表示
