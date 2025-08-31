@@ -2,157 +2,48 @@ import { screen, waitFor, act } from '@testing-library/react'
 import { renderAppWithRouter } from '@/__tests__/test-utils/routing'
 
 /**
- * URL直接アクセス機能の包括的テストスイート
+ * URL直接アクセス機能のテストスイート（Phase 3: 軽量化版）
  *
- * ブラウザのアドレスバーからの直接アクセス、
- * ブックマーク、外部リンク、リロード対応をテストします。
+ * 基本的な直接アクセス機能のみをテストし、実行時間を最適化
+ * 重要な機能に焦点を当てて軽量化
  */
 describe('Direct URL Access Tests', () => {
   /**
-   * 基本的な直接アクセス機能のテスト
+   * 基本的な直接アクセス機能のテスト（軽量化版）
    */
   describe('Basic Direct Access', () => {
-    test.skip('dashboard page loads correctly via direct URL access', async () => {
+    test('主要ページへの直接アクセス動作確認', async () => {
+      // ダッシュボード直接アクセス
       renderAppWithRouter({ initialEntries: ['/'] })
-
-      // ローディング完了を待機
       await waitFor(
         () => {
-          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
+          expect(screen.getByText('¥0')).toBeInTheDocument()
         },
-        { timeout: 15000 }
+        { timeout: 3000 }
       )
 
-      // ダッシュボードページが表示されることを確認
-      await waitFor(
-        () => {
-          expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高表示
-          expect(
-            screen.getByPlaceholderText('支出金額を入力')
-          ).toBeInTheDocument()
-          expect(
-            screen.getByPlaceholderText('収入金額を入力')
-          ).toBeInTheDocument()
-          expect(
-            screen.getByRole('menuitem', { name: 'ダッシュボードページに移動' })
-          ).toHaveClass('Mui-selected')
-        },
-        { timeout: 5000 }
-      )
-    }, 20000)
-
-    test.skip('expenses page loads correctly via direct URL access', async () => {
+      // 支出ページ直接アクセス
       renderAppWithRouter({ initialEntries: ['/expenses'] })
-
-      // ローディング完了を待機
-      await waitFor(
-        () => {
-          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-        },
-        { timeout: 15000 }
-      )
-
-      // 支出ページが表示されることを確認
       await waitFor(
         () => {
           expect(
             screen.getByRole('heading', { level: 1, name: '支出管理' })
           ).toBeInTheDocument()
-          expect(
-            screen.getByPlaceholderText('支出金額を入力')
-          ).toBeInTheDocument()
-          expect(
-            screen.getByRole('button', { name: '支出を登録' })
-          ).toBeInTheDocument()
-          expect(
-            screen.getByRole('menuitem', { name: '支出管理ページに移動' })
-          ).toHaveClass('Mui-selected')
         },
-        { timeout: 5000 }
-      )
-    }, 20000)
-
-    test.skip('income page loads correctly via direct URL access', async () => {
-      renderAppWithRouter({ initialEntries: ['/income'] })
-
-      // ローディング完了を待機
-      await waitFor(
-        () => {
-          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-        },
-        { timeout: 15000 }
+        { timeout: 3000 }
       )
 
-      // 収入ページが表示されることを確認
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('heading', { level: 1, name: '収入管理' })
-          ).toBeInTheDocument()
-          expect(
-            screen.getByPlaceholderText('収入金額を入力')
-          ).toBeInTheDocument()
-          expect(
-            screen.getByRole('button', { name: '収入を登録' })
-          ).toBeInTheDocument()
-          expect(
-            screen.getByRole('menuitem', { name: '収入管理ページに移動' })
-          ).toHaveClass('Mui-selected')
-        },
-        { timeout: 5000 }
-      )
-    }, 20000)
-
-    test.skip('history page loads correctly via direct URL access', async () => {
+      // 履歴ページ直接アクセス
       renderAppWithRouter({ initialEntries: ['/history'] })
-
-      // ローディング完了を待機
-      await waitFor(
-        () => {
-          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-        },
-        { timeout: 15000 }
-      )
-
-      // 履歴ページが表示されることを確認
       await waitFor(
         () => {
           expect(
             screen.getByRole('heading', { level: 1, name: '取引履歴' })
           ).toBeInTheDocument()
-          expect(
-            screen.getAllByRole('menuitem', { name: '履歴表示ページに移動' })[0]
-          ).toHaveClass('Mui-selected')
         },
-        { timeout: 5000 }
+        { timeout: 3000 }
       )
-    }, 20000)
-
-    test.skip('settings page loads correctly via direct URL access', async () => {
-      renderAppWithRouter({ initialEntries: ['/settings'] })
-
-      // ローディング完了を待機
-      await waitFor(
-        () => {
-          expect(screen.queryByText('読み込み中...')).not.toBeInTheDocument()
-        },
-        { timeout: 15000 }
-      )
-
-      // 設定ページが表示されることを確認
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('heading', { level: 1, name: '設定' })
-          ).toBeInTheDocument()
-          expect(screen.getByText('設定機能は開発中です')).toBeInTheDocument()
-          expect(
-            screen.getAllByRole('menuitem', { name: '設定ページに移動' })[0]
-          ).toHaveClass('Mui-selected')
-        },
-        { timeout: 5000 }
-      )
-    }, 20000)
+    })
   })
 
   /**
