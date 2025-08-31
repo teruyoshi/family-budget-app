@@ -36,9 +36,8 @@ export default {
 
   // テストファイル検出パターン（テストユーティリティを除外）
   testMatch: [
-    '**/__tests__/**/*.(test|spec).{js,jsx,ts,tsx}',
-    '!**/test-utils/**',
-    '!**/*.helper.{js,jsx,ts,tsx}',
+    '<rootDir>/src/**/__tests__/**/*.(test|spec).(ts|tsx)',
+    '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
   ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
@@ -60,10 +59,6 @@ export default {
       },
     ],
   },
-  testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.(ts|tsx)',
-    '<rootDir>/src/**/*.(test|spec).(ts|tsx)',
-  ],
 
   // Phase 4: 2分以内実行のための高速モード設定
   testPathIgnorePatterns: [
@@ -71,6 +66,7 @@ export default {
     '.*_old/.*',
     'src/__tests__/optimization.setup.ts',
     'src/__tests__/test-utils/test-theme.config.ts',
+    'src/__tests__/test-utils/optimized-render.tsx',
     // Phase 2で削除されたテストファイルのパターン
     'src/components/common_old/',
     'src/components/layout_old/',
