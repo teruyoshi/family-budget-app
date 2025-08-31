@@ -28,7 +28,9 @@ describe('SettingsPage', () => {
     renderSettingsPage()
 
     // 重要な要素の存在確認（軽量化）
-    expect(screen.getByRole('heading', { level: 1, name: '設定' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: '設定' })
+    ).toBeInTheDocument()
     expect(screen.getByText('アプリケーションの設定管理')).toBeInTheDocument()
   })
 
@@ -41,5 +43,4 @@ describe('SettingsPage', () => {
     // 工事中状態の基本確認
     expect(screen.getByText('設定機能は開発中です')).toBeInTheDocument()
   })
-
 })

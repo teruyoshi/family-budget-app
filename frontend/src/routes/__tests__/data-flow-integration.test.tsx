@@ -15,18 +15,32 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
     test('ページ間でのデータ状態基本確認', async () => {
       // 支出ページでの基本表示確認
       renderAppWithRouter({ initialEntries: ['/expenses'] })
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
-        expect(screen.getAllByPlaceholderText('支出金額を入力')[0]).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
+          expect(
+            screen.getAllByPlaceholderText('支出金額を入力')[0]
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
       // ダッシュボードでの基本状態確認
       renderAppWithRouter({ initialEntries: ['/'] })
-      await waitFor(() => {
-        expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高
-        expect(screen.getAllByPlaceholderText('支出金額を入力')[0]).toBeInTheDocument()
-        expect(screen.getAllByPlaceholderText('収入金額を入力')[0]).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('¥0')).toBeInTheDocument() // 初期残高
+          expect(
+            screen.getAllByPlaceholderText('支出金額を入力')[0]
+          ).toBeInTheDocument()
+          expect(
+            screen.getAllByPlaceholderText('収入金額を入力')[0]
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
     })
   })
 
@@ -37,16 +51,28 @@ describe('Page-to-Page Data Flow Integration Tests', () => {
     test('ナビゲーション要素の基本存在確認', async () => {
       // ナビゲーション要素の基本存在確認（重複要素対応）
       renderAppWithRouter({ initialEntries: ['/expenses'] })
-      await waitFor(() => {
-        expect(screen.getAllByRole('menuitem', { name: '支出管理ページに移動' }).length).toBeGreaterThan(0)
-        expect(screen.getAllByRole('navigation').length).toBeGreaterThan(0)
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getAllByRole('menuitem', { name: '支出管理ページに移動' })
+              .length
+          ).toBeGreaterThan(0)
+          expect(screen.getAllByRole('navigation').length).toBeGreaterThan(0)
+        },
+        { timeout: 3000 }
+      )
 
       renderAppWithRouter({ initialEntries: ['/income'] })
-      await waitFor(() => {
-        expect(screen.getAllByRole('menuitem', { name: '収入管理ページに移動' }).length).toBeGreaterThan(0)
-        expect(screen.getAllByRole('navigation').length).toBeGreaterThan(0)
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getAllByRole('menuitem', { name: '収入管理ページに移動' })
+              .length
+          ).toBeGreaterThan(0)
+          expect(screen.getAllByRole('navigation').length).toBeGreaterThan(0)
+        },
+        { timeout: 3000 }
+      )
     })
   })
 })

@@ -35,8 +35,12 @@ describe('App', () => {
     // 重要なフォーム要素の存在確認（軽量化）
     await waitFor(
       () => {
-        expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
-        expect(screen.getByPlaceholderText('収入金額を入力')).toBeInTheDocument()
+        expect(
+          screen.getByPlaceholderText('支出金額を入力')
+        ).toBeInTheDocument()
+        expect(
+          screen.getByPlaceholderText('収入金額を入力')
+        ).toBeInTheDocument()
       },
       { timeout: 3000 }
     )
@@ -48,7 +52,9 @@ describe('App', () => {
     // 404ページの基本確認（軽量化）
     await waitFor(
       () => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
+        expect(
+          screen.getByText('404 - ページが見つかりません')
+        ).toBeInTheDocument()
       },
       { timeout: 3000 }
     )

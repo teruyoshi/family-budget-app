@@ -28,7 +28,9 @@ describe('ExpensePage', () => {
     renderExpensePage()
 
     // 重要な要素の存在確認（軽量化）
-    expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: '支出管理' })
+    ).toBeInTheDocument()
     expect(screen.getByText('新規支出登録')).toBeInTheDocument()
     expect(screen.getByText('支出履歴')).toBeInTheDocument()
   })
@@ -43,5 +45,4 @@ describe('ExpensePage', () => {
     expect(screen.getByText('支出を登録')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('支出金額を入力')).toBeInTheDocument()
   })
-
 })

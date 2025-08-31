@@ -16,22 +16,32 @@ describe('Browser History Integration Tests', () => {
       // 複数エントリでの履歴管理をテスト
       renderAppWithRouter({
         initialEntries: ['/', '/expenses', '/settings'],
-        initialIndex: 2 // 設定ページから開始
+        initialIndex: 2, // 設定ページから開始
       })
-      
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '設定' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '設定' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
       // 別の履歴位置でのテスト
       renderAppWithRouter({
         initialEntries: ['/', '/expenses', '/income'],
-        initialIndex: 1 // 支出ページから開始
+        initialIndex: 1, // 支出ページから開始
       })
-      
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
     })
   })
 

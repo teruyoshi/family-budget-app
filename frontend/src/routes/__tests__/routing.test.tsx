@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, act } from '@testing-library/react'
 import {
   renderAppWithRouter,
   routeTestHelpers,
@@ -19,21 +19,34 @@ describe('Application Routing', () => {
     test('主要ページの基本ルーティング動作確認', async () => {
       // ダッシュボードページ
       renderAppWithRouter({ initialEntries: ['/'] })
-      await waitFor(() => {
-        expect(screen.getByText('¥0')).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('¥0')).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
-      // 支出ページ  
+      // 支出ページ
       renderAppWithRouter({ initialEntries: ['/expenses'] })
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
       // 設定ページ
       renderAppWithRouter({ initialEntries: ['/settings'] })
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '設定' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '設定' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
     })
   })
 
@@ -95,10 +108,15 @@ describe('Application Routing', () => {
   describe('404 Error Handling', () => {
     test('不正なルートで404ページが表示される', async () => {
       renderAppWithRouter({ initialEntries: ['/nonexistent-page'] })
-      
-      await waitFor(() => {
-        expect(screen.getByText('404 - ページが見つかりません')).toBeInTheDocument()
-      }, { timeout: 3000 })
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByText('404 - ページが見つかりません')
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
     })
   })
 

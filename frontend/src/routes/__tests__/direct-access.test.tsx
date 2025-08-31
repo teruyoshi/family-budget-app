@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, act } from '@testing-library/react'
 import { renderAppWithRouter } from '@/__tests__/test-utils/routing'
 
 /**
@@ -15,21 +15,34 @@ describe('Direct URL Access Tests', () => {
     test('主要ページへの直接アクセス動作確認', async () => {
       // ダッシュボード直接アクセス
       renderAppWithRouter({ initialEntries: ['/'] })
-      await waitFor(() => {
-        expect(screen.getByText('¥0')).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(screen.getByText('¥0')).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
       // 支出ページ直接アクセス
       renderAppWithRouter({ initialEntries: ['/expenses'] })
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '支出管理' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '支出管理' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
 
       // 履歴ページ直接アクセス
       renderAppWithRouter({ initialEntries: ['/history'] })
-      await waitFor(() => {
-        expect(screen.getByRole('heading', { level: 1, name: '取引履歴' })).toBeInTheDocument()
-      }, { timeout: 3000 })
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('heading', { level: 1, name: '取引履歴' })
+          ).toBeInTheDocument()
+        },
+        { timeout: 3000 }
+      )
     })
   })
 
