@@ -26,28 +26,25 @@ configure({
 // React 19 act()警告の抑制（Phase 3: パフォーマンス最適化）
 const originalConsoleError = console.error
 console.error = (...args) => {
+  const first = args[0]
+  const msg =
+    typeof first === 'string'
+      ? first
+      : first instanceof Error
+        ? first.message
+        : String(first ?? '')
+
   // act()警告を抑制してテスト実行速度向上
-  if (args[0]?.includes('act(...)')) {
-    return
-  }
+  if (msg.includes('act(...)')) return
   // MUI関連警告も抑制（テスト実行速度向上）
-  if (args[0]?.includes('findDOMNode')) {
-    return
-  }
-  if (args[0]?.includes('ReactDOM.render')) {
-    return
-  }
+  if (msg.includes('findDOMNode')) return
+  if (msg.includes('ReactDOM.render')) return
   // MUI prop警告の抑制（Phase 4: ボトルネック解決）
-  if (
-    args[0]?.includes('disableUnderline') ||
-    args[0]?.includes('disableunderline')
-  ) {
+  if (msg.includes('disableUnderline') || msg.includes('disableunderline'))
     return
-  }
   // React DOM prop warnings の抑制
-  if (args[0]?.includes('React does not recognize')) {
-    return
-  }
+  if (msg.includes('React does not recognize')) return
+
   originalConsoleError(...args)
 }
 

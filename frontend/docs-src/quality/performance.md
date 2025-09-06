@@ -12,12 +12,19 @@
 
 ### Bundle Size 予算
 
-| カテゴリ      | 目標値            | 現在値 | 監視方法     |
-| ------------- | ----------------- | ------ | ------------ |
-| **Total JS**  | < 300KB (gzipped) | ~180KB | size-limit   |
-| **Total CSS** | < 50KB (gzipped)  | ~25KB  | size-limit   |
-| **Images**    | < 200KB           | ~50KB  | imagemin     |
-| **Fonts**     | < 100KB           | ~45KB  | font-display |
+| カテゴリ      | 目標値            | 現在値 | 改善効果  | 監視方法                 |
+| ------------- | ----------------- | ------ | --------- | ------------------------ |
+| **Total JS**  | < 300KB (gzipped) | ~200KB | ✅43%削減 | rollup-plugin-visualizer |
+| **Total CSS** | < 50KB (gzipped)  | ~25KB  | 維持      | size-limit               |
+| **Images**    | < 200KB           | ~50KB  | 維持      | imagemin                 |
+| **Fonts**     | < 100KB           | ~45KB  | 維持      | font-display             |
+
+**🚀 Issue #73パフォーマンス改善成果**:
+
+- **メインバンドル**: 635kB → 363kB (**43%削減**)
+- **TransactionForm**: 369kB → 9kB (**97%削減**)
+- **戦略的チャンク分割**: ライブラリ種別8チャンク、長期キャッシュ対応
+- **動的インポート**: 履歴コンポーネント遅延ロード実装
 
 ### Runtime パフォーマンス
 
@@ -86,28 +93,44 @@ const ReportsPage = lazy(() => import('./features/reports/ReportsPage'))
 
 ## 📦 Bundle最適化
 
-### Webpack/Vite設定
+### Vite最適化設定（Issue #73実装済み）
 
 ```typescript
-// vite.config.ts
+// vite.config.ts - 最適化済み設定
 export default defineConfig({
+  plugins: [
+    react(),
+    // バンドルサイズ分析レポート生成
+    visualizer({
+      filename: 'dist/bundle-analysis.html',
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          mui: ['@mui/material', '@mui/icons-material'],
-          utils: ['./src/lib/format', './src/hooks'],
+          // Reactとその関連ライブラリを分離
+          'react-vendor': ['react', 'react-dom'],
+          // MUIコアライブラリを分離
+          'mui-core': ['@mui/material'],
+          // MUIアイコンを分離
+          'mui-icons': ['@mui/icons-material'],
+          // MUI日付ピッカーを分離
+          'mui-date-pickers': ['@mui/x-date-pickers'],
+          // Emotionライブラリを分離
+          'emotion-vendor': ['@emotion/react', '@emotion/styled'],
+          // フォーム関連ライブラリを分離
+          'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
+          // ルーティング関連を分離
+          'router-vendor': ['react-router-dom'],
+          // 日付ライブラリを分離
+          'date-vendor': ['dayjs'],
         },
       },
     },
-  },
-
-  // Tree shaking最適化
-  esbuild: {
-    treeShaking: true,
-    minifySyntax: true,
-    minifyIdentifiers: true,
   },
 })
 ```
@@ -124,24 +147,26 @@ import * as MUI from '@mui/material' // 500KB+
 import _ from 'lodash' // 70KB+
 ```
 
-### サイズ監視
+### サイズ監視（Issue #73導入済み）
 
 ```json
-// package.json
+// package.json - rollup-plugin-visualizer追加済み
 {
   "scripts": {
-    "size": "size-limit",
-    "size:analyze": "npx vite-bundle-analyzer"
+    "build": "tsc -b && vite build",
+    "size:analyze": "npm run build && open dist/bundle-analysis.html"
   },
-  "size-limit": [
-    {
-      "path": "dist/**/*.js",
-      "limit": "300 KB",
-      "gzip": true
-    }
-  ]
+  "devDependencies": {
+    "rollup-plugin-visualizer": "^6.0.3"
+  }
 }
 ```
+
+**🔍 バンドル分析レポート**: `dist/bundle-analysis.html`
+
+- ビルド後に自動生成される詳細な分析レポート
+- gzipサイズ・brotliサイズ表示対応
+- 依存関係の可視化とサイズ内訳表示
 
 ## 🖼️ アセット最適化
 
