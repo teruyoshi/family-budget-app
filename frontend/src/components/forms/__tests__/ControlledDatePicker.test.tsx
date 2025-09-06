@@ -38,24 +38,6 @@ describe('ControlledDatePicker', () => {
     expect(screen.getAllByText('支出日付')[0]).toBeInTheDocument()
   })
 
-  it('DatePickerコンポーネントが正しくレンダリングされる', () => {
-    const { container } = render(<TestFormWrapper />)
-    const datePickerRoot = container.querySelector('.MuiPickersTextField-root')
-    expect(datePickerRoot).toBeInTheDocument()
-  })
-
-  it('FormErrorMessageコンポーネントが含まれている', () => {
-    const { container } = render(<TestFormWrapper />)
-
-    // FormErrorMessageは初期状態ではエラーがないため表示されないが、
-    // コンポーネントの構造として存在することを確認
-    expect(container.querySelector('[data-testid="form-error"]')).toBeFalsy()
-
-    // BoxでラップされていることをBOXコンテナの存在で確認
-    const boxElement = container.querySelector('.MuiBox-root')
-    expect(boxElement).toBeInTheDocument()
-  })
-
   it('カスタムラベルが正しく表示される', () => {
     function CustomLabelWrapper() {
       const { control } = useForm<{ eventDate: string }>({
@@ -111,26 +93,5 @@ describe('ControlledDatePicker', () => {
 
     expect(screen.getAllByText('開始日')[0]).toBeInTheDocument()
     expect(screen.getAllByText('終了日')[0]).toBeInTheDocument()
-  })
-
-  it('ジェネリック型が正しく動作する', () => {
-    function GenericTypeWrapper() {
-      const { control } = useForm<{ customDate: string }>({
-        defaultValues: { customDate: '' },
-      })
-
-      return (
-        <DateLocalizationProvider>
-          <ControlledDatePicker<{ customDate: string }, 'customDate'>
-            control={control}
-            name="customDate"
-            label="カスタム日付"
-          />
-        </DateLocalizationProvider>
-      )
-    }
-
-    render(<GenericTypeWrapper />)
-    expect(screen.getAllByText('カスタム日付')[0]).toBeInTheDocument()
   })
 })

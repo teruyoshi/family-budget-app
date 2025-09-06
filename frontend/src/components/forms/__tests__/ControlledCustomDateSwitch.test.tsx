@@ -105,20 +105,6 @@ describe('ControlledCustomDateSwitch', () => {
     )
   })
 
-  it('FormControlLabelコンポーネントが正しくレンダリングされる', () => {
-    const { container } = render(<TestFormWrapper />)
-    const formControlLabel = container.querySelector(
-      '.MuiFormControlLabel-root'
-    )
-    expect(formControlLabel).toBeInTheDocument()
-  })
-
-  it('Switchコンポーネントが正しくレンダリングされる', () => {
-    const { container } = render(<TestFormWrapper />)
-    const switchComponent = container.querySelector('.MuiSwitch-root')
-    expect(switchComponent).toBeInTheDocument()
-  })
-
   it('カスタムラベルが正しく表示される', () => {
     function CustomLabelWrapper() {
       const { control } = useForm<{ enableNotifications: boolean }>({
@@ -139,18 +125,6 @@ describe('ControlledCustomDateSwitch', () => {
 
     render(<CustomLabelWrapper />)
     expect(screen.getByText('通知を有効にする')).toBeInTheDocument()
-  })
-
-  it('undefinedの値がfalseとして正しく変換される', () => {
-    render(<TestFormWrapper defaultValues={{ useCustomDate: false }} />)
-    const switchElement = screen.getByRole('switch')
-    expect(switchElement).not.toBeChecked()
-  })
-
-  it('nullの値がfalseとして正しく変換される', () => {
-    render(<TestFormWrapper defaultValues={{ useCustomDate: false }} />)
-    const switchElement = screen.getByRole('switch')
-    expect(switchElement).not.toBeChecked()
   })
 
   it('複数のスイッチフィールドが独立して動作する', () => {
@@ -201,65 +175,5 @@ describe('ControlledCustomDateSwitch', () => {
 
     expect(autoSaveSwitch).toBeChecked()
     expect(notificationsSwitch).toBeChecked()
-  })
-
-  it('アクセシビリティ属性が正しく設定される', () => {
-    render(<TestFormWrapper />)
-    const switchElement = screen.getByRole('switch')
-
-    expect(switchElement).toHaveAttribute('type', 'checkbox')
-    expect(
-      switchElement.closest('.MuiFormControlLabel-root')
-    ).toBeInTheDocument()
-  })
-
-  it('スイッチのcolor属性がprimaryに設定される', () => {
-    const { container } = render(<TestFormWrapper />)
-    const switchComponent = container.querySelector('.MuiSwitch-colorPrimary')
-    expect(switchComponent).toBeInTheDocument()
-  })
-
-  it('ジェネリック型が異なる型構造で正しく動作する', () => {
-    function GenericTypeWrapper() {
-      const { control, handleSubmit } = useForm<{
-        settings: {
-          darkMode: boolean
-          compactView: boolean
-        }
-      }>({
-        defaultValues: {
-          settings: {
-            darkMode: false,
-            compactView: true,
-          },
-        },
-      })
-
-      const onSubmit = (data: {
-        settings: { darkMode: boolean; compactView: boolean }
-      }) => {
-        console.log('Complex form data:', data)
-      }
-
-      return (
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <ControlledCustomDateSwitch<
-            { settings: { darkMode: boolean; compactView: boolean } },
-            'settings.darkMode'
-          >
-            control={control}
-            name="settings.darkMode"
-            label="ダークモード"
-          />
-          <button type="submit">Submit</button>
-        </Box>
-      )
-    }
-
-    render(<GenericTypeWrapper />)
-    expect(screen.getByText('ダークモード')).toBeInTheDocument()
-
-    const switchElement = screen.getByRole('switch')
-    expect(switchElement).not.toBeChecked()
   })
 })

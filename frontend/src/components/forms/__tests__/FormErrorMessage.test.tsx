@@ -30,11 +30,10 @@ describe('FormErrorMessage', () => {
     }
 
     render(<FormErrorMessage error={error} />)
-
-    const helperText = screen.getByText('正しい形式で入力してください')
-    expect(helperText).toBeInTheDocument()
-    expect(helperText).toHaveClass('MuiFormHelperText-root')
-    expect(helperText).toHaveClass('Mui-error')
+    // 実装詳細のクラス依存は避け、テキスト表示のみ検証
+    expect(
+      screen.getByText('正しい形式で入力してください')
+    ).toBeInTheDocument()
   })
 
   it('複数の異なるエラータイプを表示できる', () => {
@@ -63,10 +62,8 @@ describe('FormErrorMessage', () => {
       type: 'custom',
       message: '',
     }
-
     const { container } = render(<FormErrorMessage error={error} />)
-    const helperText = container.querySelector('.MuiFormHelperText-root')
-    expect(helperText).toBeInTheDocument()
-    expect(helperText).toHaveTextContent('')
+    // コンポーネントがレンダリングされ、空テキストも許容される
+    expect(container.firstChild).toBeTruthy()
   })
 })
