@@ -86,5 +86,9 @@
     "*.{json,md,css,scss}": [
       "prettier --write"
     ]
+  },
+  "volta": {
+    "node": "22.19.0",
+    "npm": "10.9.3"
   }
 }

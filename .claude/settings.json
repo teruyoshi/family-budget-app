@@ -14,7 +14,8 @@
     "WebSearch",
     "NotebookEdit",
     "BashOutput",
-    "KillBash"
+    "KillBash",
+    "serena"
   ],
   "ignorePatterns": [
     "node_modules/**",
